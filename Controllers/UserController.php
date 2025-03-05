@@ -60,7 +60,6 @@ class UserController extends BaseController
         }
     }
     
-
     function show($id)
     {
         $user = $this->model->show($id);

@@ -1,12 +1,15 @@
 <?php
 require 'Router.php';
-require 'Controllers/UserController.php';
+require_once 'Controllers/UserController.php';
 require_once 'Controllers/DashboardController.php';
+require_once 'Controllers/adminController/AdminController.php';
 
 
 $routes = new Router();
 
 $routes->get('/', [DashboardController::class, 'index']);
+
+$routes->get('/admin', [AdminController::class, 'index']);
 
 $routes->get('/user', [UserController::class, 'index']);
 $routes->get('/user/create', [UserController::class, 'create']);
