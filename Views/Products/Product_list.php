@@ -1,48 +1,120 @@
-<!DOCTYPE html>
-<html>
-<head>
-<style>
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 300px;
-  margin: auto;
-  text-align: center;
-  font-family: arial;
-}
+<!DOCTYPE html>  
+<html lang="en">  
+<link rel="stylesheet" href="../Assets/css/product_list.css">
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Management Dashboard</title>  
 
-.price {
-  color: grey;
-  font-size: 22px;
-}
+   
+        
+</head>  
 
-.card button {
-  border: none;
-  outline: 0;
-  padding: 12px;
-  color: white;
-  background-color: #000;
-  text-align: center;
-  cursor: pointer;
-  width: 100%;
-  font-size: 18px;
-}
+<body>  
+    <div class="container">  
+        <div class="header">  
+            <h1>Management</h1>  
+            <div>  
+                <label class="toggle-switch">  
+                    <input type="checkbox">  
+                    <span class="slider"></span>  
+                </label>  
+                <img src="https://via.placeholder.com/30" alt="User Avatar" style="border-radius: 50%;">  
+            </div>  
+        </div>  
 
-.card button:hover {
-  opacity: 0.7;
-}
-</style>
-</head>
-<body>
+        <div class="search-bar">  
+            <input type="text" placeholder="Search products...">  
+            <button>Search</button>  
+        </div>  
 
-<h2 style="text-align:center">Product Card</h2>
+        <h2>List Products</h2>  
+        <table class="product-list">  
+            <thead>  
+                <tr>  
+                    <th></th>  
+                    <th>Product Name</th>  
+                    <th>Type</th>  
+                    <th>Date</th>  
+                    <th>Action</th>  
+                </tr>  
+            </thead>  
+            <tbody>  
+                <tr>  
+                    <td><img src="https://via.placeholder.com/30" alt="Product Image"></td>  
+                    <td>Name product</td>  
+                    <td><span class="product-type nut">Nut</span></td>  
+                    <td>12/2/2025</td>  
+                    <td>  
+                        <button class="edit-button">Edit</button>  
+                        <button class="delete-button">Delete</button>  
+                    </td>  
+                </tr>  
+                <tr>  
+                    <td><img src="https://via.placeholder.com/30" alt="Product Image"></td>  
+                    <td>Name product</td>  
+                    <td><span class="product-type flour">Flour</span></td>  
+                    <td>12/2/2025</td>  
+                    <td>  
+                        <button class="edit-button">Edit</button>  
+                        <button class="delete-button">Delete</button>  
+                    </td>  
+                </tr>  
+                <tr>  
+                    <td><img src="https://via.placeholder.com/30" alt="Product Image"></td>  
+                    <td>Name product</td>  
+                    <td><span class="product-type nut">Nut</span></td>  
+                    <td>12/2/2025</td>  
+                    <td>  
+                        <button class="edit-button">Edit</button>  
+                        <button class="delete-button">Delete</button>  
+                    </td>  
+                </tr>  
+                <tr>  
+                    <td><img src="https://via.placeholder.com/30" alt="Product Image"></td>  
+                    <td>Name product</td>  
+                    <td><span class="product-type flour">Flour</span></td>  
+                    <td>12/2/2025</td>  
+                    <td>  
+                        <button class="edit-button">Edit</button>  
+                        <button class="delete-button">Delete</button>  
+                    </td>  
+                </tr>  
+                <tr>  
+                    <td><img src="https://via.placeholder.com/30" alt="Product Image"></td>  
+                    <td>Name product</td>  
+                    <td><span class="product-type nut">Nut</span></td>  
+                    <td>12/2/2025</td>  
+                    <td>  
+                        <button class="edit-button">Edit</button>  
+                        <button class="delete-button">Delete</button>  
+                    </td>  
+                </tr>  
+                <tr>  
+                    <td><img src="https://via.placeholder.com/30" alt="Product Image"></td>  
+                    <td>Name product</td>  
+                    <td><span class="product-type flour">Flour</span></td>  
+                    <td>12/2/2025</td>  
+                    <td>  
+                        <button class="edit-button">Edit</button>  
+                        <button class="delete-button">Delete</button>  
+                    </td>  
+                </tr>  
+                <tr>  
+                    <td><img src="https://via.placeholder.com/30" alt="Product Image"></td>  
+                    <td>Name product</td>  
+                    <td><span class="product-type nut">Nut</span></td>  
+                    <td>12/2/2025</td>  
+                    <td>  
+                        <button class="edit-button">Edit</button>  
+                        <button class="delete-button">Delete</button>  
+                    </td>  
+                </tr>  
+            </tbody>  
+        </table>  
 
-<div class="card">
-  <img src="/w3images/jeans3.jpg" alt="Denim Jeans" style="width:100%">
-  <h1>Tailored Jeans</h1>
-  <p class="price">$19.99</p>
-  <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
-  <p><button>Add to Cart</button></p>
-</div>
+        <button class="add-product-button">Add product</button>  
+    </div>  
+</body>  
 
-</body>
-</html>
+</html>  

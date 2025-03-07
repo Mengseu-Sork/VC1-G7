@@ -2,6 +2,7 @@
 require 'Router.php';
 require 'Controllers/UserController.php';
 require_once 'Controllers/DashboardController.php';
+require 'Controllers/ProductController.php';
 
 
 $routes = new Router();
@@ -16,5 +17,6 @@ $routes->put('/user/update', [UserController::class, 'update']);
 $routes->delete('/user/delete', [UserController::class, 'destroy']);
 $routes->get('/user/show', [UserController::class, 'show']);
 
+$routes->get('/products', [ProductController::class, 'index']);
 
 $routes->dispatch();
