@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+  }
+  .form-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .form-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  .form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  .form-group input[type="text"],
+  .form-group input[type="number"],
+  .form-group input[type="date"],
+  .form-group textarea,
+  .form-group select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .form-group textarea {
+    resize: vertical;
+    height: 100px;
+  }
+  .form-group input[type="date"] {
+    padding: 7px;
+  }
+  .form-group select {
+    padding: 7px;
+  }
+  .image-upload {
+    margin-bottom: 15px;
+  }
+  .image-upload label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  .image-upload input[type="file"] {
+    display: none;
+  }
+  .image-upload .upload-area {
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+  }
+  .image-upload .upload-area:hover {
+    border-color: #28a745;
+  }
+  .button-container {
+    display: flex;
+    justify-content: end;
+    margin-top: 20px;
+  }
+  .button-container button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .button-container button.cancel {
+    background-color: #ccc;
+    
+  }
+  .button-container button.save {
+    background-color: #28a745;
+    color: #fff;
+    margin-left: 10px;
+  }

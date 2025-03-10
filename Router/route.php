@@ -18,5 +18,8 @@ $routes->delete('/user/delete', [UserController::class, 'destroy']);
 $routes->get('/user/show', [UserController::class, 'show']);
 
 $routes->get('/products', [ProductController::class, 'index']);
+$routes->get('/products/product_list', [ProductController::class, 'index']);
+$routes->get('/products/create', [UserController::class, 'create']);
+$routes->delete('/products/delete', [ProductController::class, 'delete']);
 
 $routes->dispatch();
