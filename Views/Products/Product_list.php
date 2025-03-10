@@ -60,7 +60,9 @@ $products = $result->fetchAll();
                             <td><span class="product-type"><?= htmlspecialchars($row['type']) ?></span></td>
                             <td><?= date("d/m/Y", strtotime($row['date'])) ?></td>
                             <td>
-                                <button class="edit-button">Edit</button>
+                                <a href="/Views/Products/edite.php">     
+                                    <button class="edit-button">Edit</button>
+                                </a>
                                 <a href="delete.php?id=<?= $row['id'] ?>" onclick="return confirm('Are you sure?');">
                                     <button class="delete-button">Delete</button>
                                 </a>

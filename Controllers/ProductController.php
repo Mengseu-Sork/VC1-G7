@@ -10,7 +10,7 @@ class ProductController extends BaseController {
     function destroy($id)
     {
         if (isset($_POST['_method']) && $_POST['_method'] === 'DELETE') {
-            $this->model->deleteProduct($id);
+           
             $this->redirect('/product');
         }
     }

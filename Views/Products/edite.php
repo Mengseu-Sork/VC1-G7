@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/Assets/css/create.css">
-<title>Add New Product</title>
+<title>edite New Product</title>
 </head>
 <body>
 
 <div class="form-container">
-  <h2>Edite product</h2>
+  <h2>Edite new product</h2>
   <form>
     <div class="image-upload">
       
@@ -53,9 +53,10 @@
     </div>
 
     <div class="button-container">
-      <a href="/products">
-        <button type="button" class="cancel">Cancel</button>
-      </a>
+        <a href="/products">
+
+            <button type="button" class="cancel">Cancel</button>
+        </a>
       <button type="submit" class="save">Save</button>
     </div>
   </form>
