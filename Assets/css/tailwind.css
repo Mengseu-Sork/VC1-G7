@@ -258,9 +258,6 @@ select { /* 1 */
   text-transform: none;
 }
 
-.custom-link {
-  margin-left: 20px;
-}
 /**
 Correct the inability to style clickable types in iOS and Safari.
 */
