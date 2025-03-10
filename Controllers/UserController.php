@@ -11,9 +11,8 @@ class UserController extends BaseController
     function index()
     {
         $users = $this->model->getUsers();
-        $this->view('user/list',['users'=>$users]);
+        $this->view('user/profile_user',['users'=>$users]);
     }
-
     function create()
     {
         $this->view('user/create');
@@ -23,10 +22,11 @@ class UserController extends BaseController
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = [
-                'profile' => $_POST['profile'],
-                'name' => $_POST['name'],
+                'FisrtName' => $_POST['FisrtName'],
+                'LastName' => $_POST['LastName'],
                 'email' => $_POST['email'],
                 'password' => $_POST['password'],
+                'image' => $_POST['image'],
             ];
             $this->model->createUser($data);
             $this->redirect('/user');
@@ -42,10 +42,12 @@ class UserController extends BaseController
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = [
-                'profile' => $_POST['profile'],
-                'name' => $_POST['name'],
+                'FisrtName' => $_POST['FisrtName'],
+                'LastName' => $_POST['LastName'],
                 'email' => $_POST['email'],
                 'password' => $_POST['password'],
+                'image' => $_POST['image'],
+
             ];
             $this->model->updateUser($id, $data);
             $this->redirect('/user');
@@ -58,12 +60,5 @@ class UserController extends BaseController
             $this->model->deleteUser($id);
             $this->redirect('/user');
         }
-    }
-    
-
-    function show($id)
-    {
-        $user = $this->model->show($id);
-        $this->view('user/detail', ['user' => $user]); 
     }
 }

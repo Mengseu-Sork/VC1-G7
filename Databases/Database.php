@@ -11,10 +11,7 @@ class Database
         $dbname = "coffeeshop";
 
         try {
-            $this->pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password, [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            ]);
+            $this->pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
         } catch (PDOException $e) {
             die("Connection failed: " . $e->getMessage());
         }
@@ -22,18 +19,10 @@ class Database
 
     public function query($sql, $params = [])
     {
-        try {
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute($params);
-            return $stmt;
-        } catch (PDOException $e) {
-            die("Query failed: " . $e->getMessage());
-        }
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt;
     }
 
-    public function closeConnection()
-    {
-        $this->pdo = null;
-    }
 }
 ?>
