@@ -198,7 +198,7 @@
                     aria-label="User menu"
                   >
                     <a
-                      href="views/admin/admin_profile.php"
+                      href="views/admin/profile.php"
                       role="menuitem"
                       class="block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-primary"
                     >
@@ -382,7 +382,7 @@
                     aria-label="User menu"
                   >
                     <a
-                      href="../user/profile_user.php"
+                      href="admin/profile.php"
                       role="menuitem"
                       class="block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-primary"
                     >
