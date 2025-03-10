@@ -1,4 +1,5 @@
 <?php
+
 class BaseController
 {
     public function view($view, $data = [])

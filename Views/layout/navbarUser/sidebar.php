@@ -1,226 +1,6 @@
-<div x-data="setup()" x-init="$refs.loading.classList.add('hidden'); setColors(color);" :class="{ 'dark': isDark}">
-      <div class="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
-        <!-- Loading screen -->
-        <div
-          x-ref="loading"
-          class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-white bg-primary-darker"
-        >
-          Loading.....
-        </div>
 
-        <!-- Sidebar -->
-        <aside class="flex-shrink-0 hidden w-64 bg-white border-r dark:border-primary-darker dark:bg-darker md:block">
-          <div class="flex flex-col h-full">
-            <nav aria-label="Main" class="flex-1 px-2 py-4 space-y-2 overflow-y-hidden hover:overflow-y-auto">
-            <a href="/" class="inline-flex items-center text-2xl font-bold tracking-wider uppercase text-primary-dark dark:text-light">
-              <img src="../../Assets/images/FX12 LOGO.png" alt="San Cafe Logo" class="w-12 mr-4">
-              <span class="font-bold text-3xl">SAN CAFE</span>
-            </a>
-
-            <div x-data="{ isActive: true, open: true}">
-                <a
-                  href="#"
-                  @click="$event.preventDefault(); open = !open"
-                  class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                  :class="{'bg-primary-100 dark:bg-primary': isActive || open}"
-                  role="button"
-                  aria-haspopup="true"
-                  :aria-expanded="(open || isActive) ? 'true' : 'false'"
-                >
-                  <span aria-hidden="true">
-                    <svg
-                      class="w-5 h-5"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                      />
-                    </svg>
-                  </span>
-                  <span class="ml-2 text-sm"> Home </span>
-                  <span class="ml-auto" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </span>
-                </a>
-              </div>
-              <div x-data="{ isActive: false, open: false }">
-                <!-- active classes 'bg-primary-100 dark:bg-primary' -->
-                <a
-                  href="#"
-                  @click="$event.preventDefault(); open = !open"
-                  class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                  :class="{ 'bg-primary-100 dark:bg-primary': isActive || open }"
-                  role="button"
-                  aria-haspopup="true"
-                  :aria-expanded="(open || isActive) ? 'true' : 'false'"
-                >
-                  <span aria-hidden="true">
-                    <svg
-                      class="w-5 h-5"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
-                      />
-                    </svg>
-                  </span>
-                  <span class="ml-2 text-sm"> Products </span>
-                  <span aria-hidden="true" class="ml-auto">
-                    <svg
-                        class="w-5 h-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </span>
-                </a>
-                <div x-show="open" class="mt-2 space-y-2 px-7" role="menu" aria-label="Layouts">
-                    <a
-                      href="#"
-                      role="menuitem"
-                      class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
-                    >
-                    Nut Products
-                    </a>
-                    <a
-                      href="#"
-                      role="menuitem"
-                      class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
-                    >
-                    Flour Products
-                    </a>
-                  </div>
-              </div>
-
-
-              <!-- Authentication links -->
-              <div x-data="{ isActive: false, open: false}">
-                <!-- active & hover classes 'bg-primary-100 dark:bg-primary' -->
-                <a
-                  href="#"
-                  @click="$event.preventDefault(); open = !open"
-                  class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                  :class="{'bg-primary-100 dark:bg-primary': isActive || open}"
-                  role="button"
-                  aria-haspopup="true"
-                  :aria-expanded="(open || isActive) ? 'true' : 'false'"
-                >
-                  <span aria-hidden="true">
-                    <svg
-                        class="w-5 h-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M12 6v6h4"
-                        />
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
-                      </svg>
-                  </span>
-                  <span class="ml-2 text-sm"> History </span>
-                  <span aria-hidden="true" class="ml-auto">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </span>
-                </a>
-              </div>
-
-              <!-- Layouts links -->
-              <div x-data="{ isActive: false, open: false}">
-                <a
-                    href="#"
-                    @click="$event.preventDefault(); open = !open"
-                    class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                    :class="{'bg-primary-100 dark:bg-primary': isActive || open}"
-                    role="button"
-                    aria-haspopup="true"
-                    :aria-expanded="(open || isActive) ? 'true' : 'false'"
-                  >
-                    <span aria-hidden="true">
-                      <svg
-                          class="w-5 h-5"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M12 2a4 4 0 00-4 4v4h8V6a4 4 0 00-4-4z"
-                          />
-                          <rect x="6" y="10" width="12" height="12" rx="2" />
-                        </svg>
-                    </span>
-                    <span class="ml-2 text-sm"> Admin Login </span>
-                    <span aria-hidden="true" class="ml-auto">
-                    </span>
-                  </a>
-              </div>
-            </nav>
-
-            <!-- Sidebar footer -->
-            <div class="flex-shrink-0 px-2 py-4 space-y-2">
-              <button
-                @click="openSettingsPanel"
-                type="button"
-                class="flex items-center justify-center w-full px-4 py-2 text-sm text-white rounded-md bg-primary hover:bg-primary-dark focus:outline-none focus:ring focus:ring-primary-dark focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark"
-              >
-                <span aria-hidden="true">
-                  <svg
-                    class="w-4 h-4 mr-2"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-                    />
-                  </svg>
-                </span>
-                <span>Customize</span>
-              </button>
-            </div>
-          </div>
-        </aside>
-
-        <div class="flex-1 h-full overflow-x-hidden overflow-y-auto">
-        
-        <header class="relative bg-white dark:bg-darker">
-        <div class="flex items-center justify-between p-2 border-b dark:border-primary-darker">
+    <header class="flex-1 relative bg-white dark:bg-darker">
+            <div class="flex items-center justify-between p-2 border-b dark:border-primary-darker">
                 <button
                     @click="isMobileMainMenuOpen = !isMobileMainMenuOpen"
                     class="p-1 transition-colors duration-200 rounded-md text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark md:hidden focus:outline-none focus:ring"
@@ -416,48 +196,47 @@
                         role="menu"
                         aria-orientation="vertical"
                         aria-label="User menu"
-                    >
+                      >
                       <div class="px-4 py-2 text-sm text-gray-700 dark:text-light text-center flex flex-col items-center">
                           <img class="w-10 h-10 rounded-full" src="../../../Assets/images/pic5.jpg" alt="User Profile" />
                           <p class="font-semibold mt-2">MENGSEU SORK</p>
                       </div>
-                      <ul class="mt-4 space-y-3">
-                        <li class="flex items-center gap-3 p-2 text-gray-700 cursor-pointer hover:text-blue-500 transition">
+                      <ul class="mt-2 ml-4 space-y-2">
+                        <li class="flex items-center gap-3 p-1 text-gray-700 hover:text-blue-500 cursor-pointer">
                           <span class="text-blue-500">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14c3.313 0 6-2.686 6-6S15.313 2 12 2 6 4.686 6 8s2.687 6 6 6zM12 14c-4.418 0-8 2.686-8 6v2h16v-2c0-3.314-3.582-6-8-6z"></path>
                             </svg>
                           </span>
-                          <a class="block py-2 text-sm text-gray-700 transition-colors dark:text-light dark:hover:bg-primary" href="../user/profile_user.php">Your Profile</a>
+                          <a  class="block py-2 text-sm text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="../user/profile_user.php">Your Profile</a>
                         </li>
-                        <li class="flex items-center gap-3 p-2 text-gray-700 cursor-pointer hover:text-blue-500 transition">
+                        <li class="flex items-center gap-3 p-1 text-gray-700 hover:text-blue-500 cursor-pointer">
                           <span class="text-green-500">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 4l4 4-1.414 1.414L14.586 5.414 16 4zM4 14v6h6l8-8-6-6-8 8z"></path>
                             </svg>
                           </span>
-                          <a class="block py-2 text-sm text-gray-700 transition-colors dark:text-light dark:hover:bg-primary" href="../user/edit.php">Edit Profile</a>
+                          <a  class="block py-2 text-sm text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="../user/edit.php">Edit Profile</a>
                         </li>
-                        <li class="flex items-center gap-3 p-2 text-gray-700 cursor-pointer hover:text-blue-500 transition">
+                        <li class="flex items-center gap-3 p-1 text-gray-700 hover:text-blue-500 cursor-pointer">
                           <span class="text-yellow-500">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m-8-8h16"></path>
                             </svg>
                           </span>
-                          <a class="block py-2 text-sm text-gray-700 transition-colors dark:text-light dark:hover:bg-primary" href="">Add new profile +</a>
+                          <a  class="block py-2 text-sm text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="">Add new profile +</a>
                         </li>
-                        <li class="flex items-center gap-3 p-2 text-red-500 cursor-pointer hover:text-red-600 transition">
+                        <li class="flex items-center gap-3 p-1 text-gray-700 hover:text-blue-500 cursor-pointer">
                           <span class="text-red-500">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                           </span>
-                          <a href="">Logout</a>
+                          <a  class="block py-2 text-sm text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="">Logout</a>
                         </li>
                       </ul>
                     </div>
                   </div>
                 </nav>
             </div>
-        </header>
-    </div>
+    </header>
