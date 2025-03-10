@@ -75,7 +75,7 @@ $products = $result->fetchAll();
             </tbody>
         </table>
 
-        <a href="add_product.php">
+        <a href="/Views/Products/create.php">
             <button class="add-product-button">Add Product</button>
         </a>
     </div>

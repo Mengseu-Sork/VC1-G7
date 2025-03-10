@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="/Assets/css/edite.css">
+<link rel="stylesheet" href="/Assets/css/create.css">
 <title>Add New Product</title>
 </head>
 <body>
@@ -37,8 +37,8 @@
         <label for="type">Type</label>
         <select id="type" name="type" required>
           <option value="">Select type</option>
-          <option value="type1">Type 1</option>
-          <option value="type2">Type 2</option>
+          <option value="type1">Powder</option>
+          <option value="type2">Nuts</option>
         </select>
       </div>
       <div class="form-group">
