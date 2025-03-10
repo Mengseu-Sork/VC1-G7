@@ -9,48 +9,44 @@ class UserModel
     }
     function getUsers()
     {
-        $users = $this->pdo->query('SELECT * From users ORDER BY id DESC');
+        $users = $this->pdo->query('SELECT * From users ORDER BY user_id DESC');
         return $users->fetchAll(PDO::FETCH_ASSOC);
     }
+    
 
     function createUser($data)
     {
-        $this->pdo->query("INSERT INTO users (profile, name, email, password) VALUES (:profile, :name, :email, :password)", 
+        $this->pdo->query("INSERT INTO users (FisrtName, LastName, email, password, image) VALUES (:FisrtName, :LastName, :email, :password, :image)", 
         [                
-            'profile' => $data['profile'],
-            'name' => $data['name'],
+            'FisrtName' => $data['FisrtName'],
+            'LastName' => $data['LastName'],
             'email' => $data['email'],
             'password' => $data['password'],
+            'image' => $data['image'],
         ]);
     }
 
     function getUser($id)
     {
-        $stmt = $this->pdo->query("SELECT * FROM users WHERE id = :id", ['id' => $id]);
+        $stmt = $this->pdo->query("SELECT * FROM users WHERE user_id = :user_id", ['user_id' => $id]);
         return $stmt->fetch();
     }
     function updateUser($id, $data)
     {
-        $this->pdo->query("UPDATE users SET profile = :profile, name = :name, email = :email, password = :password WHERE id = :id",
+        $this->pdo->query("UPDATE users SET  FisrtName = :FisrtName, LastName = :LastName, email = :email, password = :password, image = :image WHERE user_id = :user_id",
         [
-            'profile' => $data['profile'],
-            'name' => $data['name'],
+            'FisrtName' => $data['FisrtName'],
+            'LastName' => $data['LastName'],
             'email' => $data['email'],
             'password' => $data['password'],
-            'id' => $id
+            'image' => $data['image'],
+            'user_id' => $id
         ]
         );
     }
     
     function deleteUser($id)
     {
-        $this->pdo->query("DELETE FROM users WHERE id = :id", ['id' => $id]);
-    }
-
-    public function show($id)
-    {
-        $sql = "SELECT users.id,users.profile, users.name, users.email, users.password FROM users WHERE users.id = :id";
-        $stmt = $this->pdo->query($sql, [':id' => $id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }    
+        $this->pdo->query("DELETE FROM users WHERE user_id = :user_id", ['user_id' => $id]);
+    }   
 }
