@@ -1,3 +1,15 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+if (!isset($_SESSION['user'])) {
+    header('Location: ../auth/register.php');
+    exit();
+}
+$user = $_SESSION['user'];
+?>
+
+
 <header class="relative bg-white dark:bg-darker">
   <div class="flex items-center justify-between p-2 border-b dark:border-primary-darker">
     <button

@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <div class="container">
         <div class="login-box">
             <h2>SING IN</h2>
@@ -28,9 +27,8 @@
         <div class="register-box">
             <h2>Hello, User!</h2>
             <p>Enter your personal details and start your journey with us</p>
-            <a href="register.php"><button>REGISTER</button></a>
+            <a href="./register.php"><button>REGISTER</button></a>
         </div>
     </div>
-
 </body>
 </html>
