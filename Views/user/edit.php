@@ -1,161 +1,34 @@
-<!-- 
-<div class="container">
-    
-
-
-
-
-        <button type="submit" class="btn btn-success mt-3">Update</button>
-    </form>
-</div> -->
-
-
-
-
-
-<div class="main-panel">
-      <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
-        <div class="container-fluid">
-          <div class="navbar-wrapper">
-            <div class="navbar-toggle">
-              <button type="button" class="navbar-toggler">
-                <span class="navbar-toggler-bar bar1"></span>
-                <span class="navbar-toggler-bar bar2"></span>
-                <span class="navbar-toggler-bar bar3"></span>
-              </button>
-            </div>
-            <a class="navbar-brand" href="javascript:;">Paper Dashboard 2</a>
+<?php
+require_once '../layout/navbarPages/header_user.php';
+require_once '../layout/navbarPages/nav_user.php';
+require_once '../layout/navbarPages/footer_user.php';
+?>
+<div class="container mx-auto p-6">
+<div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+  <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
+    <div class="shadow-lg rounded-lg p-6 transition duration-300 border-2 dark:border-primary-darker" :style="{ backgroundColor: bgColor }">
+        <form action="/user/update?id=<?= $user['id'] ?>" method="POST" >
+          <label for="profile" class="block text-sm font-medium font-semibold">Select image:</label>
+          <input type="file" id="profile" accept="images/*" onchange="previewImage(event) " class="block w-full text-sm font-semibold border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+          <div class="mt-4">
+            <img id="preview" class="hidden w-32 h-32 rounded-lg object-cover font-semibold border border-gray-300">
           </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <form>
-              <div class="input-group no-border">
-                <input type="text" value="" class="form-control" placeholder="Search...">
-                <div class="input-group-append">
-                  <div class="input-group-text">
-                    <i class="nc-icon nc-zoom-split"></i>
-                  </div>
-                </div>
-              </div>
-            </form>
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link btn-magnify" href="javascript:;">
-                  <i class="nc-icon nc-layout-11"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Stats</span>
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item btn-rotate dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="nc-icon nc-bell-55"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Some Actions</span>
-                  </p>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn-rotate" href="javascript:;">
-                  <i class="nc-icon nc-settings-gear-65"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Account</span>
-                  </p>
-                </a>
-              </li>
-            </ul>
+          <div class="mb-4">
+            <label class="block text-gray-700 font-medium">Name:</label>
+            <input type="text" value="<?= $user['FisrtName'] ?>" name="FisrtName" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2">
           </div>
-        </div>
-      </nav>
-      <!-- End Navbar -->
-      <div class="content">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card card-user">
-                <div class="card-header">
-                    <h5 class="card-title">Edit User</h5>
-                </div>
-                <div class="card-body">
-                <form action="/user/update?id=<?= $user['id'] ?>" method="POST">
-                    <div class="row">
-                        <div class="col-md-12 pr-1">
-                            <div class="form-group">
-                                <label for="" class="form-label">Select image:</label>
-                                <input type="file" 
-                                    class="form-control"
-                                    name="profile">
-                                <img src="/Images/<?=$user['profile']?>"
-                                    class="rounded-circle"
-                                    style="width: 40px">
-                                <input type="text"
-                                    hidden="hidden" 
-                                    name="old_profile"
-                                    value="/Images/<?=$user['profile']?>" >
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="" class="form-label">Name:</label>
-                                <input type="text" value=" <?= $user['name'] ?>" name="name" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 pr-1">
-                            <div class="form-group">
-                                <label for="" class="form-label">Email:</label>
-                                <input type="email" value=" <?= $user['email'] ?>" name="email" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="" class="form-label">Password:</label>
-                                <input type="password" value=" <?= $user['password'] ?>" name="password" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="update ml-auto mr-auto">
-                        <button type="submit" class="btn btn-primary btn-round">Update User</button>
-                        </div>
-                    </div>
-                    </form>
-                </div>
-                </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 font-medium">Email:</label>
+            <input type="email" value="<?= $user['email'] ?>" name="email" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2">
           </div>
-        </div>
-      </div>
-      <footer class="footer footer-black  footer-white ">
-        <div class="container-fluid">
-          <div class="row">
-            <nav class="footer-nav">
-              <ul>
-                <li><a href="https://www.creative-tim.com" target="_blank">Creative Tim</a></li>
-                <li><a href="https://www.creative-tim.com/blog" target="_blank">Blog</a></li>
-                <li><a href="https://www.creative-tim.com/license" target="_blank">Licenses</a></li>
-              </ul>
-            </nav>
-            <div class="credits ml-auto">
-              <span class="copyright">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
-              </span>
-            </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 font-medium">Password:</label>
+            <input type="password" value="<?= $user['password'] ?>" name="password" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2">
           </div>
-        </div>
-      </footer>  
+          <div class="text-center">
+            <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-md shadow-md hover:bg-blue-600 transition">
+              Update
+            </button>
+          </div>
+        </form>
+</div>

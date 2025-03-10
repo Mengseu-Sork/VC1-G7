@@ -14,7 +14,7 @@
             <nav aria-label="Main" class="flex-1 px-2 py-4 space-y-2 overflow-y-hidden hover:overflow-y-auto">
             <a href="/" class="inline-flex items-center text-2xl font-bold tracking-wider uppercase text-primary-dark dark:text-light">
               <img src="../../Assets/images/FX12 LOGO.png" alt="San Cafe Logo" class="w-12 mr-4">
-              <span class="font-bold text-3xl custom-link">SAN CAFE</span>
+              <span class="font-bold text-3xl">SAN CAFE</span>
             </a>
 
             <div x-data="{ isActive: true, open: true}">
