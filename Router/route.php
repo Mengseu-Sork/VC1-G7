@@ -2,11 +2,9 @@
 require 'Router.php';
 require 'Controllers/UserController.php';
 require_once 'Controllers/DashboardController.php';
-require_once 'Controllers/AdminController.php';
 
 $routes = new Router();
 
-$routes->get('/', [Authentication::class, 'index']);
 
 $routes->get('/', [DashboardController::class, 'index']);
 $routes->get('/user', [UserController::class, 'index']);
