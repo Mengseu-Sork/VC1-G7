@@ -1,4 +1,5 @@
 <?php
+require_once '../layout/header.php';
 require_once 'navList.php';
 
 ?>
@@ -437,7 +438,10 @@ require_once 'navList.php';
   class="fixed inset-0 z-10 bg-primary-darker"
   style="opacity: 0.5"
   aria-hidden="true"></div>
-<!-- Panel -->
-<?php require_once 'section.php' ?>
+  </div>
 </div>
-</div>
+
+<?php
+require_once '../layout/header.php';
+
+?>
