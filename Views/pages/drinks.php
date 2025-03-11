@@ -31,6 +31,54 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+   
+h1 {
+    text-align: left;
+    padding-left: 20px; 
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+
+.product {
+    width: 200px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+.product img {
+    width: 80px; /* Adjust image size */
+    height: auto;
+    border-radius: 5px;
+    margin-right: 15px; /* Space between image and text */
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align text to the left */
+}
+
+.product-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+
+.search-container {
+    text-align: left;
+    padding: 20px;
+}
         .container {  
             display: flex;  
             flex-wrap: wrap;  
@@ -52,6 +100,7 @@
     height: auto;
     border-radius: 10px;
 }
+
         .product {  
             background: white;  
             border: 1px solid #ddd;  
@@ -575,33 +624,128 @@
             </div>
         </header>
         <title>Product Listing</title>  
- 
- 
+        <title>Drinks Menu</title>
+    <style>
+        /* Align the heading to the left */
+        h1 {
+            text-align: left;
+            padding-left: 20px; /* Adds some spacing from the left edge */
+            font-size: 24px;
+            font-weight: bold;
+        }
 
-        <div class="search-container">
+        /* Adjust the container for better layout */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        /* Style for the product boxes */
+        .product {
+            display: flex;
+            align-items: center; /* Align items vertically */
+            width: 500px; /* Adjust width */
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        /* Style the product images */
+        .product img {
+            width: 50px; /* Adjust image size */
+            height: auto;
+            border-radius: 5px;
+            margin-right: 15px; /* Space between image and text */
+        }
+
+        /* Container for product details */
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align text to the left */
+        }
+
+        /* Style for product name */
+        .product-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        /* Style for product price */
+        .price {
+            font-size: 16px;
+            color: #27ae60; /* Green color for price */
+            margin: 5px 0;
+        }
+
+        /* Style for stock status */
+        .stock {
+            font-size: 14px;
+            color: #888; /* Gray color for stock */
+        }
+
+        /* Style the search bar */
+        .search-container {
+            text-align: left;
+            padding: 20px;
+        }
+
+        /* Options container */
+        .options {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        /* Order button styling */
+        .order-button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color:rgb(253, 205, 30);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .order-button:hover {
+            background-color:rgb(0, 238, 103);
+        }
+    </style>
+</head>
+<body>
+
+<div class="search-container">
     <input type="text" class="search-box" id="search" placeholder="Search products..." onkeyup="filterProducts()">
+    <h1>Drinks</h1>
 </div>
 
 <div class="container" id="productContainer">
     <?php  
     $products = [  
-        ["name" => "Arabica Brazil", "price" => "$0.75", "stock" => "In stock", "image" => "../../Assets/images/drinks/Apple_soda.jpg"],  
-        ["name" => "Arabica Ethiopia", "price" => "$0.75", "stock" => "In stock", "image" => "../../Assets/images/drinks/Coca-cola.jpg"],  
-        ["name" => "Baych Bleand", "price" => "$1.00", "stock" => "In stock", "image" => "../../Assets/images/drinks/Coca.jpg"],  
-        ["name" => "Brown Sugar", "price" => "$2.00", "stock" => "In stock", "image" => "../../Assets/images/drinks/Fanta.jpg"],  
-        ["name" => "Flores Bajawa Arabica", "price" => "$3.00", "stock" => "In stock", "image" => "../../Assets/images/drinks/Honey_lemon.jpg"],  
-        ["name" => "Flores Bajawa", "price" => "$1.25", "stock" => "In stock", "image" => "../../Assets/images/drinks/Mango_juice.jpg"],  
-        ["name" => "Popping Pearls Blueberry", "price" => "$2.00", "stock" => "In stock", "image" => "../../Assets/images/drinks/orange_soda.jpg"],  
-        ["name" => "Strawberry Puree", "price" => "$3.00", "stock" => "In stock", "image" => "../../Assets/images/drinks/Pepsi.jpg"],  
-        ["name" => "White Boba", "price" => "$1.25", "stock" => "In stock", "image" => "../../Assets/images/drinks/Sprite.jpg"],  
-        ["name" => "White Crystal", "price" => "$2.00", "stock" => "In stock", "image" => "../../Assets/images/drinks/Sting.jpg"],  
-        ["name" => "Milk Tea Sauce", "price" => "$3.00", "stock" => "In stock", "image" => "../../Assets/images/drinks/Naturalist.jpg"],  
-        ["name" => "Arabica Laos", "price" => "$1.25", "stock" => "In stock", "image" => "../../Assets/images/drinks/Pineapple_drink.jpg"],  
+        ["name" => "Apple Soda", "price" => "$0.75", "stock" => "In stock", "image" => "../../Assets/images/drinks/Apple_soda.jpg"],  
+        ["name" => "Cocacola", "price" => "$0.75", "stock" => "In stock", "image" => "../../Assets/images/drinks/Coca-cola.jpg"],  
+        ["name" => "Coca", "price" => "$1.00", "stock" => "In stock", "image" => "../../Assets/images/drinks/Coca.jpg"],  
+        ["name" => "Fanta", "price" => "$2.00", "stock" => "In stock", "image" => "../../Assets/images/drinks/Fanta.jpg"],  
+        ["name" => "Honey Lemon", "price" => "$3.00", "stock" => "In stock", "image" => "../../Assets/images/drinks/Honey_lemon.jpg"],  
+        ["name" => "Mango Juice", "price" => "$1.25", "stock" => "In stock", "image" => "../../Assets/images/drinks/Mango_juice.jpg"],  
+        ["name" => "Orange Soda", "price" => "$2.00", "stock" => "In stock", "image" => "../../Assets/images/drinks/orange_soda.jpg"],  
+        ["name" => "Pepsi", "price" => "$3.00", "stock" => "In stock", "image" => "../../Assets/images/drinks/Pepsi.jpg"],  
+        ["name" => "Sprite", "price" => "$1.25", "stock" => "In stock", "image" => "../../Assets/images/drinks/Sprite.jpg"],  
+        ["name" => "Sting", "price" => "$2.00", "stock" => "In stock", "image" => "../../Assets/images/drinks/Sting.jpg"],  
+        ["name" => "Naturalist", "price" => "$3.00", "stock" => "In stock", "image" => "../../Assets/images/drinks/Naturalist.jpg"],  
+        ["name" => "Pineapple Drink", "price" => "$1.25", "stock" => "In stock", "image" => "../../Assets/images/drinks/Pineapple_drink.jpg"],  
     ];  
 
     foreach ($products as $product) {  
         echo '<div class="product">';  
         echo '<img src="' . htmlspecialchars($product['image']) . '" alt="' . htmlspecialchars($product['name']) . '" class="product-image">';  
+        echo '<div class="product-info">';  
         echo '<h3 class="product-name">' . htmlspecialchars($product['name']) . '</h3>';  
         echo '<p class="stock">' . htmlspecialchars($product['stock']) . '</p>';  
         echo '<p class="price">' . htmlspecialchars($product['price']) . '</p>';  
@@ -614,7 +758,8 @@
         echo '</select>';  
         echo '</div>';  
         echo '<button class="order-button">Order</button>';  
-        echo '</div>';  
+        echo '</div>'; 
+        echo '</div>'; 
     }  
     ?>  
 </div>
@@ -627,7 +772,7 @@ function filterProducts() {
     for (let i = 0; i < products.length; i++) {
         let productName = products[i].getElementsByClassName('product-name')[0].innerText.toLowerCase();
         if (productName.includes(input)) {
-            products[i].style.display = "block";
+            products[i].style.display = "flex";
         } else {
             products[i].style.display = "none";
         }

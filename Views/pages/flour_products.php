@@ -19,8 +19,7 @@
             margin: 0;  
             padding: 20px;  
         }  
-
-        .search-container {
+  .search-container {
             text-align: center;
             margin-bottom: 20px;
         }
@@ -44,8 +43,8 @@
     width: 200px;
     border: 1px solid #ccc;
     padding: 10px;
-    /* text-align: center; */
-}
+    text-align: center;
+} 
 
 .product img {
     width: 30%;
@@ -94,7 +93,7 @@
         }  
         .order-button:hover {  
             background-color: #e67e22;  
-        }  
+        }   */
     </style>  
   </head>
   <body>
@@ -577,10 +576,104 @@
         <title>Flour Product</title>  
  
  
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flour Products</title>
+    <style>
+        /* Align the heading to the left */
+        h1 {
+            text-align: left;
+            padding-left: 20px; /* Adds some spacing from the left edge */
+            font-size: 24px;
+            font-weight: bold;
+        }
 
-        <div class="search-container">
-    <input type="text" class="search-box" id="search" placeholder="Search products..." onkeyup="filterProducts()">
-</div>
+        /* Adjust the container for better layout */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        /* Style for the product boxes */
+        .product {
+            display: flex;
+            align-items: center; /* Align items vertically */
+            width: 500px; /* Adjust width */
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        /* Style the product images */
+        .product img {
+            width: 50px; /* Adjust image size */
+            height: auto;
+            border-radius: 5px;
+            margin-right: 15px; /* Space between image and text */
+        }
+
+        /* Container for product details */
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align text to the left */
+        }
+
+        /* Style for product name */
+        .product-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        /* Style for product price */
+        .price {
+            font-size: 16px;
+            color: #27ae60; /* Green color for price */
+            margin: 5px 0;
+        }
+
+        /* Style for stock status */
+        .stock {
+            font-size: 14px;
+            color: #888; /* Gray color for stock */
+        }
+
+        /* Style the search bar */
+        .search-container {
+            text-align: left;
+            padding: 20px;
+        }
+
+        /* Options container */
+        .options {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        /* Order button styling */
+        .order-button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color:rgb(253, 205, 30);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .order-button:hover {
+            background-color:rgb(0, 238, 103);
+        }
+    </style>
+</head>
+<body>
+
+<h1>Flour Product</h1>
 
 <div class="container" id="productContainer">
     <?php  
@@ -602,6 +695,7 @@
     foreach ($products as $product) {  
         echo '<div class="product">';  
         echo '<img src="' . htmlspecialchars($product['image']) . '" alt="' . htmlspecialchars($product['name']) . '" class="product-image">';  
+        echo '<div class="product-info">';  
         echo '<h3 class="product-name">' . htmlspecialchars($product['name']) . '</h3>';  
         echo '<p class="stock">' . htmlspecialchars($product['stock']) . '</p>';  
         echo '<p class="price">' . htmlspecialchars($product['price']) . '</p>';  
@@ -614,7 +708,8 @@
         echo '</select>';  
         echo '</div>';  
         echo '<button class="order-button">Order</button>';  
-        echo '</div>';  
+        echo '</div>'; 
+        echo '</div>'; 
     }  
     ?>  
 </div>
@@ -627,7 +722,7 @@ function filterProducts() {
     for (let i = 0; i < products.length; i++) {
         let productName = products[i].getElementsByClassName('product-name')[0].innerText.toLowerCase();
         if (productName.includes(input)) {
-            products[i].style.display = "block";
+            products[i].style.display = "flex";
         } else {
             products[i].style.display = "none";
         }
