@@ -1,0 +1,108 @@
+* {  
+    box-sizing: border-box;  
+    margin: 0;  
+    padding: 0;  
+    font-family: Arial, sans-serif;  
+}  
+
+body {  
+    display: flex;  
+    background-color: #f4f4f4;  
+}  
+
+.sidebar {  
+    width: 200px;  
+    background-color: #007bff;  
+    color: white;  
+    padding: 20px;  
+    height: 100vh;  
+}  
+
+.sidebar h2 {  
+    text-align: center;  
+    margin-bottom: 20px;  
+}  
+
+.sidebar ul {  
+    list-style-type: none;  
+}  
+
+.sidebar ul li {  
+    margin: 15px 0;  
+}  
+
+.sidebar a {  
+    color: white;  
+    text-decoration: none;  
+}  
+
+.sidebar a:hover {  
+    text-decoration: underline;  
+}  
+
+.sidebar .customize {  
+    background-color: #28a745;  
+    color: white;  
+    border: none;  
+    padding: 10px;  
+    cursor: pointer;  
+    width: 100%;  
+}  
+
+.products {  
+    display: grid;  
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));  
+    gap: 20px;  
+    padding: 20px;  
+    flex-grow: 1;  
+}  
+
+.product-card {  
+    background-color: white;  
+    border: 1px solid #ddd;  
+    border-radius: 5px;  
+    padding: 15px;  
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  
+    text-align: center;  
+}  
+
+.product-card img {  
+    max-width: 100%;  
+    height: auto;  
+    border-radius: 5px;  
+}  
+
+.product-card h3 {  
+    margin: 10px 0;  
+}  
+
+.product-card p {  
+    margin: 5px 0;  
+}  
+
+.product-card label {  
+    margin: 5px 0 2px;  
+    display: block;  
+}  
+
+.product-card input[type="number"] {  
+    width: 50px;  
+    margin-bottom: 10px;  
+}  
+
+.product-card select {  
+    margin: 10px 0;  
+}  
+
+.product-card .order-btn {  
+    background-color: #ff9800;  
+    color: white;  
+    border: none;  
+    padding: 10px;  
+    cursor: pointer;  
+    transition: background-color 0.3s;  
+}  
+
+.product-card .order-btn:hover {  
+    background-color: #e68a00;  
+}  

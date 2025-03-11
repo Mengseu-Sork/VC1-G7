@@ -1,4 +1,104 @@
-<div x-data="setup()" x-init="$refs.loading.classList.add('hidden'); setColors(color);" :class="{ 'dark': isDark}">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>SAN CAFE</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../Assets/css/tailwind.css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/alpine-collective/alpine-magic-helpers@0.5.x/dist/component.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            background-color: #f8f8f8;  
+            margin: 0;  
+            padding: 20px;  
+        }  
+
+        .search-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .search-box {
+            width: 50%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .container {  
+            display: flex;  
+            flex-wrap: wrap;  
+            justify-content: space-between;  
+            max-width: 1200px;  
+            margin: auto;  
+            gap: 20px;
+        }
+
+.product {
+    width: 200px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    /* text-align: center; */
+}
+
+.product img {
+    width: 30%;
+    height: auto;
+    border-radius: 10px;
+}
+        .product {  
+            background: white;  
+            border: 1px solid #ddd;  
+            border-radius: 8px;  
+            padding: 16px;  
+            margin: 10px;  
+            flex: 1 1 calc(30% - 20px);  
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);  
+            transition: transform 0.2s;  
+        }  
+        .product:hover {  
+            transform: scale(1.02);  
+        }  
+        .product h3 {  
+            font-size: 1.2em;  
+            margin: 0 0 10px;  
+        }  
+        .stock {  
+            color: green;  
+            font-weight: bold;  
+        }  
+        .price {  
+            font-weight: bold;  
+            font-size: 1.2em;  
+        }  
+        .order-button {  
+            display: block;  
+            background-color: #f39c12;  
+            color: white;  
+            border: none;  
+            padding: 8px 20px;  
+            text-align: center;  
+            text-decoration: none;  
+            border-radius: 5px;  
+            cursor: pointer;  
+            margin-top: 10px;  
+            margin-left: auto;  
+            margin-right: 0;  
+            transition: background-color 0.3s;  
+        }  
+        .order-button:hover {  
+            background-color: #e67e22;  
+        }  
+    </style>  
+  </head>
+  <body>
+  <div x-data="setup()" x-init="$refs.loading.classList.add('hidden'); setColors(color);" :class="{ 'dark': isDark}">
       <div class="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
         <!-- Loading screen -->
         <div
@@ -460,5 +560,75 @@
                 </nav>
             </div>
         </header>
-        
+        <title>Product Listing</title>  
+ 
+ 
+
+        <div class="search-container">
+    <input type="text" class="search-box" id="search" placeholder="Search products..." onkeyup="filterProducts()">
+</div>
+
+<div class="container" id="productContainer">
+    <?php  
+    $products = [  
+        ["name" => "Arabica Brazil", "price" => "$0.75", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Arabica Brazil.png"],  
+        ["name" => "Arabica Ethiopia", "price" => "$0.75", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Arabica Brazil.png"],  
+        ["name" => "Robusta Laos", "price" => "$1.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Arabica Brazil.png"],  
+        ["name" => "Mango Puree", "price" => "$2.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Arabica Brazil.png"],  
+        ["name" => "Blueberry Puree", "price" => "$3.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Arabica Brazil.png"],  
+        ["name" => "Strawberry Puree", "price" => "$1.25", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Arabica Brazil.png"],  
+        ["name" => "Mojito Mint 1883", "price" => "$2.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Arabica Brazil.png"],  
+        ["name" => "Yogurt Powder (Beverity)", "price" => "$3.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Arabica Brazil.png"],  
+        ["name" => "Honey Coffee", "price" => "$1.25", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Arabica Brazil.png"],  
+        ["name" => "Blue Curacao 1883", "price" => "$2.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Arabica Brazil.png"],  
+        ["name" => "Milk Tea Sauce", "price" => "$3.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Arabica Brazil.png"],  
+        ["name" => "Arabica Laos", "price" => "$1.25", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Arabica Brazil.png"],  
+    ];  
+
+    foreach ($products as $product) {  
+        echo '<div class="product">';  
+        echo '<img src="' . htmlspecialchars($product['image']) . '" alt="' . htmlspecialchars($product['name']) . '" class="product-image">';  
+        echo '<h3 class="product-name">' . htmlspecialchars($product['name']) . '</h3>';  
+        echo '<p class="stock">' . htmlspecialchars($product['stock']) . '</p>';  
+        echo '<p class="price">' . htmlspecialchars($product['price']) . '</p>';  
+        echo '<div class="options">';  
+        echo '<input type="number" value="1" min="1">';  
+        echo '<select>';  
+        echo '<option>M</option>';  
+        echo '<option>L</option>';  
+        echo '<option>S</option>';  
+        echo '</select>';  
+        echo '</div>';  
+        echo '<button class="order-button">Order</button>';  
+        echo '</div>';  
+    }  
+    ?>  
+</div>
+
+<script>
+function filterProducts() {
+    let input = document.getElementById('search').value.toLowerCase();
+    let products = document.getElementsByClassName('product');
+    
+    for (let i = 0; i < products.length; i++) {
+        let productName = products[i].getElementsByClassName('product-name')[0].innerText.toLowerCase();
+        if (productName.includes(input)) {
+            products[i].style.display = "block";
+        } else {
+            products[i].style.display = "none";
+        }
+    }
+}
+</script>
+
+<style>
+
+</style>
+
+ 
     </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.bundle.min.js"></script>
+    <script src="../../Assets/js/waitslowly.js"></script>
+  </body>
+</html>
