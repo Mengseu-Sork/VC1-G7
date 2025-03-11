@@ -2,11 +2,10 @@
 require 'Router.php';
 require 'Controllers/UserController.php';
 require_once 'Controllers/DashboardController.php';
-<<<<<<<<< Temporary merge branch 1
+
 require_once 'Controllers/AdminController.php';
-=========
+
 require 'Controllers/ProductController.php';
->>>>>>>>> Temporary merge branch 2
 
 
 $routes = new Router();
