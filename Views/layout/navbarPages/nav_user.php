@@ -131,35 +131,17 @@
 
 
               <!-- Authentication links -->
-              <div x-data="{ isActive: false, open: false}">
-                <!-- active & hover classes 'bg-primary-100 dark:bg-primary' -->
-                <a
-                  href="#"
-                  @click="$event.preventDefault(); open = !open"
-                  class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                  :class="{'bg-primary-100 dark:bg-primary': isActive || open}"
-                  role="button"
-                  aria-haspopup="true"
-                  :aria-expanded="(open || isActive) ? 'true' : 'false'"
-                >
-                  <span aria-hidden="true">
-                    <svg
-                        class="w-5 h-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M12 6v6h4"
-                        />
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
-                      </svg>
-                  </span>
-                  <span class="ml-2 text-sm"> History </span>
+              <div x-data="{ open: false }">
+                <a href="../../Views/pages/history.php"
+                class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                :class="{ 'bg-primary-100 dark:bg-primary': open }"
+                role="button">
+              
+              <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6h4"/>
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+               </svg>
+               <span class="ml-2 text-sm">History</span>
                   <span aria-hidden="true" class="ml-auto">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
