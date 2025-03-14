@@ -18,7 +18,7 @@ class UserModel
     {
         $this->pdo->query("INSERT INTO users (FisrtName, LastName, email, password, image) VALUES (:FisrtName, :LastName, :email, :password, :image)", 
         [                
-            'FisrtName' => $data['FisrtName'],
+            'FirstName' => $data['FirstName'],
             'LastName' => $data['LastName'],
             'email' => $data['email'],
             'password' => $data['password'],
@@ -28,9 +28,11 @@ class UserModel
 
     function getUser($id)
     {
+        echo "Fetching user with ID: $id";
         $stmt = $this->pdo->query("SELECT * FROM users WHERE user_id = :user_id", ['user_id' => $id]);
         return $stmt->fetch();
     }
+    
     function updateUser($id, $data)
     {
         $this->pdo->query("UPDATE users SET  FisrtName = :FisrtName, LastName = :LastName, email = :email, password = :password, image = :image WHERE user_id = :user_id",

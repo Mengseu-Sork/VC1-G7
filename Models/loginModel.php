@@ -5,7 +5,7 @@ session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT); // Secure password hashing
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT); 
 
     // Check if email already exists
     $stmt = $pdo->query("SELECT * FROM users WHERE email = ? AND password = ?");
