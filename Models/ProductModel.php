@@ -12,6 +12,6 @@ class ProductModel {
         return $this->db->query("SELECT * FROM product")->fetchAll();
     }
 
-   
+  
 }
 ?>
