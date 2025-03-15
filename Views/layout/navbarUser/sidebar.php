@@ -19,7 +19,7 @@
                     </span>
                 </button>
                 <a
-                    href="#"
+                    href="../../Views/pages/products.php"
                     class="inline-block text-2xl font-bold tracking-wider uppercase text-primary-dark dark:text-light"
                 >
                 </a>
