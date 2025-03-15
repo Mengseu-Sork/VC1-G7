@@ -5,6 +5,6 @@ class DashboardController extends BaseController
 
     function index()
     {
-        $this->view('dashboard/list');
+        $this->view('Dashboard/list');
     }
 }

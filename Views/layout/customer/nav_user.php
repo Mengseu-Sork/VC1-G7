@@ -1,3 +1,4 @@
+
 <div x-data="setup()" x-init="$refs.loading.classList.add('hidden'); setColors(color);" :class="{ 'dark': isDark}">
       <div class="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
         <!-- Loading screen -->
@@ -13,13 +14,13 @@
           <div class="flex flex-col h-full">
             <nav aria-label="Main" class="flex-1 px-2 py-4 space-y-2 overflow-y-hidden hover:overflow-y-auto">
             <a href="home.php" class="inline-flex items-center text-2xl font-bold tracking-wider uppercase text-primary-dark dark:text-light">
-              <img src="../../Assets/images/FX12 LOGO.png" alt="San Cafe Logo" class="w-12 mr-4">
+              <img src="../../../Assets/images/FX12 LOGO.png" alt="San Cafe Logo" class="w-12 mr-4">
               <span class="font-bold text-3xl">SAN CAFE</span>
             </a>
 
             <div x-data="{ isActive: true, open: true}">
                 <a
-                  href="home.php"
+                  href="/"
                   @click="open = !open"
                   class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                   :class="{'bg-primary-100 dark:bg-primary': isActive || open}"
@@ -120,7 +121,7 @@
               <div x-data="{ isActive: false, open: false}">
                 <!-- active & hover classes 'bg-primary-100 dark:bg-primary' -->
                 <a
-                  href="hisory.php"
+                  href="views/pages/history.php"
                   @click="open = !open"
                   class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                   :class="{'bg-primary-100 dark:bg-primary': isActive || open}"
@@ -218,4 +219,4 @@
         </aside>
 
         <div class="flex-1 h-full overflow-x-hidden overflow-y-auto ">
-          <?php require_once 'sidebar.php'?>
+        

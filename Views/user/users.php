@@ -297,57 +297,44 @@
                     </svg>
                   </button>
                 </div>
-
-                <!-- User avatar button -->
-                <div class="relative ml-auto" x-data="{ open: false }">
-                  <button
-                    @click="open = !open"
-                    type="button"
-                    aria-haspopup="true"
-                    :aria-expanded="open ? 'true' : 'false'"
-                    class="block transition-opacity duration-200 rounded-full dark:opacity-75 dark:hover:opacity-100 focus:outline-none focus:ring dark:focus:opacity-100"
-                  >
-                    <span class="sr-only">User menu</span>
-                    <img class="w-10 h-10 rounded-full" src="../../Assets/images/pic5.jpg" alt="Ahmed Kamel" />
-                  </button>
-
-                  <!-- User dropdown menu -->
-                  <div
-                    x-show="open"
-                    x-transition:enter="transition-all transform ease-out"
-                    x-transition:enter-start="translate-y-1/2 opacity-0"
-                    x-transition:enter-end="translate-y-0 opacity-100"
-                    x-transition:leave="transition-all transform ease-in"
-                    x-transition:leave-start="translate-y-0 opacity-100"
-                    x-transition:leave-end="translate-y-1/2 opacity-0"
-                    @click.away="open = false"
-                    class="absolute right-0 w-48 py-1 origin-top-right bg-white rounded-md shadow-lg top-12 ring-1 ring-black ring-opacity-5 dark:bg-dark"
-                    role="menu"
-                    aria-orientation="vertical"
-                    aria-label="User menu"
-                  >
-                    <a
-                      href="admin/profile.php"
-                      role="menuitem"
-                      class="block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-primary"
-                    >
-                      Your Profile
-                    </a>
-                    <a
-                      href="#"
-                      role="menuitem"
-                      class="block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-primary"
-                    >
-                      Settings
-                    </a>
-                    <a
-                      href="#"
-                      role="menuitem"
-                      class="block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-primary"
-                    >
-                      Logout
-                    </a>
-                  </div>
-                </div>
               </nav>
+            </div>
+            </header>
+            <div class="container mx-auto mt-6 px-4">
+                <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
+                    <table class="w-full table-auto border-collapse">
+                        <thead>
+                            <tr class="bg-gray-800 text-white uppercase text-xs sm:text-sm leading-normal">
+                                <th class="py-3 px-6 text-left">ID</th>
+                                <th class="py-3 px-6 text-center">Profile</th>
+                                <th class="py-3 px-6 text-left">First Name</th>
+                                <th class="py-3 px-6 text-left">Last Name</th>
+                                <th class="py-3 px-6 text-left">Email</th>
+                                <th class="py-3 px-6 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-600 text-sm font-light">
+                            <?php foreach ($users as $index => $user): ?>
+                                <tr class="border-t border-gray-200 hover:bg-gray-100 transition duration-200">
+                                    <td class="py-3 px-6"><?= $index + 1 ?></td>
+                                    <td class="py-3 px-6 text-center">
+                                        <img src="/Assets/images/<?= $user['image'] ?>" alt="Profile Image" class="w-10 h-10 rounded-full object-cover">
+                                    </td>
+                                    <td class="py-3 px-6"><?= $user['FirstName'] ?></td>
+                                    <td class="py-3 px-6"><?= $user['LastName'] ?></td>
+                                    <td class="py-3 px-6"><?= $user['email'] ?></td>
+                                    <td class="py-3 px-6 text-center flex justify-center space-x-2">
+                                        <a href="/user/edit?id=<?= $user['id'] ?>" class="px-4 py-2 text-white bg-yellow-500 hover:bg-yellow-400 rounded-md transition duration-200">
+                                            Edit
+                                        </a>
+                                        <button type="button" class="px-4 py-2 text-white bg-red-500 hover:bg-red-400 rounded-md transition duration-200" data-bs-toggle="modal" data-bs-target="#user<?= $user['id'] ?>">
+                                            Delete
+                                        </button>
+                                        <a href="views/user/profile.php"></a>
+                                    </td>
+                                </tr>
+                            <?php endforeach ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>

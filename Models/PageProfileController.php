@@ -9,25 +9,7 @@ class UserModel
     {
         $this->pdo = new Database();
     }
-
-    function getUsers()
-    {
-        return $this->pdo->query('SELECT * FROM users ORDER BY id DESC')->fetchAll();
-    }
-
-    function createUser($data)
-    {
-        return $this->pdo->query("INSERT INTO users (image, FirstName, LastName, email, password) 
-                                  VALUES (:image, :FirstName, :LastName, :email, :password)", [
-            'image' => $data['image'],
-            'FirstName' => $data['FirstName'],
-            'LastName' => $data['LastName'],
-            'email' => $data['email'],
-            'password' => password_hash($data['password'], PASSWORD_DEFAULT),
-        ]);
-    }
-
-    function getUser($id)
+function getUser($id)
     {
         return $this->pdo->query("SELECT * FROM users WHERE id = :id", ['id' => $id])->fetch();
     }
@@ -54,5 +36,5 @@ class UserModel
         $sql = "SELECT users.id,users.image, users.FirstName, users.LastName, users.email, users.password FROM users WHERE users.id = :id";
         $stmt = $this->pdo->query($sql, [':id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
-    }   
+    }
 }

@@ -1,5 +1,5 @@
 <?php
-require_once 'Models/UserModel.php';
+require_once 'Models/PageProfileController.php';
 require_once 'BaseController.php';
 class UserController extends BaseController
 {
@@ -8,36 +8,10 @@ class UserController extends BaseController
     {
         $this->model =  new UserModel();
     }
-    function index()
-    {
-        $users = $this->model->getUsers();
-        $this->view('user/users',['users'=>$users]);
-    }
-
-    function create()
-    {
-        $this->view('user/create');
-    }
-
-    function store()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $data = [
-                'image' => $_POST['image'],
-                'FirstName' => $_POST['FirstName'],
-                'LastName' => $_POST['LastName'],
-                'email' => $_POST['email'],
-                'password' => $_POST['password'],
-            ];
-            $this->model->createUser($data);
-            $this->redirect('/user');
-        }
-    }
-
-    function edit($id)
+function edit($id)
     {
         $user = $this->model->getUser($id);
-        $this->view('user/edit',['user'=>$user]);
+        $this->view('pages/edit',['user'=>$user]);
     }
     function update($id)
     {
@@ -65,20 +39,13 @@ class UserController extends BaseController
             ];
 
             $this->model->updateUser($id, $data);
-            $this->redirect('/user');
+            $this->redirect('/pages');
         }
-    }
-
-
-    function destroy($id)
-    {
-        $this->model->deleteUser($id);
-        $this->redirect('/user');
     }
 
     function show($id)
     {
         $user = $this->model->show($id);
-        $this->view('user/detail', ['user' => $user]); 
+        $this->view('pages/detail', ['user' => $user]); 
     }
 }
