@@ -36,15 +36,5 @@ class Database
             die("Query Error: " . $e->getMessage());
         }
     }
-
-
-    // public function closeConnection()
-    // {
-    //     $this->pdo = null;
-    // }
-    public function getConnection()
-    {
-        return $this->pdo;
-    }
 }
 ?>
