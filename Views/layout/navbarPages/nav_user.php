@@ -53,7 +53,7 @@
               <div x-data="{ isActive: false, open: false }">
                 <!-- active classes 'bg-primary-100 dark:bg-primary' -->
                 <a
-                  href="#"
+                  href="../../Views/pages/products.php"
                   @click="$event.preventDefault(); open = !open"
                   class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                   :class="{ 'bg-primary-100 dark:bg-primary': isActive || open }"
@@ -98,15 +98,29 @@
                   </span>
                 </a>
                 <div x-show="open" class="mt-2 space-y-2 px-7" role="menu" aria-label="Layouts">
+                <a
+                      href="../../Views/pages/products.php"
+                      role="menuitem"
+                      class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
+                    >
+                    All Products
+                    </a>
                     <a
-                      href="#"
+                      href="../../Views/pages/drinks.php"
+                      role="menuitem"
+                      class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
+                    >
+                    Drinks
+                    </a>
+                    <a
+                      href="../../Views/pages/nut_products.php"
                       role="menuitem"
                       class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
                     >
                     Nut Products
                     </a>
                     <a
-                      href="#"
+                      href="../../Views/pages/flour_products.php"
                       role="menuitem"
                       class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
                     >
@@ -117,35 +131,17 @@
 
 
               <!-- Authentication links -->
-              <div x-data="{ isActive: false, open: false}">
-                <!-- active & hover classes 'bg-primary-100 dark:bg-primary' -->
-                <a
-                  href="#"
-                  @click="$event.preventDefault(); open = !open"
-                  class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                  :class="{'bg-primary-100 dark:bg-primary': isActive || open}"
-                  role="button"
-                  aria-haspopup="true"
-                  :aria-expanded="(open || isActive) ? 'true' : 'false'"
-                >
-                  <span aria-hidden="true">
-                    <svg
-                        class="w-5 h-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M12 6v6h4"
-                        />
-                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
-                      </svg>
-                  </span>
-                  <span class="ml-2 text-sm"> History </span>
+              <div x-data="{ open: false }">
+                <a href="../../Views/pages/history.php"
+                class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                :class="{ 'bg-primary-100 dark:bg-primary': open }"
+                role="button">
+              
+              <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6h4"/>
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+               </svg>
+               <span class="ml-2 text-sm">History</span>
                   <span aria-hidden="true" class="ml-auto">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
@@ -239,7 +235,7 @@
                     </span>
                 </button>
                 <a
-                    href="#"
+                    href="../../Views/pages/products.php"
                     class="inline-block text-2xl font-bold tracking-wider uppercase text-primary-dark dark:text-light"
                 >
                 </a>
@@ -460,4 +456,5 @@
                 </nav>
             </div>
         </header>
-    </div>
+
+ 

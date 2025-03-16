@@ -18,6 +18,7 @@ class UserController extends BaseController
         $this->view('user/create');
     }
 
+
     function store()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
