@@ -330,7 +330,7 @@
                                         <button type="button" class="px-4 py-2 text-white bg-red-500 hover:bg-red-400 rounded-md transition duration-200" data-bs-toggle="modal" data-bs-target="#user<?= $user['id'] ?>">
                                             Delete
                                         </button>
-                                        <a href="views/user/profile.php"></a>
+                                        <?php require 'delete.php'; ?>
                                     </td>
                                 </tr>
                             <?php endforeach ?>
