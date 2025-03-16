@@ -8,7 +8,7 @@ class Database
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $dbname = "coffeeshop";
+        $dbname = "test";
 
         try {
 
@@ -38,10 +38,13 @@ class Database
     }
 
 
-    public function closeConnection()
+    // public function closeConnection()
+    // {
+    //     $this->pdo = null;
+    // }
+    public function getConnection()
     {
-        $this->pdo = null;
+        return $this->pdo;
     }
-
 }
 ?>
