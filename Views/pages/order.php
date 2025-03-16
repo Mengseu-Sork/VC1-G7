@@ -1,5 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>SAN CAFE</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../Assets/css/tailwind.css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/alpine-collective/alpine-magic-helpers@0.5.x/dist/component.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            background-color: #f8f8f8;  
+            margin: 0;  
+            padding: 20px;  
+        }  
 
-<<<<<<< HEAD:Views/layout/navbarPages/nav_user.php
+        .search-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .search-box {
+            width: 50%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .container {  
+            display: flex;  
+            flex-wrap: wrap;  
+            justify-content: space-between;  
+            max-width: 1200px;  
+            margin: auto;  
+            gap: 20px;
+        }
+
+.product {
+    width: 200px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    /* text-align: center; */
+}
+
+.product img {
+    width: 30%;
+    height: auto;
+    border-radius: 10px;
+}
+        .product {  
+            background: white;  
+            border: 1px solid #ddd;  
+            border-radius: 8px;  
+            padding: 16px;  
+            margin: 10px;  
+            flex: 1 1 calc(30% - 20px);  
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);  
+            transition: transform 0.2s;  
+        }  
+        .product:hover {  
+            transform: scale(1.02);  
+        }  
+        .product h3 {  
+            font-size: 1.2em;  
+            margin: 0 0 10px;  
+        }  
+        .stock {  
+            color: green;  
+            font-weight: bold;  
+        }  
+        .price {  
+            font-weight: bold;  
+            font-size: 1.2em;  
+        }  
+        .order-button {  
+            display: block;  
+            background-color: #f39c12;  
+            color: white;  
+            border: none;  
+            padding: 8px 20px;  
+            text-align: center;  
+            text-decoration: none;  
+            border-radius: 5px;  
+            cursor: pointer;  
+            margin-top: 10px;  
+            margin-left: auto;  
+            margin-right: 0;  
+            transition: background-color 0.3s;  
+        }  
+        .order-button:hover {  
+            background-color: #e67e22;  
+        }  
+    </style>  
+  </head>
+  <body>
+  <div x-data="setup()" x-init="$refs.loading.classList.add('hidden'); setColors(color);" :class="{ 'dark': isDark}">
+      <div class="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
+        <!-- Loading screen -->
+        <div
+          x-ref="loading"
+          class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-white bg-primary-darker"
+        >
+          Loading.....
+        </div>
+
         <!-- Sidebar -->
         <aside class="flex-shrink-0 hidden w-64 bg-white border-r dark:border-primary-darker dark:bg-darker md:block">
           <div class="flex flex-col h-full">
@@ -45,7 +153,7 @@
               <div x-data="{ isActive: false, open: false }">
                 <!-- active classes 'bg-primary-100 dark:bg-primary' -->
                 <a
-                  href="../../Views/pages/products.php"
+                  href="#"
                   @click="$event.preventDefault(); open = !open"
                   class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                   :class="{ 'bg-primary-100 dark:bg-primary': isActive || open }"
@@ -123,17 +231,35 @@
 
 
               <!-- Authentication links -->
-              <div x-data="{ open: false }">
-                <a href="../../Views/pages/history.php"
-                class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                :class="{ 'bg-primary-100 dark:bg-primary': open }"
-                role="button">
-              
-              <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6h4"/>
-                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-               </svg>
-               <span class="ml-2 text-sm">History</span>
+              <div x-data="{ isActive: false, open: false}">
+                <!-- active & hover classes 'bg-primary-100 dark:bg-primary' -->
+                <a
+                  href="#"
+                  @click="$event.preventDefault(); open = !open"
+                  class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                  :class="{'bg-primary-100 dark:bg-primary': isActive || open}"
+                  role="button"
+                  aria-haspopup="true"
+                  :aria-expanded="(open || isActive) ? 'true' : 'false'"
+                >
+                  <span aria-hidden="true">
+                    <svg
+                        class="w-5 h-5"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M12 6v6h4"
+                        />
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                      </svg>
+                  </span>
+                  <span class="ml-2 text-sm"> History </span>
                   <span aria-hidden="true" class="ml-auto">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
@@ -209,10 +335,6 @@
         
         <header class="relative bg-white dark:bg-darker">
         <div class="flex items-center justify-between p-2 border-b dark:border-primary-darker">
-=======
-    <header class="flex-1 relative bg-white dark:bg-darker">
-            <div class="flex items-center justify-between p-2 border-b dark:border-primary-darker">
->>>>>>> 4e9b5b4c2ef93442db3c7deb023a72f78626809c:Views/layout/navbarUser/sidebar.php
                 <button
                     @click="isMobileMainMenuOpen = !isMobileMainMenuOpen"
                     class="p-1 transition-colors duration-200 rounded-md text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark md:hidden focus:outline-none focus:ring"
@@ -408,57 +530,97 @@
                         role="menu"
                         aria-orientation="vertical"
                         aria-label="User menu"
-                      >
+                    >
                       <div class="px-4 py-2 text-sm text-gray-700 dark:text-light text-center flex flex-col items-center">
                           <img class="w-10 h-10 rounded-full" src="../../../Assets/images/pic5.jpg" alt="User Profile" />
                           <p class="font-semibold mt-2">MENGSEU SORK</p>
                       </div>
-                      <ul class="mt-2 ml-4 space-y-2">
-                        <li class="flex items-center gap-3 p-1 text-gray-700 hover:text-blue-500 cursor-pointer">
+                      <ul class="mt-4 space-y-3">
+                        <li class="flex items-center gap-3 p-2 text-gray-700 cursor-pointer hover:text-blue-500 transition">
                           <span class="text-blue-500">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14c3.313 0 6-2.686 6-6S15.313 2 12 2 6 4.686 6 8s2.687 6 6 6zM12 14c-4.418 0-8 2.686-8 6v2h16v-2c0-3.314-3.582-6-8-6z"></path>
                             </svg>
                           </span>
-                          <a  class="block py-2 text-sm text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="../user/profile_user.php">Your Profile</a>
+                          <a class="block py-2 text-sm text-gray-700 transition-colors dark:text-light dark:hover:bg-primary" href="../user/profile_user.php">Your Profile</a>
                         </li>
-                        <li class="flex items-center gap-3 p-1 text-gray-700 hover:text-blue-500 cursor-pointer">
+                        <li class="flex items-center gap-3 p-2 text-gray-700 cursor-pointer hover:text-blue-500 transition">
                           <span class="text-green-500">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 4l4 4-1.414 1.414L14.586 5.414 16 4zM4 14v6h6l8-8-6-6-8 8z"></path>
                             </svg>
                           </span>
-                          <a  class="block py-2 text-sm text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="../user/edit.php">Edit Profile</a>
+                          <a class="block py-2 text-sm text-gray-700 transition-colors dark:text-light dark:hover:bg-primary" href="../user/edit.php">Edit Profile</a>
                         </li>
-                        <li class="flex items-center gap-3 p-1 text-gray-700 hover:text-blue-500 cursor-pointer">
+                        <li class="flex items-center gap-3 p-2 text-gray-700 cursor-pointer hover:text-blue-500 transition">
                           <span class="text-yellow-500">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m-8-8h16"></path>
                             </svg>
                           </span>
-                          <a  class="block py-2 text-sm text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="">Add new profile +</a>
+                          <a class="block py-2 text-sm text-gray-700 transition-colors dark:text-light dark:hover:bg-primary" href="">Add new profile +</a>
                         </li>
-                        <li class="flex items-center gap-3 p-1 text-gray-700 hover:text-blue-500 cursor-pointer">
+                        <li class="flex items-center gap-3 p-2 text-red-500 cursor-pointer hover:text-red-600 transition">
                           <span class="text-red-500">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                           </span>
-                          <a  class="block py-2 text-sm text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="">Logout</a>
+                          <a href="">Logout</a>
                         </li>
                       </ul>
                     </div>
                   </div>
                 </nav>
             </div>
-<<<<<<< HEAD:Views/layout/navbarPages/nav_user.php
         </header>
 
-<<<<<<< HEAD:Views/layout/navbarUser/sidebar.php
-    </div>
-=======
-    </header>
->>>>>>> 4e9b5b4c2ef93442db3c7deb023a72f78626809c:Views/layout/navbarUser/sidebar.php
-=======
- 
->>>>>>> 6775f3bde8e93a51789f312ee394c1774a909651:Views/layout/navbarPages/nav_user.php
+<link rel="stylesheet" href="/Assets/css/order.css">
+<title>Product Listing</title>
+
+<div class="search-container">
+    <input type="text" class="search-box" id="search" placeholder="Search products..." onkeyup="filterProducts()">
+</div>
+
+<div class="container" id="productContainer">
+    <?php  
+    $products = [  
+        ["name" => "Arabica Brazil", "price" => 0.75, "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Arabica Brazil.png"],  
+        ["name" => "Arabica Ethiopia", "price" => 0.75, "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Arabica Ethiopia.png"],  
+        ["name" => "Baych Bleand", "price" => 1.00, "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Baych_bleand.jpg"],  
+    ];  
+
+    foreach ($products as $product) {  
+        echo '<div class="product">';  
+        echo '<img src="' . htmlspecialchars($product['image']) . '" alt="' . htmlspecialchars($product['name']) . '" class="product-image">';  
+        echo '<h3 class="product-name">' . htmlspecialchars($product['name']) . '</h3>';  
+        echo '<p class="stock">' . htmlspecialchars($product['stock']) . '</p>';  
+        echo '<p class="price">$' . htmlspecialchars($product['price']) . '</p>';  
+        echo '<div class="options">';  
+        echo '<input type="number" class="quantity" value="1" min="1">';  
+        echo '<select class="size">';  
+        echo '<option value="M">M</option>';  
+        echo '<option value="L">L</option>';  
+        echo '<option value="S">S</option>';  
+        echo '</select>';  
+        echo '</div>';  
+        echo '<button class="order-button" onclick="addToOrder(this, ' . $product['price'] . ')">Order</button>';  
+        echo '</div>';  
+    }  
+    ?>  
+</div>
+
+<div id="orderForm" style="display: none;" class="order-form">
+    <h2>Order List</h2>
+    <div id="orderList"></div>
+    <p>Total Price: $<span id="totalPrice">0.00</span></p>
+      <button class="btn1" onclick="submitOrder()">Submit Order</button>
+      <button class="btn2" onclick="closeOrderForm()">Cancel</button>
+</div>
+
+
+<script src="/Assets/js/order.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.bundle.min.js"></script>
+    <script src="../../Assets/js/waitslowly.js"></script>
+  </body>
+</html>

@@ -28,6 +28,8 @@ $routes->delete('/user/delete', [UserController::class, 'destroy']);
 
 $routes->get('/products', [ProductController::class, 'index']);
 $routes->get('/products/product_list', [ProductController::class, 'index']);
+$routes->get('/products/product_nut', [ProductController::class, 'nut']);
+$routes->get('/products/product_flour', [ProductController::class, 'flour']);
 $routes->get('/products/create', [UserController::class, 'create']);
 $routes->delete('/products/delete', [ProductController::class, 'delete']);
 
