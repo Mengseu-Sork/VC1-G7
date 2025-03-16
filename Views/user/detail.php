@@ -1,15 +1,10 @@
 <?php
-// session_start();
-// if (!isset($_SESSION["user"])) {
-//     header("Location: /signin");
-//     exit();
-// }
-
 require_once __DIR__ . '/../layout/customer/header_user.php';
 require_once __DIR__ . '/../layout/customer/nav_user.php';
 require_once __DIR__ . '/../layout/customer/footer_user.php';
+
 ?>
-    <header class="flex-1 relative bg-white dark:bg-darker">
+                <header class="flex-1 relative bg-white dark:bg-darker">
                 <div class="flex items-center justify-between p-2 border-b dark:border-primary-darker">
                     <button
                         @click="isMobileMainMenuOpen = !isMobileMainMenuOpen"
@@ -240,3 +235,22 @@ require_once __DIR__ . '/../layout/customer/footer_user.php';
                     </nav>
                 </div>
         </header>
+        <div class="mx-auto p-6">
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+                <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
+                    <div class="shadow-lg rounded-lg p-6 transition duration-300 border-2 dark:border-primary-darker" :style="{ backgroundColor: bgColor }">
+                    <img src="../../Assets/images/pic5.jpg" alt="Profile Picture" class="w-40 h-40 rounded-full mx-auto mb-4">
+                    <div class="mb-4">
+                        <span class="block text-center text-gray-700 text-3xl dark:text-light font-medium">Mengseu Sork</span>
+                    </div>
+                    <div class="mb-4">
+                        <span class="block px-20 text-center text-gray-700 text-l dark:text-light font-medium">Social media has drastically changed the way photographers present their work. Platforms like Instagram, Pinterest, and TikTok have made it easier to reach a global audience and connect with clients directly. However, it also raises questions about the value of photos, the pressure to conform to trends, and the impact on creativity.</span>
+                    </div>
+                    <div class="flex justify-end space-x-4">
+                        <a href="/" class="px-4 py-2 text-white bg-red-500 hover:bg-red-400 rounded-md transition duration-200">Back</a>
+                        <a href="#" class="px-4 py-2 text-white bg-blue-500 hover:bg-red-400 rounded-md transition duration-200">Edit</a>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>

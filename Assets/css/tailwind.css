@@ -268,6 +268,25 @@ button,
   -webkit-appearance: button;
 }
 
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  color: #6c757d;
+  text-decoration: none;
+}
+.sidebar-item:hover {
+  color: #0056b3;
+}
+.icon {
+  font-size: 20px;
+  margin-right: 10px;
+} 
+.icon1{
+  font-size: 25px;
+  margin-right: 10px;
+}
+
 /**
 Remove the inner border and padding in Firefox.
 */
