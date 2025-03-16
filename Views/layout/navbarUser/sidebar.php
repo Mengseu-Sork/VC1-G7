@@ -1,13 +1,5 @@
-<div x-data="setup()" x-init="$refs.loading.classList.add('hidden'); setColors(color);" :class="{ 'dark': isDark}">
-      <div class="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
-        <!-- Loading screen -->
-        <div
-          x-ref="loading"
-          class="fixed inset-0 z-50 flex items-center justify-center text-2xl font-semibold text-white bg-primary-darker"
-        >
-          Loading.....
-        </div>
 
+<<<<<<< HEAD:Views/layout/navbarPages/nav_user.php
         <!-- Sidebar -->
         <aside class="flex-shrink-0 hidden w-64 bg-white border-r dark:border-primary-darker dark:bg-darker md:block">
           <div class="flex flex-col h-full">
@@ -217,6 +209,10 @@
         
         <header class="relative bg-white dark:bg-darker">
         <div class="flex items-center justify-between p-2 border-b dark:border-primary-darker">
+=======
+    <header class="flex-1 relative bg-white dark:bg-darker">
+            <div class="flex items-center justify-between p-2 border-b dark:border-primary-darker">
+>>>>>>> 4e9b5b4c2ef93442db3c7deb023a72f78626809c:Views/layout/navbarUser/sidebar.php
                 <button
                     @click="isMobileMainMenuOpen = !isMobileMainMenuOpen"
                     class="p-1 transition-colors duration-200 rounded-md text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark md:hidden focus:outline-none focus:ring"
@@ -412,49 +408,53 @@
                         role="menu"
                         aria-orientation="vertical"
                         aria-label="User menu"
-                    >
+                      >
                       <div class="px-4 py-2 text-sm text-gray-700 dark:text-light text-center flex flex-col items-center">
                           <img class="w-10 h-10 rounded-full" src="../../../Assets/images/pic5.jpg" alt="User Profile" />
                           <p class="font-semibold mt-2">MENGSEU SORK</p>
                       </div>
-                      <ul class="mt-4 space-y-3">
-                        <li class="flex items-center gap-3 p-2 text-gray-700 cursor-pointer hover:text-blue-500 transition">
+                      <ul class="mt-2 ml-4 space-y-2">
+                        <li class="flex items-center gap-3 p-1 text-gray-700 hover:text-blue-500 cursor-pointer">
                           <span class="text-blue-500">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14c3.313 0 6-2.686 6-6S15.313 2 12 2 6 4.686 6 8s2.687 6 6 6zM12 14c-4.418 0-8 2.686-8 6v2h16v-2c0-3.314-3.582-6-8-6z"></path>
                             </svg>
                           </span>
-                          <a class="block py-2 text-sm text-gray-700 transition-colors dark:text-light dark:hover:bg-primary" href="../user/profile_user.php">Your Profile</a>
+                          <a  class="block py-2 text-sm text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="../user/profile_user.php">Your Profile</a>
                         </li>
-                        <li class="flex items-center gap-3 p-2 text-gray-700 cursor-pointer hover:text-blue-500 transition">
+                        <li class="flex items-center gap-3 p-1 text-gray-700 hover:text-blue-500 cursor-pointer">
                           <span class="text-green-500">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 4l4 4-1.414 1.414L14.586 5.414 16 4zM4 14v6h6l8-8-6-6-8 8z"></path>
                             </svg>
                           </span>
-                          <a class="block py-2 text-sm text-gray-700 transition-colors dark:text-light dark:hover:bg-primary" href="../user/edit.php">Edit Profile</a>
+                          <a  class="block py-2 text-sm text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="../user/edit.php">Edit Profile</a>
                         </li>
-                        <li class="flex items-center gap-3 p-2 text-gray-700 cursor-pointer hover:text-blue-500 transition">
+                        <li class="flex items-center gap-3 p-1 text-gray-700 hover:text-blue-500 cursor-pointer">
                           <span class="text-yellow-500">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m-8-8h16"></path>
                             </svg>
                           </span>
-                          <a class="block py-2 text-sm text-gray-700 transition-colors dark:text-light dark:hover:bg-primary" href="">Add new profile +</a>
+                          <a  class="block py-2 text-sm text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="">Add new profile +</a>
                         </li>
-                        <li class="flex items-center gap-3 p-2 text-red-500 cursor-pointer hover:text-red-600 transition">
+                        <li class="flex items-center gap-3 p-1 text-gray-700 hover:text-blue-500 cursor-pointer">
                           <span class="text-red-500">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                           </span>
-                          <a href="">Logout</a>
+                          <a  class="block py-2 text-sm text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="">Logout</a>
                         </li>
                       </ul>
                     </div>
                   </div>
                 </nav>
             </div>
+<<<<<<< HEAD:Views/layout/navbarPages/nav_user.php
         </header>
 
  
+=======
+    </header>
+>>>>>>> 4e9b5b4c2ef93442db3c7deb023a72f78626809c:Views/layout/navbarUser/sidebar.php
