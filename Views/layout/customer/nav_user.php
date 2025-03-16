@@ -119,7 +119,6 @@
 
               <!-- Authentication links -->
               <div x-data="{ isActive: false, open: false}">
-                <!-- active & hover classes 'bg-primary-100 dark:bg-primary' -->
                 <a
                   href="../pages/history.php"
                   @click="open = !open"
