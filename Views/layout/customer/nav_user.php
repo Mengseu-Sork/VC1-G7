@@ -121,7 +121,7 @@
               <div x-data="{ isActive: false, open: false}">
                 <!-- active & hover classes 'bg-primary-100 dark:bg-primary' -->
                 <a
-                  href="views/pages/history.php"
+                  href="../pages/history.php"
                   @click="open = !open"
                   class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                   :class="{'bg-primary-100 dark:bg-primary': isActive || open}"
@@ -153,11 +153,10 @@
                   </span>
                 </a>
               </div>
-
               <!-- Layouts links -->
               <div x-data="{ isActive: false, open: false}">
                 <a
-                    href="/views/auth/signup.php"
+                    href="../auth/signup.php"
                     @click="open = !open"
                     class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                     :class="{'bg-primary-100 dark:bg-primary': isActive || open}"
@@ -166,23 +165,9 @@
                     :aria-expanded="(open || isActive) ? 'true' : 'false'"
                   >
                     <span aria-hidden="true">
-                      <svg
-                          class="w-5 h-5"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M12 2a4 4 0 00-4 4v4h8V6a4 4 0 00-4-4z"
-                          />
-                          <rect x="6" y="10" width="12" height="12" rx="2" />
-                        </svg>
+                      <i class="fas fa-lock"></i>
                     </span>
-                    <span class="ml-2 text-sm"> Admin Login </span>
+                    <span class="ml-3 text-sm"> Admin Login </span>
                     <span aria-hidden="true" class="ml-auto">
                     </span>
                   </a>

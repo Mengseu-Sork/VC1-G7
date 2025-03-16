@@ -1,4 +1,5 @@
-    <header class="relative bg-white dark:bg-darker">
+   
+   <header class="relative bg-white dark:bg-darker">
         <div class="flex items-center justify-between p-2 border-b dark:border-primary-darker">
             <button
                 @click="isMobileMainMenuOpen = !isMobileMainMenuOpen"
@@ -204,6 +205,16 @@
                     type="email" 
                     name="email" 
                     value="<?= $user['email'] ?>" 
+                    class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 font-semibold mb-2">Email:</label>
+                <input 
+                    type="password" 
+                    name="password" 
+                    value="<?= $user['password'] ?>" 
                     class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
             </div>

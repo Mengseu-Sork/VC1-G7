@@ -15,8 +15,6 @@ $routes->get('/', [HomeController::class, 'index']);
 
 // $routes->get('/signin', [AuthController::class, 'login']);
 
-
-
 // dashboard
 $routes->get('/Dashboard', [DashboardController::class, 'index']);
 

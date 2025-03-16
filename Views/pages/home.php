@@ -175,8 +175,7 @@ require_once __DIR__ . '/../layout/customer/footer_user.php';
                             />
                         </svg>
                         </button>
-
-                        <!-- User avatar button -->
+                                                <!-- User avatar button -->
                       <div class="relative" x-data="{ open: false }">
                         <button
                             @click="open = !open; $nextTick(() => { if(open){ $refs.userMenu.focus() } })"
@@ -213,34 +212,25 @@ require_once __DIR__ . '/../layout/customer/footer_user.php';
                           </div>
                           <ul class="mt-2 ml-4 space-y-2">
                             <li class="flex items-center gap-3 p-1 text-gray-700 hover:text-blue-500 cursor-pointer">
-                              <span class="text-blue-500">
-                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14c3.313 0 6-2.686 6-6S15.313 2 12 2 6 4.686 6 8s2.687 6 6 6zM12 14c-4.418 0-8 2.686-8 6v2h16v-2c0-3.314-3.582-6-8-6z"></path>
-                                </svg>
+                                <i class="fas fa-user"></i>
                               </span>
                               <a class="block py-2 text-sm text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 nav-link" href="views/user/detail.php">Your Profile</a>
                             </li>
                             <li class="flex items-center gap-3 p-1 text-gray-700 hover:text-blue-500 cursor-pointer">
                               <span class="text-green-500">
-                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 4l4 4-1.414 1.414L14.586 5.414 16 4zM4 14v6h6l8-8-6-6-8 8z"></path>
-                                </svg>
+                                <i class="fas fa-pencil-alt"></i>
                               </span>
                               <a  class="block py-2 text-sm text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="../user/edit.php">Edit Profile</a>
                             </li>
                             <li class="flex items-center gap-3 p-1 text-gray-700 hover:text-blue-500 cursor-pointer">
                               <span class="text-yellow-500">
-                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m-8-8h16"></path>
-                                </svg>
+                                <i class="fas fa-user-plus"></i>
                               </span>
-                              <a  class="block py-2 text-sm text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="">Add new profile +</a>
+                              <a  class="block py-2 text-sm text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="">Add new account</a>
                             </li>
                             <li class="flex items-center gap-3 p-1 text-gray-700 hover:text-blue-500 cursor-pointer">
                               <span class="text-red-500">
-                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                </svg>
+                                <i class="fas fa-sign-out-alt"></i>
                               </span>
                               <a  class="block py-2 text-sm text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="">Logout</a>
                             </li>

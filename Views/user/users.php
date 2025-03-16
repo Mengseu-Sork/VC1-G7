@@ -299,7 +299,7 @@
                 </div>
               </nav>
             </div>
-            </header>
+</header>
             <div class="container mx-auto mt-6 px-4">
                 <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
                     <table class="w-full table-auto border-collapse">
