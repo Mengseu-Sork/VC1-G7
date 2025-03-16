@@ -1,7 +1,6 @@
 <?php
-require_once '../layout/navbarPages/header_user.php';
-require_once '../layout/navbarPages/nav_user.php';
-
+require_once (__DIR__ . '/../layout/navbarUser/header_user.php');
+require_once (__DIR__ . '/../layout/navbarUser/nav_user.php');
 ?>
  
 <h1>Nut Products</h1>
@@ -63,6 +62,7 @@ function filterProducts() {
  
 
 
+
 <?php
-require_once '../layout/navbarPages/footer_user.php';
+require_once (__DIR__ . '/../layout/navbarUser/footer_user.php');
 ?>
