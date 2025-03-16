@@ -157,7 +157,7 @@
               <!-- Layouts links -->
               <div x-data="{ isActive: false, open: false}">
                 <a
-                    href="#"
+                    href="/views/auth/signup.php"
                     @click="open = !open"
                     class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                     :class="{'bg-primary-100 dark:bg-primary': isActive || open}"

@@ -327,10 +327,36 @@
                                         <a href="/user/edit?id=<?= $user['id'] ?>" class="px-4 py-2 text-white bg-yellow-500 hover:bg-yellow-400 rounded-md transition duration-200">
                                             Edit
                                         </a>
-                                        <button type="button" class="px-4 py-2 text-white bg-red-500 hover:bg-red-400 rounded-md transition duration-200" data-bs-toggle="modal" data-bs-target="#user<?= $user['id'] ?>">
+                                        <button onclick="openModal('deleteUserModal<?= $user['id'] ?>')"
+                                            class="px-4 py-2 text-white bg-red-500 hover:bg-red-400 rounded-md transition duration-200">
                                             Delete
                                         </button>
-                                        <?php require 'delete.php'; ?>
+
+                                        <!-- Delete Confirmation Modal -->
+                                        <div id="deleteUserModal<?= $user['id'] ?>" 
+                                            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+                                            <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+                                                <h2 class="text-lg font-semibold">Delete User</h2>
+                                                <p class="mt-4">Are you sure you want to delete this user?</p>
+
+                                                <div class="mt-6 flex justify-end space-x-2">
+                                                    <!-- Cancel Button -->
+                                                    <button onclick="closeModal('deleteUserModal<?= $user['id'] ?>')"
+                                                        class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 transition duration-200">
+                                                        Cancel
+                                                    </button>
+
+                                                    <!-- Confirm Delete -->
+                                                    <form action="/user/delete?id=<?= $user['id'] ?>" method="POST">
+                                                        <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                                                        <button type="submit"
+                                                            class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
+                                                            Delete
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach ?>

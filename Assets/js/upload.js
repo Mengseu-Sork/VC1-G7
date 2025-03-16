@@ -10,3 +10,11 @@ function previewImage(event) {
         reader.readAsDataURL(file);
     }
 }
+
+function openModal(id) {
+    document.getElementById(id).classList.remove("hidden");
+    }
+
+function closeModal(id) {
+    document.getElementById(id).classList.add("hidden");
+    }
