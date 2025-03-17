@@ -8,7 +8,7 @@ class Database
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $dbname = "test";
+        $dbname = "coffeeshop";
 
         try {
 

@@ -134,16 +134,8 @@
               <!-- Authentication links -->
               <div x-data="{ isActive: false, open: false}">
                 <a
-<<<<<<< HEAD
-<<<<<<< HEAD:Views/layout/customer/nav_user.php
-                  href="../pages/history.php"
-=======
-                  href="history.php"
->>>>>>> 5422fc5bc23e3e0474d1f45e2f4b77a0b5497c64:Views/layout/navbarUser/nav_user.php
-=======
                   href="../views/pages/history.php"
                   href="history.php"
->>>>>>> 9c87117459c9cd58d7cfa322f785ec2ce58e0c93
                   @click="open = !open"
                   class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                   :class="{'bg-primary-100 dark:bg-primary': isActive || open}"

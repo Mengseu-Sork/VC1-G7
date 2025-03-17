@@ -59,5 +59,16 @@ class ProductController extends BaseController {
     function edit(){
         $this->view('Products/edit');
     }
+
+
+    public function delete()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
+            $id = $_POST['id'];
+            $this->model->deleteProduct($id);
+            header("Location: /Product_list");
+            exit();
+        }
+    }
 }
 ?>
