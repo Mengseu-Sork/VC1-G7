@@ -9,13 +9,6 @@ class BaseController
         $content = ob_get_clean();
         require_once 'views/layout.php';
     }
-<<<<<<< HEAD
-    public function redirect($uri)
-    {
-        header('Location:' . $uri);
-        exit();
-    }  
-=======
 
     function redirect($uri)
     {
@@ -28,5 +21,4 @@ class BaseController
         echo json_encode($data);
     }
 
->>>>>>> e37aa4e4f99a93e0efb02bbbda6050b8ff1b8e42
 }

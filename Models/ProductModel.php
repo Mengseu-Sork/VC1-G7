@@ -17,12 +17,6 @@ class ProductModel {
     }
 
     // Add a product (example function)
-<<<<<<< HEAD
-    function addProduct($name, $price) {
-        $query = "INSERT INTO product (name, price) VALUES (?, ?)";
-        $stmt = $this->db->query($query);
-        return $stmt->execute([$name, $price]);
-=======
     function createProduct($data) {
         $stmt = "INSERT INTO product (product_name, price, type, date, image)
                  VALUES (:product_name, :price, :type, :date, :image)";
@@ -49,7 +43,6 @@ class ProductModel {
             'image' => $data['image'],
             'id' => $data['id']
         ]);
->>>>>>> e37aa4e4f99a93e0efb02bbbda6050b8ff1b8e42
     }
 }
 ?>
