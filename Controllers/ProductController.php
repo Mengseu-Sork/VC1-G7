@@ -1,7 +1,8 @@
 <?php
 // If BaseController exists
 // require_once ' Controllers/BaseController.php';
-require_once 'Models/ProductModel.php';
+require_once './Models/ProductModel.php';
+require_once 'BaseController.php';
 
 class ProductController extends BaseController {
     private $model;
@@ -56,8 +57,27 @@ class ProductController extends BaseController {
             $this->redirect('/products');
         }
     }
-    function edit(){
-        $this->view('Products/edit');
+    function edit($id){
+        $product = $this->model->getProductById($id);
+        $this->view('Products/edite', ['product' => $product]);
+    }
+    function update(){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $data = [
+                'product_name' => $_POST['name'],
+                'price' => $_POST['price'],
+                'type' => $_POST['type'],
+                'date' => $_POST['date-start'],
+                'image' => $_POST['image'],
+            ];
+            $this->model->updateProduct($data);
+            $this->redirect('/products');
+        }
+    }
+    function delete($id)
+    {
+        $this->model->deleteProduct($id);
+        $this->redirect('/products');
     }
 }
 ?>

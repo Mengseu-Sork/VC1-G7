@@ -81,5 +81,20 @@ $products = $result->fetchAll();
             <button class="add-product-button">Add Product</button>
         </a>
     </div>
+    <script>
+        function filterProducts() {
+            var searchQuery = document.getElementById('search-input').value.toLowerCase();
+            var rows = document.querySelectorAll('.product-list tbody tr');
+
+            rows.forEach(function(row) {
+                var productName = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
+                if (productName.includes(searchQuery)) {
+                    row.style.display = ''; 
+                } else {
+                    row.style.display = 'none'; 
+                }
+            });
+        }
+    </script>
 </body>
 </html>

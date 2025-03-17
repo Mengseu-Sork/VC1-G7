@@ -44,5 +44,9 @@ class ProductModel {
             'id' => $data['id']
         ]);
     }
+    function deleteProduct($id){
+        $stmt = "DELETE FROM products WHERE id = :id";
+        $this->db->query($stmt, ['id' => $id]);
+    }
 }
 ?>

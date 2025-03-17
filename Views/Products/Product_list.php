@@ -1,18 +1,21 @@
 <?php
 $db = new Database();
-$query = "SELECT * FROM product"; 
+$query = "SELECT * FROM product";
 $result = $db->query($query);
 $products = $result->fetchAll();
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Management Dashboard</title>
     <link rel="stylesheet" href="../Assets/css/product_list.css">
+    <script src="searchProduct.js" defer></script>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -36,9 +39,9 @@ $products = $result->fetchAll();
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Image</th> 
+                    <th>Image</th>
                     <th>Product Name</th>
-                    <th>Price</th> 
+                    <th>Price</th>
                     <th>Type</th>
                     <th>Date</th>
                     <th>Action</th>
@@ -50,22 +53,22 @@ $products = $result->fetchAll();
                         <tr>
                             <td><?= ($row['id']) ?></td>
                             <td>
-                                
+
                                 <!-- // !empty($row['image']) ? '../Assets/images/product/' . ($row['image']) : '../Assets/images/product/default.jpg' 
                               -->
                                 <!-- alt="Product Image" width="50" height="50" style="border-radius: 5px;"> -->
-                                <img src="../../Assets/images/product/<?php echo $row["image"]?>" alt=""  width="50" height="50" style="border-radius: 5px;"  >
+                                <img src="../../Assets/images/product/<?php echo $row["image"] ?>" alt="" width="50" height="50" style="border-radius: 5px;">
                             </td>
-                            
+
                             <td><?= ($row['product_name']) ?></td>
-                            <td><?= ($row['price']) ?>$</td> 
+                            <td><?= ($row['price']) ?>$</td>
                             <td><span class="product-type"><?= ($row['type']) ?></span></td>
                             <td><?= date("d/m/Y", strtotime($row['date'])) ?></td>
-                            
+
                             <td>
-                            <a href="/products/edit">
-                             <button class="edit-button">Edit</button>
-                            </a>
+                                <a href="/products/edit?id=<?= $row['id'] ?>">
+                                    <button class="edit-button">Edit</button>
+                                </a>
                                 <a href="delete.php?id=<?= $row['id'] ?>" onclick="return confirm('Are you sure you want to delete <?= addslashes($row['product_name']) ?>?');">
                                     <button class="delete-button">Delete</button>
                                 </a>
@@ -84,6 +87,28 @@ $products = $result->fetchAll();
             <button class="add-product-button">Add Product</button>
         </a>
     </div>
-</body>
-</html>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.querySelector(".search-bar input");
+            searchInput.addEventListener("input", function() {
+                const query = searchInput.value.toLowerCase();
+                filterProducts(query);
+            });
+        });
 
+        function filterProducts(query) {
+            const rows = document.querySelectorAll(".product-list tbody tr");
+
+            rows.forEach(row => {
+                const productName = row.querySelector("td:nth-child(3)").textContent.toLowerCase();
+                if (productName.includes(query)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
