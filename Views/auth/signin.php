@@ -1,19 +1,15 @@
-<!-- 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - XING FU CHA</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
-<body class="flex flex-col items-center justify-center min-h-screen bg-[url('../../Assets/images/photo_2025-03-12_07-22-11.jpg')] bg-cover bg-center">
-
+<body class="flex flex-col items-center justify-center min-h-screen bg-[url('../../../Assets/images/photo_2025-03-12_07-22-11.jpg')] bg-cover bg-center">
     <div class="w-full max-w-md p-8 mt-5 mb-5 space-y-6 bg-white shadow-md rounded-lg">
         <div class="text-center">
-            <img src="../../Assets/images/FX12 LOGO.png" alt="XING FU CHA Logo" class="w-24 mx-auto">
+            <img src="../../../Assets/images/FX12 LOGO.png" alt="XING FU CHA Logo" class="w-24 mx-auto">
             <h2 class="text-2xl font-semibold mt-4">Welcome to Cafe Shop</h2>
             <p class="text-gray-600">Login to your account to continue</p>
         </div>
@@ -25,7 +21,7 @@
             </div>
         <?php endif; ?>
 
-        <form action="/login" method="post" class="space-y-4">
+        <form action="/auth/signin" method="post" class="space-y-4">
             <div>
                 <label for="email" class="block font-medium">Email</label>
                 <div class="relative mt-1">
@@ -79,5 +75,4 @@
         });
     </script>
 </body>
-
-</html> -->
+</html>

@@ -175,7 +175,7 @@
           <div class="form-group">
               <label for="" class="form-label">Select image:</label>
               <input type="file" class="form-control" name="image">
-              <img src="/Assets/images/<?=$user['image']?>" class="rounded-circle" style="width: 40px">
+              <img src="../../Assets/images/<?=$user['image']?>" class="rounded-circle" style="width: 40px">
               <input type="text" hidden="hidden" name="old_image" value="/Assets/images/<?=$user['image']?>" >
           </div>
             <div class="mb-4">
