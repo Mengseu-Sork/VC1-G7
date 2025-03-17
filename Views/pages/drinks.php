@@ -26,11 +26,11 @@ require_once (__DIR__ . '/../layout/navbarUser/nav_user.php');
 
     foreach ($products as $product) {  
         echo '<div class="product">';  
-        echo '<img src="' . htmlspecialchars($product['image']) . '" alt="' . htmlspecialchars($product['name']) . '" class="product-image">';  
+        echo '<img src="' . ($product['image']) . '" alt="' . htmlspecialchars($product['name']) . '" class="product-image">';  
         echo '<div class="product-info">';  
-        echo '<h3 class="product-name">' . htmlspecialchars($product['name']) . '</h3>';  
-        echo '<p class="stock">' . htmlspecialchars($product['stock']) . '</p>';  
-        echo '<p class="price">' . htmlspecialchars($product['price']) . '</p>';  
+        echo '<h3 class="product-name">' . ($product['name']) . '</h3>';  
+        echo '<p class="stock">' . ($product['stock']) . '</p>';  
+        echo '<p class="price">' . ($product['price']) . '</p>';  
         echo '<div class="options">';  
         echo '<input type="number" value="1" min="1">';  
         echo '<select>';  
