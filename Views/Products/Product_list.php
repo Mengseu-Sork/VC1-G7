@@ -61,7 +61,7 @@ $products = $result->fetchAll();
                             <td><?= date("d/m/Y", strtotime($row['date'])) ?></td>
                             
                             <td>
-                            <a href="/Views/products/edit.php">
+                            <a href="/products/edit">
                              <button class="edit-button">Edit</button>
                             </a>
 

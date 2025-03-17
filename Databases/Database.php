@@ -1,46 +1,47 @@
 <?php
+class Database
+{
+    private $pdo;
 
-if (!class_exists('Database')) {
-    class Database
+    public function __construct()
     {
-        private static $instance = null;
-        private $pdo;
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "coffeeshop";
 
-        private function __construct($servername, $dbname, $username, $password)
-        {
-            try {
-                $this->pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password, [
-                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                ]);
-            } catch (PDOException $e) {
-                die("Connection failed: " . $e->getMessage());
-            }
-        }
+        try {
 
-        public static function getInstance($servername, $dbname, $username, $password)
-        {
-            if (self::$instance === null) {
-                self::$instance = new self($servername, $dbname, $username, $password);
-            }
-            return self::$instance;
-        }
+            $this->pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        public function query($sql, $params = [])
-        {
-            try {
-                $stmt = $this->pdo->prepare($sql);
-                $stmt->execute($params);
-                return $stmt;
-            } catch (PDOException $e) {
-                die("Query Error: " . $e->getMessage());
-            }
-        }
+            $this->pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password, [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            ]);
 
-        public function closeConnection()
-        {
-            $this->pdo = null;
+        } catch (PDOException $e) {
+            die("Connection failed: " . $e->getMessage());
         }
     }
+
+    public function query($sql, $params = [])
+    {
+        try {
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute($params);
+            return $stmt;
+        } catch (PDOException $e) {
+
+            die("Query Error: " . $e->getMessage());
+        }
+    }
+
+
+    public function closeConnection()
+    {
+        $this->pdo = null;
+    }
+
 }
 ?>

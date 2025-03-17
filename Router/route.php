@@ -1,8 +1,7 @@
 <?php
 require 'Router.php';
-require 'Controllers/UserController.php';
+require_once 'Controllers/UserController.php';
 require_once 'Controllers/DashboardController.php';
-
 require_once 'Controllers/AdminController.php';
 
 require 'Controllers/ProductController.php';
@@ -30,7 +29,9 @@ $routes->get('/products', [ProductController::class, 'index']);
 $routes->get('/products/product_list', [ProductController::class, 'index']);
 $routes->get('/products/product_nut', [ProductController::class, 'nut']);
 $routes->get('/products/product_flour', [ProductController::class, 'flour']);
-$routes->get('/products/create', [UserController::class, 'create']);
+$routes->get('/products/create', [ProductController::class, 'create']);
+$routes->get('/products/edit', [ProductController::class, 'edit']);
+// $routes->post('/products/store', [ProductController::class, 'store']);
 $routes->delete('/products/delete', [ProductController::class, 'delete']);
 
 $routes->dispatch();

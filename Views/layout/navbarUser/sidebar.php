@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 <<<<<<< HEAD:Views/layout/navbarPages/nav_user.php
         <!-- Sidebar -->
         <aside class="flex-shrink-0 hidden w-64 bg-white border-r dark:border-primary-darker dark:bg-darker md:block">
@@ -213,6 +214,10 @@
     <header class="flex-1 relative bg-white dark:bg-darker">
             <div class="flex items-center justify-between p-2 border-b dark:border-primary-darker">
 >>>>>>> 4e9b5b4c2ef93442db3c7deb023a72f78626809c:Views/layout/navbarUser/sidebar.php
+=======
+    <header class="flex-1 relative bg-white dark:bg-darker">
+            <div class="flex items-center justify-between p-2 border-b dark:border-primary-darker">
+>>>>>>> 4fed22346155d3428bfc823998cf4178f519102f
                 <button
                     @click="isMobileMainMenuOpen = !isMobileMainMenuOpen"
                     class="p-1 transition-colors duration-200 rounded-md text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark md:hidden focus:outline-none focus:ring"
@@ -451,7 +456,10 @@
                   </div>
                 </nav>
             </div>
+<<<<<<< HEAD
 <<<<<<< HEAD:Views/layout/navbarPages/nav_user.php
+=======
+>>>>>>> 4fed22346155d3428bfc823998cf4178f519102f
         </header>
 
 <<<<<<< HEAD:Views/layout/navbarUser/sidebar.php
@@ -461,4 +469,7 @@
 >>>>>>> 4e9b5b4c2ef93442db3c7deb023a72f78626809c:Views/layout/navbarUser/sidebar.php
 =======
  
+<<<<<<< HEAD
 >>>>>>> 6775f3bde8e93a51789f312ee394c1774a909651:Views/layout/navbarPages/nav_user.php
+=======
+>>>>>>> 4fed22346155d3428bfc823998cf4178f519102f

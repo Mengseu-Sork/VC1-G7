@@ -1,5 +1,5 @@
 <?php
-<<<<<<< HEAD
+
 require_once '../layout/navbarPages/header_user.php';
 require_once '../layout/navbarPages/nav_user.php';
 require_once '../layout/navbarPages/footer_user.php';
@@ -12,108 +12,85 @@ if (!isset($_SESSION['user'])) {
 
 $user = $_SESSION['user'];
 ?>
-=======
+
 require_once (__DIR__ . '/../layout/navbarUser/header_user.php');
 require_once (__DIR__ . '/../layout/navbarUser/nav_user.php');
-require_once (__DIR__ . '/../layout/navbarUser/footer_user.php');
+
 
 ?>
 
 
-<div class="mx-auto p-6">
-<div class="grid grid-cols-1 md:grid-cols-1 gap-6">
-        <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
-            <div class="shadow-lg rounded-lg p-6 transition duration-300 border-2 dark:border-primary-darker" :style="{ backgroundColor: bgColor }">
-    <!-- Products -->
-          <div>
-            <h2 class="text-xl font-bold mb-6">All-Products</h2>
-            <!-- Drinks Section -->
-            <div class="mb-8">
-              <h3 class="text-lg font-semibold mb-4 pb-2 border-b">Drinks</h3>
-              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <!-- Coffee -->
-                <div class="bg-white rounded-lg shadow p-4">
-                  <img src="../../Assets/images/coffee-coffee.jpg" alt="Coffee" class="w-full h-40 object-cover rounded-lg mb-4">
-                  <h4 class="text-center font-medium mb-2">Coffee</h4>
-                  <button class="w-full px-4 py-2 text-sm text-gray-600 border rounded-full hover:bg-gray-50">View
-                    more</button>
-                </div>
-                <!-- Cocoa -->
-                <div class="bg-white rounded-lg shadow p-4">
-                  <img src="../../Assets/images/borey-cafe.jpg" alt="Orange" class="w-full h-40 object-cover rounded-lg mb-4">
-                  <h4 class="text-center font-medium mb-2">Borey Cafe</h4>
-                  <button class="w-full px-4 py-2 text-sm text-gray-600 border rounded-full hover:bg-gray-50">View
-                    more</button>
-                </div>
-                <!-- Juice -->
-                <div class="bg-white rounded-lg shadow p-4">
-                  <img src="../../Assets/images/juice.jpg" alt="Juice" class="w-full h-40 object-cover rounded-lg mb-4">
-                  <h4 class="text-center font-medium mb-2">Juice</h4>
-                  <button class="w-full px-4 py-2 text-sm text-gray-600 border rounded-full hover:bg-gray-50">View
-                    more</button>
-                </div>
-                <!-- Drink Can -->
-                <div class="bg-white rounded-lg shadow p-4">
-                  <img src="../../Assets/images/drink-can.jpg" alt="Drink Can" class="w-full h-40 object-cover rounded-lg mb-4">
-                  <h4 class="text-center font-medium mb-2">Drink Can</h4>
-                  <button class="w-full px-4 py-2 text-sm text-gray-600 border rounded-full hover:bg-gray-50">View
-                    more</button>
-                </div>
-              </div>
-            </div>
-            <!-- Drink Powder Section -->
-            <div class="mb-8">
-              <h3 class="text-lg font-semibold mb-4 pb-2 border-b">Drink Powder</h3>
-              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <!-- Sugar -->
-                <div class="bg-white rounded-lg shadow p-4">
-                  <img src="../../Assets/images/sugar.jpg" alt="Sugar" class="w-full h-40 object-cover rounded-lg mb-4">
-                  <h4 class="text-center font-medium mb-2">Sugar</h4>
-                  <button class="w-full px-4 py-2 text-sm text-gray-600 border rounded-full hover:bg-gray-50">View
-                    more</button>
-                </div>
-                <!-- Powder -->
-                <div class="bg-white rounded-lg shadow p-4">
-                  <img src="../../Assets/images/powder.jpg" alt="Powder" class="w-full h-40 object-cover rounded-lg mb-4">
-                  <h4 class="text-center font-medium mb-2">Coconut Powder</h4>
-                  <button class="w-full px-4 py-2 text-sm text-gray-600 border rounded-full hover:bg-gray-50">View
-                    more</button>
-                </div>
-                <!-- Tea Pack -->
-                <div class="bg-white rounded-lg shadow p-4">
-                  <img src="../../Assets/images/green-tea-power.jpg" alt="green-tea-power"
-                    class="w-full h-40 object-cover rounded-lg mb-4">
-                  <h4 class="text-center font-medium mb-2">Green Tea Powder</h4>
-                  <button class="w-full px-4 py-2 text-sm text-gray-600 border rounded-full hover:bg-gray-50">View
-                    more</button>
-                </div>
-                <!-- Package -->
-                <div class="bg-white rounded-lg shadow p-4">
-                  <img src="../../Assets/images/coca-powder.png" alt="coca-power" class="w-full h-40 object-cover rounded-lg mb-4">
-                  <h4 class="text-center font-medium mb-2">Coca Powder</h4>
-                  <button class="w-full px-4 py-2 text-sm text-gray-600 border rounded-full hover:bg-gray-50">View
-                    more</button>
-                </div>
-              </div>
-            </div>
-            <!-- Fast Food Section -->
-            <div class="mb-8">
-              <h3 class="text-lg font-semibold mb-4 pb-2 border-b">Fast food</h3>
-              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <!-- Milk -->
-                <div class="bg-white rounded-lg shadow p-4">
-                  <img src="../../Assets/images/Milk.jpg" alt="Milk" class="w-full h-40 object-cover rounded-lg mb-4">
-                  <h4 class="text-center font-medium mb-2">Milk</h4>
-                  <button class="w-full px-4 py-2 text-sm text-gray-600 border rounded-full hover:bg-gray-50">View
-                    more</button>
-                </div>
-                <!-- Noodle -->
-                <div class="bg-white rounded-lg shadow p-4">
-                  <img src="../../Assets/images/noodles.jpg" alt="Noodle" class="w-full h-40 object-cover rounded-lg mb-4">
-                  <h4 class="text-center font-medium mb-2">Noodles</h4>
-                  <button class="w-full px-4 py-2 text-sm text-gray-600 border rounded-full hover:bg-gray-50">View
-                    more</button>
-                </div>
+<?php  
+// Sample product data  
+$products = [  
+    'drinks' => [  
+        [  
+            'name' => 'Coffee',  
+            'image' => '../../Assets/images/coffee-coffee.jpg',  
+            'link' => '../../Views/pages/products.php'  
+        ],  
+        [  
+            'name' => 'Borey Cafe',  
+            'image' => '../../Assets/images/borey-cafe.jpg',  
+            'link' => '../../Views/pages/products.php'  
+        ],  
+        [  
+            'name' => 'Juice',  
+            'image' => '../../Assets/images/juice.jpg',  
+            'link' => '../../Views/pages/products.php'  
+        ],  
+        [  
+            'name' => 'Drink Can',  
+            'image' => '../../Assets/images/drink-can.jpg',  
+            'link' => '../../Views/pages/products.php'  
+        ],  
+    ],  
+    'flour_products' => [  
+        [  
+            'name' => 'Sugar',  
+            'image' => '../../Assets/images/sugar.jpg',  
+            'link' => '../../Views/pages/flour_products.php'  
+        ],  
+        [  
+            'name' => 'Coconut Powder',  
+            'image' => '../../Assets/images/powder.jpg',  
+            'link' => '../../Views/pages/flour_products.php'  
+        ],  
+        [  
+            'name' => 'Green Tea Powder',  
+            'image' => '../../Assets/images/green-tea-power.jpg',  
+            'link' => '../../Views/pages/flour_products.php'  
+        ],  
+        [  
+            'name' => 'Coca Powder',  
+            'image' => '../../Assets/images/coca-powder.png',  
+            'link' => '../../Views/pages/flour_products.php'  
+        ],  
+    ],  
+    'nut_products' => [  
+        [  
+            'name' => 'Milk',  
+            'image' => '../../Assets/images/Milk.jpg',  
+            'link' => '../../Views/pages/nut_products.php'  
+        ],  
+        [  
+            'name' => 'Noodles',  
+            'image' => '../../Assets/images/noodles.jpg',  
+            'link' => '../../Views/pages/nut_products.php'  
+        ],  
+        [  
+            'name' => 'Chocolate',  
+            'image' => '../../Assets/images/chocolate.jpg',  
+            'link' => '../../Views/pages/nut_products.php'  
+        ],  
+        [  
+            'name' => 'Nabati',  
+            'image' => '../../Assets/images/nabati.jpg',  
+            'link' => '../../Views/pages/nut_products.php'  
+        ],  
+    ],  
+];  
+?>  
 
                 <!-- Package -->
                 <div class="bg-white rounded-lg shadow p-4">
@@ -171,4 +148,37 @@ require_once (__DIR__ . '/../layout/navbarUser/footer_user.php');
         </div>
         </div>
         </div>
->>>>>>> 4e9b5b4c2ef93442db3c7deb023a72f78626809c
+<div class="mx-auto p-6">  
+    <div class="grid grid-cols-1 md:grid-cols-1 gap-6">  
+        <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">  
+            <div class="shadow-lg rounded-lg p-6 transition duration-300 border-2 dark:border-primary-darker" :style="{ backgroundColor: bgColor }">  
+                <!-- Products -->  
+                <div>  
+                    <h2 class="text-xl font-bold mb-6">All-Products</h2>  
+                    
+                    <?php foreach ($products as $category => $items): ?>  
+                        <div class="mb-8">  
+                            <h3 class="text-lg font-semibold mb-4 pb-2 border-b"><?= ucfirst(str_replace('_', ' ', $category)); ?></h3>  
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">  
+                                <?php foreach ($items as $product): ?>  
+                                    <div class="bg-white rounded-lg shadow p-4">  
+                                        <img src="<?= $product['image']; ?>" alt="<?= $product['name']; ?>" class="w-full h-40 object-cover rounded-lg mb-4">  
+                                        <h4 class="text-center font-medium mb-2"><?= $product['name']; ?></h4>  
+                                        <a href="<?= $product['link']; ?>">  
+                                            <button class="w-full px-4 py-2 text-sm text-gray-600 border rounded-full hover:bg-gray-50">View more</button>  
+                                        </a>  
+                                    </div>  
+                                <?php endforeach; ?>  
+                            </div>  
+                        </div>  
+                    <?php endforeach; ?>  
+                    
+                </div>  
+            </div>  
+        </div>  
+    </div>  
+</div>  
+
+<?php
+require_once (__DIR__ . '/../layout/navbarUser/footer_user.php');
+?>

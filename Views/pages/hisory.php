@@ -1,8 +1,8 @@
 <?php
-require_once '../layout/navbarUser/header_user.php';
-require_once '../layout/navbarUser/nav_user.php';
-require_once '../layout/navbarUser/sidebar.php';
-require_once '../layout/navbarUser/footer_user.php';
+require_once (__DIR__ . '/../layout/navbarUser/header_user.php');
+require_once (__DIR__ . '/../layout/navbarUser/nav_user.php');
+
+
 ?>
 <div class="mx-auto p-6">
 <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
@@ -72,3 +72,6 @@ require_once '../layout/navbarUser/footer_user.php';
         </div>
     </div>
 </div>
+<?php
+require_once (__DIR__ . '/../layout/navbarUser/footer_user.php');
+?>

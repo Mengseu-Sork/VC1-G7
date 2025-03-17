@@ -1,14 +1,10 @@
 <?php
-require_once '../layout/navbarPages/header_user.php';
-require_once '../layout/navbarPages/nav_user.php';
+require_once (__DIR__ . '/../layout/navbarUser/header_user.php');
+require_once (__DIR__ . '/../layout/navbarUser/nav_user.php');
+
+
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="../../Assets/css/history.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Table</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -115,5 +111,5 @@ require_once '../layout/navbarPages/nav_user.php';
 </html>
 
 <?php
-require_once '../layout/navbarPages/footer_user.php';
+require_once (__DIR__ . '/../layout/navbarUser/footer_user.php');
 ?>
