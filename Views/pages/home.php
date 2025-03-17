@@ -1,9 +1,9 @@
 <?php
-session_start();
-if (!isset($_SESSION["id"])) {
-    header("Location: /auth/signin");
-    exit();
-}
+// session_start();
+// if (!isset($_SESSION["user"])) {
+//     header("Location: /signin");
+//     exit();
+// }
 require_once __DIR__ . '/../layout/customer/header_user.php';
 require_once __DIR__ . '/../layout/customer/nav_user.php';
 

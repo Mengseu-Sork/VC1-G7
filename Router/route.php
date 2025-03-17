@@ -3,7 +3,7 @@ require 'Router.php';
 require_once 'controllers/UserController.php';
 require_once 'Controllers/DashboardController.php';
 require_once 'Controllers/HomeController.php';
-require_once 'Controllers/AuthController.php';
+// require_once 'Controllers/AuthController.php';
 require 'Controllers/ProductController.php';
 
 
@@ -13,7 +13,7 @@ $routes = new Router();
 $routes->get('/', [HomeController::class, 'index']);
 
 
-$routes->get('/signin', [AuthController::class, 'login']);
+// $routes->get('/signin', [AuthController::class, 'login']);
 
 
 // dashboard
