@@ -28,11 +28,13 @@ class ProductModel {
             'image' => $data['image'],
         ]);
     }
+
     function getProductById($id){
         $query = "SELECT * FROM product WHERE id = :id";
         $result = $this->db->query($query, ['id' => $id]);
         return $result->fetch();
     }
+
     function updateProduct($data){
         $stmt = "UPDATE product SET product_name = :product_name, price = :price, type = :type, date = :date, image = :image WHERE id = :id";
         $this->db->query($stmt, [

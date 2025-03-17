@@ -1,93 +1,96 @@
+let orderList = [];
 
-let orders = [];
-let totalPrice = 0;
+function addToOrder(productName, price, image) {
+    let qty = parseInt(document.getElementById('qty_' + productName).value);
+    let size = document.getElementById('size_' + productName).value;
+    let itemPrice = parseFloat(price.replace('$', ''));
 
-function filterProducts() {
-    let input = document.getElementById('search').value.toLowerCase();
-    let products = document.getElementsByClassName('product');
-    
-    for (let i = 0; i < products.length; i++) {
-        let productName = products[i].getElementsByClassName('product-name')[0].innerText.toLowerCase();
-        if (productName.includes(input)) {
-            products[i].style.display = "block";
-        } else {
-            products[i].style.display = "none";
-        }
-    }
-}
-
-function addToOrder(button, price) {
-    let productDiv = button.parentElement;
-    let productName = productDiv.getElementsByClassName('product-name')[0].innerText;
-    let quantity = parseInt(productDiv.getElementsByClassName('quantity')[0].value);
-    let size = productDiv.getElementsByClassName('size')[0].value;
-    let productImage = productDiv.getElementsByClassName('product-image')[0].src;
-    
-    let existingOrder = orders.find(order => order.name === productName && order.size === size);
-    
-    if (existingOrder) {
-        existingOrder.quantity += quantity;
-        existingOrder.price += price * quantity;
+    let existingItem = orderList.find(item => item.name === productName && item.size === size);
+    if (existingItem) {
+        existingItem.quantity += qty;
     } else {
-        orders.push({ name: productName, quantity, size, image: productImage, price: price * quantity });
+        let item = { 
+            name: productName, 
+            price: itemPrice, 
+            quantity: qty, 
+            size: size, 
+            image: image
+        };
+        orderList.push(item);
     }
-    
-    updateOrders();
+
+    updateOrderList();
 }
 
-function updateOrders() {
-    let orderListDiv = document.getElementById('orderList');
-    orderListDiv.innerHTML = '';
-    totalPrice = 0;
+function updateOrderList() {
+    let listContainer = document.getElementById('orderList');
+    let total = 0;
+    listContainer.innerHTML = "";
     
-    orders.forEach((order, index) => {
-        totalPrice += order.price;
-        let orderDiv = document.createElement('div');
-        orderDiv.classList.add('order-item');
-        orderDiv.innerHTML = `
-            <img src="${order.image}" alt="${order.name}" class="order-image">
-            <p>${order.name}</p>
-            <input type="number" value="${order.quantity}" min="1" onchange="changeOrderQuantity(${index}, this.value)">
-            <select onchange="changeOrderSize(${index}, this.value)">
-                <option value="M" ${order.size === 'M' ? 'selected' : ''}>M</option>
-                <option value="L" ${order.size === 'L' ? 'selected' : ''}>L</option>
-                <option value="S" ${order.size === 'S' ? 'selected' : ''}>S</option>
-            </select>
-            <p>$${order.price.toFixed(2)}</p>
-            <button class="remove-button" onclick="removeOrder(${index})">Remove</button>
+    listContainer.style.maxHeight = "250px"; // Set max height for two items
+    listContainer.style.overflowY = "auto"; // Enable scrolling
+
+    orderList.forEach((item, index) => {
+        total += item.price * item.quantity;
+        listContainer.innerHTML += `
+            <div class="order-item">
+                <img src="${item.image}" alt="${item.name}" class="order-image">
+                <div class="order-details">
+                    <p>${item.name} (${item.size}) - $${(item.price * item.quantity).toFixed(2)}</p>
+                    <label>Quantity:</label>
+                    <input type="number" min="1" value="${item.quantity}" onchange="updateQuantity(${index}, this.value)">
+                    <label>Size:</label>
+                    <select onchange="updateSize(${index}, this.value)">
+                        <option value="S" ${item.size === 'S' ? 'selected' : ''}>S</option>
+                        <option value="M" ${item.size === 'M' ? 'selected' : ''}>M</option>
+                        <option value="L" ${item.size === 'L' ? 'selected' : ''}>L</option>
+                    </select>
+                    <button class="remove-btn" onclick="removeFromOrder(${index})">Remove</button>
+                </div>
+            </div>
         `;
-        orderListDiv.appendChild(orderDiv);
     });
+
+    document.getElementById('totalPrice').innerText = total.toFixed(2);
+    document.getElementById('orderForm').style.display = "block";
+}
+
+function updateQuantity(index, newQuantity) {
+    orderList[index].quantity = parseInt(newQuantity);
+    updateOrderList();
+}
+
+function updateSize(index, newSize) {
+    let item = orderList[index];
+    let duplicateItem = orderList.find(i => i.name === item.name && i.size === newSize);
     
-    document.getElementById('totalPrice').innerText = totalPrice.toFixed(2);
-    document.getElementById('orderForm').style.display = 'block';
+    if (duplicateItem) {
+        duplicateItem.quantity += item.quantity;
+        orderList.splice(index, 1);
+    } else {
+        item.size = newSize;
+    }
+
+    updateOrderList();
 }
 
-function changeOrderQuantity(index, newQuantity) {
-    newQuantity = parseInt(newQuantity);
-    let order = orders[index];
-    order.price = (order.price / order.quantity) * newQuantity;
-    order.quantity = newQuantity;
-    updateOrders();
-}
-
-function changeOrderSize(index, newSize) {
-    orders[index].size = newSize;
-    updateOrders();
-}
-
-function removeOrder(index) {
-    orders.splice(index, 1);
-    updateOrders();
-}
-
-function submitOrder() {
-    alert('Order Submitted: ' + JSON.stringify(orders) + '\nTotal Price: $' + totalPrice.toFixed(2));
-    orders = [];
-    totalPrice = 0;
-    closeOrderForm();
+function removeFromOrder(index) {
+    orderList.splice(index, 1);
+    updateOrderList();
 }
 
 function closeOrderForm() {
-    document.getElementById('orderForm').style.display = 'none';
+    document.getElementById('orderForm').style.display = "none";
+}
+
+function submitOrder() {
+    if (orderList.length === 0) {
+        alert("Your order is empty!");
+        return;
+    }
+
+    alert("Order submitted successfully!");
+    orderList = [];
+    updateOrderList();
+    closeOrderForm();
 }
