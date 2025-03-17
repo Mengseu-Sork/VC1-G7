@@ -19,7 +19,7 @@ class ProductModel {
     // Add a product (example function)
     function addProduct($name, $price) {
         $query = "INSERT INTO product (name, price) VALUES (?, ?)";
-        $stmt = $this->db->prepare($query);
+        $stmt = $this->db->query($query);
         return $stmt->execute([$name, $price]);
     }
 
