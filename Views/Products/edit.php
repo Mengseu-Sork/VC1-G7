@@ -10,10 +10,11 @@
 
 <div class="form-container">
   <h2>Edit Product</h2>
-  <form action="/products/store" method="POST" enctype="multipart/form-data">
+  <form action="/products/update/<?php echo $product['id']; ?>" method="POST" enctype="multipart/form-data">
     <div class="image-upload">
       <label for="image">Upload Image</label>
-      <input type="file" id="image" name="image" accept="image/*" required>
+      <input type="file" id="image" name="image" accept="image/*">
+      <input type="hidden" name="existing_image" value="<?php echo $product['image']; ?>">
       <div class="upload-area" onclick="document.getElementById('image').click()">
         Click or drag to upload image
       </div>
@@ -21,24 +22,24 @@
 
     <div class="form-group">
       <label for="name">Name</label>
-      <input type="text" id="name" name="name" required>
+      <input type="text" id="name" name="name" value="<?php echo $product['product_name']; ?>" required>
     </div>
 
     <div class="form-grid">
       <div class="form-group">
         <label for="price">Price</label>
-        <input type="number" id="price" name="price" required>
+        <input type="number" id="price" name="price" value="<?php echo $product['price']; ?>" required>
       </div>
       <div class="form-group">
         <label for="date-start">Date Start</label>
-        <input type="date" id="date-start" name="date-start" required>
+        <input type="date" id="date-start" name="date-start" value="<?php echo $product['date']; ?>" required>
       </div>
       <div class="form-group">
         <label for="type">Type</label>
         <select id="type" name="type" required>
           <option value="">Select Type</option>
-          <option value="Powder">Flour</option>
-          <option value="Nuts">Nut</option>
+          <option value="Powder" <?php if($product['type'] == 'Powder') echo 'selected'; ?>>Flour</option>
+          <option value="Nuts" <?php if($product['type'] == 'Nuts') echo 'selected'; ?>>Nut</option>
         </select>
       </div>
     </div>

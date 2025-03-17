@@ -32,7 +32,8 @@ $routes->get('/products/product_nut', [ProductController::class, 'nut']);
 $routes->get('/products/product_flour', [ProductController::class, 'flour']);
 $routes->get('/products/create', [ProductController::class, 'create']);
 $routes->post('/products/store', [ProductController::class, 'store']);
-$routes->get('/products/edit', [ProductController::class, 'edit']);
+$routes->get('/products/edit/{id}', [ProductController::class, 'edit']);
+$routes->post('/products/update/{id}', [ProductController::class, 'update']);
 $routes->delete('/products/delete', [ProductController::class, 'delete']);
 
 $routes->dispatch();
