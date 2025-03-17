@@ -31,14 +31,14 @@ $products = $result->fetchAll();
             <button>Search</button>
         </div>
 
-        <h2>List Products (Type: Flour)</h2> <!-- Updated title to show filter -->
+        <h2>List Products</h2>
         <table class="product-list">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Image</th>
+                    <th>Image</th> 
                     <th>Product Name</th>
-                    <th>Price</th>
+                    <th>Price</th> 
                     <th>Type</th>
                     <th>Date</th>
                     <th>Action</th>
@@ -50,18 +50,19 @@ $products = $result->fetchAll();
                         <tr>
                             <td><?= ($row['id']) ?></td>
                             <td>
-                                <img src="<?= !empty($row['image']) ? '../Assets/images/' . ($row['image']) : '../Assets/images/default.jpg' ?>" 
-                                     alt="Product Image" width="50" height="50" style="border-radius: 5px;">
+                        
+                                <img src="../../Assets/images/product/<?php echo $row["image"]?>" alt=""  width="50" height="50" style="border-radius: 5px;"  >
                             </td>
+                            
                             <td><?= ($row['product_name']) ?></td>
-                            <td><?= ($row['price']) ?>$</td>
+                            <td><?= ($row['price']) ?>$</td> 
                             <td><span class="product-type"><?= ($row['type']) ?></span></td>
                             <td><?= date("d/m/Y", strtotime($row['date'])) ?></td>
+                            
                             <td>
-                                <a href="/Views/products/edit.php">
-                                    <button class="edit-button">Edit</button>
-                                </a>
-
+                            <a href="/products/edit">
+                             <button class="edit-button">Edit</button>
+                            </a>
                                 <a href="delete.php?id=<?= $row['id'] ?>" onclick="return confirm('Are you sure you want to delete <?= addslashes($row['product_name']) ?>?');">
                                     <button class="delete-button">Delete</button>
                                 </a>
@@ -70,13 +71,13 @@ $products = $result->fetchAll();
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="7" style="text-align: center;">No products found</td> <!-- Adjusted colspan to 7 -->
+                        <td colspan="6" style="text-align: center;">No products found</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
         </table>
 
-        <a href="/Views/Products/create.php">
+        <a href="/products/create">
             <button class="add-product-button">Add Product</button>
         </a>
     </div>

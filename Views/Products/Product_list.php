@@ -50,9 +50,11 @@ $products = $result->fetchAll();
                         <tr>
                             <td><?= ($row['id']) ?></td>
                             <td>
-                                <img src="<?= !empty($row['image']) ? '../Assets/images/' . ($row['image']) : '../Assets/images/default.jpg' ?>" 
-                                alt="Product Image" width="50" height="50" style="border-radius: 5px;">
                                 
+                                <!-- // !empty($row['image']) ? '../Assets/images/product/' . ($row['image']) : '../Assets/images/product/default.jpg' 
+                              -->
+                                <!-- alt="Product Image" width="50" height="50" style="border-radius: 5px;"> -->
+                                <img src="../../Assets/images/product/<?php echo $row["image"]?>" alt=""  width="50" height="50" style="border-radius: 5px;"  >
                             </td>
                             
                             <td><?= ($row['product_name']) ?></td>
@@ -64,7 +66,6 @@ $products = $result->fetchAll();
                             <a href="/products/edit">
                              <button class="edit-button">Edit</button>
                             </a>
-
                                 <a href="delete.php?id=<?= $row['id'] ?>" onclick="return confirm('Are you sure you want to delete <?= addslashes($row['product_name']) ?>?');">
                                     <button class="delete-button">Delete</button>
                                 </a>
@@ -79,9 +80,10 @@ $products = $result->fetchAll();
             </tbody>
         </table>
 
-        <a href="/Views/Products/create.php">
+        <a href="/products/create">
             <button class="add-product-button">Add Product</button>
         </a>
     </div>
 </body>
 </html>
+
