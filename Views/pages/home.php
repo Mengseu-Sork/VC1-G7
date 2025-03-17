@@ -7,7 +7,7 @@ require_once (__DIR__ . '/../layout/navbarUser/nav_user.php');
 
 
 <?php  
-// Sample product data  
+ 
 $products = [  
     'drinks' => [  
         [  

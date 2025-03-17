@@ -49,7 +49,7 @@ $products = $result->fetchAll();
                         <tr>
                             <td><?= ($row['id']) ?></td>
                             <td>
-                                <img src="../../Assets/images/product/<?php echo $row["image"]?>" alt=""  width="50" height="50" style="border-radius: 5px;"  >
+                                <img src="../../Assets/images/<?php echo $row["image"]?>" alt=""  width="50" height="50" style="border-radius: 5px;"  >
                             </td>
                             
                             <td><?= ($row['product_name']) ?></td>
