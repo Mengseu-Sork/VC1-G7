@@ -14,6 +14,8 @@ class ProductController extends BaseController {
             $this->redirect('/product');
         }
     }
+
+    
     
 }
 ?>
