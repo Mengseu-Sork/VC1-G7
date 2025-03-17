@@ -1,8 +1,6 @@
 <?php
-require_once (__DIR__ . '/../layout/navbarUser/header_user.php');
-require_once (__DIR__ . '/../layout/navbarUser/nav_user.php');
-
-
+require_once (__DIR__ . '/../layout/customer/header_user.php');
+require_once (__DIR__ . '/../layout/customer/nav_user.php');
 ?>
 
 <h1>Drinks</h1>
@@ -63,5 +61,5 @@ require_once (__DIR__ . '/../layout/navbarUser/nav_user.php');
 <script src="/Assets/js/order.js"></script>
 
 <?php
-require_once (__DIR__ . '/../layout/navbarUser/footer_user.php');
+require_once (__DIR__ . '/../layout/customer/footer_user.php');
 ?>

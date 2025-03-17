@@ -1,8 +1,6 @@
 <?php
-require_once (__DIR__ . '/../layout/navbarUser/header_user.php');
-require_once (__DIR__ . '/../layout/navbarUser/nav_user.php');
-
-
+require_once (__DIR__ . '/../layout/customer/header_user.php');
+require_once (__DIR__ . '/../layout/customer/nav_user.php');
 ?>
 
 
@@ -115,4 +113,7 @@ $products = [
     </div>
 </div>
 
-<?php require_once __DIR__ . '/../layout/customer/footer_user.php';?>
+
+<?php
+require_once (__DIR__ . '/../layout/customer/footer_user.php');
+?>

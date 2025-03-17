@@ -1,9 +1,8 @@
 <?php
-require_once (__DIR__ . '/../layout/navbarUser/header_user.php');
-require_once (__DIR__ . '/../layout/navbarUser/nav_user.php');
-
-
+require_once (__DIR__ . '/../layout/customer/header_user.php');
+require_once (__DIR__ . '/../layout/customer/nav_user.php');
 ?>
+
 
 <h1>Flour Product</h1>
 
@@ -67,6 +66,7 @@ function filterProducts() {
 </style>
 
 
+
 <?php
-require_once (__DIR__ . '/../layout/navbarUser/footer_user.php');
+require_once (__DIR__ . '/../layout/customer/footer_user.php');
 ?>
