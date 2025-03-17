@@ -1,14 +1,11 @@
 <?php
 require_once (__DIR__ . '/../layout/navbarUser/header_user.php');
 require_once (__DIR__ . '/../layout/navbarUser/nav_user.php');
+
+
 ?>
 
-<link rel="stylesheet" href="/Assets/css/order.css">
-<title>Product Listing</title>
-
-<h1>Flour Products</h1>
-
-
+<h1>Flour Product</h1>
 
 <div class="container" id="productContainer">
     <?php  
@@ -49,19 +46,27 @@ $products = [
     ?>  
 </div>
 
-<!-- Order List Modal -->
-<div id="orderForm" style="display: none;" class="order-form">
-    <h2>Order List</h2>
-    <div id="orderList"></div>
-    <div id="order-footer">
-        <p>Total Price: $<span id="totalPrice">0.00</span></p>
-        <button class="btn1" onclick="submitOrder()">Submit Order</button>
-        <button class="btn2" onclick="closeOrderForm()">Cancel</button>
-        <p class="note">Scroll to see your another products order</p>
-    </div>
-</div>
+<script>
+function filterProducts() {
+    let input = document.getElementById('search').value.toLowerCase();
+    let products = document.getElementsByClassName('product');
+    
+    for (let i = 0; i < products.length; i++) {
+        let productName = products[i].getElementsByClassName('product-name')[0].innerText.toLowerCase();
+        if (productName.includes(input)) {
+            products[i].style.display = "flex";
+        } else {
+            products[i].style.display = "none";
+        }
+    }
+}
+</script>
 
-<script src="/Assets/js/order.js"></script>
+<style>
+
+</style>
+
+
 <?php
 require_once (__DIR__ . '/../layout/navbarUser/footer_user.php');
 ?>

@@ -1,5 +1,5 @@
 <?php
-require_once 'Databases/database.php';
+require_once 'Databases/Database.php';
 
 // ProductModel.php
 class ProductModel {

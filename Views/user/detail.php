@@ -1,9 +1,10 @@
 <?php
 require_once __DIR__ . '/../layout/customer/header_user.php';
 require_once __DIR__ . '/../layout/customer/nav_user.php';
+require_once __DIR__ . '/../layout/customer/footer_user.php';
 
 ?>
-        <header class="flex-1 relative bg-white dark:bg-darker">
+                <header class="flex-1 relative bg-white dark:bg-darker">
                 <div class="flex items-center justify-between p-2 border-b dark:border-primary-darker">
                     <button
                         @click="isMobileMainMenuOpen = !isMobileMainMenuOpen"
@@ -236,87 +237,20 @@ require_once __DIR__ . '/../layout/customer/nav_user.php';
         </header>
         <div class="mx-auto p-6">
             <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
-                    <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
-                        <div class="shadow-lg rounded-lg p-6 transition duration-300 border-2 dark:border-primary-darker" :style="{ backgroundColor: bgColor }">
-                        <h2 class="text-xl font-semibold mb-4">Order History</h2>
-                        <div class="p-6 border-1 dark:border-primary-darker">
-                            <table class="min-w-full border border-2 dark:border-primary-darker">
-                                <thead >
-                                    <tr class="dark:border-primary-darker">
-                                        <th class="py-3 px-4 border-2 dark:border-primary-darker">Order ID</th>
-                                        <th class="py-3 px-4 border-2 dark:border-primary-darker">Product Name</th>
-                                        <th class="py-3 px-4 border-2 dark:border-primary-darker">Date</th>
-                                        <th class="py-3 px-4 border-2 dark:border-primary-darker">Total</th>
-                                        <th class="py-3 px-4 border-2 dark:border-primary-darker">Amount</th>
-                                        <th class="py-3 px-4 border-2 dark:border-primary-darker">Payment</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="orderTable">
-                                    <tr class="">
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">#00001</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">Coffee coconut powder</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">17-February-2025</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">10</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">$80</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker flex justify-center items-center">
-                                            <button class="bg-blue-500 text-white rounded-lg px-2 py-1 hover:bg-blue-600 transition duration-200">QR Code</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="">
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">#00002</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">Borey cafe</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">17-February-2025</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">15</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">$80</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker flex justify-center items-center">
-                                            <button class="bg-blue-500 text-white rounded-lg px-2 py-1 hover:bg-blue-600 transition duration-200">QR Code</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="">
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">#00003</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">Africa</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">18-February-2025</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">25</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">$30</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker flex justify-center items-center">
-                                            <button class="bg-blue-500 text-white rounded-lg px-2 py-1 hover:bg-blue-600 transition duration-200">QR Code</button>
-                                        </td>
-                                    </tr>
-                                    <tr class=" ">
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">#00004</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">Arabica Brazil</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">18-February-2025</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">5</td>
-
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">$35</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker flex justify-center items-center">
-                                            <button class="bg-blue-500 text-white rounded-lg px-2 py-1 hover:bg-blue-600 transition duration-200">QR Code</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="">
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">#00005</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">Honey Lemon</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">19-February-2025</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">10</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">$120</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker flex justify-center items-center">
-                                            <button class="bg-blue-500 text-white rounded-lg px-2 py-1 hover:bg-blue-600 transition duration-200">QR Code</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="">
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">#00006</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">Green Tea Powder</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">19-February-2025</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">5</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker">$100</td>
-                                        <td class="py-2 px-4 border-2 dark:border-primary-darker flex justify-center items-center">
-                                            <button class="bg-blue-500 text-white rounded-lg px-2 py-1 hover:bg-blue-600 transition duration-200">QR Code</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
+                    <div class="shadow-lg rounded-lg p-6 transition duration-300 border-2 dark:border-primary-darker" :style="{ backgroundColor: bgColor }">
+                    <img src="../../Assets/images/pic5.jpg" alt="Profile Picture" class="w-40 h-40 rounded-full mx-auto mb-4">
+                    <div class="mb-4">
+                        <span class="block text-center text-gray-700 text-3xl dark:text-light font-medium">Mengseu Sork</span>
+                    </div>
+                    <div class="mb-4">
+                        <span class="block px-20 text-center text-gray-700 text-l dark:text-light font-medium">Social media has drastically changed the way photographers present their work. Platforms like Instagram, Pinterest, and TikTok have made it easier to reach a global audience and connect with clients directly. However, it also raises questions about the value of photos, the pressure to conform to trends, and the impact on creativity.</span>
+                    </div>
+                    <div class="flex justify-end space-x-4">
+                        <a href="/" class="px-4 py-2 text-white bg-red-500 hover:bg-red-400 rounded-md transition duration-200">Back</a>
+                        <a href="#" class="px-4 py-2 text-white bg-blue-500 hover:bg-red-400 rounded-md transition duration-200">Edit</a>
                     </div>
                 </div>
+                </div>
             </div>
-            <?php require_once __DIR__ . '/../layout/customer/footer_user.php';?>
+        </div>

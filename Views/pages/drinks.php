@@ -1,9 +1,9 @@
 <?php
 require_once (__DIR__ . '/../layout/navbarUser/header_user.php');
 require_once (__DIR__ . '/../layout/navbarUser/nav_user.php');
-?>
 
-<link rel="stylesheet" href="/Assets/css/order.css">
+
+?>
 
 <h1>Drinks</h1>
 
@@ -65,4 +65,3 @@ require_once (__DIR__ . '/../layout/navbarUser/nav_user.php');
 <?php
 require_once (__DIR__ . '/../layout/navbarUser/footer_user.php');
 ?>
-

@@ -1,4 +1,5 @@
 <?php
+
 $db = new Database();
 $query = "SELECT * FROM product"; 
 $result = $db->query($query);

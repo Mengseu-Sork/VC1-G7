@@ -299,3 +299,68 @@
                 </div>
               </nav>
             </div>
+</header>
+            <div class="container mx-auto mt-6 px-4">
+                <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
+                    <table class="w-full table-auto border-collapse">
+                        <thead>
+                            <tr class="bg-gray-800 text-white uppercase text-xs sm:text-sm leading-normal">
+                                <th class="py-3 px-6 text-left">ID</th>
+                                <th class="py-3 px-6 text-center">Profile</th>
+                                <th class="py-3 px-6 text-left">First Name</th>
+                                <th class="py-3 px-6 text-left">Last Name</th>
+                                <th class="py-3 px-6 text-left">Email</th>
+                                <th class="py-3 px-6 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-600 text-sm font-light">
+                            <?php foreach ($users as $index => $user): ?>
+                                <tr class="border-t border-gray-200 hover:bg-gray-100 transition duration-200">
+                                    <td class="py-3 px-6"><?= $index + 1 ?></td>
+                                    <td class="py-3 px-6 text-center">
+                                        <img src="../../Assets/images/<?= $user['image'] ?>" alt="Profile Image" class="w-10 h-10 rounded-full object-cover">
+                                    </td>
+                                    <td class="py-3 px-6"><?= $user['FirstName'] ?></td>
+                                    <td class="py-3 px-6"><?= $user['LastName'] ?></td>
+                                    <td class="py-3 px-6"><?= $user['email'] ?></td>
+                                    <td class="py-3 px-6 text-center flex justify-center space-x-2">
+                                        <a href="/user/edit?id=<?= $user['id'] ?>" class="px-4 py-2 text-white bg-yellow-500 hover:bg-yellow-400 rounded-md transition duration-200">
+                                            Edit
+                                        </a>
+                                        <button onclick="openModal('deleteUserModal<?= $user['id'] ?>')"
+                                            class="px-4 py-2 text-white bg-red-500 hover:bg-red-400 rounded-md transition duration-200">
+                                            Delete
+                                        </button>
+
+                                        <!-- Delete Confirmation Modal -->
+                                        <div id="deleteUserModal<?= $user['id'] ?>" 
+                                            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+                                            <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+                                                <h2 class="text-lg font-semibold">Delete User</h2>
+                                                <p class="mt-4">Are you sure you want to delete this user?</p>
+
+                                                <div class="mt-6 flex justify-end space-x-2">
+                                                    <!-- Cancel Button -->
+                                                    <button onclick="closeModal('deleteUserModal<?= $user['id'] ?>')"
+                                                        class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 transition duration-200">
+                                                        Cancel
+                                                    </button>
+
+                                                    <!-- Confirm Delete -->
+                                                    <form action="/user/delete?id=<?= $user['id'] ?>" method="POST">
+                                                        <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                                                        <button type="submit"
+                                                            class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
+                                                            Delete
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
