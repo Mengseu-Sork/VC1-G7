@@ -1,5 +1,5 @@
 <?php
-// Ensure the class is not declared multiple times
+
 if (!class_exists('Database')) {
     class Database
     {

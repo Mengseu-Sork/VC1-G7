@@ -8,7 +8,7 @@ class ProductModel {
         $this->db = new Database();
     }
 
-    public function getAllProducts() {
+     function getAllProducts() {
         return $this->db->query("SELECT * FROM product")->fetchAll();
     }
 
