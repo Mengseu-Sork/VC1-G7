@@ -13,7 +13,7 @@
             <section class="about">
                 <div>
                     <h1>About Us</h1>
-                    <p>HubSpot's company and culture are a lot like our product. They're crafted, not cobbled.</p>
+                    <p>HubSpot’s company and culture are a lot like our product. They’re crafted, not cobbled.</p>
                 </div>
                 <img src="https://i.pinimg.com/474x/9e/a7/ee/9ea7eee807b77d4d062ec54be39c6a92.jpg" alt="about Image">
             </section>

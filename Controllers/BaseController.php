@@ -2,7 +2,7 @@
 
 class BaseController
 {
-    public function view($view, $data = [])
+    function view($view, $data = [])
     {
         extract($data);
         ob_clean();
@@ -11,9 +11,15 @@ class BaseController
         require_once 'views/'.$view.'.php';
     }
 
-    public function redirect($uri)
+    function redirect($uri)
     {
         header('Location:' . $uri);
         exit();
     }
+    function json($data)
+    {
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+
 }

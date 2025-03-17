@@ -20,7 +20,11 @@
 
             <div x-data="{ isActive: true, open: true}">
                 <a
+<<<<<<< HEAD:Views/layout/customer/nav_user.php
                   href="/"
+=======
+                  href="home.php"
+>>>>>>> 5422fc5bc23e3e0474d1f45e2f4b77a0b5497c64:Views/layout/navbarUser/nav_user.php
                   @click="open = !open"
                   class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                   :class="{'bg-primary-100 dark:bg-primary': isActive || open}"
@@ -54,7 +58,7 @@
               <div x-data="{ isActive: false, open: false }">
                 <!-- active classes 'bg-primary-100 dark:bg-primary' -->
                 <a
-                  href="#"
+                  href="/home.php"
                   @click="$event.preventDefault(); open = !open"
                   class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                   :class="{ 'bg-primary-100 dark:bg-primary': isActive || open }"
@@ -99,15 +103,29 @@
                   </span>
                 </a>
                 <div x-show="open" class="mt-2 space-y-2 px-7" role="menu" aria-label="Layouts">
+                <a
+                      href="../../Views/pages/products.php"
+                      role="menuitem"
+                      class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
+                    >
+                    All Products
+                    </a>
                     <a
-                      href="#"
+                      href="../../Views/pages/drinks.php"
+                      role="menuitem"
+                      class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
+                    >
+                    Drinks
+                    </a>
+                    <a
+                      href="../../Views/pages/nut_products.php"
                       role="menuitem"
                       class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
                     >
                     Nut Products
                     </a>
                     <a
-                      href="#"
+                      href="../../Views/pages/flour_products.php"
                       role="menuitem"
                       class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
                     >
@@ -120,7 +138,11 @@
               <!-- Authentication links -->
               <div x-data="{ isActive: false, open: false}">
                 <a
+<<<<<<< HEAD:Views/layout/customer/nav_user.php
                   href="../pages/history.php"
+=======
+                  href="history.php"
+>>>>>>> 5422fc5bc23e3e0474d1f45e2f4b77a0b5497c64:Views/layout/navbarUser/nav_user.php
                   @click="open = !open"
                   class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                   :class="{'bg-primary-100 dark:bg-primary': isActive || open}"
