@@ -2,7 +2,10 @@
 require_once (__DIR__ . '/../layout/navbarUser/header_user.php');
 require_once (__DIR__ . '/../layout/navbarUser/nav_user.php');
 ?>
- 
+
+<link rel="stylesheet" href="/Assets/css/order.css">
+<title>Product Listing</title>
+
 <h1>Nut Products</h1>
 
 <div class="container" id="productContainer">
@@ -10,16 +13,13 @@ require_once (__DIR__ . '/../layout/navbarUser/nav_user.php');
     $products = [  
         ["name" => "Arabica Brazil", "price" => "$0.75", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Arabica Brazil.png"],  
         ["name" => "Arabica Ethiopia", "price" => "$0.75", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Arabica Ethiopia.png"],  
+        ["name" => "Arabica Brazil", "price" => "$0.75", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Arabica Brazil.png"],  
+        ["name" => "Arabica Ethiopia", "price" => "$0.75", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Arabica Ethiopia.png"],  
         ["name" => "Baych Bleand", "price" => "$1.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Baych_bleand.jpg"],  
         ["name" => "Brown Sugar", "price" => "$2.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Brown_sugar.jpg"],  
-        ["name" => "Flores Bajawa Arabica", "price" => "$3.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Flores_bajawa_arabica.jpg"],  
-        ["name" => "Flores Bajawa", "price" => "$1.25", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Flores_bajawa.jpg"],  
-        ["name" => "Popping Pearls Blueberry", "price" => "$2.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Popping_Pearls_Blueberry.jpg"],  
-        ["name" => "Strawberry Puree", "price" => "$3.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Strawberry.jpg"],  
-        ["name" => "White Boba", "price" => "$1.25", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/White_boba.jpg"],  
-        ["name" => "White Crystal", "price" => "$2.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/White_crystal.jpg"],  
-        ["name" => "Popping Boba Strawberry", "price" => "$3.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Popping_boba_strawberry.jpg"],  
-        ["name" => "Boba Drink Mix.", "price" => "$1.25", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/boba_drink_mix.jpg"],  
+        ["name" => "Flores Bajawa Arabica", "price" => "$3.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Flores_bajawa_arabica.jpg"], 
+        ["name" => "Brown Sugar", "price" => "$2.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Brown_sugar.jpg"],  
+        ["name" => "Flores Bajawa Arabica", "price" => "$3.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Flores_bajawa_arabica.jpg"],   
     ];  
 
     foreach ($products as $product) {  
@@ -30,38 +30,34 @@ require_once (__DIR__ . '/../layout/navbarUser/nav_user.php');
         echo '<p class="stock">' . ($product['stock']) . '</p>';  
         echo '<p class="price">' . ($product['price']) . '</p>';  
         echo '<div class="options">';  
-        echo '<input type="number" value="1" min="1">';  
-        echo '<select>';  
-        echo '<option>M</option>';  
-        echo '<option>L</option>';  
-        echo '<option>S</option>';  
+        echo '<input type="number" id="qty_' . addslashes($product['name']) . '" value="1" min="1">';  
+        echo '<select id="size_' . addslashes($product['name']) . '">';  
+        echo '<option value="M">M</option>';  
+        echo '<option value="L">L</option>';  
+        echo '<option value="S">S</option>';  
         echo '</select>';  
         echo '</div>';  
-        echo '<button class="order-button">Order</button>';  
+        echo '<button class="order-button" onclick="addToOrder(\'' . addslashes($product['name']) . '\', \'' . addslashes($product['price']) . '\', \'' . addslashes($product['image']) . '\')">Order</button>';  
         echo '</div>'; 
         echo '</div>'; 
     }  
     ?>  
 </div>
 
-<script>
-function filterProducts() {
-    let input = document.getElementById('search').value.toLowerCase();
-    let products = document.getElementsByClassName('product');
-    
-    for (let i = 0; i < products.length; i++) {
-        let productName = products[i].getElementsByClassName('product-name')[0].innerText.toLowerCase();
-        if (productName.includes(input)) {
-            products[i].style.display = "flex";
-        } else {
-            products[i].style.display = "none";
-        }
-    }
-}
-</script>
- 
+<!-- Order List Modal -->
+<div id="orderForm" style="display: none;" class="order-form">
+    <h2>Order List</h2>
+    <div id="orderList"></div>
+    <div id="order-footer">
+        <p>Total Price: $<span id="totalPrice">0.00</span></p>
+        <button class="btn1" onclick="submitOrder()">Submit Order</button>
+        <button class="btn2" onclick="closeOrderForm()">Cancel</button>
+        <p class="note">Scroll to see your another products order</p>
+    </div>
+</div>
 
 
+<script src="/Assets/js/order.js"></script>
 
 <?php
 require_once (__DIR__ . '/../layout/navbarUser/footer_user.php');
