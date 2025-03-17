@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/../layout/customer/header_user.php';
 require_once __DIR__ . '/../layout/customer/nav_user.php';
-require_once __DIR__ . '/../layout/customer/footer_user.php';
 
 ?>
         <header class="flex-1 relative bg-white dark:bg-darker">
@@ -320,3 +319,4 @@ require_once __DIR__ . '/../layout/customer/footer_user.php';
                     </div>
                 </div>
             </div>
+            <?php require_once __DIR__ . '/../layout/customer/footer_user.php';?>

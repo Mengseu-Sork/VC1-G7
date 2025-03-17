@@ -58,14 +58,21 @@
                 </a>
                 <div x-show="open" class="mt-2 space-y-2 px-7" role="menu" aria-label="Layouts">
                     <a
-                      href="#"
+                      href="/products/product_list"
+                      role="menuitem"
+                      class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
+                    >
+                    Products List
+                    </a>
+                    <a
+                      href="/products/product_nut"
                       role="menuitem"
                       class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
                     >
                     Nut Products
                     </a>
                     <a
-                      href="#"
+                      href="/products/product_flour"
                       role="menuitem"
                       class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
                     >

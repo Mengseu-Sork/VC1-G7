@@ -318,7 +318,7 @@
                                 <tr class="border-t border-gray-200 hover:bg-gray-100 transition duration-200">
                                     <td class="py-3 px-6"><?= $index + 1 ?></td>
                                     <td class="py-3 px-6 text-center">
-                                        <img src="/Assets/images/<?= $user['image'] ?>" alt="Profile Image" class="w-10 h-10 rounded-full object-cover">
+                                        <img src="../../Assets/images/<?= $user['image'] ?>" alt="Profile Image" class="w-10 h-10 rounded-full object-cover">
                                     </td>
                                     <td class="py-3 px-6"><?= $user['FirstName'] ?></td>
                                     <td class="py-3 px-6"><?= $user['LastName'] ?></td>

@@ -1,16 +1,8 @@
 <?php
 
-
-// Create a new instance of the Database class
 $db = new Database();
-
-// Write the query to select all products from the products table
-$query = "SELECT * FROM product"; // Make sure the table name is correct
-
-// Run the query and store the result
+$query = "SELECT * FROM product"; 
 $result = $db->query($query);
-
-// Fetch all products from the database
 $products = $result->fetchAll();
 ?>
 
@@ -45,7 +37,9 @@ $products = $result->fetchAll();
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Image</th> 
                     <th>Product Name</th>
+                    <th>Price</th> 
                     <th>Type</th>
                     <th>Date</th>
                     <th>Action</th>
@@ -55,15 +49,25 @@ $products = $result->fetchAll();
                 <?php if (count($products) > 0): ?>
                     <?php foreach ($products as $row): ?>
                         <tr>
-                            <td><?= htmlspecialchars($row['id']) ?></td>
-                            <td><?= htmlspecialchars($row['product_name']) ?></td>
-                            <td><span class="product-type"><?= htmlspecialchars($row['type']) ?></span></td>
-                            <td><?= date("d/m/Y", strtotime($row['date'])) ?></td>
+                            <td><?= ($row['id']) ?></td>
                             <td>
-                                <a href="/Views/Products/edite.php">     
-                                    <button class="edit-button">Edit</button>
-                                </a>
-                                <a href="delete.php?id=<?= $row['id'] ?>" onclick="return confirm('Are you sure?');">
+                                
+                                <!-- // !empty($row['image']) ? '../Assets/images/product/' . ($row['image']) : '../Assets/images/product/default.jpg' 
+                              -->
+                                <!-- alt="Product Image" width="50" height="50" style="border-radius: 5px;"> -->
+                                <img src="../../Assets/images/product/<?php echo $row["image"]?>" alt=""  width="50" height="50" style="border-radius: 5px;"  >
+                            </td>
+                            
+                            <td><?= ($row['product_name']) ?></td>
+                            <td><?= ($row['price']) ?>$</td> 
+                            <td><span class="product-type"><?= ($row['type']) ?></span></td>
+                            <td><?= date("d/m/Y", strtotime($row['date'])) ?></td>
+                            
+                            <td>
+                            <a href="/products/edit">
+                             <button class="edit-button">Edit</button>
+                            </a>
+                                <a href="delete.php?id=<?= $row['id'] ?>" onclick="return confirm('Are you sure you want to delete <?= addslashes($row['product_name']) ?>?');">
                                     <button class="delete-button">Delete</button>
                                 </a>
                             </td>
@@ -71,15 +75,16 @@ $products = $result->fetchAll();
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="5">No products found</td>
+                        <td colspan="6" style="text-align: center;">No products found</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
         </table>
 
-        <a href="/Views/Products/create.php">
+        <a href="/products/create">
             <button class="add-product-button">Add Product</button>
         </a>
     </div>
 </body>
 </html>
+
