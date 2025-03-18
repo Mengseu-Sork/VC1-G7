@@ -183,3 +183,27 @@ input:checked+.slider:before {
     float: right;
     
 } 
+
+.product-list th select {
+    width: 100%;
+    font-family: Arial, sans-serif; 
+    border-collapse: collapse;
+    border: none;
+    background-color: #5bc0de;
+}
+.product-list img {
+    border-radius: 5px;
+}
+
+
+.product-list .edit-button, .product-list .delete-button {
+    padding: 5px 10px;
+    border: none;
+    background-color:#d9534f;
+    color: white;
+    cursor: pointer;
+}
+
+.product-list .edit-button {
+    background-color: #5bc0de;
+}

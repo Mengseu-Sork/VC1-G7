@@ -38,8 +38,8 @@
         <label for="type">Type</label>
         <select id="type" name="type" required>
           <option value="">Select Type</option>
-          <option value="Powder" <?php if($product['type'] == 'Powder') echo 'selected'; ?>>Flour</option>
-          <option value="Nuts" <?php if($product['type'] == 'Nuts') echo 'selected'; ?>>Nut</option>
+          <option value="Powder" <?php if($product['type'] == 'Powder') echo 'selected'; ?>>Powder</option>
+          <option value="Nuts" <?php if($product['type'] == 'Nut') echo 'selected'; ?>>Nut</option>
         </select>
       </div>
     </div>

@@ -64,20 +64,7 @@
                     >
                     Products List
                     </a>
-                    <a
-                      href="/products/product_nut"
-                      role="menuitem"
-                      class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
-                    >
-                    Nut Products
-                    </a>
-                    <a
-                      href="/products/product_flour"
-                      role="menuitem"
-                      class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
-                    >
-                    Flour Products
-                    </a>
+                   
                   </div>
               </div>
 
@@ -106,7 +93,6 @@
 
               <!-- Authentication links -->
               <div x-data="{ isActive: false, open: false}">
-                <!-- active & hover classes 'bg-primary-100 dark:bg-primary' -->
                 <a
                   href="#"
                   @click="open = !open"
