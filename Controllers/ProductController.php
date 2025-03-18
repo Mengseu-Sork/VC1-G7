@@ -2,6 +2,7 @@
 // If BaseController exists
 // require_once ' Controllers/BaseController.php';
 require_once 'Models/ProductModel.php';
+require_once 'BaseController.php';
 
 class ProductController extends BaseController {
     private $model;
@@ -60,15 +61,10 @@ class ProductController extends BaseController {
         $this->view('Products/edit');
     }
 
+    public function delete($id) {
+        $this->model->deleteProduct($id) ;
+        $this->redirect('/products');
 
-    public function delete()
-    {
-        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
-            $id = $_POST['id'];
-            $this->model->deleteProduct($id);
-            header("Location: /Product_list");
-            exit();
-        }
     }
 }
 ?>

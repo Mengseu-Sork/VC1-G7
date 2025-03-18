@@ -26,11 +26,11 @@ $products = $result->fetchAll();
         </div>
 
         <div class="search-bar">
-            <input type="text" placeholder="Search products...">
+            <input type="text" id="search-input" placeholder="Search products...">
             <button>Search</button>
         </div>
 
-        <h2>List Products</h2>
+        <h2>List Products of nut</h2>
         <table class="product-list">
             <thead>
                 <tr>
@@ -58,7 +58,7 @@ $products = $result->fetchAll();
                             <td><?= date("d/m/Y", strtotime($row['date'])) ?></td>
                             
                             <td>
-                            <a href="/products/edit">
+                            <a href="/products/edit?id=<?= $row['id'] ?>">
                              <button class="edit-button">Edit</button>
                             </a>
                                 <a href="delete.php?id=<?= $row['id'] ?>" onclick="return confirm('Are you sure you want to delete <?= addslashes($row['product_name']) ?>?');">
@@ -79,5 +79,23 @@ $products = $result->fetchAll();
             <button class="add-product-button">Add Product</button>
         </a>
     </div>
+
+    <script>
+        // JavaScript to filter products by name
+        document.getElementById('search-input').addEventListener('input', function() {
+            var searchQuery = this.value.toLowerCase();
+            var rows = document.querySelectorAll('.product-row');
+            
+            rows.forEach(function(row) {
+                var productName = row.cells[2].textContent.toLowerCase(); // Assuming product name is in the 3rd column (index 2)
+                
+                if (productName.includes(searchQuery)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>

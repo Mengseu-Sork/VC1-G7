@@ -34,7 +34,7 @@ class ProductModel {
         $result = $this->db->query($query, ['id' => $id]);
         return $result->fetch();
     }
-
+  
     function updateProduct($data){
         $stmt = "UPDATE product SET product_name = :product_name, price = :price, type = :type, date = :date, image = :image WHERE id = :id";
         $this->db->query($stmt, [
@@ -46,10 +46,10 @@ class ProductModel {
             'id' => $data['id']
         ]);
     }
+   
 
-    public function deleteProduct($id)
-    {
-    $this->db->query("DELETE FROM products WHERE id = :id", ['id' => $id]);
+    public function deleteProduct($id) {
+        return $this->db->query('DELETE FROM product where id = :id', ['id'=> $id]);
     }
 }
 ?>

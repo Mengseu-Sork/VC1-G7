@@ -53,7 +53,7 @@
 
             <button type="submit" class="w-full py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">Login</button>
 
-            <div class="text-center text-gray-500">Or login with</div>
+            <!-- <div class="text-center text-gray-500">Or login with</div>
             <div class="flex gap-4">
                 <button type="button" class="flex-1 py-2 text-white bg-red-500 rounded-md hover:bg-red-600">
                     <i class="fab fa-google mr-2"></i> Google
@@ -61,11 +61,11 @@
                 <button type="button" class="flex-1 py-2 text-white bg-blue-800 rounded-md hover:bg-blue-900">
                     <i class="fab fa-facebook-f mr-2"></i> Facebook
                 </button>
-            </div>
+            </div> -->
         </form>
 
         <div class="text-center text-gray-600">
-            <p>Don't have an account? <a href="/register" class="text-blue-500 hover:underline">Register</a></p>
+            <p>Don't have an account? <a href="/Views/auth/register.php" class="text-blue-500 hover:underline">Register</a></p>
         </div>
     </div>
     <script>
