@@ -33,7 +33,7 @@ class ProductModel {
         $result = $this->db->query($query, ['id' => $id]);
         return $result->fetch();
     }
-    function updateProduct($data){
+    function updateProduct($id, $data){
         $stmt = "UPDATE product SET product_name = :product_name, price = :price, type = :type, date = :date, image = :image WHERE id = :id";
         $this->db->query($stmt, [
             'product_name' => $data['product_name'],
@@ -41,11 +41,11 @@ class ProductModel {
             'type' => $data['type'],
             'date' => $data['date'],
             'image' => $data['image'],
-            'id' => $data['id']
+            'id' => $id
         ]);
     }
     function deleteProduct($id){
-        $stmt = "DELETE FROM products WHERE id = :id";
+        $stmt =$this->db->query("DELETE FROM products WHERE id = :id");
         $this->db->query($stmt, ['id' => $id]);
     }
 }

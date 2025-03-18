@@ -23,7 +23,7 @@
 
       <div class="form-group">
         <label for="name">Name </label>
-        <input type="text" id="name" value="<?= $product['product_name'] ?>" name="name" required>
+        <input type="text" id="name" value="<?= $product['product_name'] ?>" name="product_name" required>
       </div>
 
       <div class="form-grid">
@@ -39,8 +39,8 @@
           <label for="type">Type</label>
           <select id="type" name="type" required>
             <option value="">Select Type</option>
-            <option value="Powder" <?= $product['type'] == 'Powder' ? 'selected' : '' ?>>Flour</option>
-            <option value="Nuts" <?= $product['type'] == 'Nuts' ? 'selected' : '' ?>>Nut</option>
+            <option value=" <?= $product['type'] == 'Powder' ? 'selected' : '' ?>">Flour</option>
+            <option value="<?= $product['type'] == 'Nuts' ? 'selected' : '' ?>" >Nut</option>
           </select>
         </div>
       </div>

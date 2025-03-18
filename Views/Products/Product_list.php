@@ -69,7 +69,7 @@ $products = $result->fetchAll();
                                 <a href="/products/edit?id=<?= $row['id'] ?>">
                                     <button class="edit-button">Edit</button>
                                 </a>
-                                <a href="delete.php?id=<?= $row['id'] ?>" onclick="return confirm('Are you sure you want to delete <?= addslashes($row['product_name']) ?>?');">
+                                <a href="/Products/delete<?= $row['id'] ?>" onclick="return confirm('Are you sure you want to delete <?= addslashes($row['product_name']) ?>?');">
                                     <button class="delete-button">Delete</button>
                                 </a>
                             </td>

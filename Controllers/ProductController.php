@@ -70,7 +70,7 @@ class ProductController extends BaseController {
                 'date' => $_POST['date-start'],
                 'image' => $_POST['image'],
             ];
-            $this->model->updateProduct($data);
+            $this->model->updateProduct($_POST['id'], $data);
             $this->redirect('/products');
         }
     }
