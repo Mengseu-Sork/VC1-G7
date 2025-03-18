@@ -5,14 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/Assets/css/create.css">
-  <title>Edit Product name</title>
+  <title>Edit Product</title>
 </head>
 
 <body>
-
   <div class="form-container">
     <h2>Edit Product</h2>
-    <form action="/products/update?id=<?= $row['id'] ?>" method="POST" enctype="multipart/form-data">
+    <form action="/products/update" method="POST" enctype="multipart/form-data">
       <div class="image-upload">
         <label for="image">Upload Image</label>
         <input type="file" id="image" value="<?= $product['image'] ?>" name="image" accept="image/*" required>
@@ -20,27 +19,28 @@
           Click or drag to upload image
         </div>
       </div>
+      <input type="hidden" name="id" value="<?= $product['id'] ?>">
 
       <div class="form-group">
-        <label for="name">Name </label>
-        <input type="text" id="name" value="<?= $product['product_name'] ?>" name="product_name" required>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="product_name" value="<?= htmlspecialchars($product['product_name']) ?>" required>
       </div>
 
       <div class="form-grid">
         <div class="form-group">
           <label for="price">Price</label>
-          <input type="number" id="price" value="<?= $product['price'] ?>" name="price" required>
+          <input type="number" id="price" name="price" value="<?= htmlspecialchars($product['price']) ?>" required>
         </div>
         <div class="form-group">
           <label for="date-start">Date Start</label>
-          <input type="date" id="date-start" value="<?= $product['date'] ?>" name="date-start" required>
+          <input type="date" id="date-start" name="date-start" value="<?= htmlspecialchars($product['date']) ?>" required>
         </div>
         <div class="form-group">
           <label for="type">Type</label>
           <select id="type" name="type" required>
             <option value="">Select Type</option>
-            <option value=" <?= $product['type'] == 'Powder' ? 'selected' : '' ?>">Flour</option>
-            <option value="<?= $product['type'] == 'Nuts' ? 'selected' : '' ?>" >Nut</option>
+            <option value="Powder" <?= $product['type'] == 'Powder' ? 'selected' : '' ?>>Flour</option>
+            <option value="Nuts" <?= $product['type'] == 'Nuts' ? 'selected' : '' ?>>Nut</option>
           </select>
         </div>
       </div>
@@ -51,7 +51,6 @@
       </div>
     </form>
   </div>
-
 </body>
 
 </html>

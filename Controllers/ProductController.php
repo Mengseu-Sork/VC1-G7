@@ -61,16 +61,43 @@ class ProductController extends BaseController {
         $product = $this->model->getProductById($id);
         $this->view('Products/edite', ['product' => $product]);
     }
-    function update(){
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    function update() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id = $_POST['id'];
             $data = [
-                'product_name' => $_POST['name'],
-                'price' => $_POST['price'],
-                'type' => $_POST['type'],
-                'date' => $_POST['date-start'],
-                'image' => $_POST['image'],
+                'product_name' => htmlspecialchars($_POST['product_name']),
+                'price' => (float)$_POST['price'],
+                'type' => htmlspecialchars($_POST['type']),
+                'date' => htmlspecialchars($_POST['date-start']),
             ];
-            $this->model->updateProduct($_POST['id'], $data);
+    
+            // Image Upload Handling
+            $imagePath = null;
+            if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+                $target_dir = "uploads/";
+                if (!is_dir($target_dir)) {
+                    mkdir($target_dir, 0777, true);
+                }
+                $imagePath = $target_dir . basename($_FILES['image']['name']);
+                if (move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
+                    $data['image'] = $imagePath; // Add image path to data
+                } else {
+                    echo "Error: Failed to upload image.";
+                    return;
+                }
+            } else {
+              //if no new image is uploaded, use the previous image
+              $product = $this->model->getProductById($id);
+              $data['image'] = $product['image'];
+            }
+    
+            // Validation (Add more validation as needed)
+            if (empty($data['product_name'])) {
+                echo "Error: Product name is required.";
+                return;
+            }
+    
+            $this->model->updateProduct($id, $data);
             $this->redirect('/products');
         }
     }
