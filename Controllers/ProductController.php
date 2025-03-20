@@ -80,7 +80,8 @@ class ProductController extends BaseController {
                 }
                 $imagePath = $target_dir . basename($_FILES['image']['name']);
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
-                    $data['image'] = $imagePath; // Add image path to data
+                    $data['image'] = basename($_FILES['image']['name']); //store only the name in the database.
+                    echo "<br> Image Uploaded Correctly <br>";
                 } else {
                     echo "Error: Failed to upload image.";
                     return;
@@ -89,12 +90,19 @@ class ProductController extends BaseController {
               //if no new image is uploaded, use the previous image
               $product = $this->model->getProductById($id);
               $data['image'] = $product['image'];
+              echo "<br> No new image uploaded, using previous image <br>";
             }
     
             // Validation (Add more validation as needed)
             if (empty($data['product_name'])) {
                 echo "Error: Product name is required.";
                 return;
+            }
+    
+            var_dump($_FILES['image']);
+            echo "<br>";
+            if(isset($imagePath)){
+                echo "image path: " . $imagePath;
             }
     
             $this->model->updateProduct($id, $data);

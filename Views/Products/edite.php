@@ -11,7 +11,7 @@
 <body>
   <div class="form-container">
     <h2>Edit Product</h2>
-    <form action="/products/update" method="POST" enctype="multipart/form-data">
+    <form action="/products/update?id=<?= $product['id'] ?>" method="POST" enctype="multipart/form-data">
       <div class="image-upload">
         <label for="image">Upload Image</label>
         <input type="file" id="image" value="<?= $product['image'] ?>" name="image" accept="image/*" required>
