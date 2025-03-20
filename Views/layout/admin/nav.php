@@ -133,6 +133,24 @@
                   </a>
               </div>
               <div x-data="{ isActive: false, open: false}">
+                <a
+                    href="/categories"
+                    @click="open = !open"
+                    class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                    :class="{'bg-primary-100 dark:bg-primary': isActive || open}"
+                    role="button"
+                    aria-haspopup="true"
+                    :aria-expanded="(open || isActive) ? 'true' : 'false'"
+                  >
+                    <span aria-hidden="true">
+                      <i class="fas fa-dollar-sign icon1"></i>
+                    </span>
+                    <span class="ml-4 text-sm"> Categories </span>
+                    <span aria-hidden="true" class="ml-auto">
+                    </span>
+                  </a>
+              </div>
+              <div x-data="{ isActive: false, open: false}">
                 <!-- active & hover classes 'bg-primary-100 dark:bg-primary' -->
                 <a
                   href="/user"
