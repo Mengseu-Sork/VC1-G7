@@ -1,5 +1,5 @@
 <?php
-require_once 'Databases/Database.php';
+require_once 'Databases/database.php';
 
 // ProductModel.php
 class ProductModel {
@@ -28,23 +28,24 @@ class ProductModel {
             'image' => $data['image'],
         ]);
     }
-
     function getProductById($id){
         $query = "SELECT * FROM product WHERE id = :id";
         $result = $this->db->query($query, ['id' => $id]);
         return $result->fetch();
     }
-
-    function updateProduct($data){
-        $stmt = "UPDATE product SET product_name = :product_name, price = :price, type = :type, date = :date, image = :image WHERE id = :id";
+    function updateProduct($id, $data) {
+        $stmt = "UPDATE product SET product_name = :product_name, price = :price, type = :type, date = :date WHERE id = :id";
         $this->db->query($stmt, [
             'product_name' => $data['product_name'],
             'price' => $data['price'],
             'type' => $data['type'],
             'date' => $data['date'],
-            'image' => $data['image'],
-            'id' => $data['id']
+            'id' => $id,
         ]);
+    }
+    function deleteProduct($id){
+        $stmt =$this->db->query("DELETE FROM products WHERE id = :id");
+        $this->db->query($stmt, ['id' => $id]);
     }
 }
 ?>

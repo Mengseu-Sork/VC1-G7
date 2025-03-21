@@ -6,6 +6,12 @@ $products = $result->fetchAll();
 
 $product_types = ['Nut' => 'Nut Products', 'Powder' => 'Powder Products'];   
 ?>  
+<?php
+$db = new Database();
+$query = "SELECT * FROM product";
+$result = $db->query($query);
+$products = $result->fetchAll();
+?>
 
 <!DOCTYPE html>  
 <html lang="en">  
@@ -68,7 +74,7 @@ $product_types = ['Nut' => 'Nut Products', 'Powder' => 'Powder Products'];
                             <td><span class="product-type"><?= ($row['type']) ?></span></td>  
                             <td><?= date("d/m/Y", strtotime($row['date'])) ?></td>  
                             <td>  
-                                <a href="/products/edit">  
+                                <a href="/products/edit?id=<?= $row['id'] ?>">  
                                     <button class="edit-button">Edit</button>  
                                 </a>  
                                 <a href="delete.php?id=<?= $row['id'] ?>" onclick="return confirm('Are you sure you want to delete <?= addslashes($row['product_name']) ?>?');">  
