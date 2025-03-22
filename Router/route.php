@@ -6,6 +6,7 @@ require_once 'Controllers/HomeController.php';
 require_once 'Controllers/CategoryController.php';
 // require_once 'Controllers/AuthController.php';
 require 'Controllers/ProductController.php';
+require_once 'Controllers/OrderController.php';
 
 
 $routes = new Router();
@@ -47,5 +48,15 @@ $routes->get('/categories', [CategoryController::class, 'index']);
 // $routes->get('/categories/edit/{id}', [CategoryController::class, 'edit']);
 // $routes->post('/categories/update/{id}', [CategoryController::class, 'update']);
 // $routes->get('/categories/delete/{id}', [CategoryController::class, 'delete']);
+
+
+// order
+$routes->get('/orders', [OrderController::class, 'index']);
+// $routes->get('/orders/create', [OrderController::class, 'create']);
+// $routes->post('/orders/store', [OrderController::class, 'store']);
+// $routes->get('/orders/edit/{id}', [OrderController::class, 'edit']);
+// $routes->post('/orders/update/{id}', [OrderController::class, 'update']);
+// $routes->delete('/orders/delete', [OrderController::class, 'delete']);
+// $routes->get('/orders/show', [OrderController::class, 'show']);
 
 $routes->dispatch();
