@@ -1,87 +1,131 @@
-<?php  
-$db = new Database();  
-$query = "SELECT * FROM products";   
-$result = $db->query($query);  
-$products = $result->fetchAll();  
-
-$product_types = ['Nut' => 'Nut Products', 'Powder' => 'Powder Products'];   
-?>  
 <?php
-$db = new Database();
-$query = "SELECT * FROM products";
-$result = $db->query($query);
-$products = $result->fetchAll();
+$categories_name = [
+    'Nut' => 'Nut Products',
+    'Powder' => 'Powder Products',
+    'Drinks' => 'Drinks Products'
+];
 ?>
-<div class="mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
-        <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
-            <div class="shadow-lg rounded-lg p-6 border-2 border-gray-200 dark:border-primary-darker transition duration-300"
-                 :style="{ backgroundColor: bgColor }">
-                <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Products List</h2>
-                <div class="overflow-x-auto bg-white shadow-lg rounded-lg mt-5">
-                    <table class="w-full table-auto border-collapse">
-                        <thead>
-                            <tr class="bg-blue-800 text-white uppercase text-xs sm:text-sm leading-normal">
-                                <th class="border border-gray-200 dark:border-gray-700 px-4 py-2">ID</th>
-                                <th class="border border-gray-200 dark:border-gray-700 px-4 py-2">Image</th>
-                                <th class="border border-gray-200 dark:border-gray-700 px-4 py-2">Product Name</th>
-                                <th class="border border-gray-200 dark:border-gray-700 px-4 py-2">Price</th>
-                                <th class="border border-gray-200 dark:border-gray-700 px-4 py-2">
-                                    <select id="product-filter" class="bg-blue-800 border border-blue-300 dark:border-gray-700 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary">
-                                        <option value="">All Types</option>
-                                        <?php foreach ($product_types as $key => $value): ?>  
-                                            <option value="<?= $key ?>"><?= $value ?></option>
-                                        <?php endforeach; ?>  
-                                    </select>
-                                </th>
-                                <th class="border border-gray-200 dark:border-gray-700 px-4 py-2">Date</th>
-                                <th class="border border-gray-200 dark:border-gray-700 px-4 py-2">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="product-table-body">
-                            <?php if (count($products) > 0): ?>  
-                                <?php foreach ($products as $row): ?>  
-                                    <tr class="bg-gray-50 dark:bg-gray-900">
-                                        <td class="border border-gray-200 dark:border-gray-700 px-4 py-2"><?= ($row['id']) ?></td>
-                                        <td class="border border-gray-200 dark:border-gray-700 px-4 py-2">
-                                            <img src="../../Assets/images/<?php echo $row['image'] ?>" alt="" width="50" height="50" class="rounded-md">
-                                        </td>
-                                        <td class="border border-gray-200 dark:border-gray-700 px-4 py-2"><?= ($row['product_name']) ?></td>
-                                        <td class="border border-gray-200 dark:border-gray-700 px-4 py-2"><?= ($row['price']) ?>$</td>
-                                        <td class="border border-gray-200 dark:border-gray-700 px-4 py-2"><span class="product-type"><?= ($row['type']) ?></span></td>
-                                        <td class="border border-gray-200 dark:border-gray-700 px-4 py-2"><?= date("d/m/Y", strtotime($row['date'])) ?></td>
-                                        <td class="border border-gray-200 dark:border-gray-700 px-4 py-2">
-                                            <a href="/products/edit?id=<?= $row['id'] ?>">
-                                                <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-300">Edit</button>
-                                            </a>
-                                            <a href="delete.php?id=<?= $row['id'] ?>" onclick="return confirm('Are you sure you want to delete <?= addslashes($row['product_name']) ?>?');">
-                                                <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition duration-300 ml-2">Delete</button>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>  
-                            <?php else: ?>  
-                                <tr>
-                                    <td colspan="7" class="text-center py-4">No products found</td>
-                                </tr>
-                            <?php endif; ?>  
-                        </tbody>
-                    </table>
-                </div>
-                <a href="/products/create" class="inline-block mt-4">
-                    <button class="bg-blue-500 hover:bg-green-600 text-white font-bold px-6 py-3 rounded-lg transition duration-300">Add Product</button>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
+    <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        header("Content-Type: application/json"); // Set response type to JSON
+    
+        if (isset($_FILES["image"]) && $_FILES["image"]["error"] == UPLOAD_ERR_OK) {
+            $targetDir = "Assets/images/uploads/";
+            $fileName = basename($_FILES["image"]["name"]);
+            $targetFilePath = $targetDir . $fileName;
+            $fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
+    
+            // Allowed file types
+            $allowedTypes = ["jpg", "jpeg", "png", "gif"];
+            if (!in_array($fileType, $allowedTypes)) {
+                echo json_encode(["success" => false, "message" => "Invalid file format. Only JPG, JPEG, PNG, and GIF files are allowed."]);
+                exit;
+            }
+    
+            // Ensure target directory exists
+            if (!is_dir($targetDir) && !mkdir($targetDir, 0777, true)) {
+                echo json_encode(["success" => false, "message" => "Failed to create upload directory."]);
+                exit;
+            }
+    
+            // Move the uploaded file
+            if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
+                echo json_encode(["success" => true, "message" => "File uploaded successfully!", "image" => $targetFilePath]);
+            } else {
+                echo json_encode(["success" => false, "message" => "Error moving the uploaded file."]);
+            }
+        } else {
+            // Handle specific upload errors
+            $errorMessages = [
+                UPLOAD_ERR_INI_SIZE   => "The uploaded file exceeds the server limit.",
+                UPLOAD_ERR_FORM_SIZE  => "The uploaded file exceeds the form limit.",
+                UPLOAD_ERR_PARTIAL    => "The file was only partially uploaded.",
+                UPLOAD_ERR_NO_FILE    => "No file was uploaded.",
+                UPLOAD_ERR_NO_TMP_DIR => "Missing a temporary folder.",
+                UPLOAD_ERR_CANT_WRITE => "Failed to write file to disk.",
+                UPLOAD_ERR_EXTENSION  => "File upload stopped by a PHP extension."
+            ];
+            
+            $errorCode = $_FILES["image"]["error"];
+            $errorMessage = $errorMessages[$errorCode] ?? "An unknown error occurred.";
+    
+            echo json_encode(["success" => false, "message" => $errorMessage]);
+        }
+        exit;
+    }   
+    ?>
+    <div class="container">  
+        <div class="header">  
+            <h1>Management</h1>  
+            <div>  
+                <label class="toggle-switch">  
+                    <input type="checkbox">  
+                    <span class="slider"></span>  
+                </label>  
+                <img src="https://via.placeholder.com/30" alt="User Avatar" style="border-radius: 50%;">  
+            </div>  
+        </div>  
+
+        <div class="search-bar">  
+            <input type="text" placeholder="Search products...">  
+            <button>Search</button>  
+        </div>  
+
+        <h2>Products List</h2>  
+
+        <table class="product-list">  
+            <thead>  
+                <tr>  
+                    <th>Image</th>  
+                    <th>Product Name</th>  
+                    <th>Price</th>  
+                    <th>Date</th>  
+
+                    <th>
+                        <select name="category-filter" id="category-filter" onchange="filterByCategory(this.value)">
+                            <option value="">All Categories</option>
+                            <?php foreach ($categories_name as $key => $value): ?>
+                                <option value="<?= $key ?>"><?= $value ?></option>
+                            <?php endforeach; ?>  
+                        </select>
+                    </th>  
+
+                    <th>Actions</th>  
+                </tr>  
+            </thead>  
+            <tbody id="product-table-body">  
+                <?php foreach ($products as $product): ?>  
+                    <tr data-category="<?= $product['category_name']; ?>">  
+                    <td>  
+                        <img src="../Assets/images/uploads/<?php echo $product["image"]?>" alt="" width="50" height="50" style="border-radius: 5px;">  
+                    </td>  
+                    <td><?php echo $product['name']; ?></td>  
+                    <td><?php echo $product['price']; ?></td>  
+                    <td><?php echo $product['date']; ?></td>  
+                    <td><?php echo $product['category_name']; ?></td>  
+                    
+
+                    <td>  
+                        <a href="/products/edit/<?php echo $product['id']; ?>" class="edit-button">Edit</a>  
+                        <a href="/products/delete/<?php echo $product['id']; ?>" class="delete-button">Delete</a>  
+                    </td>  
+                </tr>  
+                <?php endforeach; ?>  
+            </tbody>  
+        </table>  
+
+        <a href="/products/create">  
+            <button class="add-product-button">Add Product</button>  
+        </a>  
+    </div>  
 
     <script>  
-        function filterByType(type) {  
-            const rows = document.querySelectorAll("#product-table-body tr");  
-            rows.forEach(row => {  
-                const productType = row.querySelector(".product-type").innerText.trim();  
-                row.style.display = (type === "" || productType === type) ? "" : "none"; 
-            });  
-        }  
+        // Filter products by category
+        function filterByCategory(category) {
+            const rows = document.querySelectorAll("#product-table-body tr");
+            rows.forEach(row => {
+                const productCategory = row.getAttribute("data-category");
+                row.style.display = (category === "" || productCategory === category) ? "" : "none";
+            });
+        }
     </script>  
