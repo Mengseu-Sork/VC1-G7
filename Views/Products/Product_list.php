@@ -5,35 +5,32 @@ $result = $db->query($query);
 $products = $result->fetchAll();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Management Dashboard</title>  
+    <link rel="stylesheet" href="../Assets/css/product_list.css">  
+    
+</head>  
+<body>  
+    <div class="container">  
+        <div class="header">  
+            <h1>Management</h1>  
+            <div>  
+                <label class="toggle-switch">  
+                    <input type="checkbox">  
+                    <span class="slider"></span>  
+                </label>  
+                <img src="https://via.placeholder.com/30" alt="User Avatar" style="border-radius: 50%;">  
+            </div>  
+        </div>  
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Management Dashboard</title>
-    <link rel="stylesheet" href="../Assets/css/product_list.css">
-    <script src="searchProduct.js" defer></script>
-</head>
-
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>Management</h1>
-            <div>
-                <label class="toggle-switch">
-                    <input type="checkbox">
-                    <span class="slider"></span>
-                </label>
-                <img src="https://via.placeholder.com/30" alt="product Avatar" style="border-radius: 50%;">
-            </div>
-        </div>
-
-        <div class="search-bar">
-            <input type="text" placeholder="Search products...">
-            <button>Search</button>
-        </div>
-
+        <div class="search-bar">  
+            <input type="text" placeholder="Search products...">  
+            <button>Search</button>  
+        </div> 
         <h2>List Products</h2>
         <table class="product-list">
             <thead>

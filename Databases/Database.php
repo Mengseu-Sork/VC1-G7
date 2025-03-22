@@ -38,10 +38,16 @@ class Database
     }
 
 
-    public function fetchAll($sql, $params = [])
+    public function fetchAll($stmt)
     {
-        return $this->query($sql, $params)->fetchAll();
+        return $stmt ? $stmt->fetchAll() : [];
     }
+
+    public function fetch($stmt)
+    {
+        return $stmt ? $stmt->fetch() : null;
+    }
+
 
 
     public function closeConnection()

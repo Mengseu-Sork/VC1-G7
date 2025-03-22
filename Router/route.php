@@ -3,7 +3,7 @@ require 'Router.php';
 require_once 'controllers/UserController.php';
 require_once 'Controllers/DashboardController.php';
 require_once 'Controllers/HomeController.php';
-require_once 'Controllers/AuthController.php';
+// require_once 'Controllers/AuthController.php';
 require 'Controllers/ProductController.php';
 require 'Controllers/OrderHistoryController.php';
 
@@ -14,7 +14,7 @@ $routes = new Router();
 $routes->get('/', action: [HomeController::class, 'index']);
 
 
-$routes->get('/signin', [AuthController::class, 'login']);
+// $routes->get('/signin', [AuthController::class, 'login']);
 
 
 // dashboard
@@ -38,11 +38,12 @@ $routes->get('/products/product_flour', [ProductController::class, 'flour']);
 $routes->get('/products/create', [ProductController::class, 'create']);
 $routes->post('/products/store', [ProductController::class, 'store']);
 $routes->get('/products/edit', [ProductController::class, 'edit']);
-$routes->put('/products/update', [ProductController::class, 'update']);
+$routes->post('/products/update', [ProductController::class, 'update']);
 $routes->delete('/products/delete', [ProductController::class, 'delete']);
 
 // orders
 $routes->get('/orders', [OrderHistoryController::class, 'index']);
+$routes->get('/orders/show', [OrderHistoryController::class, 'show']);
 // $routes->delete('/orders/delete', [OrderHistoryController::class, 'delete']);
 
 $routes->dispatch();

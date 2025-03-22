@@ -1,7 +1,8 @@
 <?php
-include_once __DIR__ . '/../Models/OrderHistoryModel.php';
+require_once 'Models/OrderHistoryModel.php';
+require_once 'BaseController.php';
 
-class OrderHistoryController
+class OrderHistoryController extends BaseController
 {
     private $orderHistoryModel;
 
@@ -12,16 +13,9 @@ class OrderHistoryController
 
     public function index()
     {
-        try {
-            $orders = $this->orderHistoryModel->getAllOrders();
-            if ($orders === false) {
-                $_SESSION['error'] = "Failed to load orders";
-            }
-            include __DIR__ . '/../Views/orderView.php';
-        } catch (Exception $e) {
-            $_SESSION['error'] = "An error occurred: " . $e->getMessage();
-            include __DIR__ . '/../Views/orderView.php';
-        }
+        $orders = $this->orderHistoryModel->getAllOrders();
+
+        require_once __DIR__ . '/../Views/Products/orderHistory.php'; 
     }
 }
 ?>
