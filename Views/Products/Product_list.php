@@ -90,12 +90,12 @@ $products = $result->fetchAll();
 
                                                     <!-- Confirm Delete -->
                                                     <form action="/products/delete?id=<?= $row['id'] ?>" method="POST">
-    <input type="hidden" name="id" value="<?= $row['id'] ?>">
-    <button type="submit"
-        class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
-        Delete
-    </button>
-</form>
+                                                        <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                                                        <button type="submit"
+                                                            class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
+                                                            Delete
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -136,12 +136,12 @@ $products = $result->fetchAll();
             });
         }
         function openModal(id) {
-    document.getElementById(id).classList.remove("hidden");
-    }
+            document.getElementById(id).classList.remove("hidden");
+        }
 
-function closeModal(id) {
-    document.getElementById(id).classList.add("hidden");
-    }
+        function closeModal(id) {
+            document.getElementById(id).classList.add("hidden");
+        }
     </script>
 </body>
 

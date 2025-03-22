@@ -4,6 +4,6 @@ class HomeController
 
     function index()
     {
-        require_once 'views/pages/home.php';
+        require_once 'Views/pages/home.php';
     }
 }

@@ -8,7 +8,6 @@ require_once __DIR__ . '/../layout/customer/header_user.php';
 require_once __DIR__ . '/../layout/customer/nav_user.php';
 
 ?>
- 
     <header class="flex-1 relative bg-white dark:bg-darker">
                 <div class="flex items-center justify-between p-2 border-b dark:border-primary-darker">
                     <button

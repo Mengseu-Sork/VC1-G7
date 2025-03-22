@@ -8,7 +8,7 @@ class Database
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $dbname = "coffeeshop";
+        $dbname = "test";
 
         try {
 
@@ -35,6 +35,12 @@ class Database
 
             die("Query Error: " . $e->getMessage());
         }
+    }
+
+
+    public function fetchAll($sql, $params = [])
+    {
+        return $this->query($sql, $params)->fetchAll();
     }
 
 

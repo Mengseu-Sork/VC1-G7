@@ -5,12 +5,13 @@ require_once 'Controllers/DashboardController.php';
 require_once 'Controllers/HomeController.php';
 require_once 'Controllers/AuthController.php';
 require 'Controllers/ProductController.php';
+require 'Controllers/OrderHistoryController.php';
 
 
 $routes = new Router();
 
 // Homepage
-$routes->get('/', [HomeController::class, 'index']);
+$routes->get('/', action: [HomeController::class, 'index']);
 
 
 $routes->get('/signin', [AuthController::class, 'login']);
@@ -39,5 +40,9 @@ $routes->post('/products/store', [ProductController::class, 'store']);
 $routes->get('/products/edit', [ProductController::class, 'edit']);
 $routes->put('/products/update', [ProductController::class, 'update']);
 $routes->delete('/products/delete', [ProductController::class, 'delete']);
+
+// orders
+$routes->get('/orders', [OrderHistoryController::class, 'index']);
+// $routes->delete('/orders/delete', [OrderHistoryController::class, 'delete']);
 
 $routes->dispatch();
