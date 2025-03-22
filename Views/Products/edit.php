@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/Assets/css/create.css">
   <title>Edit Product</title>
 </head>
+
 <body>
 
 <div class="form-container">
@@ -39,16 +41,17 @@
           <option value="">Select Type</option>
           <option value="Powder">Flour</option>
           <option value="Nuts">Nut</option>
+          <option value="Drink">Drink</option>
         </select>
       </div>
     </div>
 
-    <div class="button-container">
-      <button type="button" class="cancel" onclick="window.location.href='/products'">Cancel</button>
-      <button type="submit" class="save">Save</button>
-    </div>
-  </form>
-</div>
-
+      <div class="button-container">
+        <button type="button" class="cancel" onclick="window.location.href='/products'">Cancel</button>
+        <button type="submit" class="save">Save</button>
+      </div>
+    </form>
+  </div>
 </body>
+
 </html>

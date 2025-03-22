@@ -74,6 +74,3 @@ function filterProducts() {
 <style>
 
 </style>
-
-
-<?php require_once __DIR__ . '/../layout/customer/footer_user.php';?>

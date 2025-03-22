@@ -1,12 +1,4 @@
-body {  
-    font-family: Arial, sans-serif;  
-    margin: 0;  
-    background-color: #e0f2f7;  
-    /* Light blue background */  
-    display: flex;  
-    flex-direction: column;  
-    /* align-items: center;   */
-}  
+ 
 
 .container {  
     width: 100%;  
@@ -82,31 +74,6 @@ input:checked+.slider:before {
     transform: translateX(26px);  
 }  
 
-/* Search Bar */  
-.search-bar {  
-    display: flex;  
-    width: 100%;  
-    margin-bottom: 20px;  
-}  
-
-.search-bar input[type="text"] {  
-    padding: 10px;  
-    border: 1px solid #ddd;  
-    border-radius: 8px;  
-    width: 100%;  
-    background-color: #f9f9f9;  
-}  
-
-.search-bar button {  
-    background-color: #5cb85c;  
-    color: white;  
-    border: none;  
-    padding: 10px 15px;  
-    border-radius: 8px;  
-    cursor: pointer;  
-    margin-left: 10px; 
-     
-}  
 
 /* Product List Styling */  
 .product-list {  
@@ -178,7 +145,31 @@ input:checked+.slider:before {
     border-radius: 10px;  
     cursor: pointer;  
     display: block;  
-    margin: -50px auto;  
+    margin: -80px auto;  
     float: right;
     
 } 
+
+.product-list th select {
+    width: 70%;
+    font-family: Arial, sans-serif; 
+    border-collapse: collapse;
+    border: none;
+    background-color: #5bc0de;
+}
+.product-list img {
+    border-radius: 5px;
+}
+
+
+.product-list .edit-button, .product-list .delete-button {
+    padding: 5px 10px;
+    border: none;
+    background-color:#d9534f;
+    color: white;
+    cursor: pointer;
+}
+
+.product-list .edit-button {
+    background-color: #5bc0de;
+}

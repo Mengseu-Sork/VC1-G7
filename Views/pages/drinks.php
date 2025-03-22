@@ -56,19 +56,15 @@
     </div>
 </div>
 
-<script>
-function filterProducts() {
-    let input = document.getElementById('search').value.toLowerCase();
-    let products = document.getElementsByClassName('product');
-    
-    for (let i = 0; i < products.length; i++) {
-        let productName = products[i].getElementsByClassName('product-name')[0].innerText.toLowerCase();
-        if (productName.includes(input)) {
-            products[i].style.display = "flex";
-        } else {
-            products[i].style.display = "none";
-        }
-    }
-}
-</script>
+<!-- Order List Modal -->
+<div id="orderForm" style="display: none;" class="order-form">
+    <h2>Order List</h2>
+    <div id="orderList"></div>
+    <div id="order-footer">
+        <p>Total Price: $<span id="totalPrice">0.00</span></p>
+        <button class="btn1" onclick="submitOrder()">Submit Order</button>
+        <button class="btn2" onclick="closeOrderForm()">Cancel</button>
+        <p class="note">Scroll to see your another products order</p>
+    </div>
+</div>
 

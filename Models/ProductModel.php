@@ -1,5 +1,5 @@
 <?php
-require_once 'Databases/Database.php';
+require_once 'Databases/database.php';
 
 // ProductModel.php
 class ProductModel {
@@ -11,17 +11,17 @@ class ProductModel {
 
     // Get all products
     function getAllProducts() {
-        $query = "SELECT * FROM product";
+        $query = "SELECT * FROM products";
         $result = $this->db->query($query);
         return $result->fetchAll();
     }
 
     // Add a product (example function)
     function createProduct($data) {
-        $stmt = "INSERT INTO product (product_name, price, type, date, image)
-                 VALUES (:product_name, :price, :type, :date, :image)";
+        $stmt = "INSERT INTO products (name, price, type, date, image)
+                 VALUES (:name, :price, :type, :date, :image)";
         $this->db->query($stmt, [
-            'product_name' => $data['product_name'],
+            'name' => $data['name'],
             'price' => $data['price'],
             'type' => $data['type'],
             'date' => $data['date'],
@@ -29,20 +29,23 @@ class ProductModel {
         ]);
     }
     function getProductById($id){
-        $query = "SELECT * FROM product WHERE id = :id";
+        $query = "SELECT * FROM products WHERE id = :id";
         $result = $this->db->query($query, ['id' => $id]);
         return $result->fetch();
     }
-    function updateProduct($data){
-        $stmt = "UPDATE product SET product_name = :product_name, price = :price, type = :type, date = :date, image = :image WHERE id = :id";
+    function updateProduct($id, $data) {
+        $stmt = "UPDATE products SET name = :name, price = :price, type = :type, date = :date WHERE id = :id";
         $this->db->query($stmt, [
-            'product_name' => $data['product_name'],
+            'name' => $data['name'],
             'price' => $data['price'],
             'type' => $data['type'],
             'date' => $data['date'],
-            'image' => $data['image'],
-            'id' => $data['id']
+            'id' => $id,
         ]);
+    }
+    function deleteProduct($id){
+        $stmt =$this->db->query("DELETE FROM products WHERE id = :id");
+        $this->db->query($stmt, ['id' => $id]);
     }
 }
 ?>

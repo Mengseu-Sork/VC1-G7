@@ -10,20 +10,33 @@
     border-radius: 10px;
     width: 600px;
 }
-.order-image {
-    width: 50px;
-    height: 50px;
-    border-radius: 5px;
-    margin-right: 10px;
-}
 .order-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 10px;
     margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.order-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.order-details {
+    flex-grow: 1;
 }
 p{
     padding: 10px;
+}
+h1{
+    text-align: center;
+    font-size: 30px;
 }
 .btn1{
     border: 1px solid darkorange;
@@ -31,6 +44,7 @@ p{
     padding: 6px 10px;
     font-weight: bold;
     border-radius: 5px;
+    margin-left: 10px;
 }
 .btn1:hover{
     background: orange;
@@ -47,7 +61,8 @@ p{
     background: orange;
     border: 2px solid darkorange;
 }
-.remove-button {
+
+.remove-btn{
     background: red;
     border: 2px solid;
     color: white;
@@ -55,8 +70,14 @@ p{
     font-weight: bold;
     border-radius: 5px;
 }
-.remove-button:hover {
+.remove-btn:hover {
     background: rgb(246, 155, 155);
     border: 2px solid darkred;
 }
-
+.note{
+    color: gray;
+    font-size: 15px;
+}
+#order-footer{
+    border: 2px solid rgb(119, 66, 0);
+}

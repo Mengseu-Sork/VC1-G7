@@ -17,7 +17,7 @@
               <span class="font-bold text-3xl">SAN CAFE</span>
             </a>
 
-            <div x-data="{ isActive: true, open: true}">
+            <div>
                 <a
                   href="/"
                   class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
@@ -35,7 +35,7 @@
               <div>
                 <!-- active classes 'bg-primary-100 dark:bg-primary' -->
                 <a
-                  href="#"
+                  href="/products"
                   class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
 
                 >
