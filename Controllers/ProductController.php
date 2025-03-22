@@ -114,5 +114,11 @@ class ProductController extends BaseController {
         $this->model->deleteProduct($id);
         $this->redirect('/products');
     }
+
+    public function details($id) {
+        $product = $this->model->getProductById($id);
+        $this->view('Products/product_details', ['product' => $product]);
+    }
+    
 }
 ?>

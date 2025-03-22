@@ -38,5 +38,6 @@ $routes->post('/products/store', [ProductController::class, 'store']);
 $routes->get('/products/edit', [ProductController::class, 'edit']);
 $routes->post('/products/update', [ProductController::class, 'update']);
 $routes->delete('/products/delete', [ProductController::class, 'delete']);
+$routes->get('/products/details', [ProductController::class, 'details']);
 
 $routes->dispatch();
