@@ -469,7 +469,6 @@ body {
 /*
  * Ensure horizontal rules are visible by default
  */
-
 hr {
   border-top-width: 1px;
 }

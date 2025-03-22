@@ -59,7 +59,7 @@ class ProductModel {
 
     public static function update($id, $name, $price, $date, $type, $image) {
         $db = new Database();
-        $query = "UPDATE product SET product_name = ?, price = ?, date = ?, type = ?, image = ? WHERE id = ?";
+        $query = "UPDATE products SET name = ?, price = ?, date = ?, type = ?, image = ? WHERE id = ?";
         return $db->query($query, [$name, $price, $date, $type, $image, $id]);
     }
 
@@ -76,9 +76,12 @@ class ProductModel {
             'price' => $data['price'],
             'category_id' => $data['category_id'],
             'date' => $data['date'],
-            'image' => $data['image'],
-            'id' => $data['id']
+            'id' => $data['id'],
         ]);
+    }
+    function deleteProduct($id){
+        $stmt =$this->db->query("DELETE FROM products WHERE id = :id");
+        $this->db->query($stmt, ['id' => $id]);
     }
 }
 ?>

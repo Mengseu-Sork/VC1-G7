@@ -3,8 +3,14 @@ require_once 'BaseController.php';
 class DashboardController extends BaseController
 {
 
-    function index()
+    public function index()
     {
-        $this->view('Dashboard/list');
+        // session_start();
+        // if (!isset($_SESSION["admin"])) {
+        //     header("Location: /signup");
+        //     exit();
+        // }
+    
+        $this->view('/Dashboard/list');;
     }
 }

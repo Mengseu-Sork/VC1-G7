@@ -13,7 +13,7 @@
   <form action="/products/store" method="POST" enctype="multipart/form-data">
     <div class="image-upload">
       <label for="image">Upload Image</label>
-      <input type="file" id="image" name="image" accept="image/*" required>
+      <input type="file" id="image" value="" name="image" accept="image/*" required>
       <div class="upload-area" onclick="document.getElementById('image').click()">
         Click or drag to upload image
       </div>
@@ -21,17 +21,17 @@
 
     <div class="form-group">
       <label for="name">Name</label>
-      <input type="text" id="name" name="name" required>
+      <input type="text" id="name" value="" name="name" required>
     </div>
 
     <div class="form-grid">
       <div class="form-group">
         <label for="price">Price</label>
-        <input type="number" id="price" name="price" required>
+        <input type="number" id="price" value="" name="price" required>
       </div>
       <div class="form-group">
         <label for="date-start">Date Start</label>
-        <input type="date" id="date-start" name="date-start" required>
+        <input type="date" id="date-start" value="" name="date-start" required>
       </div>
       <div class="form-group">
         <label for="type">Type</label>

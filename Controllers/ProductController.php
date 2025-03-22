@@ -1,7 +1,6 @@
 <?php
-// If BaseController exists
-// require_once ' Controllers/BaseController.php';
 require_once 'Models/ProductModel.php';
+require_once 'BaseController.php';
 
 class ProductController extends BaseController {
     private $model;
@@ -59,27 +58,38 @@ class ProductController extends BaseController {
 
     function edit($id){
         $product = $this->model->getProductById($id);
-        if ($product) {
-            $this->view('Products/edit', ['product' => $product]);
-        } else {
-            echo "404 - Product not found";
-        }
+        $this->view('Products/edite', ['product' => $product]);
     }
-
-    function update($id)
-    {
+    function update() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $imagePath = $_POST['existing_image'];
+            $id = $_POST['id'];
+            $data = [
+                'product_name' => htmlspecialchars($_POST['product_name']),
+                'price' => (float)$_POST['price'],
+                'type' => htmlspecialchars($_POST['type']),
+                'date' => htmlspecialchars($_POST['date-start']),
+            ];
+    
+            // Image Upload Handling
+            $imagePath = null;
             if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
                 $target_dir = "Assets/images/uploads/";
                 if (!is_dir($target_dir)) {
                     mkdir($target_dir, 0777, true);
                 }
                 $imagePath = $target_dir . basename($_FILES['image']['name']);
-                if (!move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
+                if (move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
+                    $data['image'] = basename($_FILES['image']['name']); //store only the name in the database.
+                    echo "<br> Image Uploaded Correctly <br>";
+                } else {
                     echo "Error: Failed to upload image.";
                     return;
                 }
+            } else {
+              //if no new image is uploaded, use the previous image
+              $product = $this->model->getProductById($id);
+              $data['image'] = $product['image'];
+              echo "<br> No new image uploaded, using previous image <br>";
             }
 
             $data = [
@@ -93,6 +103,11 @@ class ProductController extends BaseController {
             $this->model->updateProduct($data);
             $this->redirect('/products');
         }
+    }
+    function delete($id)
+    {
+        $this->model->deleteProduct($id);
+        $this->redirect('/products');
     }
 }
 ?>

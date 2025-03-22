@@ -2,23 +2,24 @@
 require 'Router.php';
 require_once 'controllers/UserController.php';
 require_once 'Controllers/DashboardController.php';
-require_once 'Controllers/HomeController.php';
 require_once 'Controllers/CategoryController.php';
-// require_once 'Controllers/AuthController.php';
 require 'Controllers/ProductController.php';
+require 'Controllers/AdminController.php';
+require 'Controllers/ShowproductController.php';
+require 'Controllers/ShowuserController.php';
 
 
 $routes = new Router();
 
-// Homepage
-$routes->get('/', [HomeController::class, 'index']);
-
-
-// $routes->get('/signin', [AuthController::class, 'login']);
-
-
 // dashboard
-$routes->get('/Dashboard', [DashboardController::class, 'index']);
+$routes->get('/', [DashboardController::class, 'index']);
+
+// Homepage
+$routes->get('/pages', [ShowproductController::class, 'show']);
+
+$routes->get('/auth/signup', [AdminController::class, 'signup']);
+$routes->post('/signup', [AdminController::class, 'signup']);
+$routes->post('/auth/signout', [AdminController::class, 'signup']);
 
 // user
 
@@ -34,8 +35,8 @@ $routes->get('/products', [ProductController::class, 'index']);
 $routes->get('/products/product_list', [ProductController::class, 'index']);
 $routes->get('/products/create', [ProductController::class, 'create']);
 $routes->post('/products/store', [ProductController::class, 'store']);
-$routes->get('/products/edit/{id}', [ProductController::class, 'edit']);
-$routes->post('/products/update/{id}', [ProductController::class, 'update']);
+$routes->get('/products/edit', [ProductController::class, 'edit']);
+$routes->post('/products/update', [ProductController::class, 'update']);
 $routes->delete('/products/delete', [ProductController::class, 'delete']);
 
     

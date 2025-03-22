@@ -15,6 +15,11 @@ class UserModel
         return $this->pdo->query('SELECT * FROM users ORDER BY id DESC')->fetchAll();
     }
 
+    public function getUserByEmail($email)
+{
+    $stmt = $this->pdo->query("SELECT * FROM users WHERE email = ?", [$email]);
+    return $stmt->fetch();
+}
     function createUser($data)
     {
         return $this->pdo->query("INSERT INTO users (image, FirstName, LastName, email, password) 

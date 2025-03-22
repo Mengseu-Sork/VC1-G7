@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/Assets/css/create.css">
   <title>Edit Product</title>
 </head>
+
 <body>
 
 <div class="form-container">
   <h2>Edit Product</h2>
-  <form action="/products/update/<?php echo $product['id']; ?>" method="POST" enctype="multipart/form-data">
+  <form action="/products/store" method="POST" enctype="multipart/form-data">
     <div class="image-upload">
       <label for="image">Upload Image</label>
       <input type="file" id="image" name="image" accept="image/*" onchange="previewImage(event)">
@@ -63,4 +65,5 @@
 </script>
 
 </body>
+
 </html>
