@@ -15,32 +15,52 @@ $categories_name = [
     <link rel="stylesheet" href="../Assets/css/product_list.css">  
     <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (isset($_FILES["image"]) && $_FILES["image"]["error"] == 0) {
+        header("Content-Type: application/json"); // Set response type to JSON
+    
+        if (isset($_FILES["image"]) && $_FILES["image"]["error"] == UPLOAD_ERR_OK) {
             $targetDir = "Assets/images/uploads/";
             $fileName = basename($_FILES["image"]["name"]);
             $targetFilePath = $targetDir . $fileName;
             $fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
-
+    
             // Allowed file types
             $allowedTypes = ["jpg", "jpeg", "png", "gif"];
-            if (in_array($fileType, $allowedTypes)) {
-                if (!file_exists($targetDir)) {
-                    mkdir($targetDir, 0777, true);
-                }
-
-                if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
-                    echo json_encode(["success" => true, "message" => "File uploaded successfully!", "image" => $targetFilePath]);
-                } else {
-                    echo json_encode(["success" => false, "message" => "Error uploading the file."]);
-                }
-            } else {
+            if (!in_array($fileType, $allowedTypes)) {
                 echo json_encode(["success" => false, "message" => "Invalid file format. Only JPG, JPEG, PNG, and GIF files are allowed."]);
+                exit;
+            }
+    
+            // Ensure target directory exists
+            if (!is_dir($targetDir) && !mkdir($targetDir, 0777, true)) {
+                echo json_encode(["success" => false, "message" => "Failed to create upload directory."]);
+                exit;
+            }
+    
+            // Move the uploaded file
+            if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
+                echo json_encode(["success" => true, "message" => "File uploaded successfully!", "image" => $targetFilePath]);
+            } else {
+                echo json_encode(["success" => false, "message" => "Error moving the uploaded file."]);
             }
         } else {
-            echo json_encode(["success" => false, "message" => "No file uploaded or an error occurred."]);
+            // Handle specific upload errors
+            $errorMessages = [
+                UPLOAD_ERR_INI_SIZE   => "The uploaded file exceeds the server limit.",
+                UPLOAD_ERR_FORM_SIZE  => "The uploaded file exceeds the form limit.",
+                UPLOAD_ERR_PARTIAL    => "The file was only partially uploaded.",
+                UPLOAD_ERR_NO_FILE    => "No file was uploaded.",
+                UPLOAD_ERR_NO_TMP_DIR => "Missing a temporary folder.",
+                UPLOAD_ERR_CANT_WRITE => "Failed to write file to disk.",
+                UPLOAD_ERR_EXTENSION  => "File upload stopped by a PHP extension."
+            ];
+            
+            $errorCode = $_FILES["image"]["error"];
+            $errorMessage = $errorMessages[$errorCode] ?? "An unknown error occurred.";
+    
+            echo json_encode(["success" => false, "message" => $errorMessage]);
         }
         exit;
-    }
+    }   
     ?>
 </head>  
 <body>  
