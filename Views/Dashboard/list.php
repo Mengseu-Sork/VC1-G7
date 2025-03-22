@@ -1,6 +1,4 @@
 
-
-            <?php require_once 'navList.php'?>
             <!-- Mobile main manu -->
             <div
               class="border-b md:hidden dark:border-primary-darker"
@@ -234,7 +232,7 @@
               </nav>
             </div>
         </header>
-          <main>
+          <main class="flex-1 h-full overflow-x-hidden overflow-y-auto">
             <!-- Content -->
             <div class="mt-2">
               <!-- State cards -->

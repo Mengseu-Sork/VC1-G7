@@ -42,22 +42,21 @@ class UserController extends BaseController
     function update($id)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if (!empty($_FILES['image']['name'])) {
-                $targetDir = "/Assets/images/";
-                $newFileName = time() . "_" .basename($_FILES["image"]["name"]);
-                $targetFile = $targetDir . $newFileName;
-
-                if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
-                    $profileImage = $newFileName;
-                } else {
-                    $profileImage = $_POST['old_image'];
+            $imagePath = null;
+            if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+                $target_dir = "uploads/";
+                if (!is_dir($target_dir)) {
+                    mkdir($target_dir, 0777, true);
                 }
-            } else {
-                $profileImage = $_POST['old_image'];
+                $imagePath = $target_dir . basename($_FILES['image']['name']);
+                if (!move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
+                    echo "Error: Failed to upload image.";
+                    return;
+                }
             }
 
             $data = [
-                'image' => $profileImage,
+                'image' => $imagePath,
                 'FirstName' => $_POST['FirstName'],
                 'LastName' => $_POST['LastName'],
                 'email' => $_POST['email'],

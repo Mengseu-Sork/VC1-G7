@@ -2,22 +2,33 @@
 require 'Router.php';
 require_once 'controllers/UserController.php';
 require_once 'Controllers/DashboardController.php';
-require_once 'Controllers/HomeController.php';
 // require_once 'Controllers/AuthController.php';
 require 'Controllers/ProductController.php';
+require 'Controllers/AdminController.php';
+require 'Controllers/ShowproductController.php';
+require 'Controllers/ShowuserController.php';
 
 
 $routes = new Router();
 
+// dashboard
+$routes->get('/', [DashboardController::class, 'index']);
+
 // Homepage
-$routes->get('/', [HomeController::class, 'index']);
+$routes->get('/pages', [ShowproductController::class, 'show']);
+// $routes->get('/', [ShowuserController::class, 'user']);
 
 
 // $routes->get('/signin', [AuthController::class, 'login']);
+$routes->get('/auth/signup', [AdminController::class, 'signup']);
+$routes->post('/signup', [AdminController::class, 'signup']);
 
 
-// dashboard
-$routes->get('/Dashboard', [DashboardController::class, 'index']);
+// $routes->post('/Dashboard', [DashboardController::class, 'store']);
+
+
+
+
 
 // user 
 
