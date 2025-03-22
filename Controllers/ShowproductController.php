@@ -1,8 +1,8 @@
 <?php
-
+require_once 'BaseController.php';
 require_once 'Models/ShowproductModel.php';
 
-class ShowproductController {
+class ShowproductController extends BaseController {
     private $db;
 
     public function __construct() {
@@ -10,6 +10,6 @@ class ShowproductController {
     }
 
     public function show() {
-        require_once 'views/pages/products.php';
+        $this->view('/pages/products');
     }
 }

@@ -371,7 +371,7 @@
               </div>
 
               <!-- Charts -->
-              <div class="grid grid-cols-2 gap-4 ml-4 mr-4 mb-5">
+              <div class="grid grid-cols-2 gap-4 ml-4 mr-4 mb-24">
                 <!-- Bar Chart -->
                 <div class="bg-white rounded-md dark:bg-darker p-4 rounded-lg shadow">
                     <h2 class="text-lg font-semibold">Bar Chart</h2>

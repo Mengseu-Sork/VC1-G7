@@ -25,7 +25,22 @@
                   <span aria-hidden="true">
                     <i class="fas fa-home icon"></i>
                   </span>
-                  <span class="ml-2 text-sm"> Dashboards </span>
+                  <span class="ml-2 text-5sm"> Dashboards </span>
+                  <span class="ml-auto" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </span>
+                </a>
+              </div>
+              <div>
+                <a
+                  href="/pages"
+                  class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                >
+                  <span aria-hidden="true">
+                    <i class="fas fa-cube icon"></i>
+                  </span>
+                  <span class="ml-3 text-5sm "> Products </span>
                   <span class="ml-auto" aria-hidden="true">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
@@ -41,7 +56,7 @@
                 >
                   <span aria-hidden="true">
                     <i class="fas fa-box icon"></i> 
-                  <span class="ml-3 text-sm"> Inventory </span>
+                  <span class="ml-2 text-5sm"> Inventory </span>
                 </a>
               </div>
 
@@ -54,7 +69,7 @@
                   <span aria-hidden="true">
                     <i class="fas fa-file-alt icon"></i>
                   </span>
-                  <span class="ml-4 text-sm"> Report </span>
+                  <span class="ml-4 text-5sm"> Report </span>
                   <span aria-hidden="true" class="ml-auto">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
@@ -72,7 +87,7 @@
                   <span aria-hidden="true">
                     <i class="fas fa-shopping-cart icon"></i>
                   </span>
-                  <span class="ml-2 text-sm"> Order </span>
+                  <span class="ml-2 text-5sm"> Order </span>
                   <span aria-hidden="true" class="ml-auto">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
@@ -90,7 +105,7 @@
                     <span aria-hidden="true">
                       <i class="fas fa-dollar-sign icon1"></i>
                     </span>
-                    <span class="ml-4 text-sm"> Payments </span>
+                    <span class="ml-4 text-5sm"> Payments </span>
                     <span aria-hidden="true" class="ml-auto">
                     </span>
                   </a>
@@ -112,13 +127,13 @@
               </div>
               <div>
                 <a
-                  href="/"
+                  href="/auth/signout"
                   class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
                     <i class="fas fa-sign-out-alt icon"></i>
                   </span>
-                  <span class="ml-3 text-sm"> Sign Out </span>
+                  <span class="ml-3 text-5sm"> Sign Out </span>
                 </a>
               </div>
 
@@ -126,7 +141,7 @@
           </div>
         </aside>
         <div class="flex-1 h-full overflow-hidden">
-          <header class="flex-1 bg-white dark:bg-darker">
+          <header class="flex-1 bg-white dark:bg-darker"> 
                   <div class="flex items-center justify-between p-2 border-b dark:border-primary-darker">
                       <button
                           @click="isMobileMainMenuOpen = !isMobileMainMenuOpen"
@@ -146,7 +161,7 @@
                           </span>
                       </button>
                       <a
-                          href="#"
+                          href="/"
                           class="inline-block text-2xl font-bold tracking-wider uppercase text-primary-dark dark:text-light"
                       >
                       </a>
@@ -243,24 +258,24 @@
 
                           <!-- Search button -->
                           <button
-                          @click="openSearchPanel"
-                          class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker"
-                          >
-                          <span class="sr-only">Open search panel</span>
-                          <svg
-                              class="w-7 h-7"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              aria-hidden="true"
-                          >
-                              <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                              />
+                            @click="openSearchPanel"
+                            class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker"
+                            >
+                            <span class="sr-only">Open search panel</span>
+                            <svg
+                                class="w-7 h-7"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                aria-hidden="true"
+                            >
+                                <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                />
                           </svg>
                           </button>
 

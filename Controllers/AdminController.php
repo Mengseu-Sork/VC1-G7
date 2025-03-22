@@ -1,7 +1,9 @@
 <?php
 require_once "Models/AdminModel.php";
+require_once "BaseController.php";
 
-class AdminController
+
+class AdminController extends BaseController
 {
     private $adminModel;
 
@@ -24,5 +26,12 @@ class AdminController
         }
         require "views/auth/signup.php";
     }
+    
+
+    public function signout()
+    {
+        $this->view('/auth/signout');
+    }
+    
 }
 ?>
