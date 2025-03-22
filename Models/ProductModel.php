@@ -1,7 +1,5 @@
 <?php
 require_once 'Databases/Database.php';
-
-// ProductModel.php
 class ProductModel {
     private $db;
 
@@ -54,6 +52,17 @@ class ProductModel {
         ]);
     }
 
+    public static function find($id) {
+        $db = new Database();
+        return $db->query("SELECT * FROM products WHERE id = ?", [$id])->fetch();
+    }
+
+    public static function update($id, $name, $price, $date, $type, $image) {
+        $db = new Database();
+        $query = "UPDATE product SET product_name = ?, price = ?, date = ?, type = ?, image = ? WHERE id = ?";
+        return $db->query($query, [$name, $price, $date, $type, $image, $id]);
+    }
+
     function getProductById($id){
         $query = "SELECT * FROM products WHERE id = :id";
         $result = $this->db->query($query, ['id' => $id]);
@@ -61,18 +70,15 @@ class ProductModel {
     }
 
     function updateProduct($data){
-        $stmt = "UPDATE product SET product_name = :product_name, price = :price, type = :type, date = :date, image = :image WHERE id = :id";
+        $stmt = "UPDATE products SET name = :name, price = :price, category_id = :category_id, date = :date, image = :image WHERE id = :id";
         $this->db->query($stmt, [
             'name' => $data['name'],
             'price' => $data['price'],
             'category_id' => $data['category_id'],
             'date' => $data['date'],
-            'id' => $id,
+            'image' => $data['image'],
+            'id' => $data['id']
         ]);
-    }
-    function deleteProduct($id){
-        $stmt =$this->db->query("DELETE FROM products WHERE id = :id");
-        $this->db->query($stmt, ['id' => $id]);
     }
 }
 ?>
