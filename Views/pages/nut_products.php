@@ -3,6 +3,7 @@ require_once (__DIR__ . '/../layout/customer/header_user.php');
 require_once (__DIR__ . '/../layout/customer/nav_user.php');
 ?>
 
+<link rel="stylesheet" href="/Assets/css/order.css">
 <h1>Nut Products</h1>
 
 <div class="container" id="productContainer">
