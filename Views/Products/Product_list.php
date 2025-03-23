@@ -87,7 +87,7 @@ $categories_name = [
                 <?php foreach ($products as $product): ?>  
                     <tr data-category="<?= $product['category_name']; ?>">  
                     <td>  
-                        <img src="../Assets/images/uploads/<?php echo $product["image"]?>" alt="" width="50" height="50" style="border-radius: 5px;">  
+                        <img src="/<?= $product["image"] ?>" alt="" width="50" height="50" style="border-radius: 5px;">  
                     </td>  
                     <td><?php echo $product['name']; ?></td>  
                     <td><?php echo $product['price']; ?></td>  
@@ -96,7 +96,7 @@ $categories_name = [
                     
 
                     <td>  
-                        <a href="/products/edit/<?php echo $product['id']; ?>" class="edit-button">Edit</a>  
+                        <a href="/products/edit?id=<?php echo $product['id']; ?>" class="edit-button">Edit</a>  
                         <a href="/products/delete/<?php echo $product['id']; ?>" class="delete-button">Delete</a>  
                     </td>  
                 </tr>  
