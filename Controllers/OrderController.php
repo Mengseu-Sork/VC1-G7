@@ -1,25 +1,25 @@
 <?php
-require_once 'Models/OrderHistoryModel.php';
+require_once 'Models/OrderModel.php';
 
-class OrderHistoryController
+class OrderController
 {
     private $model;
 
     public function __construct()
     {
-        $this->model = new OrderHistoryModel();
+        $this->model = new OrderModel();
     }
 
     public function index()
     {
         $orders = $this->model->getAllOrders();
-        require 'Views/Products/orderHistory.php';
+        require 'Views/Products/order.php';
     }
 
     public function view($id)
     {
         $order = $this->model->getOrderById($id);
-        require 'Views/Products/orderHistoryView.php';
+        require 'Views/Products/order.php';
     }
 
     public function delete($id)

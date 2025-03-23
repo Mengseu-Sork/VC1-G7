@@ -6,7 +6,7 @@ require_once 'Controllers/CategoryController.php';
 require 'Controllers/ProductController.php';
 require 'Controllers/AdminController.php';
 require 'Controllers/ShowproductController.php';
-require_once 'Controllers/OrderHistoryController.php';
+require_once 'Controllers/OrderController.php';
 
 
 $routes = new Router();
@@ -37,8 +37,10 @@ $routes->get('/products/product_list', [ProductController::class, 'index']);
 $routes->get('/products/create', [ProductController::class, 'create']);
 $routes->post('/products/store', [ProductController::class, 'store']);
 $routes->get('/products/edit', [ProductController::class, 'edit']);
-$routes->post('/products/update', [ProductController::class, 'update']);
+$routes->post('/products/update/{id}', [ProductController::class, 'update']);
 $routes->delete('/products/delete', [ProductController::class, 'delete']);
+// Make sure this line exists in your routes:
+$routes->get('/products/details', [ProductController::class, 'show']);
 
     
 // $routes->get('/products_list', [ProductController::class, 'index']);
@@ -50,9 +52,8 @@ $routes->get('/categories', [CategoryController::class, 'index']);
 // $routes->post('/categories/update/{id}', [CategoryController::class, 'update']);
 // $routes->get('/categories/delete/{id}', [CategoryController::class, 'delete']);
 
-$routes->get('/orderHistory', [OrderHistoryController::class, 'index']);
-$routes->get('/orderHistory/view', [OrderHistoryController::class, 'view']);
-$routes->get('/orderHistory/delete', [OrderHistoryController::class, 'delete']);
-
+$routes->get('/order', [OrderController::class, 'index']);
+$routes->get('/order/view', [OrderController::class, 'view']);  
+$routes->delete('/order/delete', [OrderController::class, 'delete']);
 
 $routes->dispatch();
