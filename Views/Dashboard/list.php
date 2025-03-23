@@ -1,6 +1,4 @@
 
-
-            <?php require_once 'navList.php'?>
             <!-- Mobile main manu -->
             <div
               class="border-b md:hidden dark:border-primary-darker"
@@ -234,7 +232,7 @@
               </nav>
             </div>
         </header>
-          <main>
+          <main class="flex-1 h-full overflow-x-hidden overflow-y-auto">
             <!-- Content -->
             <div class="mt-2">
               <!-- State cards -->
@@ -373,7 +371,7 @@
               </div>
 
               <!-- Charts -->
-              <div class="grid grid-cols-2 gap-4 ml-4 mr-4 mb-5">
+              <div class="grid grid-cols-2 gap-4 ml-4 mr-4 mb-24">
                 <!-- Bar Chart -->
                 <div class="bg-white rounded-md dark:bg-darker p-4 rounded-lg shadow">
                     <h2 class="text-lg font-semibold">Bar Chart</h2>

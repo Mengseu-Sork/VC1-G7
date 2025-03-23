@@ -1,21 +1,36 @@
 <?php
 require_once 'Models/OrderHistoryModel.php';
-require_once 'BaseController.php';
 
-class OrderHistoryController extends BaseController
+class OrderHistoryController
 {
-    private $orderHistoryModel;
+    private $model;
 
     public function __construct()
     {
-        $this->orderHistoryModel = new OrderHistoryModel();
+        $this->model = new OrderHistoryModel();
     }
 
     public function index()
     {
-        $orders = $this->orderHistoryModel->getAllOrders();
+        $orders = $this->model->getAllOrders();
+        require 'Views/Products/orderHistory.php';
+    }
 
-        require_once __DIR__ . '/../Views/Products/orderHistory.php'; 
+    public function view($id)
+    {
+        $order = $this->model->getOrderById($id);
+        require 'Views/Products/orderHistoryView.php';
+    }
+
+    public function delete($id)
+    {
+        if ($this->model->deleteOrder($id)) {
+            $_SESSION['success'] = "Order deleted successfully.";
+        } else {
+            $_SESSION['error'] = "Failed to delete order.";
+        }
+        header('Location: /orderHistory');
+        exit();
     }
 }
 ?>
