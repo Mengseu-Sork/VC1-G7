@@ -139,17 +139,7 @@
             display: flex;
             flex-direction: row;
             gap: 16px;
-            
-            
-            /* justify-content: space-around; */
-            /* justify-content: space-evenly; */
-            justify-content: flex-end;
-            /* justify-content: flex-start; */
-            /* justify-content: center; */
-            /* justify-content: space-between; */
-            /* justify-content: space-around; */
-            /* justify-content: space-evenly; */
-            /* justify-content: flex-end; */
+            justify-content: flex-end;   
             margin-top: 10px;
         }
 

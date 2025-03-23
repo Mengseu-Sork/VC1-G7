@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <a href="/products/create">
                     <button class="bg-blue-500 hover:bg-blue-600 text-white mb-4 font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300">Add Product</button>
                 </a>
-                <div class="overflow-x-auto bg-white shadow-lg rounded-lg mt-5">
+                <div class="overflow-x-auto bg-white shadow-lg rounded-lg mt-5 mb-6">
                     <table class="w-full table-auto border-collapse">
                         <thead>
                             <tr class="bg-blue-500 text-white uppercase text-xs sm:text-sm leading-normal">
@@ -108,8 +108,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                 <i class="fas fa-trash-alt mr-1" style="color: red"></i>
                                             </button>
 
-                                            <a href="/user/show?id=<?= $product['id'] ?>"
-                                               class="block px-2 py-2 text-gray-700 flex items-center">
+                                          
+                                            <!-- <a href="../Views/Products/show.php" -->
+
+                                            <!-- With this: -->
+                                            <a href="/products/details?id=<?= $product['id'] ?>"
+                                            class="block px-2 py-2 text-gray-700 flex items-center">
                                                 <i class="far fa-eye mr-1" style="color: blue;"></i>
                                             </a>
                                         </div>

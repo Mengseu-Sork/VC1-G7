@@ -36,9 +36,10 @@ $routes->get('/products/product_list', [ProductController::class, 'index']);
 $routes->get('/products/create', [ProductController::class, 'create']);
 $routes->post('/products/store', [ProductController::class, 'store']);
 $routes->get('/products/edit', [ProductController::class, 'edit']);
-$routes->post('/products/update', [ProductController::class, 'update']);
+$routes->post('/products/update/{id}', [ProductController::class, 'update']);
 $routes->delete('/products/delete', [ProductController::class, 'delete']);
-$routes->get('/products/details', [ProductController::class, 'details']);
+// Make sure this line exists in your routes:
+$routes->get('/products/details', [ProductController::class, 'show']);
 
     
 // $routes->get('/products_list', [ProductController::class, 'index']);

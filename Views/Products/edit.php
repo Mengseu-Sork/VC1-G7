@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit</title>
+    <title>Add Product</title>
     <style>
         :root {
             --primary-color: #4a6cf7;
@@ -139,7 +139,17 @@
             display: flex;
             flex-direction: row;
             gap: 16px;
+            
+            
+            /* justify-content: space-around; */
+            /* justify-content: space-evenly; */
             justify-content: flex-end;
+            /* justify-content: flex-start; */
+            /* justify-content: center; */
+            /* justify-content: space-between; */
+            /* justify-content: space-around; */
+            /* justify-content: space-evenly; */
+            /* justify-content: flex-end; */
             margin-top: 10px;
         }
 
@@ -193,94 +203,161 @@
     </style>
 </head>
 <body>
+    <div class="container">
+        <h4>Add Product</h4>
+        <form id="addProductForm" action="//products/update/<?= $product['id'] ?>" method="POST" enctype="multipart/form-data" method="POST" enctype="multipart/form-data">
+            <div class="grid">
+                <div class="flex-col md-col-span-1"> 
+                    <label for="product_name">Product Name</label>
+                    <input type="text" name="name" id="product_name" required>
+                    <span class="error-message" id="product_name_error">Please enter a product name</span>
+                </div>
+                <div class="flex-col md-col-span-1">
+                    <label for="price">Price</label>
+                    <input type="number" name="price" id="price" step="0.01" min="0" required>
+                    <span class="error-message" id="price_error">Please enter a valid price</span>
+                </div>
 
-<div class="form-container">
-  <h2>Edit Product</h2>
-  <form action="/products/store" method="POST" enctype="multipart/form-data">
-    <div class="image-upload">
-      <label for="image">Upload Image</label>
-<<<<<<<<< Temporary merge branch 1
-      <input type="file" id="image" name="image" accept="image/*" required>
-      <div class="upload-area" onclick="document.getElementById('image').click()">
-        Click or drag to upload image
-=========
-      <input type="file" id="image" name="image" accept="image/*" onchange="previewImage(event)">
-      <input type="hidden" name="existing_image" value="<?php echo htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8'); ?>">
-      <div class="upload-area">
-        <img id="image-preview" src="/Assets/images/<?php echo htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8'); ?>" width="100" height="100">
-<p>Click or drag to upload image</p>
->>>>>>>>> Temporary merge branch 2
-      </div>
+                <div class="flex-col md-col-span-1">
+                    <label for="date-start">Date</label>
+                    <input type="date" name="date-start" id="date-start" required>
+                    <span class="error-message" id="date_error">Please select a valid date</span>
+                </div>
+
+                <div class="flex-col md-col-span-1">
+                    <label for="category_id">Category</label>
+                    <select name="category_id" id="category_id" required>
+                        <option value="">Choose Category</option>
+                        <option value="1">Nut Products</option>
+                        <option value="2">Powder Products</option>
+                        <option value="3">Drinks Products</option>
+                    </select>
+                    <span class="error-message" id="category_id_error">Please select a category</span>
+                </div>
+
+                <div class="flex-col md-col-span-1">
+                    <label for="product_content">Product Content</label>
+                    <textarea name="product_content" id="product_content" rows="2"></textarea>
+                </div>
+
+                <div class="flex-col md-col-span-1">
+                    <label>Product Image</label>
+                    <div class="image-upload">
+                        <input type="file" name="image" id="image" accept="image/*" onchange="previewImage(this)">
+                        <div class="drop-zone" id="drop-zone">
+                            <div class="image-preview">
+                                <img id="image-preview" src="#" alt="Product Image Preview">
+                                <h4>Drag and drop a file to upload</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="  button-container md-col-span-2">
+                    <button type="button" class="btn-cancel" onclick="window.location.href='/products'">Cancel</button>
+                    <button type="submit" class="btn-submit">Submit</button>
+                    <button type="button" class="btn-back" onclick="goBack()">Back</button>
+                </div>
+            </div>
+        </form>
     </div>
 
-    <div class="form-group">
-      <label for="name">Name</label>
-<<<<<<<<< Temporary merge branch 1
-      <input type="text" id="name" name="name" required>
-=========
-      <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($product['product_name'], ENT_QUOTES, 'UTF-8'); ?>" required>
->>>>>>>>> Temporary merge branch 2
-    </div>
+    <script>
+        // Image preview functionality
+        function previewImage(input) {
+            const preview = document.getElementById('image-preview');
+            const file = input.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                
+                reader.readAsDataURL(file);
+            } else {
+                preview.style.display = 'none';
+            }
+        }
 
-    <div class="form-grid">
-      <div class="form-group">
-        <label for="price">Price</label>
-<<<<<<<<< Temporary merge branch 1
-        <input type="number" id="price" name="price" required>
-      </div>
-      <div class="form-group">
-        <label for="date-start">Date Start</label>
-        <input type="date" id="date-start" name="date-start" required>
-      </div>
-=========
-        <input type="number" id="price" name="price" value="<?php echo $product['price']; ?>" required>
-</div>
-      <div class="form-group">
-        <label for="date-start">Date Start</label>
-        <input type="date" id="date-start" name="date-start" value="<?php echo date('Y-m-d', strtotime($product['date'])); ?>" required>
-</div>
->>>>>>>>> Temporary merge branch 2
-      <div class="form-group">
-        <label for="type">Type</label>
-        <select id="type" name="type" required>
-          <option value="">Select Type</option>
-<<<<<<<<< Temporary merge branch 1
-          <option value="Powder">Flour</option>
-          <option value="Nuts">Nut</option>
-          <option value="Drink">Drink</option>
-=========
-          <option value="Powder" <?php if($product['type'] == 'Powder') echo 'selected'; ?>>Powder</option>
-          <option value="Nut" <?php if($product['type'] == 'Nut') echo 'selected'; ?>>Nut</option>
->>>>>>>>> Temporary merge branch 2
-        </select>
-      </div>
-    </div>
+        // Go back function
+        function goBack() {
+            window.history.back();
+        }
 
-<<<<<<<<< Temporary merge branch 1
-      <div class="button-container">
-        <button type="button" class="cancel" onclick="window.location.href='/products'">Cancel</button>
-        <button type="submit" class="save">Save</button>
-      </div>
-    </form>
-  </div>
-=========
-    <div class="button-container">
-      <a href="/products" class="cancel-button">Cancel</a>
-      <button type="submit" class="save">Save</button>
-    </div>
-  </form>
-</div>
+        // Form validation
+        document.getElementById('addProductForm').addEventListener('submit', function(event) {
+            let isValid = true;
+            
+            // Validate product name
+            const productName = document.getElementById('product_name');
+            if (!productName.value.trim()) {
+                document.getElementById('product_name_error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('product_name_error').style.display = 'none';
+            }
+            
+            // Validate date
+            const date = document.getElementById('date-start');
+            if (!date.value) {
+                document.getElementById('date_error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('date_error').style.display = 'none';
+            }
+            
+            // Validate price
+            const price = document.getElementById('price');
+            if (!price.value || price.value < 0) {
+                document.getElementById('price_error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('price_error').style.display = 'none';
+            }
+            
+            // Validate category
+            const category = document.getElementById('category_id');
+            if (!category.value) {
+                document.getElementById('category_id_error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('category_id_error').style.display = 'none';
+            }
+            
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
 
-<script>
-  function previewImage(event) {
-    const reader = new FileReader();
-    reader.onload = function(){
-      document.getElementById('image-preview').src = reader.result;
-    };
-    reader.readAsDataURL(event.target.files[0]);
-  }
-</script>
+        // Drag and drop functionality
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('image');
 
->>>>>>>>> Temporary merge branch 2
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('active');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('active');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('active');
+            
+            if (e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                previewImage(fileInput);
+            }
+        });
+
+        dropZone.addEventListener('click', () => {
+            fileInput.click();
+        });
+    </script>
 </body>
 </html>
