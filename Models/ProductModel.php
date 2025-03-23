@@ -101,6 +101,16 @@ class ProductModel {
             return false;
         }
     }
+    function getCategoryById($category_id) {
+        try {
+            $query = "SELECT * FROM categories WHERE category_id = :category_id";
+            $result = $this->db->query($query, ['category_id' => $category_id]);
+            return $result->fetch();
+        } catch (Exception $e) {
+            error_log("Error getting category by ID: " . $e->getMessage());
+            return false;
+        }
+    }
     
     function deleteProduct($id){
         try {

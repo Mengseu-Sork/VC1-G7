@@ -107,8 +107,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <i class="fas fa-trash-alt mr-1" style="color: red"></i>
                                         </a>
 
-                                        <a href="/products/show?id=<?= $product['id'] ?>"
-                                           class="block px-2 py-2 text-gray-700 flex items-center">
+                                        <!-- Replace this line: -->
+                                        <!-- <a href="../Views/Products/show.php" -->
+
+                                        <!-- With this: -->
+                                        <a href="/products/details?id=<?= $product['id'] ?>"
+                                        class="block px-2 py-2 text-gray-700 flex items-center">
                                             <i class="far fa-eye mr-1" style="color: blue;"></i>
                                         </a>
                                     </td>

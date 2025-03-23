@@ -17,9 +17,9 @@ $routes->get('/', [DashboardController::class, 'index']);
 // Homepage
 $routes->get('/pages', [ShowproductController::class, 'show']);
 
-$routes->get('/auth/signup', [AdminController::class, 'signup']);
-$routes->post('/signup', [AdminController::class, 'signup']);
-$routes->post('/auth/signout', [AdminController::class, 'signup']);
+// $routes->get('/auth/signup', [AdminController::class, 'signup']);
+// $routes->post('/signup', [AdminController::class, 'signup']);
+// $routes->post('/auth/signout', [AdminController::class, 'signup']);
 
 // user
 $routes->get('/user', [UserController::class, 'index']);
@@ -37,7 +37,9 @@ $routes->get('/products/create', [ProductController::class, 'create']);
 $routes->post('/products/store', [ProductController::class, 'store']);
 $routes->get('/products/edit', [ProductController::class, 'edit']);
 $routes->post('/products/update', [ProductController::class, 'update']);
-$routes->get('/products/delete', [ProductController::class, 'delete']); // Changed to GET for simplicity
+$routes->get('/products/delete', [ProductController::class, 'delete']); 
+// Make sure this line exists in your routes:
+$routes->get('/products/details', [ProductController::class, 'show']);
 
 $routes->get('/categories', [CategoryController::class, 'index']);
 
