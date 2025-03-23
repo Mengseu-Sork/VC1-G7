@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <a href="/products/create">
                     <button class="bg-blue-500 hover:bg-blue-600 text-white mb-4 font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300">Add Product</button>
                 </a>
-                <div class="overflow-x-auto bg-white shadow-lg rounded-lg mt-5 mb-6">
+                <div class="overflow-x-auto bg-white shadow-lg rounded-lg mt-5">
                     <table class="w-full table-auto border-collapse">
                         <thead>
                             <tr class="bg-blue-500 text-white uppercase text-xs sm:text-sm leading-normal">
@@ -90,53 +90,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <tr data-category="<?= $product['category_name']; ?>"
                                     class="duration-200 rounded-lg shadow-md transition bg-white dark:text-light dark:bg-darker border-b dark:border-primary-darker">
                                     <td>
-                                    <img src="/<?= $product["image"] ?>" alt="" width="50" height="50" style="border-radius: 5px;">  
+                                        <img src="../Assets/images/uploads/<?php echo $product["image"]?>" class="ml-4" alt="" width="40" height="40" style="border-radius: 5px">
                                     </td>
                                     <td class="py-3 px-6 font-semibold"><?php echo $product['name']; ?></td>
                                     <td class="py-3 px-6 font-semibold"><?php echo $product['price']; ?></td>
                                     <td class="py-3 px-6 font-semibold"><?php echo $product['date']; ?></td>
                                     <td class="py-3 px-6 font-semibold"><?php echo $product['category_name']; ?></td>
                                     <td class="flex py-3 px-6 font-semibold justify-center relative">
-          
-                                            <a href="/user/edit?id=<?= $product['id'] ?>"
-                                               class="block px-2 py-2 text-gray-700 flex items-center">
-                                                <i class="far fa-edit mr-1" style="color: green;"></i>
-                                            </a>
+                                        <a href="/products/edit?id=<?= $product['id'] ?>"
+                                           class="block px-2 py-2 text-gray-700 flex items-center">
+                                            <i class="far fa-edit mr-1" style="color: green;"></i>
+                                        </a>
 
-                                            <button onclick="openModal('deleteUserModal<?= $product['id'] ?>')"
-                                                    class="block text-left px-2 py-2 text-gray-700 flex items-center">
-                                                <i class="fas fa-trash-alt mr-1" style="color: red"></i>
-                                            </button>
+                                        <a href="javascript:void(0)" onclick="openModal('deleteProductModal<?= $product['id'] ?>')"
+                                                class="block text-left px-2 py-2 text-gray-700 flex items-center">
+                                            <i class="fas fa-trash-alt mr-1" style="color: red"></i>
+                                        </a>
 
-                                          
-                                            <!-- <a href="../Views/Products/show.php" -->
-
-                                            <!-- With this: -->
-                                            <a href="/products/details?id=<?= $product['id'] ?>"
-                                            class="block px-2 py-2 text-gray-700 flex items-center">
-                                                <i class="far fa-eye mr-1" style="color: blue;"></i>
-                                            </a>
-                                        </div>
+                                        <a href="/products/show?id=<?= $product['id'] ?>"
+                                           class="block px-2 py-2 text-gray-700 flex items-center">
+                                            <i class="far fa-eye mr-1" style="color: blue;"></i>
+                                        </a>
                                     </td>
-                                    <div id="deleteUserModal<?= $product['id'] ?>"
-                                         class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+                                    <div id="deleteProductModal<?= $product['id'] ?>"
+                                         class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50">
                                         <div class="bg-white p-6 rounded-lg shadow-lg w-96">
                                             <h2 class="text-lg font-semibold">Delete Product</h2>
                                             <p class="mt-4">Are you sure you want to delete this product?</p>
 
                                             <div class="mt-6 flex justify-end space-x-2">
-                                                <button onclick="closeModal('deleteUserModal<?= $product['id'] ?>')"
+                                                <button onclick="closeModal('deleteProductModal<?= $product['id'] ?>')"
                                                         class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 transition duration-200">
                                                     Cancel
                                                 </button>
 
-                                                <form action="/user/delete?id=<?= $product['id'] ?>" method="POST">
-                                                    <input type="hidden" name="id" value="<?= $product['id'] ?>">
-                                                    <button type="submit"
-                                                            class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
-                                                        Delete
-                                                    </button>
-                                                </form>
+                                                <a href="/products/delete?id=<?= $product['id'] ?>" 
+                                                   class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200 inline-block text-center">
+                                                    Delete
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -164,12 +155,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         });
     }
 
-    // Open and close the action menu
-    function toggleMenu(productId) {
-        const menu = document.getElementById(`menu-${productId}`);
-        menu.classList.toggle('hidden');
-    }
-
     // Open modal for deletion
     function openModal(modalId) {
         document.getElementById(modalId).classList.remove('hidden');
@@ -180,3 +165,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         document.getElementById(modalId).classList.add('hidden');
     }
 </script>
+

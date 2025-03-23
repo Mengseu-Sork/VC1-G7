@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Product</title>
+    <title>Edit Product</title>
     <style>
         :root {
             --primary-color: #4a6cf7;
@@ -126,7 +126,6 @@
             object-fit: cover;
             border-radius: 5px;
             margin-bottom: 8px;
-            display: none;
         }
 
         .image-preview h4 {
@@ -139,17 +138,7 @@
             display: flex;
             flex-direction: row;
             gap: 16px;
-            
-            
-            /* justify-content: space-around; */
-            /* justify-content: space-evenly; */
-            justify-content: flex-end;
-            /* justify-content: flex-start; */
-            /* justify-content: center; */
-            /* justify-content: space-between; */
-            /* justify-content: space-around; */
-            /* justify-content: space-evenly; */
-            /* justify-content: flex-end; */
+            justify-content: flex-end;   
             margin-top: 10px;
         }
 
@@ -173,6 +162,10 @@
 
         .btn-back {
             background-color: var(--warning-color);
+        }
+
+        .btn-cancel {
+            background-color: var(--danger-color);
         }
 
         .error-message {
@@ -204,40 +197,43 @@
 </head>
 <body>
     <div class="container">
-        <h4>Add Product</h4>
-        <form id="addProductForm" action="//products/update/<?= $product['id'] ?>" method="POST" enctype="multipart/form-data" method="POST" enctype="multipart/form-data">
+        <h4>Edit Product</h4>
+        <form id="editProductForm" action="/products/update" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
             <div class="grid">
                 <div class="flex-col md-col-span-1"> 
                     <label for="product_name">Product Name</label>
-                    <input type="text" name="name" id="product_name" required>
+                    <input type="text" name="name" id="product_name" value="<?php echo htmlspecialchars($product['name'], ENT_QUOTES, 'UTF-8'); ?>" required>
                     <span class="error-message" id="product_name_error">Please enter a product name</span>
                 </div>
                 <div class="flex-col md-col-span-1">
                     <label for="price">Price</label>
-                    <input type="number" name="price" id="price" step="0.01" min="0" required>
+                    <input type="number" name="price" id="price" step="0.01" min="0" value="<?php echo $product['price']; ?>" required>
                     <span class="error-message" id="price_error">Please enter a valid price</span>
                 </div>
 
                 <div class="flex-col md-col-span-1">
                     <label for="date-start">Date</label>
-                    <input type="date" name="date-start" id="date-start" required>
+                    <input type="date" name="date-start" id="date-start" value="<?php echo date('Y-m-d', strtotime($product['date'])); ?>" required>
                     <span class="error-message" id="date_error">Please select a valid date</span>
                 </div>
 
                 <div class="flex-col md-col-span-1">
-                    <label for="category_id">Category</label>
-                    <select name="category_id" id="category_id" required>
+                    <label for="type">Category</label>
+                    <select name="type" id="type" required>
                         <option value="">Choose Category</option>
-                        <option value="1">Nut Products</option>
-                        <option value="2">Powder Products</option>
-                        <option value="3">Drinks Products</option>
+                        <?php foreach ($categories as $category): ?>
+                            <option value="<?php echo $category['category_id']; ?>" <?php echo ($product['category_id'] == $category['category_id']) ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($category['name'], ENT_QUOTES, 'UTF-8'); ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                     <span class="error-message" id="category_id_error">Please select a category</span>
                 </div>
 
                 <div class="flex-col md-col-span-1">
                     <label for="product_content">Product Content</label>
-                    <textarea name="product_content" id="product_content" rows="2"></textarea>
+                    <textarea name="product_content" id="product_content" rows="2"><?php echo isset($product['description']) ? htmlspecialchars($product['description'], ENT_QUOTES, 'UTF-8') : ''; ?></textarea>
                 </div>
 
                 <div class="flex-col md-col-span-1">
@@ -246,16 +242,20 @@
                         <input type="file" name="image" id="image" accept="image/*" onchange="previewImage(this)">
                         <div class="drop-zone" id="drop-zone">
                             <div class="image-preview">
-                                <img id="image-preview" src="#" alt="Product Image Preview">
+                                <?php 
+                                $imagePath = !empty($product['image']) ? "/Assets/images/uploads/" . $product['image'] : "#";
+                                $displayStyle = !empty($product['image']) ? "block" : "none";
+                                ?>
+                                <img id="image-preview" src="<?php echo $imagePath; ?>" alt="Product Image Preview" style="display: <?php echo $displayStyle; ?>">
                                 <h4>Drag and drop a file to upload</h4>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="  button-container md-col-span-2">
+                <div class="button-container md-col-span-2">
                     <button type="button" class="btn-cancel" onclick="window.location.href='/products'">Cancel</button>
-                    <button type="submit" class="btn-submit">Submit</button>
+                    <button type="submit" class="btn-submit">Save Changes</button>
                     <button type="button" class="btn-back" onclick="goBack()">Back</button>
                 </div>
             </div>
@@ -277,8 +277,6 @@
                 }
                 
                 reader.readAsDataURL(file);
-            } else {
-                preview.style.display = 'none';
             }
         }
 
@@ -288,7 +286,7 @@
         }
 
         // Form validation
-        document.getElementById('addProductForm').addEventListener('submit', function(event) {
+        document.getElementById('editProductForm').addEventListener('submit', function(event) {
             let isValid = true;
             
             // Validate product name
@@ -319,7 +317,7 @@
             }
             
             // Validate category
-            const category = document.getElementById('category_id');
+            const category = document.getElementById('type');
             if (!category.value) {
                 document.getElementById('category_id_error').style.display = 'block';
                 isValid = false;
@@ -361,3 +359,4 @@
     </script>
 </body>
 </html>
+
