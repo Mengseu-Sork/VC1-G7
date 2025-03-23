@@ -23,7 +23,6 @@
       <label for="name">Name</label>
       <input type="text" id="name" value="" name="name" required>
     </div>
-
     <div class="form-grid">
       <div class="form-group">
         <label for="price">Price</label>

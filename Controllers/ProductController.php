@@ -78,10 +78,10 @@ class ProductController extends BaseController {
                 if (!is_dir($target_dir)) {
                     mkdir($target_dir, 0777, true);
                 }
-                $imagePath = $target_dir . basename($_FILES['image']['name']);
+                $filename = basename($_FILES['image']['name']);//get the filename
+                $imagePath = $target_dir . $filename;
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
-                    $data['image'] = basename($_FILES['image']['name']); //store only the name in the database.
-                    echo "<br> Image Uploaded Correctly <br>";
+                    $data['image'] = $filename; // Store ONLY the filename in the database
                 } else {
                     echo "Error: Failed to upload image.";
                     return;
@@ -90,7 +90,6 @@ class ProductController extends BaseController {
               //if no new image is uploaded, use the previous image
               $product = $this->model->getProductById($id);
               $data['image'] = $product['image'];
-              echo "<br> No new image uploaded, using previous image <br>";
             }
     
             // Validation (Add more validation as needed)
@@ -99,20 +98,15 @@ class ProductController extends BaseController {
                 return;
             }
     
-            var_dump($_FILES['image']);
-            echo "<br>";
-            if(isset($imagePath)){
-                echo "image path: " . $imagePath;
-            }
-    
             $this->model->updateProduct($id, $data);
             $this->redirect('/products');
         }
     }
-    function delete($id)
-    {
-        $this->model->deleteProduct($id);
+    public function delete($id) {
+        $this->model->deleteProduct($id) ;
         $this->redirect('/products');
+
     }
+
 }
 ?>

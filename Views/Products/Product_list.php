@@ -25,7 +25,7 @@ $products = $result->fetchAll();
                     <input type="checkbox">
                     <span class="slider"></span>
                 </label>
-                <img src="https://via.placeholder.com/30" alt="User Avatar" style="border-radius: 50%;">
+                <img src="https://via.placeholder.com/30" alt="product Avatar" style="border-radius: 50%;">
             </div>
         </div>
 
@@ -49,9 +49,9 @@ $products = $result->fetchAll();
             </thead>
             <tbody>
                 <?php if (count($products) > 0): ?>
-                    <?php foreach ($products as $row): ?>
+                    <?php foreach ($products as $index => $row): ?>
                         <tr>
-                            <td><?= ($row['id']) ?></td>
+                            <td><?= $index + 1 ?></td>
                             <td>
 
                                 <!-- // !empty($row['image']) ? '../Assets/images/product/' . ($row['image']) : '../Assets/images/product/default.jpg' 
@@ -69,9 +69,39 @@ $products = $result->fetchAll();
                                 <a href="/products/edit?id=<?= $row['id'] ?>">
                                     <button class="edit-button">Edit</button>
                                 </a>
-                                <a href="/Products/delete<?= $row['id'] ?>" onclick="return confirm('Are you sure you want to delete <?= addslashes($row['product_name']) ?>?');">
+                                <!-- <a href="/Products/delete<?= $row['id'] ?>" onclick="return confirm('Are you sure you want to delete <?= addslashes($row['product_name']) ?>?');">
                                     <button class="delete-button">Delete</button>
-                                </a>
+                                </a> -->
+                                <button onclick="openModal('deleteproductModal<?= $row['id'] ?>')"
+                                    class="px-4 py-2 text-white bg-red-500 hover:bg-red-400 rounded-md transition duration-200">
+                                    Delete
+                                </button>
+
+                                <!-- Delete Confirmation Modal -->
+                                <div id="deleteproductModal<?= $row['id'] ?>"
+                                    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+                                    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+                                        <h2 class="text-lg font-semibold">Delete product</h2>
+                                        <p class="mt-4">Are you sure you want to delete this product?</p>
+
+                                        <div class="mt-6 flex justify-end space-x-2">
+                                            <!-- Cancel Button -->
+                                            <button onclick="closeModal('deleteproductModal<?= $row['id'] ?>')"
+                                                class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 transition duration-200">
+                                                Cancel
+                                            </button>
+
+                                            <!-- Confirm Delete -->
+                                            <form action="/products/delete?id=<?= $row['id'] ?>" method="POST">
+                                                <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                                                <button type="submit"
+                                                    class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -107,6 +137,14 @@ $products = $result->fetchAll();
                     row.style.display = "none";
                 }
             });
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.remove("hidden");
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add("hidden");
         }
     </script>
 </body>

@@ -105,6 +105,9 @@ body {
 
 .product-card .order-btn:hover {  
     background-color: #e68a00;  
+<<<<<<< HEAD
+}  
+=======
 }  
 
 
@@ -335,3 +338,4 @@ h1 {
 .order-button:hover {
     background-color:rgb(163, 83, 42);
 }
+>>>>>>> 5422fc5bc23e3e0474d1f45e2f4b77a0b5497c64
