@@ -25,8 +25,8 @@
                 </div>  
                 <div class="mt-6">  
                     <h2 class="font-semibold">About This Item:</h2>  
-                    <?php if (isset($product['description']) && !empty($product['description'])): ?>
-                        <p class="text-gray-700 mt-2"><?= htmlspecialchars($product['description']) ?></p>
+                    <?php if (isset($category['description']) && !empty($category['description'])): ?>
+                        <p class="text-gray-700 mt-2"><?= htmlspecialchars($category['description']) ?></p>
                     <?php else: ?>
                         <p class="text-gray-700 mt-2">No description available for this product.</p>
                     <?php endif; ?>
