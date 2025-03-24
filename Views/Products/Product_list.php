@@ -61,11 +61,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="shadow-lg rounded-lg p-6 border-2 border-gray-200 dark:border-primary-darker transition duration-300"
                  :style="{ backgroundColor: bgColor }">
                 <h2 class="text-left ml-1 text-2xl font-bold mb-6">Products List</h2>
-                <a href="/products/create">
-                    <button class="bg-blue-500 hover:bg-blue-600 text-white mb-4 font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300">Add Product</button>
-                </a>
+                <div class="flex justify-between flex-col md:flex-row items-center gap-4 mb-6">
+                    <a href="/products/create">
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300">Add Product</button>
+                    </a>
+                    <div class="flex w-full md:w-auto gap-2 relative">
+                        <input type="text" id="searchInput" placeholder="Search products..." required
+                            class="w-full md:w-64 px-4 py-2 pl-10 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 outline-none"
+                            oninput="searchProducts()">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <button type="button" onclick="searchProducts()"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300">
+                            Search
+                        </button>
+                    </div>
+                </div>
                 <div class="overflow-x-auto bg-white shadow-lg rounded-lg mt-5">
-                    <table class="w-full table-auto border-collapse">
+                    <table id="productsTable" class="w-full table-auto border-collapse">
                         <thead>
                             <tr class="bg-blue-500 text-white uppercase text-xs sm:text-sm leading-normal">
                                 <th class="py-3 px-6 text-left">Image</th>
@@ -74,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <th class="py-3 px-6 text-left">Date</th>
                                 <th class="py-3 px-6 text-left">
                                     <select name="category-filter" id="category-filter"
-                                            class="pr-5 pl-2 border border-blue-300 rounded-md transition duration-300 mr-1 bg-blue-600 dark:bg-darker border-b dark:border-primary-darker"
+                                            class="pr-5 pl-2 border border-blue-300 rounded-md transition duration-300 mr-1 bg-blue-600 border-b dark:border-primary-darker"
                                             onchange="filterByCategory(this.value)">
                                         <option value="">All Categories</option>
                                         <?php foreach ($categories_name as $key => $value): ?>

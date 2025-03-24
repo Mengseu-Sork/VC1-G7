@@ -4,7 +4,7 @@ require_once 'controllers/UserController.php';
 require_once 'Controllers/DashboardController.php';
 require_once 'Controllers/CategoryController.php';
 require 'Controllers/ProductController.php';
-require 'Controllers/AdminController.php';
+// require 'Controllers/AdminController.php';
 require 'Controllers/ShowproductController.php';
 require 'Controllers/ShowuserController.php';
 
@@ -17,9 +17,9 @@ $routes->get('/', [DashboardController::class, 'index']);
 // Homepage
 $routes->get('/pages', [ShowproductController::class, 'show']);
 
-// $routes->get('/auth/signup', [AdminController::class, 'signup']);
-// $routes->post('/signup', [AdminController::class, 'signup']);
-// $routes->post('/auth/signout', [AdminController::class, 'signup']);
+// $routes->get('/auth/login', [AdminController::class, 'login']);
+// $routes->post('/auth/login', [AdminController::class, 'login']);
+// $routes->post('/auth/logout', [AdminController::class, 'logout']);
 
 // user
 $routes->get('/user', [UserController::class, 'index']);
