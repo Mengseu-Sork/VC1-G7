@@ -14,6 +14,16 @@ class ShowproductModel {
         return $result->fetchAll();
     }
 
+    function getProductTypes() {
+        try {
+            $result = $this->db->query("SELECT category_id, name FROM categories");
+            return $result->fetchAll();
+        } catch (Exception $e) {
+            error_log("Error fetching product types: " . $e->getMessage());
+            return [];
+        }
+    }
+
     function getProductById($id) {
         try {
             $query = "SELECT * FROM products WHERE id = :id";
