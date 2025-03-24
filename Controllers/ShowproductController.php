@@ -14,8 +14,21 @@ class ShowproductController extends BaseController {
         $this->view('pages/products', ['products' => $products]);
     }
     function ratings() {
-        $products = $this->model->getShowProducts();
-        $this->view('pages/product_ratings', ['products' => $products]);
+        // Get product ID from URL if available
+        $id = null;
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            // Get the specific product if ID is provided
+            $product = $this->model->getProductById($id);
+            $this->view('pages/product_ratings', [
+                'product' => $product,
+                'id' => $id
+            ]);
+        } else {
+            // Get all products if no ID is provided
+            $products = $this->model->getShowProducts();
+            $this->view('pages/product_ratings', ['products' => $products]);
+        }
     }
     function show($id = null) {
         // If no ID is provided in the URL, try to get it from GET parameters
