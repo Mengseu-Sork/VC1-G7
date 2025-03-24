@@ -198,6 +198,7 @@
     </style>
 </head>
 <body>
+<div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">    
     <div class="container">
         <h4>Add Product</h4>
         <form id="addProductForm" action="/products/store" method="POST" enctype="multipart/form-data">
@@ -258,7 +259,7 @@
             </div>
         </form>
     </div>
-
+</div>
     <script>
         // Image preview functionality
         function previewImage(input) {

@@ -196,70 +196,72 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h4>Edit Product</h4>
-        <form id="editProductForm" action="/products/update" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
-            <div class="grid">
-                <div class="flex-col md-col-span-1"> 
-                    <label for="product_name">Product Name</label>
-                    <input type="text" name="name" id="product_name" value="<?php echo htmlspecialchars($product['name'], ENT_QUOTES, 'UTF-8'); ?>" required>
-                    <span class="error-message" id="product_name_error">Please enter a product name</span>
-                </div>
-                <div class="flex-col md-col-span-1">
-                    <label for="price">Price</label>
-                    <input type="number" name="price" id="price" step="0.01" min="0" value="<?php echo $product['price']; ?>" required>
-                    <span class="error-message" id="price_error">Please enter a valid price</span>
-                </div>
+    <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto"> 
+        <div class="container">
+            <h4>Edit Product</h4>
+            <form id="editProductForm" action="/products/update" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
+                <div class="grid">
+                    <div class="flex-col md-col-span-1"> 
+                        <label for="product_name">Product Name</label>
+                        <input type="text" name="name" id="product_name" value="<?php echo htmlspecialchars($product['name'], ENT_QUOTES, 'UTF-8'); ?>" required>
+                        <span class="error-message" id="product_name_error">Please enter a product name</span>
+                    </div>
+                    <div class="flex-col md-col-span-1">
+                        <label for="price">Price</label>
+                        <input type="number" name="price" id="price" step="0.01" min="0" value="<?php echo $product['price']; ?>" required>
+                        <span class="error-message" id="price_error">Please enter a valid price</span>
+                    </div>
 
-                <div class="flex-col md-col-span-1">
-                    <label for="date-start">Date</label>
-                    <input type="date" name="date-start" id="date-start" value="<?php echo date('Y-m-d', strtotime($product['date'])); ?>" required>
-                    <span class="error-message" id="date_error">Please select a valid date</span>
-                </div>
+                    <div class="flex-col md-col-span-1">
+                        <label for="date-start">Date</label>
+                        <input type="date" name="date-start" id="date-start" value="<?php echo date('Y-m-d', strtotime($product['date'])); ?>" required>
+                        <span class="error-message" id="date_error">Please select a valid date</span>
+                    </div>
 
-                <div class="flex-col md-col-span-1">
-                    <label for="type">Category</label>
-                    <select name="type" id="type" required>
-                        <option value="">Choose Category</option>
-                        <?php foreach ($categories as $category): ?>
-                            <option value="<?php echo $category['category_id']; ?>" <?php echo ($product['category_id'] == $category['category_id']) ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($category['name'], ENT_QUOTES, 'UTF-8'); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                    <span class="error-message" id="category_id_error">Please select a category</span>
-                </div>
+                    <div class="flex-col md-col-span-1">
+                        <label for="type">Category</label>
+                        <select name="type" id="type" required>
+                            <option value="">Choose Category</option>
+                            <?php foreach ($categories as $category): ?>
+                                <option value="<?php echo $category['category_id']; ?>" <?php echo ($product['category_id'] == $category['category_id']) ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($category['name'], ENT_QUOTES, 'UTF-8'); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <span class="error-message" id="category_id_error">Please select a category</span>
+                    </div>
 
-                <div class="flex-col md-col-span-1">
-                    <label for="product_content">Product Content</label>
-                    <textarea name="product_content" id="product_content" rows="2"><?php echo isset($product['description']) ? htmlspecialchars($product['description'], ENT_QUOTES, 'UTF-8') : ''; ?></textarea>
-                </div>
+                    <div class="flex-col md-col-span-1">
+                        <label for="product_content">Product Content</label>
+                        <textarea name="product_content" id="product_content" rows="2"><?php echo isset($product['description']) ? htmlspecialchars($product['description'], ENT_QUOTES, 'UTF-8') : ''; ?></textarea>
+                    </div>
 
-                <div class="flex-col md-col-span-1">
-                    <label>Product Image</label>
-                    <div class="image-upload">
-                        <input type="file" name="image" id="image" accept="image/*" onchange="previewImage(this)">
-                        <div class="drop-zone" id="drop-zone">
-                            <div class="image-preview">
-                                <?php 
-                                $imagePath = !empty($product['image']) ? "/Assets/images/uploads/" . $product['image'] : "#";
-                                $displayStyle = !empty($product['image']) ? "block" : "none";
-                                ?>
-                                <img id="image-preview" src="<?php echo $imagePath; ?>" alt="Product Image Preview" style="display: <?php echo $displayStyle; ?>">
-                                <h4>Drag and drop a file to upload</h4>
+                    <div class="flex-col md-col-span-1">
+                        <label>Product Image</label>
+                        <div class="image-upload">
+                            <input type="file" name="image" id="image" accept="image/*" onchange="previewImage(this)">
+                            <div class="drop-zone" id="drop-zone">
+                                <div class="image-preview">
+                                    <?php 
+                                    $imagePath = !empty($product['image']) ? "/Assets/images/uploads/" . $product['image'] : "#";
+                                    $displayStyle = !empty($product['image']) ? "block" : "none";
+                                    ?>
+                                    <img id="image-preview" src="<?php echo $imagePath; ?>" alt="Product Image Preview" style="display: <?php echo $displayStyle; ?>">
+                                    <h4>Drag and drop a file to upload</h4>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="button-container md-col-span-2">
-                    <button type="button" class="btn-cancel" onclick="window.location.href='/products'">Cancel</button>
-                    <button type="submit" class="btn-submit">Save Changes</button>
-                    <button type="button" class="btn-back" onclick="goBack()">Back</button>
+                    <div class="button-container md-col-span-2">
+                        <button type="button" class="btn-cancel" onclick="window.location.href='/products'">Cancel</button>
+                        <button type="submit" class="btn-submit">Save Changes</button>
+                        <button type="button" class="btn-back" onclick="goBack()">Back</button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 
     <script>

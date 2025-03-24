@@ -7,7 +7,7 @@ class DashboardController extends BaseController
     {
         // session_start();
         // if (!isset($_SESSION["admin"])) {
-        //     header("Location: /signup");
+        //     header("Location: /auth/login");
         //     exit();
         // }
     
