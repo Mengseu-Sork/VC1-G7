@@ -10,7 +10,6 @@ class ProductModel {
         $query = "SELECT * FROM categories";
         $result = $this->db->query($query);
         return $result->fetchAll();
-        
     }
 
     function getAllProducts() {
@@ -27,7 +26,8 @@ class ProductModel {
                 LEFT JOIN categories ON products.category_id = categories.category_id");
             return $result->fetchAll();
         } catch (Exception $e) {
-            die("Error fetching products: " . $e->getMessage());
+            error_log("Error fetching products: " . $e->getMessage());
+            return [];
         }
     }
 
@@ -36,109 +36,111 @@ class ProductModel {
             $result = $this->db->query("SELECT category_id, name FROM categories");
             return $result->fetchAll();
         } catch (Exception $e) {
-            die("Error fetching product types: " . $e->getMessage());
+            error_log("Error fetching product types: " . $e->getMessage());
+            return [];
         }
     }
 
-    public function createProduct($data) {
-        $query = "INSERT INTO products (name, price, category_id, date, image) 
-                 VALUES (:name, :price, :category_id, :date, :image)";
-                 
-        return $this->db->query($query, [
-            'name' => $data['name'],
-            'price' => $data['price'],
-            'category_id' => $data['category_id'],
-            'date' => $data['date'],
-            'image' => $data['image']
-        ]);
-    }
-
-    public static function find($id) {
-        $db = new Database();
-        return $db->query("SELECT * FROM products WHERE id = ?", [$id])->fetch();
-    }
-
-    public static function update($id, $name, $price, $date, $type, $image) {
-        $db = new Database();
-        $query = "UPDATE products SET name = ?, price = ?, date = ?, type = ?, image = ? WHERE id = ?";
-        return $db->query($query, [$name, $price, $date, $type, $image, $id]);
-    }
-
-    // function getProductById($id){
-    //     $query = "SELECT * FROM products WHERE id = :id";
-    //     $result = $this->db->query($query, ['id' => $id]);
-    //     return $result->fetch();
-    // }
-
-    function updateProduct($id, $data) {
+    function createProduct($data) {
         try {
-            $query = "UPDATE products SET name = :name, price = :price, category_id = :category_id, date = :date";
-            
-            // Only include image in update if it's provided
-            if (!empty($data['image'])) {
-                $query .= ", image = :image";
-            }
-            
-            $query .= " WHERE id = :id";
+            $stmt = "INSERT INTO products (name, price, category_id, date, image) 
+                     VALUES (:name, :price, :category_id, :date, :image)";
+            $this->db->query($stmt, [
+                'name' => $data['name'],
+                'price' => $data['price'],
+                'category_id' => $data['category_id'],
+                'date' => $data['date'],
+                'image' => $data['image'],
+            ]);
+            return true;
+        } catch (Exception $e) {
+            error_log("Error creating product: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    function getProductById($id){
+        try {
+            $query = "SELECT * FROM products WHERE id = :id";
+            $result = $this->db->query($query, ['id' => $id]);
+            return $result->fetch();
+        } catch (Exception $e) {
+            error_log("Error getting product by ID: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    function updateProduct($data){
+        try {
+            $stmt = "UPDATE products SET 
+                    name = :name, 
+                    price = :price, 
+                    category_id = :category_id, 
+                    date = :date";
             
             $params = [
                 'name' => $data['name'],
                 'price' => $data['price'],
                 'category_id' => $data['category_id'],
                 'date' => $data['date'],
-                'id' => $id
+                'id' => $data['id']
             ];
             
-            // Only add image parameter if it exists
+            // Only include image in the update if it's provided
             if (!empty($data['image'])) {
+                $stmt .= ", image = :image";
                 $params['image'] = $data['image'];
             }
             
-            // Execute the query with parameters
-            $result = $this->db->query($query, $params);
+            $stmt .= " WHERE id = :id";
             
-            return $result !== false;
+            $this->db->query($stmt, $params);
+            return true;
         } catch (Exception $e) {
             error_log("Error updating product: " . $e->getMessage());
             return false;
         }
     }
-   
-
-    public function deleteProduct($id) {
-        return $this->db->query('DELETE FROM products where id = :id', ['id'=> $id]);
-    }
-    function getProductById($id) {
-        try {
-            // Use prepared statement to prevent SQL injection
-            $query = "SELECT * FROM products WHERE id = :id";
-            $result = $this->db->query($query, ['id' => $id]);
-            
-            // Fetch the product
-            $product = $result->fetch();
-            
-            // For debugging
-            if (!$product) {
-                error_log("No product found with ID: $id");
-            }
-            
-            return $product;
-        } catch (Exception $e) {
-            error_log("Error fetching product by ID: " . $e->getMessage());
-            return null;
-        }
-    }
-    
-    function getCategoryById($categoryId) {
+    function getCategoryById($category_id) {
         try {
             $query = "SELECT * FROM categories WHERE category_id = :category_id";
-            $result = $this->db->query($query, ['category_id' => $categoryId]);
+            $result = $this->db->query($query, ['category_id' => $category_id]);
             return $result->fetch();
         } catch (Exception $e) {
-            error_log("Error fetching category: " . $e->getMessage());
-            return null;
+            error_log("Error getting category by ID: " . $e->getMessage());
+            return false;
         }
     }
     
+    function deleteProduct($id){
+        try {
+            $stmt = "DELETE FROM products WHERE id = :id";
+            $this->db->query($stmt, ['id' => $id]);
+            return true;
+        } catch (Exception $e) {
+            error_log("Error deleting product: " . $e->getMessage());
+            return false;
+        }
+    }
+
+
+    // Add this method to your ProductModel class
+    public function getProductForOrder($id) {
+        try {
+            $query = "SELECT id, name, price, image, stock FROM products WHERE id = :id";
+            $result = $this->db->query($query, ['id' => $id]);
+            $product = $result->fetch();
+            
+            if ($product) {
+                $product['numericPrice'] = floatval(str_replace(['$', ','], '', $product['price']));
+                return $product;
+            }
+            return null;
+        } catch (Exception $e) {
+            error_log("Error getting product for order: " . $e->getMessage());
+            return null;
+        }
+    }
 }
 ?>
+

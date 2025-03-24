@@ -165,6 +165,10 @@
             background-color: var(--warning-color);
         }
 
+        .btn-cancel {
+            background-color: var(--danger-color);
+        }
+
         .error-message {
             color: var(--danger-color);
             font-size: 12px;
@@ -215,12 +219,14 @@
                 </div>
 
                 <div class="flex-col md-col-span-1">
-                    <label for="category_id">Category</label>
-                    <select name="category_id" id="category_id" required>
+                    <label for="type">Category</label>
+                    <select name="type" id="type" required>
                         <option value="">Choose Category</option>
-                        <option value="1">Nut Products</option>
-                        <option value="2">Powder Products</option>
-                        <option value="3">Drinks Products</option>
+                        <?php foreach ($categories as $category): ?>
+                            <option value="<?php echo $category['category_id']; ?>">
+                                <?php echo htmlspecialchars($category['name'], ENT_QUOTES, 'UTF-8'); ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                     <span class="error-message" id="category_id_error">Please select a category</span>
                 </div>
@@ -243,7 +249,7 @@
                     </div>
                 </div>
 
-                <div class="  button-container md-col-span-2">
+                <div class="button-container md-col-span-2">
                     <button type="button" class="btn-cancel" onclick="window.location.href='/products'">Cancel</button>
                     <button type="submit" class="btn-submit">Submit</button>
                     <button type="button" class="btn-back" onclick="goBack()">Back</button>
@@ -309,7 +315,7 @@
             }
             
             // Validate category
-            const category = document.getElementById('category_id');
+            const category = document.getElementById('type');
             if (!category.value) {
                 document.getElementById('category_id_error').style.display = 'block';
                 isValid = false;
