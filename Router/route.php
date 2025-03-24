@@ -45,6 +45,11 @@ $routes->get('/products/details', [ProductController::class, 'show']);
 $routes->get('/products/prosuct_ratings', [ProductController::class, 'ratings']);
 
 $routes->get('/categories', [CategoryController::class, 'index']);
+$routes->get('/categories/create', [CategoryController::class, 'create']);
+$routes->get('/categories/store', [CategoryController::class, 'store']);
+$routes->get('/categories/edit', [CategoryController::class, 'edit']);
+$routes->get('/categories/update', [CategoryController::class, 'update']);
+$routes->get('/categories/delete', [CategoryController::class, 'delete']);
 
 $routes->dispatch();
 

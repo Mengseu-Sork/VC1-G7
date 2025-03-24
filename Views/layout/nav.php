@@ -23,7 +23,7 @@
                   class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-home icon"></i>
+                    <i class="fas fa-home icon text-blue-500"></i>
                   </span>
                   <span class="ml-2 text-5sm"> Dashboards </span>
                   <span class="ml-auto" aria-hidden="true">
@@ -38,7 +38,7 @@
                   class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-cube icon"></i>
+                    <i class="fas fa-cube icon text-blue-500"></i>
                   </span>
                   <span class="ml-3 text-5sm "> Products </span>
                   <span class="ml-auto" aria-hidden="true">
@@ -55,7 +55,7 @@
 
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-box icon"></i> 
+                    <i class="fas fa-box icon text-blue-500"></i> 
                   <span class="ml-2 text-5sm"> Inventory </span>
                 </a>
               </div>
@@ -67,7 +67,7 @@
 
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-box icon"></i> 
+                  <i class="fas fa-list icon text-blue-500"></i>
                   <span class="ml-2 text-5sm"> Category </span>
                 </a>
               </div>
@@ -79,7 +79,7 @@
                   class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-file-alt icon"></i>
+                    <i class="fas fa-file-alt icon text-blue-500"></i>
                   </span>
                   <span class="ml-4 text-5sm"> Report </span>
                   <span aria-hidden="true" class="ml-auto">
@@ -97,7 +97,7 @@
 
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-shopping-cart icon"></i>
+                    <i class="fas fa-shopping-cart icon text-blue-500"></i>
                   </span>
                   <span class="ml-2 text-5sm"> Order </span>
                   <span aria-hidden="true" class="ml-auto">
@@ -115,7 +115,7 @@
 
                   >
                     <span aria-hidden="true">
-                      <i class="fas fa-dollar-sign icon1"></i>
+                      <i class="fas fa-dollar-sign icon1 text-blue-500"></i>
                     </span>
                     <span class="ml-4 text-5sm"> Payments </span>
                     <span aria-hidden="true" class="ml-auto">
@@ -128,7 +128,7 @@
                   class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                   >
                   <span aria-hidden="true">
-                    <i class="fas fa-users icon"></i>
+                    <i class="fas fa-users icon text-blue-500"></i>
                   </span>
                   <span class="ml-2 text-sm"> Users </span>
                   <span aria-hidden="true" class="ml-auto">
@@ -143,7 +143,7 @@
                   class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-sign-out-alt icon"></i>
+                    <i class="fas fa-sign-out-alt icon text-blue-500"></i>
                   </span>
                   <span class="ml-3 text-5sm"> Sign Out </span>
                 </a>
