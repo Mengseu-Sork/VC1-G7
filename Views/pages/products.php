@@ -56,6 +56,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit;
 }   
 ?>
+<style>
+    .product-image-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+    .view-more-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 209, 129, 0.58);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: 5px;
+        pointer-events: none; /* Prevents the overlay from being interactive */
+    }
+    .product-image-container:hover .view-more-overlay {
+        opacity: 1;
+    }
+</style>
 <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
     <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
         <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
@@ -74,7 +100,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="container flex flex-wrap gap-8 p-4 justify-center " id="productContainer">
                     <?php foreach ($products as $product): ?>
                         <div class="w-48 h-72 bg-white border border-gray-300 p-4 rounded-lg shadow-md transition duration-300 flex flex-col items-center bg-white dark:bg-darker border-b dark:border-primary-darker">
-                        <img src="../Assets/images/uploads/<?php echo $product["image"]; ?>"  alt="<?php echo htmlspecialchars($product['name']); ?>"  class="w-28 h-28 rounded-md mb-1 mt-1">
+                            <div class="product-image-container">
+                                <a href="/pages/details?id=<?php echo $product['id']; ?>">
+                                    <img src="../Assets/images/uploads/<?php echo $product["image"]; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="w-28 h-28 rounded-md mb-1 mt-1">
+                                    <div class="view-more-overlay">View More</div>
+                                </a>
+                            </div>
                             <h4 class="text-lg font-bold"><?= htmlspecialchars($product['name']) ?></h4>
                             <p class="text-gl text-green-600 font-semibold"><span class="ml-4 bg-green-200 text-green-800 text-xs font-bold px-3 py-1 rounded-full">In Stock</span></p>
                             <p class="text-gl font-semibold text-yellow-600"><?= htmlspecialchars($product['price']) ?></p>
