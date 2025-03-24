@@ -1,5 +1,4 @@
 <?php
-
 $productModel = new ProductModel();
 $products = $productModel->getAllProducts();
 $categories_name = [
@@ -8,54 +7,13 @@ $categories_name = [
     'Drinks' => 'Drinks Products'
 ];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    header("Content-Type: application/json"); 
-
-    if (isset($_FILES["image"]) && $_FILES["image"]["error"] == UPLOAD_ERR_OK) {
-        $targetDir = "../../Assets/images/uploads/";
-        $fileName = basename($_FILES["image"]["name"]);
-        $targetFilePath = $targetDir . $fileName;
-        $fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
-
-        // Allowed file types
-        $allowedTypes = ["jpg", "jpeg", "png", "gif"];
-        if (!in_array($fileType, $allowedTypes)) {
-            echo json_encode(["success" => false, "message" => "Invalid file format. Only JPG, JPEG, PNG, and GIF files are allowed."]);
-            exit;
-        }
-
-        // Ensure target directory exists
-        if (!is_dir($targetDir) && !mkdir($targetDir, 0777, true)) {
-            echo json_encode(["success" => false, "message" => "Failed to create upload directory."]);
-            exit;
-        }
-
-        // Move the uploaded file
-        if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
-            echo json_encode(["success" => true, "message" => "File uploaded successfully!", "image" => $targetFilePath]);
-        } else {
-            echo json_encode(["success" => false, "message" => "Error moving the uploaded file."]);
-        }
-    } else {
-        // Handle specific upload errors
-        $errorMessages = [
-            UPLOAD_ERR_INI_SIZE   => "The uploaded file exceeds the server limit.",
-            UPLOAD_ERR_FORM_SIZE  => "The uploaded file exceeds the form limit.",
-            UPLOAD_ERR_PARTIAL    => "The file was only partially uploaded.",
-            UPLOAD_ERR_NO_FILE    => "No file was uploaded.",
-            UPLOAD_ERR_NO_TMP_DIR => "Missing a temporary folder.",
-            UPLOAD_ERR_CANT_WRITE => "Failed to write file to disk.",
-            UPLOAD_ERR_EXTENSION  => "File upload stopped by a PHP extension."
-        ];
-        
-        $errorCode = $_FILES["image"]["error"];
-        $errorMessage = $errorMessages[$errorCode] ?? "An unknown error occurred.";
-
-        echo json_encode(["success" => false, "message" => $errorMessage]);
-    }
-    exit;
-}   
+$productsPerRow = 5; // Number of products per row
+$rowsPerClick = 2; // Show 2 more rows per click
+$initialRows = 2; // Initially displayed rows
+$initialProductsToShow = $productsPerRow * $initialRows;
+$totalProducts = count($products);
 ?>
+
 <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
     <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
         <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
@@ -63,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                  :style="{ backgroundColor: bgColor }">
                 
                 <div class="flex flex-wrap gap-8 p-4 justify-between">
-                    <h1 class="text-left ml-1 text-3xl font-bold ">Products</h1>
+                    <h1 class="text-left ml-1 text-3xl font-bold">Products</h1>
                     <select class="pr-5 pl-2 border border-gray-300 rounded-md transition duration-300 mr-1 bg-white dark:bg-darker border-b dark:border-primary-darker" onchange="filterByCategory(this.value)">
                         <option value="#">All Products</option>
                         <?php foreach ($categories_name as $key => $value): ?>
@@ -71,28 +29,96 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <?php endforeach; ?>  
                     </select>
                 </div>
-                <div class="container flex flex-wrap gap-8 p-4 justify-center " id="productContainer">
-                    <?php foreach ($products as $product): ?>
-                        <div class="w-48 h-72 bg-white border border-gray-300 p-4 rounded-lg shadow-md transition duration-300 flex flex-col items-center bg-white dark:bg-darker border-b dark:border-primary-darker">
-                        <img src="../Assets/images/uploads/<?php echo $product["image"]; ?>"  alt="<?php echo htmlspecialchars($product['name']); ?>"  class="w-28 h-28 rounded-md mb-1 mt-1">
+
+                <div class="container flex flex-wrap gap-8 p-4 justify-center" id="productContainer">
+                    <?php 
+                    $index = 0;
+                    foreach ($products as $product): 
+                        $hiddenClass = ($index >= $initialProductsToShow) ? 'hidden product-hidden' : '';
+                        $index++;
+                    ?>
+                        <div class="w-48 h-72 bg-white border border-gray-300 p-4 rounded-lg shadow-md transition duration-300 flex flex-col items-center bg-white dark:bg-darker border-b dark:border-primary-darker <?= $hiddenClass ?>">
+                            <img src="../Assets/images/uploads/<?php echo $product["image"]; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="w-28 h-28 rounded-md mb-1 mt-1">
                             <h4 class="text-lg font-bold"><?= htmlspecialchars($product['name']) ?></h4>
                             <p class="text-gl text-green-600 font-semibold"><span class="ml-4 bg-green-200 text-green-800 text-xs font-bold px-3 py-1 rounded-full">In Stock</span></p>
                             <p class="text-gl font-semibold text-yellow-600"><?= htmlspecialchars($product['price']) ?></p>
-                            <button class="mt-3 border px-8 py-2 bg-blue-500 relative dark:bg-darker border-b dark:border-primary-darker hover:bg-blue-600 text-white font-semibold rounded-md transition"><i class="fas fa-shopping-cart mr-2" style="color: orange;"></i> ORDER</button>
+                            <button class="mt-3 border px-8 py-2 bg-blue-500 relative dark:bg-darker border-b dark:border-primary-darker hover:bg-blue-600 text-white font-semibold rounded-md transition">
+                                <i class="fas fa-shopping-cart mr-2" style="color: orange;"></i> ORDER
+                            </button>
                         </div>
                     <?php endforeach; ?>
+                </div>
+
+                <!-- Buttons Container -->
+                <div class="flex justify-center mt-6 gap-4" id="buttonContainer">
+                    <button onclick="showMoreProducts()" id="seeMoreButton" class="px-6 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition">
+                        See More
+                    </button>
+                    <button onclick="resetProducts()" id="backButton" class="px-6 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 transition hidden">
+                        Back
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<script>  
-    function filterByCategory(category) {
-        const rows = document.querySelectorAll("#product-table-body tr");
-        rows.forEach(row => {
-            const productCategory = row.getAttribute("data-category");
-            row.style.display = (category === "" || productCategory === category) ? "" : "none";
+<script>
+    let productsPerRow = <?= $productsPerRow ?>; 
+    let rowsPerClick = <?= $rowsPerClick ?>;
+    let initialProductsToShow = <?= $initialProductsToShow ?>;
+    let shownProducts = initialProductsToShow;
+    const totalProducts = <?= $totalProducts ?>;
+
+    function showMoreProducts() {
+        let hiddenProducts = document.querySelectorAll('.product-hidden');
+        let counter = 0;
+
+        hiddenProducts.forEach(product => {
+            if (counter < (productsPerRow * rowsPerClick)) {
+                product.classList.remove('hidden');
+                product.classList.remove('product-hidden');
+                counter++;
+            }
         });
+
+        shownProducts += counter;
+
+        // Show "Back" button when "See More" is clicked
+        document.getElementById('backButton').classList.remove('hidden');
+
+        // Hide the "See More" button if all products are shown
+        if (shownProducts >= totalProducts) {
+            document.getElementById('seeMoreButton').style.display = 'none';
+        }
+    }
+
+    function resetProducts() {
+        let allProducts = document.querySelectorAll('.container .w-48.h-72');
+        allProducts.forEach((product, index) => {
+            if (index >= initialProductsToShow) {
+                product.classList.add('hidden');
+                product.classList.add('product-hidden');
+            }
+        });
+
+        shownProducts = initialProductsToShow;
+
+        // Show "See More" button again
+        document.getElementById('seeMoreButton').style.display = 'block';
+
+        // Hide "Back" button after resetting
+        document.getElementById('backButton').classList.add('hidden');
     }
 </script>
+
+<style>
+    /* Center the button container */
+    #buttonContainer {
+        display: flex;
+        justify-content: center;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        padding: 10px;
+    }
+</style>
