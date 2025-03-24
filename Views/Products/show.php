@@ -1,16 +1,8 @@
-<!DOCTYPE html>  
-<html lang="en">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">  
-    <title>Product Details</title>  
-</head>  
-<body class="bg-gray-100">  
-    <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
+
+    <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto ">
         <div class="container mx-auto p-8">  
             <?php if (isset($product) && $product): ?>
-            <div class="flex flex-col md:flex-row bg-white shadow-lg rounded-lg">  
+            <div class="flex flex-col md:flex-row bg-white shadow-lg rounded-lg bg-white dark:bg-darker border-b dark:border-primary-darker">  
                 <div class="w-full md:w-1/2 p-6">  
                     <!-- Updated image path to match your application structure -->
                     <img src="../Assets/images/uploads/<?php echo $product["image"]; ?>" 
@@ -18,10 +10,10 @@
                         class="ml-3" alt="" width="400"  style="border-radius: 5px" />  
                 </div>  
                 <div class="w-full md:w-1/2 p-6">  
-                    <h1 class="text-3xl font-bold text-gray-800"><?php echo htmlspecialchars($product['name']); ?></h1>  
+                    <h1 class="text-3xl font-bold font-semibold"><?php echo htmlspecialchars($product['name']); ?></h1>  
                     <div class="flex items-center mt-2">  
                         <span class="text-yellow-500 text-lg">&#9733;&#9733;&#9733;&#9733;&#9734;</span>  
-                        <span class="ml-2 text-gray-600">(4.7/721)</span> 
+                        <span class="ml-2 font-semibold">(4.7/721)</span> 
                         <span class="ml-4 bg-green-200 text-green-800 text-xs font-bold px-2 py-1 rounded-full">In Stock</span>  
                     </div>  
                     <div class="mt-4">  
@@ -30,11 +22,11 @@
                     <div class="mt-6">  
                         <h2 class="font-semibold">About This Item:</h2>  
                         <?php if (isset($category['description']) && !empty($category['description'])): ?>
-                            <p class="text-gray-700 mt-3"><?php echo htmlspecialchars($category['description']); ?></p>
+                            <p class="font-semibold mt-3"><?php echo htmlspecialchars($category['description']); ?></p>
                         <?php else: ?>
-                            <p class="text-gray-700 mt-2">No description available for this product.</p>
+                            <p class="font-semibold mt-2">No description available for this product.</p>
                         <?php endif; ?>
-                        <ul class="mt-4 list-disc list-inside text-gray-700">  
+                        <ul class="mt-4 list-disc list-inside font-semibold">  
                             <li><strong>Available:</strong> In stock</li>  
                             <li><strong>Category:</strong> 
                                 <?php if (isset($category) && $category): ?>
@@ -66,5 +58,3 @@
             <?php endif; ?>
         </div> 
     </div>
-</body>  
-</html>

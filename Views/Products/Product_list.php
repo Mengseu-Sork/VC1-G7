@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
     <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
         <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
-            <div class="shadow-lg rounded-lg p-6 border-2 border-gray-200 dark:border-primary-darker transition duration-300"
+            <div class="shadow-lg rounded-lg p-6 border-2 mb-16 border-gray-200 dark:border-primary-darker transition duration-300"
                  :style="{ backgroundColor: bgColor }">
                 <h2 class="text-left ml-1 text-2xl font-bold mb-6">Products List</h2>
                 <div class="flex justify-between flex-col md:flex-row items-center gap-4 mb-6">
@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </a>
                     <div class="flex w-full md:w-auto gap-2 relative">
                         <input type="text" id="searchInput" placeholder="Search products..." required
-                            class="w-full md:w-64 px-4 py-2 pl-10 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 outline-none"
+                            class="w-full md:w-64 px-4 py-2 pl-10 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 outline-none bg-white dark:bg-darker border-b dark:border-primary-darker"
                             oninput="searchProducts()">
                         <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                         <button type="button" onclick="searchProducts()"
@@ -80,6 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <table id="productsTable" class="w-full table-auto border-collapse">
                         <thead>
                             <tr class="bg-blue-500 text-white uppercase text-xs sm:text-sm leading-normal">
+                            <th class="py-1 px-4 text-center"><input type="checkbox" id="selectAll"></th>
                                 <th class="py-3 px-6 text-left">Image</th>
                                 <th class="py-3 px-6 text-left">Product Name</th>
                                 <th class="py-3 px-6 text-left">Price</th>
@@ -101,6 +102,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php foreach ($products as $product): ?>
                                 <tr data-category="<?= $product['category_name']; ?>"
                                     class="duration-200 rounded-lg shadow-md transition bg-white dark:text-light dark:bg-darker border-b dark:border-primary-darker">
+                                    <td class="py-1 px-4 font-semibold">
+                                        <input type="checkbox" class="productCheckbox">
+                                    </td>
                                     <td>
                                         <img src="../Assets/images/uploads/<?php echo $product["image"]?>" class="ml-4" alt="" width="40" height="40" style="border-radius: 5px">
                                     </td>
@@ -119,8 +123,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <i class="fas fa-trash-alt mr-1" style="color: red"></i>
                                         </a>
 
-                                        <!-- Replace this line: -->
-                                        <!-- <a href="../Views/Products/show.php" -->
 
                                         <!-- With this: -->
                                         <a href="/products/details?id=<?= $product['id'] ?>"
@@ -158,15 +160,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 
 <script>
+    
+    function searchProducts() {
+        let input = document.getElementById("searchInput").value.toLowerCase().trim();
+        let table = document.getElementById("productsTable");
+        let rows = table.getElementsByTagName("tr");
+
+        for (let i = 1; i < rows.length; i++) {
+            let cells = rows[i].getElementsByTagName("td");
+
+            if (cells.length > 0) {
+                let name = cells[1].innerText.toLowerCase().trim();
+                let price = cells[2].innerText.toLowerCase().trim(); 
+                let category = cells[4].innerText.toLowerCase().trim(); 
+
+
+                if (name.includes(input) || price.includes(input) || category.includes(input)) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        }
+
+        if (input === "") {
+            for (let i = 1; i < rows.length; i++) {
+                rows[i].style.display = "";
+            }
+        }
+    }
+
+
+
     // Filter products by category
     function filterByCategory(category) {
         const rows = document.querySelectorAll("#product-table-body tr");
         rows.forEach(row => {
             const productCategory = row.getAttribute("data-category").toLowerCase();
             if (category === "" || productCategory === category.toLowerCase()) {
-                row.style.display = ""; // Show the row
+                row.style.display = ""; 
             } else {
-                row.style.display = "none"; // Hide the row
+                row.style.display = "none";
             }
         });
     }
@@ -180,5 +214,106 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     function closeModal(modalId) {
         document.getElementById(modalId).classList.add('hidden');
     }
+
+    //Add Stock
+    document.addEventListener("DOMContentLoaded", function () {
+        const selectAllCheckbox = document.getElementById("selectAll");
+        const productCheckboxes = document.querySelectorAll(".productCheckbox");
+
+        // Create "Add Stock" button dynamically
+        const addStockButton = document.createElement("button");
+        addStockButton.id = "addStockSelectedButton";
+        addStockButton.textContent = "Add Stock";
+        addStockButton.classList.add(
+            "bg-blue-500", "hover:bg-blue-600", "text-white",
+            "font-semibold", "py-2", "px-4", "rounded-lg",
+            "shadow-md", "transition", "duration-300", "hidden", "mt-4", "mb-4", "ml-4"
+        );
+        addStockButton.addEventListener("click", showStockModal);
+
+        // Create "Clear All" button dynamically
+        const clearAllButton = document.createElement("button");
+        clearAllButton.id = "clearAllButton";
+        clearAllButton.textContent = "Clear All";
+        clearAllButton.classList.add(
+            "bg-red-500", "hover:bg-red-600", "text-white",
+            "font-semibold", "py-2", "px-4", "rounded-lg",
+            "shadow-md", "transition", "duration-300", "hidden", "mt-4", "mb-4", "ml-4"
+        );
+        clearAllButton.addEventListener("click", clearAllSelections);
+
+        // Find the table's parent container and append buttons after it
+        const tableContainer = document.getElementById("productsTable").parentElement;
+        tableContainer.appendChild(addStockButton);
+        tableContainer.appendChild(clearAllButton);
+
+        // Function to toggle button visibility
+        function toggleButtons() {
+            const anyChecked = Array.from(productCheckboxes).some(checkbox => checkbox.checked);
+            addStockButton.classList.toggle("hidden", !anyChecked);
+            clearAllButton.classList.toggle("hidden", !anyChecked);
+        }
+
+        // Listen for changes on individual checkboxes
+        productCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener("change", toggleButtons);
+        });
+
+        // Handle "Select All" checkbox
+        selectAllCheckbox.addEventListener("change", function () {
+            productCheckboxes.forEach(checkbox => {
+                checkbox.checked = selectAllCheckbox.checked;
+            });
+            toggleButtons();
+        });
+
+        // Function to clear all selected checkboxes
+        function clearAllSelections() {
+            selectAllCheckbox.checked = false; // Uncheck "Select All"
+            productCheckboxes.forEach(checkbox => {
+                checkbox.checked = false; // Uncheck all checkboxes
+            });
+            toggleButtons();
+        }
+
+        // Function to show stock input modal
+        function showStockModal() {
+            const selectedIds = Array.from(productCheckboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.closest("tr").dataset.productId);
+
+            if (selectedIds.length === 0) return;
+
+            const stockQuantity = prompt("Enter stock quantity to add:");
+            if (stockQuantity === null || stockQuantity.trim() === "" || isNaN(stockQuantity) || stockQuantity <= 0) {
+                alert("Please enter a valid stock quantity.");
+                return;
+            }
+
+            addStockToSelectedProducts(selectedIds, stockQuantity);
+        }
+
+        // Function to send stock update request
+        function addStockToSelectedProducts(selectedIds, stockQuantity) {
+            fetch('/products/add-stock', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ids: selectedIds, stock: stockQuantity })
+            }).then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Stock added successfully!");
+                    clearAllSelections(); // Clear selection after adding stock
+                } else {
+                    alert("Failed to add stock.");
+                }
+            }).catch(error => console.error("Error:", error));
+        }
+
+        // Toggle buttons based on initial state of checkboxes
+        toggleButtons();
+    });
+
+
 </script>
 
