@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">  
     <title>Add Product</title>
     <style>
         :root {
@@ -19,19 +20,19 @@
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            /* box-sizing: border-box; */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
             background-color: #f5f7fb;
             color: var(--text-color);
-            line-height: 1.6;
-            padding: 20px;
+            /* line-height: 1.6; */
+            /* padding: 20px; */
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1900px;
             margin: 20px auto;
             padding: 24px;
             background-color: var(--bg-color);
@@ -328,32 +329,9 @@
             }
         });
 
-        // Drag and drop functionality
-        const dropZone = document.getElementById('drop-zone');
-        const fileInput = document.getElementById('image');
+        
 
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('active');
-        });
-
-        dropZone.addEventListener('dragleave', () => {
-            dropZone.classList.remove('active');
-        });
-
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('active');
-            
-            if (e.dataTransfer.files.length) {
-                fileInput.files = e.dataTransfer.files;
-                previewImage(fileInput);
-            }
-        });
-
-        dropZone.addEventListener('click', () => {
-            fileInput.click();
-        });
+        
     </script>
 </body>
 </html>
