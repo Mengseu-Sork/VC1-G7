@@ -53,7 +53,7 @@ class UserController extends BaseController
             // Check if a new image is uploaded
             if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
                 // Define the upload directory
-                $target_dir = "uploads/";
+                $target_dir = "Assets/images/uploads/";
     
                 // Create the directory if it doesn't exist
                 if (!is_dir($target_dir)) {
