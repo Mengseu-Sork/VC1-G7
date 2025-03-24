@@ -4,16 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Reviews</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-gray-50">
     <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
         <div class="container mx-auto px-4 py-8 max-w-6xl">
-            <h2 class="text-2xl font-bold mb-6">Customer Reviews</h2>
+            <!-- Header with Back Button -->
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">Customer Reviews</h2>
+                <?php if (isset($_GET['id'])): ?>
+                    <a href="/pages/details?id=<?php echo htmlspecialchars($_GET['id']); ?>" class="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Product Details
+                    </a>
+                <?php else: ?>
+                    <a href="/pages" class="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Products
+                    </a>
+                <?php endif; ?>
+            </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Sidebar -->
                 <div class="md:col-span-1 space-y-6">
+                    <!-- Write Review Button -->
                     <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                         <button
                             id="openModalBtn"
@@ -150,6 +168,21 @@
                                 <i class="fas fa-chevron-right text-xs"></i>
                             </button>
                         </div>
+                        
+                        <!-- Back to Product Button (Mobile) -->
+                        <div class="mt-8 md:hidden">
+                            <?php if (isset($_GET['id'])): ?>
+                                <a href="/pages/details?id=<?php echo htmlspecialchars($_GET['id']); ?>" class="flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors w-full">
+                                    <i class="fas fa-arrow-left"></i>
+                                    Back to Product Details
+                                </a>
+                            <?php else: ?>
+                                <a href="/pages" class="flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors w-full">
+                                    <i class="fas fa-arrow-left"></i>
+                                    Back to Products
+                                </a>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -225,6 +258,10 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Store product ID from URL for use in reviews
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+            
             // DOM Elements
             const openModalBtn = document.getElementById('openModalBtn');
             const closeModalBtn = document.getElementById('closeModalBtn');
@@ -338,6 +375,7 @@
                 // Create review object
                 const review = {
                     id: Date.now(), // Unique ID based on timestamp
+                    productId: productId, // Store the product ID with the review
                     rating: selectedRating,
                     title: title,
                     content: content,
@@ -382,7 +420,14 @@
             
             // Load reviews from localStorage
             function loadReviews() {
-                return JSON.parse(localStorage.getItem('productReviews')) || [];
+                let reviews = JSON.parse(localStorage.getItem('productReviews')) || [];
+                
+                // Filter by product ID if available
+                if (productId) {
+                    reviews = reviews.filter(review => review.productId === productId);
+                }
+                
+                return reviews;
             }
             
             // Filter and sort reviews
@@ -584,7 +629,7 @@
             
             // Make helper functions available globally
             window.markHelpful = function(reviewId) {
-                let reviews = loadReviews();
+                let reviews = JSON.parse(localStorage.getItem('productReviews')) || [];
                 const reviewIndex = reviews.findIndex(r => r.id === reviewId);
                 
                 if (reviewIndex !== -1) {
@@ -600,7 +645,7 @@
             };
             
             window.markNotHelpful = function(reviewId) {
-                let reviews = loadReviews();
+                let reviews = JSON.parse(localStorage.getItem('productReviews')) || [];
                 const reviewIndex = reviews.findIndex(r => r.id === reviewId);
                 
                 if (reviewIndex !== -1) {
