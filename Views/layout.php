@@ -1,7 +1,7 @@
 <?php
-require_once 'layout/admin/header.php';
-require_once 'layout/admin/nav.php';
+require_once 'layout/header.php';
+require_once 'layout/nav.php';
 
 $content;
 
-require_once 'layout/admin/footer.php';
+require_once 'layout/footer.php';

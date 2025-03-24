@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="flex flex-col items-center justify-center min-h-screen bg-[url('../../../Assets/images/photo_2025-03-12_07-22-11.jpg')] bg-cover bg-center">
-    <div class="w-full max-w-md p-8 mt-5 mb-5 space-y-6 bg-white shadow-md rounded-lg">
+    <div class="w-full max-w-md p-8 space-y-6 bg-white shadow-md rounded-lg">
         <div class="text-center">
             <img src="../../../Assets/images/FX12 LOGO.png" alt="XING FU CHA Logo" class="w-24 mx-auto">
             <h2 class="text-2xl font-semibold mt-4">Welcome to Cafe Shop</h2>
@@ -52,16 +52,6 @@
             </div>
 
             <button type="submit" class="w-full py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">Login</button>
-
-            <!-- <div class="text-center text-gray-500">Or login with</div>
-            <div class="flex gap-4">
-                <button type="button" class="flex-1 py-2 text-white bg-red-500 rounded-md hover:bg-red-600">
-                    <i class="fab fa-google mr-2"></i> Google
-                </button>
-                <button type="button" class="flex-1 py-2 text-white bg-blue-800 rounded-md hover:bg-blue-900">
-                    <i class="fab fa-facebook-f mr-2"></i> Facebook
-                </button>
-            </div> -->
         </form>
 
         <div class="text-center text-gray-600">

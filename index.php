@@ -1,3 +1,3 @@
+<?php require("Router/route.php");
 
-<?php 
-require("Router/route.php");
+

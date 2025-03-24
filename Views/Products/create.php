@@ -36,8 +36,9 @@
         <label for="type">Type</label>
         <select id="type" name="type" required>
           <option value="">Select Type</option>
-          <option value="Powder">Flour</option>
-          <option value="Nuts">Nut</option>
+          <option value="Powder">Powder</option>
+          <option value="Nut">Nut</option>
+          <option value="Drinks">Drinks</option>
         </select>
       </div>
     </div>

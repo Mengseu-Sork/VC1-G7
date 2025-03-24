@@ -19,7 +19,7 @@ class AuthController
             if ($user) {
                 $_SESSION["user"] = $user["email"];
                 // Redirect to Home Page after login
-                header("Location: /");
+                header("Location: /views/pages/home.php");
                 exit();
             } else {
                 echo "Invalid credentials.";
