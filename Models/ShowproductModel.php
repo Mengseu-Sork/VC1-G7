@@ -54,4 +54,16 @@ class ShowproductModel {
             error_log("Error incrementing view count: " . $e->getMessage());
         }
     }
+    function getAllCategories() {
+        try {
+            $query = "SELECT * FROM categories";
+            $result = $this->db->query($query);
+            return $result->fetchAll();
+        } catch (Exception $e) {
+            error_log("Error fetching categories: " . $e->getMessage());
+            return [];
+        }
+    }
+    
+
 }

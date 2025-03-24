@@ -13,22 +13,10 @@ class ShowproductController extends BaseController {
         $products = $this->model->getShowProducts();
         $this->view('pages/products', ['products' => $products]);
     }
-
-    // public function show() {
-    //     $productId = $_GET['id'] ?? null;
-    //     if ($productId) {
-    //         $this->model->incrementViewCount($productId); // Increment view count
-    //         $product = $this->model->getProductById($productId);
-    //         $category = $this->model->getCategoryById($product['category_id']);
-    //         if ($product) {
-    //             $this->view('pages/show', ['product' => $product, 'category' => $category]);
-    //         } else {
-    //             $this->view('pages/404');
-    //         }
-    //     } else {
-    //         $this->view('pages/404');
-    //     }
-    // }
+    function ratings() {
+        $products = $this->model->getShowProducts();
+        $this->view('pages/product_ratings', ['products' => $products]);
+    }
     function show($id = null) {
         // If no ID is provided in the URL, try to get it from GET parameters
         if ($id === null && isset($_GET['id'])) {
@@ -64,5 +52,8 @@ class ShowproductController extends BaseController {
                 'category' => null
             ]);
         }
+    }
+    function incrementViewCount($id) {
+        $this->model->incrementViewCount($id);
     }
 }
