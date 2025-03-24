@@ -3,5 +3,6 @@
     <script src="../../Assets/js/waitslowly.js"></script>
     <script src="../../Assets/js/upload.js"></script>
     <script src="../../Assets/js/select.js"></script>
+    <script src="../../Assets/js/order.js"></script>
   </body>
 </html>

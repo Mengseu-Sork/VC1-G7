@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
     <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
         <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
-            <div class="shadow-lg rounded-lg p-6 border-2 border-gray-200 dark:border-primary-darker transition duration-300"
+            <div class="shadow-lg rounded-lg p-6 mb-12 border-2 border-gray-200 dark:border-primary-darker transition duration-300"
                  :style="{ backgroundColor: bgColor }">
                 <h2 class="text-left ml-1 text-2xl font-bold mb-6">Products List</h2>
                 <div class="flex justify-between flex-col md:flex-row items-center gap-4 mb-6">
