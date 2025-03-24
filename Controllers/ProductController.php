@@ -1,7 +1,6 @@
 <?php
-// If BaseController exists
-// require_once ' Controllers/BaseController.php';
 require_once 'Models/ProductModel.php';
+require_once 'BaseController.php';
 
 class ProductController extends BaseController {
     private $model;
@@ -15,14 +14,16 @@ class ProductController extends BaseController {
         $product_types = $this->model->getProductTypes();
         $categories = $this->model->getAllCategories();
         $this->view('Products/Product_list', ['products' => $products, 'product_types' => $product_types, 'categories' => $categories]);
-        // var_dump($categories);
     }
+    
     function create(){
-        $this->view('Products/create');
+        $categories = $this->model->getAllCategories();
+        $this->view('Products/create', ['categories' => $categories]);
     }
+    
     function store() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $imagePath = null;
+            $imageName = null;
 
             // Handle Image Upload
             if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
@@ -31,9 +32,10 @@ class ProductController extends BaseController {
                     mkdir($target_dir, 0777, true);
                 }
 
-                $imagePath = $target_dir . basename($_FILES['image']['name']);
+                $imageName = basename($_FILES['image']['name']);
+                $targetPath = $target_dir . $imageName;
 
-                if (!move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
+                if (!move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
                     echo "Error: Failed to upload image.";
                     return;
                 }
@@ -45,7 +47,8 @@ class ProductController extends BaseController {
                 'price' => floatval($_POST['price']),
                 'category_id' => $_POST['type'],
                 'date' => $_POST['date-start'],
-                'image' => $imagePath,
+                'image' => $imageName,
+                'description' => isset($_POST['product_content']) ? $_POST['product_content'] : ''
             ];
 
             // Save Product to Database
@@ -57,42 +60,111 @@ class ProductController extends BaseController {
         }
     }
 
-    function edit($id){
-        $product = $this->model->getProductById($id);
-        if ($product) {
-            $this->view('Products/edit', ['product' => $product]);
+    function edit(){
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $product = $this->model->getProductById($id);
+            if ($product) {
+                $categories = $this->model->getAllCategories();
+                $this->view('Products/edit', ['product' => $product, 'categories' => $categories]);
+            } else {
+                echo "Product not found";
+                $this->redirect('/products');
+            }
         } else {
-            echo "404 - Product not found";
+            $this->redirect('/products');
         }
     }
-
-    function update($id)
-    {
+    
+    function update() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $imagePath = $_POST['existing_image'];
+            $id = $_POST['id'];
+            
+            // Image Upload Handling
+            $imageName = null;
             if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
                 $target_dir = "Assets/images/uploads/";
                 if (!is_dir($target_dir)) {
                     mkdir($target_dir, 0777, true);
                 }
-                $imagePath = $target_dir . basename($_FILES['image']['name']);
-                if (!move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
+                $imageName = basename($_FILES['image']['name']);
+                $targetPath = $target_dir . $imageName;
+                if (!move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
                     echo "Error: Failed to upload image.";
                     return;
                 }
+            } else {
+                // If no new image is uploaded, keep the existing image
+                $product = $this->model->getProductById($id);
+                $imageName = $product['image'];
             }
 
             $data = [
                 'id' => $id,
                 'name' => $_POST['name'],
-                'price' => $_POST['price'],
+                'price' => floatval($_POST['price']),
                 'category_id' => $_POST['type'],
                 'date' => $_POST['date-start'],
-                'image' => $imagePath,
+                'image' => $imageName,
+                'description' => isset($_POST['product_content']) ? $_POST['product_content'] : ''
             ];
-            $this->model->updateProduct($data);
+            
+            if ($this->model->updateProduct($data)) {
+                $this->redirect('/products');
+            } else {
+                echo "Error: Failed to update product.";
+            }
+        }
+    }
+    
+    function delete() {
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            if ($this->model->deleteProduct($id)) {
+                $this->redirect('/products');
+            } else {
+                echo "Error: Failed to delete product.";
+            }
+        } else {
             $this->redirect('/products');
+        }
+    }
+    function show($id = null) {
+        // If no ID is provided in the URL, try to get it from GET parameters
+        if ($id === null && isset($_GET['id'])) {
+            $id = $_GET['id'];
+        }
+        
+        // Validate that we have an ID
+        if (!$id) {
+            echo "Error: No product ID specified.";
+            return;
+        }
+        
+        // Get product details from the database
+        $product = $this->model->getProductById($id);
+        
+        // Get category information
+        $category = null;
+        if ($product && isset($product['category_id'])) {
+            $category = $this->model->getCategoryById($product['category_id']);
+        }
+        
+        // Check if product exists
+        if ($product) {
+            // Pass both product and category data to the view
+            $this->view('Products/show', [
+                'product' => $product,
+                'category' => $category
+            ]);
+        } else {
+            // Product not found, still render the view but with no product data
+            $this->view('Products/show', [
+                'product' => null,
+                'category' => null
+            ]);
         }
     }
 }
 ?>
+
