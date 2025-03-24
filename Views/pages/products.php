@@ -59,20 +59,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
     <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
         <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
-            <div class="shadow-lg rounded-lg p-6 border-2 mb-16 border-gray-200 dark:border-primary-darker transition duration-300"
+            <div class="shadow-lg rounded-lg p-6 border-2 border-gray-200 dark:border-primary-darker transition duration-300"
                  :style="{ backgroundColor: bgColor }">
-                <h1 class="text-left ml-4 text-3xl font-bold mb-2">Products</h1>
+                
                 <div class="flex flex-wrap gap-8 p-4 justify-between">
-                    <div class="flex w-full md:w-auto gap-2 relative">
-                    <input type="text" id="searchInput" placeholder="Search products..." required
-                            class="w-full md:w-64 px-4 py-2 pl-10 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 outline-none"
-                            oninput="searchProducts()">
-                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                    <button type="button" onclick="searchProducts()"
-                            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300">
-                            Search
-                    </button>
-                </div>
+                    <h1 class="text-left ml-1 text-3xl font-bold ">Products</h1>
                     <select class="pr-5 pl-2 border border-gray-300 rounded-md transition duration-300 mr-1 bg-white dark:bg-darker border-b dark:border-primary-darker" onchange="filterByCategory(this.value)">
                         <option value="#">All Products</option>
                         <?php foreach ($categories_name as $key => $value): ?>
@@ -80,22 +71,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <?php endforeach; ?>  
                     </select>
                 </div>
-                <div class="container flex flex-wrap gap-9 p-4" id="productContainer">
+                <div class="container flex flex-wrap gap-8 p-4 justify-center " id="productContainer">
                     <?php foreach ($products as $product): ?>
-                        <div class="w-48 h-76 bg-white border border-gray-300 p-4 rounded-lg shadow-md transition duration-300 flex flex-col items-center bg-white dark:bg-darker border-b dark:border-primary-darker"
-                            data-name="<?= htmlspecialchars($product['name']) ?>"
-                            data-price="<?= htmlspecialchars($product['price']) ?>">
-                            <img src="../Assets/images/uploads/<?php echo $product["image"]; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="w-28 h-28 rounded-md mb-1 mt-1">
-                            <h4 class="text-lg font-bold mt-2 mb-2"><?= htmlspecialchars($product['name']) ?></h4>
-                            <p class="text-gl flex justify-center text-green-500 font-bold mb-2">In Stock</p>
+                        <div class="w-48 h-72 bg-white border border-gray-300 p-4 rounded-lg shadow-md transition duration-300 flex flex-col items-center bg-white dark:bg-darker border-b dark:border-primary-darker">
+                        <img src="../Assets/images/uploads/<?php echo $product["image"]; ?>"  alt="<?php echo htmlspecialchars($product['name']); ?>"  class="w-28 h-28 rounded-md mb-1 mt-1">
+                            <h4 class="text-lg font-bold"><?= htmlspecialchars($product['name']) ?></h4>
+                            <p class="text-gl text-green-600 font-semibold"><span class="ml-4 bg-green-200 text-green-800 text-xs font-bold px-3 py-1 rounded-full">In Stock</span></p>
                             <p class="text-gl font-semibold text-yellow-600"><?= htmlspecialchars($product['price']) ?></p>
-                            <button class="mt-3 border px-8 py-2 bg-blue-500 relative dark:bg-darker border-b dark:border-primary-darker hover:bg-blue-600 text-white font-semibold rounded-md transition">
-                                <i class="fas fa-shopping-cart mr-2" style="color: orange;"></i> ORDER
-                            </button>
+                            <button class="mt-3 border px-8 py-2 bg-blue-500 relative dark:bg-darker border-b dark:border-primary-darker hover:bg-blue-600 text-white font-semibold rounded-md transition"><i class="fas fa-shopping-cart mr-2" style="color: orange;"></i> ORDER</button>
                         </div>
                     <?php endforeach; ?>
                 </div>
-
             </div>
         </div>
     </div>

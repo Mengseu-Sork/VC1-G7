@@ -17,85 +17,85 @@ function searchProducts() {
     }
 }
 function filterByCategory(category) {
-    const rows = document.querySelectorAll("#product-table-body tr");
-    rows.forEach(row => {
-        const productCategory = row.getAttribute("data-category").toLowerCase();
-        if (category === "" || productCategory === category.toLowerCase()) {
-            row.style.display = ""; // Show the row
-        } else {
-            row.style.display = "none"; // Hide the row
-        }
-    });
-}
+        const rows = document.querySelectorAll("#product-table-body tr");
+        rows.forEach(row => {
+            const productCategory = row.getAttribute("data-category").toLowerCase();
+            if (category === "" || productCategory === category.toLowerCase()) {
+                row.style.display = ""; // Show the row
+            } else {
+                row.style.display = "none"; // Hide the row
+            }
+        });
+    }
 
-// Open modal for deletion
-function openModal(modalId) {
-    document.getElementById(modalId).classList.remove('hidden');
-}
+    // Open modal for deletion
+    function openModal(modalId) {
+        document.getElementById(modalId).classList.remove('hidden');
+    }
 
-// Close modal for deletion
-function closeModal(modalId) {
-    document.getElementById(modalId).classList.add('hidden');
-}
+    // Close modal for deletion
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.add('hidden');
+    }
 
 // document.addEventListener("DOMContentLoaded", function () {
-// const selectAllCheckbox = document.getElementById("selectAll");
-// const productCheckboxes = document.querySelectorAll(".productCheckbox");
+//     const selectAllCheckbox = document.getElementById("selectAll");
+//     const productCheckboxes = document.querySelectorAll(".productCheckbox");
 
-// // Create add stock button dynamically
-// const addStockButton = document.createElement("button");
-// addStockButton.id = "addStockButton";
-// addStockButton.textContent = "Add Stock";
-// addStockButton.classList.add(
-//     "bg-blue-500", "hover:bg-blue-600", "text-white",
-//     "font-semibold", "py-2", "px-4", "rounded-lg",
-//     "shadow-md", "transition", "duration-300", "hidden", "mt-4", "mb-4", "ml-2"
-// );
-// addStockButton.addEventListener("click", addStockToSelectedProducts);
+//     // Create add stock button dynamically
+//     const addStockButton = document.createElement("button");
+//     addStockButton.id = "addStockButton";
+//     addStockButton.textContent = "Add Stock";
+//     addStockButton.classList.add(
+//         "bg-blue-500", "hover:bg-blue-600", "text-white",
+//         "font-semibold", "py-2", "px-4", "rounded-lg",
+//         "shadow-md", "transition", "duration-300", "hidden", "mt-4", "mb-4", "ml-2"
+//     );
+//     addStockButton.addEventListener("click", addStockToSelectedProducts);
 
-// // Find the table's parent container and append buttons after it
-// const tableContainer = document.getElementById("productsTable").parentElement;
-// tableContainer.appendChild(addStockButton);
+//     // Find the table's parent container and append buttons after it
+//     const tableContainer = document.getElementById("productsTable").parentElement;
+//     tableContainer.appendChild(addStockButton);
 
-// // Function to toggle button visibility
-// function toggleButtons() {
-//     const anyChecked = Array.from(productCheckboxes).some(checkbox => checkbox.checked);
-//     addStockButton.classList.toggle("hidden", !anyChecked);
-// }
+//     // Function to toggle button visibility
+//     function toggleButtons() {
+//         const anyChecked = Array.from(productCheckboxes).some(checkbox => checkbox.checked);
+//         addStockButton.classList.toggle("hidden", !anyChecked);
+//     }
 
-// // Listen for changes on individual checkboxes
-// productCheckboxes.forEach(checkbox => {
-//     checkbox.addEventListener("change", toggleButtons);
-// });
-
-// // Handle "Select All" checkbox
-// selectAllCheckbox.addEventListener("change", function () {
+//     // Listen for changes on individual checkboxes
 //     productCheckboxes.forEach(checkbox => {
-//         checkbox.checked = selectAllCheckbox.checked;
+//         checkbox.addEventListener("change", toggleButtons);
 //     });
-//     toggleButtons();
-// });
 
-// // Function to add stock to selected products
-// function addStockToSelectedProducts() {
-//     const selectedIds = Array.from(productCheckboxes)
-//         .filter(checkbox => checkbox.checked)
-//         .map(checkbox => checkbox.closest("tr").dataset.productId);
+//     // Handle "Select All" checkbox
+//     selectAllCheckbox.addEventListener("change", function () {
+//         productCheckboxes.forEach(checkbox => {
+//             checkbox.checked = selectAllCheckbox.checked;
+//         });
+//         toggleButtons();
+//     });
 
-//     if (selectedIds.length === 0) return;
-//     if (!confirm("Are you sure you want to add stock to the selected products?")) return;
+//     // Function to add stock to selected products
+//     function addStockToSelectedProducts() {
+//         const selectedIds = Array.from(productCheckboxes)
+//             .filter(checkbox => checkbox.checked)
+//             .map(checkbox => checkbox.closest("tr").dataset.productId);
 
-//     fetch('/products/add-stock-multiple', {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({ ids: selectedIds })
-//     }).then(response => response.json())
-//       .then(data => {
-//           if (data.success) {
-//               alert("Stock added successfully!");
-//           } else {
-//               alert("Failed to add stock.");
-//           }
-//       }).catch(error => console.error("Error:", error));
-// }
+//         if (selectedIds.length === 0) return;
+//         if (!confirm("Are you sure you want to add stock to the selected products?")) return;
+
+//         fetch('/products/add-stock-multiple', {
+//             method: 'POST',
+//             headers: { 'Content-Type': 'application/json' },
+//             body: JSON.stringify({ ids: selectedIds })
+//         }).then(response => response.json())
+//           .then(data => {
+//               if (data.success) {
+//                   alert("Stock added successfully!");
+//               } else {
+//                   alert("Failed to add stock.");
+//               }
+//           }).catch(error => console.error("Error:", error));
+//     }
 // });

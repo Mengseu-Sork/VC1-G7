@@ -15,7 +15,10 @@ $routes = new Router();
 $routes->get('/', [DashboardController::class, 'index']);
 
 // Homepage
-$routes->get('/pages', [ShowproductController::class, 'show']);
+$routes->get('/pages', [ShowproductController::class, 'index']);
+$routes->get('/pages/products', [ShowproductController::class, 'index']);
+$routes->get('/pages/details', [ShowproductController::class, 'show']);
+$routes->get('/pages/prosuct_ratings', [ShowproductController::class, 'ratings']);
 
 // $routes->get('/auth/login', [AdminController::class, 'login']);
 // $routes->post('/auth/login', [AdminController::class, 'login']);
@@ -38,8 +41,8 @@ $routes->post('/products/store', [ProductController::class, 'store']);
 $routes->get('/products/edit', [ProductController::class, 'edit']);
 $routes->post('/products/update', [ProductController::class, 'update']);
 $routes->get('/products/delete', [ProductController::class, 'delete']); 
-// Make sure this line exists in your routes:
 $routes->get('/products/details', [ProductController::class, 'show']);
+$routes->get('/products/prosuct_ratings', [ProductController::class, 'ratings']);
 
 $routes->get('/categories', [CategoryController::class, 'index']);
 
