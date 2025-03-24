@@ -1,5 +1,4 @@
-
-             
+            
 <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
     <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
         <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
