@@ -1,4 +1,7 @@
 <?php
+
+$productModel = new ProductModel();
+$products = $productModel->getAllProducts();
 $categories_name = [
     'Nut' => 'Nut Products',
     'Powder' => 'Powder Products',
@@ -6,10 +9,10 @@ $categories_name = [
 ];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    header("Content-Type: application/json"); // Set response type to JSON
+    header("Content-Type: application/json"); 
 
     if (isset($_FILES["image"]) && $_FILES["image"]["error"] == UPLOAD_ERR_OK) {
-        $targetDir = "Assets/images/uploads/";
+        $targetDir = "../../Assets/images/uploads/";
         $fileName = basename($_FILES["image"]["name"]);
         $targetFilePath = $targetDir . $fileName;
         $fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
@@ -69,33 +72,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </select>
                 </div>
                 <div class="container flex flex-wrap gap-8 p-4 justify-center " id="productContainer">
-                    <?php  
-                    $products = [  
-                        ["name" => "Arabica Brazil", "price" => "$0.75", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Arabica Brazil.png"],  
-                        ["name" => "Arabica Ethiopia", "price" => "$0.75", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Arabica Ethiopia.png"],  
-                        ["name" => "Baych Bleand", "price" => "$1.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Baych_bleand.jpg"],  
-                        ["name" => "Brown Sugar", "price" => "$2.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Brown_sugar.jpg"],  
-                        ["name" => "Flores Bajawa", "price" => "$3.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Flores_bajawa_arabica.jpg"],  
-                        ["name" => "Flores Bajawa", "price" => "$1.25", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Flores_bajawa.jpg"],  
-                        ["name" => "Popping Pearls", "price" => "$2.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Popping_Pearls_Blueberry.jpg"],  
-                        ["name" => "Strawberry Puree", "price" => "$3.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Strawberry.jpg"],  
-                        ["name" => "White Boba", "price" => "$1.25", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/White_boba.jpg"],  
-                        ["name" => "White Crystal", "price" => "$2.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/White_crystal.jpg"],  
-                        ["name" => "Popping Boba", "price" => "$3.00", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/Popping_boba_strawberry.jpg"],  
-                        ["name" => "Boba Drink Mix.", "price" => "$1.25", "stock" => "In stock", "image" => "../../Assets/images/Nut_product/boba_drink_mix.jpg"],  
-                    ];  
-
-                    foreach ($products as $product) {  
-                        echo '<div class="w-48 h-72 bg-white border border-gray-300 p-4 rounded-lg shadow-md transition duration-300 flex flex-col items-center bg-white dark:bg-darker border-b dark:border-primary-darker">';
-                        echo '<img src="' . htmlspecialchars($product['image']) . '" alt="' . htmlspecialchars($product['name']) . '" class="w-28 h-28 rounded-md mb-1 mt-1">';
-                        echo '<h4 class="text-lg font-bold">' . htmlspecialchars($product['name']) . '</h4>';
-                        echo '<p class="text-gl text-green-600 font-semibold">' . htmlspecialchars($product['stock']) . '</p>';
-                        echo '<p class="text-gl font-semibold text-yellow-600">' . htmlspecialchars($product['price']) . '</p>';
-                        echo '<button class="mt-3 border px-8 py-2 bg-blue-500 relative dark:bg-darker border-b dark:border-primary-darker hover:bg-blue-600 text-white font-semibold rounded-md transition"><i class="fas fa-shopping-cart mr-2" style="color: orange;"></i> ORDER</button>';  
-                        echo '</div>';
-                        
-                    }        
-                    ?>  
+                    <?php foreach ($products as $product): ?>
+                        <div class="w-48 h-72 bg-white border border-gray-300 p-4 rounded-lg shadow-md transition duration-300 flex flex-col items-center bg-white dark:bg-darker border-b dark:border-primary-darker">
+                        <img src="../Assets/images/uploads/<?php echo $product["image"]; ?>"  alt="<?php echo htmlspecialchars($product['name']); ?>"  class="w-28 h-28 rounded-md mb-1 mt-1">
+                            <h4 class="text-lg font-bold"><?= htmlspecialchars($product['name']) ?></h4>
+                            <p class="text-gl text-green-600 font-semibold"><span class="ml-4 bg-green-200 text-green-800 text-xs font-bold px-3 py-1 rounded-full">In Stock</span></p>
+                            <p class="text-gl font-semibold text-yellow-600"><?= htmlspecialchars($product['price']) ?></p>
+                            <button class="mt-3 border px-8 py-2 bg-blue-500 relative dark:bg-darker border-b dark:border-primary-darker hover:bg-blue-600 text-white font-semibold rounded-md transition"><i class="fas fa-shopping-cart mr-2" style="color: orange;"></i> ORDER</button>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
@@ -103,11 +88,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 
 <script>  
-        function filterByCategory(category) {
-            const rows = document.querySelectorAll("#product-table-body tr");
-            rows.forEach(row => {
-                const productCategory = row.getAttribute("data-category");
-                row.style.display = (category === "" || productCategory === category) ? "" : "none";
-            });
-        }
-    </script>  
+    function filterByCategory(category) {
+        const rows = document.querySelectorAll("#product-table-body tr");
+        rows.forEach(row => {
+            const productCategory = row.getAttribute("data-category");
+            row.style.display = (category === "" || productCategory === category) ? "" : "none";
+        });
+    }
+</script>
