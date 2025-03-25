@@ -109,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <img src="../Assets/images/uploads/<?php echo $product["image"]?>" class="ml-4" alt="" width="40" height="40" style="border-radius: 5px">
                                     </td>
                                     <td class="py-3 px-6 font-semibold"><?php echo $product['name']; ?></td>
-                                    <td class="py-3 px-6 font-semibold"><?php echo $product['price']; ?></td>
+                                    <td class="py-3 px-6 font-semibold"><?php echo $product['price']; ?>$</td>
                                     <td class="py-3 px-6 font-semibold"><?php echo $product['date']; ?></td>
                                     <td class="py-3 px-6 font-semibold"><?php echo $product['category_name']; ?></td>
                                     <td class="flex py-3 px-6 font-semibold justify-center relative">

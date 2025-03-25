@@ -7,7 +7,7 @@
                     <!-- Updated image path to match your application structure -->
                     <img src="../Assets/images/uploads/<?php echo $product["image"]; ?>" 
                         alt="<?php echo htmlspecialchars($product['name']); ?>" 
-                        class="ml-3" alt="" width="400"  style="border-radius: 5px" />  
+                        class="ml-3 w-96 h-96 rounded-md" alt="Product Image" />
                 </div>  
                 <div class="w-full md:w-1/2 p-6">  
                     <h1 class="text-3xl font-bold font-semibold"><?php echo htmlspecialchars($product['name']); ?></h1>  
