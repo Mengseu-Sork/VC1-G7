@@ -47,10 +47,9 @@ $routes->get('/products/prosuct_ratings', [ProductController::class, 'ratings'])
 $routes->get('/categories', [CategoryController::class, 'index']);
 
 // Add notification routes
-$routes->get('/notifications/get', [NotificationController::class, 'getNotifications']);
+$routes->get('/notifications', [NotificationController::class, 'getNotifications']);
 $routes->post('/notifications/mark-as-read', [NotificationController::class, 'markAsRead']);
 $routes->post('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead']);
-$routes->get('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead']);
 
 $routes->dispatch();
 

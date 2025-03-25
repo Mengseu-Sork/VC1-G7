@@ -246,8 +246,8 @@
                           </button>
 
                           <!-- Add this where you want the notification bell to appear -->
-                          <?php include_once 'Views/Components/notification-bell.php'; ?>
-
+                          
+<?php include_once 'Views/Components/notification-bell.php'; ?>
 
                           <!-- Settings button -->
                           <button

@@ -30,36 +30,36 @@ class ProductController extends BaseController {
         $categories = $this->model->getAllCategories();
         $this->view('Products/create', ['categories' => $categories]);
     }
-    
-    function store() {
+    public function store() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $imageName = null;
-
+    
             // Handle Image Upload
             if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
                 $target_dir = "Assets/images/uploads/";
                 if (!is_dir($target_dir)) {
                     mkdir($target_dir, 0777, true);
                 }
-
+    
                 $imageName = basename($_FILES['image']['name']);
                 $targetPath = $target_dir . $imageName;
-
+    
                 if (!move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
                     echo "Error: Failed to upload image.";
                     return;
                 }
             }
-
-            // Prepare Data - REMOVED description field
+    
+            // Prepare Data
             $data = [
                 'name' => $_POST['name'],
                 'price' => floatval($_POST['price']),
                 'category_id' => $_POST['type'],
                 'date' => $_POST['date-start'],
-                'image' => $imageName
+                'image' => $imageName,
+                'description' => isset($_POST['product_content']) ? $_POST['product_content'] : ''
             ];
-
+    
             // Save Product to Database
             if ($productId = $this->model->createProduct($data)) {
                 // Create notification for the new product
@@ -70,22 +70,6 @@ class ProductController extends BaseController {
             } else {
                 echo "Error: Failed to save product.";
             }
-        }
-    }
-
-    function edit(){
-        if (isset($_GET['id'])) {
-            $id = $_GET['id'];
-            $product = $this->model->getProductById($id);
-            if ($product) {
-                $categories = $this->model->getAllCategories();
-                $this->view('Products/edit', ['product' => $product, 'categories' => $categories]);
-            } else {
-                echo "Product not found";
-                $this->redirect('/products');
-            }
-        } else {
-            $this->redirect('/products');
         }
     }
     
@@ -112,14 +96,14 @@ class ProductController extends BaseController {
                 $imageName = $product['image'];
             }
 
-            // REMOVED description field
             $data = [
                 'id' => $id,
                 'name' => $_POST['name'],
                 'price' => floatval($_POST['price']),
                 'category_id' => $_POST['type'],
                 'date' => $_POST['date-start'],
-                'image' => $imageName
+                'image' => $imageName,
+                'description' => isset($_POST['product_content']) ? $_POST['product_content'] : ''
             ];
             
             if ($this->model->updateProduct($data)) {
@@ -133,7 +117,24 @@ class ProductController extends BaseController {
             }
         }
     }
-    
+
+   
+    function edit(){
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $product = $this->model->getProductById($id);
+            if ($product) {
+                $categories = $this->model->getAllCategories();
+                $this->view('Products/edit', ['product' => $product, 'categories' => $categories]);
+            } else {
+                echo "Product not found";
+                $this->redirect('/products');
+            }
+        } else {
+            $this->redirect('/products');
+        }
+    }
+
     function delete() {
         if (isset($_GET['id'])) {
             $id = $_GET['id'];

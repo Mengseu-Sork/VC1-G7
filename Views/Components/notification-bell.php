@@ -35,54 +35,178 @@
     </div>
 </div>
 
-<script src="../../Assets/js/notifications.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        fetchNotifications();
-
-        document.getElementById('notification-button').addEventListener('click', function() {
-            document.getElementById('notification-panel').classList.toggle('hidden');
-        });
-
-        document.getElementById('mark-all-read').addEventListener('click', function() {
-            markAllAsRead();
-        });
+document.addEventListener('DOMContentLoaded', function() {
+    const notificationButton = document.getElementById('notification-button');
+    const notificationPanel = document.getElementById('notification-panel');
+    const notificationBadge = document.getElementById('notification-badge');
+    const notificationList = document.getElementById('notification-list');
+    const markAllReadButton = document.getElementById('mark-all-read');
+    
+    let isOpen = false;
+    
+    // Toggle notification panel
+    notificationButton.addEventListener('click', function() {
+        isOpen = !isOpen;
+        if (isOpen) {
+            notificationPanel.classList.remove('hidden');
+            fetchNotifications();
+        } else {
+            notificationPanel.classList.add('hidden');
+        }
     });
-
+    
+    // Close panel when clicking outside
+    document.addEventListener('click', function(event) {
+        if (isOpen && !notificationButton.contains(event.target) && !notificationPanel.contains(event.target)) {
+            isOpen = false;
+            notificationPanel.classList.add('hidden');
+        }
+    });
+    
+    // Mark all as read
+    markAllReadButton.addEventListener('click', function() {
+        fetch('/notifications/mark-all-read', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                fetchNotifications();
+            }
+        })
+        .catch(error => console.error('Error marking all as read:', error));
+    });
+    
+    // Fetch notifications
     function fetchNotifications() {
         fetch('/notifications/get')
+        .then(response => response.json())
+        .then(data => {
+            updateNotificationBadge(data.unreadCount);
+            renderNotifications(data.notifications);
+        })
+        .catch(error => {
+            console.error('Error fetching notifications:', error);
+            notificationList.innerHTML = '<div class="p-4 text-center text-gray-500">Failed to load notifications</div>';
+        });
+    }
+    
+    // Update notification badge
+    function updateNotificationBadge(count) {
+        if (count > 0) {
+            notificationBadge.textContent = count > 9 ? '9+' : count;
+            notificationBadge.classList.remove('hidden');
+        } else {
+            notificationBadge.classList.add('hidden');
+        }
+    }
+    
+    // Render notifications
+    function renderNotifications(notifications) {
+        if (notifications.length === 0) {
+            notificationList.innerHTML = '<div class="p-4 text-center text-gray-500">No notifications</div>';
+            return;
+        }
+        
+        let html = '';
+        notifications.forEach(notification => {
+            const timeAgo = getTimeAgo(new Date(notification.created_at));
+            const isUnread = notification.is_read == 0;
+            
+            html += `
+                <div class="notification-item p-4 ${isUnread ? 'bg-blue-50' : ''}" data-id="${notification.id}">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 mt-0.5">
+                            <div class="w-2 h-2 rounded-full ${isUnread ? 'bg-blue-600' : 'bg-gray-300'}"></div>
+                        </div>
+                        <div class="ml-3 w-0 flex-1">
+                            <p class="text-sm text-gray-900">${notification.message}</p>
+                            <p class="mt-1 text-xs text-gray-500">${timeAgo}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        notificationList.innerHTML = html;
+        
+        // Add click event to mark as read
+        document.querySelectorAll('.notification-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const id = this.dataset.id;
+                markAsRead(id);
+            });
+        });
+    }
+    
+    // Mark notification as read
+    function markAsRead(id) {
+        fetch('/notifications/mark-as-read', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: id })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                fetchNotifications();
+            }
+        })
+        .catch(error => console.error('Error marking as read:', error));
+    }
+    
+    // Helper function to format time ago
+    function getTimeAgo(date) {
+        const seconds = Math.floor((new Date() - date) / 1000);
+        
+        let interval = Math.floor(seconds / 31536000);
+        if (interval > 1) return interval + ' years ago';
+        if (interval === 1) return '1 year ago';
+        
+        interval = Math.floor(seconds / 2592000);
+        if (interval > 1) return interval + ' months ago';
+        if (interval === 1) return '1 month ago';
+        
+        interval = Math.floor(seconds / 86400);
+        if (interval > 1) return interval + ' days ago';
+        if (interval === 1) return '1 day ago';
+        
+        interval = Math.floor(seconds / 3600);
+        if (interval > 1) return interval + ' hours ago';
+        if (interval === 1) return '1 hour ago';
+        
+        interval = Math.floor(seconds / 60);
+        if (interval > 1) return interval + ' minutes ago';
+        if (interval === 1) return '1 minute ago';
+        
+        return 'just now';
+    }
+    
+    // Check for new notifications periodically
+    setInterval(function() {
+        if (!isOpen) {
+            fetch('/notifications/get')
             .then(response => response.json())
             .then(data => {
-                const notificationList = document.getElementById('notification-list');
-                notificationList.innerHTML = '';
-
-                if (data.notifications.length > 0) {
-                    data.notifications.forEach(notification => {
-                        const notificationItem = document.createElement('div');
-                        notificationItem.classList.add('p-4', 'hover:bg-gray-100', 'cursor-pointer');
-                        notificationItem.innerHTML = `
-                            <p>${notification.message}</p>
-                            <small class="text-gray-500">${notification.time_ago}</small>
-                        `;
-                        notificationList.appendChild(notificationItem);
-                    });
-
-                    document.getElementById('notification-badge').classList.remove('hidden');
-                    document.getElementById('notification-badge').textContent = data.unreadCount;
-                } else {
-                    notificationList.innerHTML = '<div class="p-4 text-center text-gray-500">No notifications</div>';
-                }
-            });
-    }
-
-    function markAllAsRead() {
-        fetch('/notifications/mark-all-read', { method: 'POST' })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    fetchNotifications();
-                    document.getElementById('notification-badge').classList.add('hidden');
-                }
-            });
-    }
+                updateNotificationBadge(data.unreadCount);
+            })
+            .catch(error => console.error('Error checking notifications:', error));
+        }
+    }, 30000); // Check every 30 seconds
+    
+    // Initial fetch
+    fetch('/notifications/get')
+    .then(response => response.json())
+    .then(data => {
+        updateNotificationBadge(data.unreadCount);
+    })
+    .catch(error => console.error('Error checking notifications:', error));
+});
 </script>
+

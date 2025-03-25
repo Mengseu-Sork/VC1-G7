@@ -8,14 +8,6 @@ class NotificationModel {
         $this->db = new Database();
     }
 
-    /**
-     * Create a new notification
-     * 
-     * @param string $message The notification message
-     * @param int|null $relatedId ID of the related item (e.g., product ID)
-     * @param string|null $relatedType Type of the related item (e.g., 'product')
-     * @return int|bool The ID of the created notification or false on failure
-     */
     public function createNotification($message, $relatedId = null, $relatedType = null) {
         try {
             $query = "INSERT INTO notifications (message, related_id, related_type) 
@@ -35,12 +27,6 @@ class NotificationModel {
         }
     }
 
-    /**
-     * Get unread notifications
-     * 
-     * @param int $limit Maximum number of notifications to retrieve
-     * @return array Array of notification objects
-     */
     public function getUnreadNotifications($limit = 10) {
         try {
             $query = "SELECT n.*, p.name as product_name 
@@ -58,12 +44,6 @@ class NotificationModel {
         }
     }
 
-    /**
-     * Get all notifications
-     * 
-     * @param int $limit Maximum number of notifications to retrieve
-     * @return array Array of notification objects
-     */
     public function getAllNotifications($limit = 20) {
         try {
             $query = "SELECT n.*, p.name as product_name 
@@ -80,12 +60,6 @@ class NotificationModel {
         }
     }
 
-    /**
-     * Mark a notification as read
-     * 
-     * @param int $id Notification ID
-     * @return bool Success status
-     */
     public function markAsRead($id) {
         try {
             $query = "UPDATE notifications SET is_read = 1 WHERE id = :id";
@@ -97,11 +71,6 @@ class NotificationModel {
         }
     }
 
-    /**
-     * Mark all notifications as read
-     * 
-     * @return bool Success status
-     */
     public function markAllAsRead() {
         try {
             $query = "UPDATE notifications SET is_read = 1 WHERE is_read = 0";
@@ -113,11 +82,6 @@ class NotificationModel {
         }
     }
 
-    /**
-     * Get count of unread notifications
-     * 
-     * @return int Number of unread notifications
-     */
     public function getUnreadCount() {
         try {
             $query = "SELECT COUNT(*) as count FROM notifications WHERE is_read = 0";
@@ -130,3 +94,4 @@ class NotificationModel {
         }
     }
 }
+
