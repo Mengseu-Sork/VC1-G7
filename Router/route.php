@@ -62,3 +62,4 @@ $routes->post('/notifications/mark-all-read', [NotificationController::class, 'm
 
 $routes->dispatch();
 
+

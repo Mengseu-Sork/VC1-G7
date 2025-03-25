@@ -73,27 +73,27 @@ class ProductModel {
         }
     }
 
-    // function updateProduct($data){
-    //     try {
-    //         $stmt = "UPDATE products SET 
-    //                 name = :name, 
-    //                 price = :price, 
-    //                 category_id = :category_id, 
-    //                 date = :date";
+    function updateProduct($data){
+        try {
+            $stmt = "UPDATE products SET 
+                    name = :name, 
+                    price = :price, 
+                    category_id = :category_id, 
+                    date = :date";
             
-    //         $params = [
-    //             'name' => $data['name'],
-    //             'price' => $data['price'],
-    //             'category_id' => $data['category_id'],
-    //             'date' => $data['date'],
-    //             'id' => $data['id']
-    //         ];
+            $params = [
+                'name' => $data['name'],
+                'price' => $data['price'],
+                'category_id' => $data['category_id'],
+                'date' => $data['date'],
+                'id' => $data['id']
+            ];
             
-    //         // Only include image in the update if it's provided
-    //         if (!empty($data['image'])) {
-    //             $stmt .= ", image = :image";
-    //             $params['image'] = $data['image'];
-    //         }
+            // Only include image in the update if it's provided
+            if (!empty($data['image'])) {
+                $stmt .= ", image = :image";
+                $params['image'] = $data['image'];
+            }
             
             // Include stock status in the update
             if (isset($data['stock_status'])) {
