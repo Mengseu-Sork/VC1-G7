@@ -1,12 +1,15 @@
 <?php
 require_once 'Models/ProductModel.php';
+require_once 'Models/NotificationModel.php';
 require_once 'BaseController.php';
 
 class ProductController extends BaseController {
     private $model;
+    private $notificationModel;
 
     public function __construct() {
         $this->model = new ProductModel();
+        $this->notificationModel = new NotificationModel();
     }
 
     public function index() {
@@ -15,12 +18,14 @@ class ProductController extends BaseController {
         $categories = $this->model->getAllCategories();
         $this->view('Products/Product_list', ['products' => $products, 'product_types' => $product_types, 'categories' => $categories]);
     }
+    
     function ratings() {
         $products = $this->model->getAllProducts();
         $product_types = $this->model->getProductTypes();
         $categories = $this->model->getAllCategories();
         $this->view('Products/Product_ratings', ['products' => $products, 'product_types' => $product_types, 'categories' => $categories]);
     }
+    
     function create(){
         $categories = $this->model->getAllCategories();
         $this->view('Products/create', ['categories' => $categories]);
@@ -46,18 +51,21 @@ class ProductController extends BaseController {
                 }
             }
 
-            // Prepare Data
+            // Prepare Data - REMOVED description field
             $data = [
                 'name' => $_POST['name'],
                 'price' => floatval($_POST['price']),
                 'category_id' => $_POST['type'],
                 'date' => $_POST['date-start'],
-                'image' => $imageName,
-                'description' => isset($_POST['product_content']) ? $_POST['product_content'] : ''
+                'image' => $imageName
             ];
 
             // Save Product to Database
-            if ($this->model->createProduct($data)) {
+            if ($productId = $this->model->createProduct($data)) {
+                // Create notification for the new product
+                $message = "New product '{$data['name']}' has been added";
+                $this->notificationModel->createNotification($message, $productId, 'product');
+                
                 $this->redirect('/products');
             } else {
                 echo "Error: Failed to save product.";
@@ -104,17 +112,21 @@ class ProductController extends BaseController {
                 $imageName = $product['image'];
             }
 
+            // REMOVED description field
             $data = [
                 'id' => $id,
                 'name' => $_POST['name'],
                 'price' => floatval($_POST['price']),
                 'category_id' => $_POST['type'],
                 'date' => $_POST['date-start'],
-                'image' => $imageName,
-                'description' => isset($_POST['product_content']) ? $_POST['product_content'] : ''
+                'image' => $imageName
             ];
             
             if ($this->model->updateProduct($data)) {
+                // Create notification for the updated product
+                $message = "Product '{$data['name']}' has been updated";
+                $this->notificationModel->createNotification($message, $id, 'product');
+                
                 $this->redirect('/products');
             } else {
                 echo "Error: Failed to update product.";
@@ -125,7 +137,13 @@ class ProductController extends BaseController {
     function delete() {
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
-            if ($this->model->deleteProduct($id)) {
+            $product = $this->model->getProductById($id);
+            
+            if ($product && $this->model->deleteProduct($id)) {
+                // Create notification for the deleted product
+                $message = "Product '{$product['name']}' has been deleted";
+                $this->notificationModel->createNotification($message, null, 'product');
+                
                 $this->redirect('/products');
             } else {
                 echo "Error: Failed to delete product.";
@@ -134,6 +152,7 @@ class ProductController extends BaseController {
             $this->redirect('/products');
         }
     }
+    
     function show($id = null) {
         // If no ID is provided in the URL, try to get it from GET parameters
         if ($id === null && isset($_GET['id'])) {
@@ -171,5 +190,3 @@ class ProductController extends BaseController {
         }
     }
 }
-?>
-

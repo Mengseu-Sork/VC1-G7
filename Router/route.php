@@ -7,7 +7,7 @@ require 'Controllers/ProductController.php';
 // require 'Controllers/AdminController.php';
 require 'Controllers/ShowproductController.php';
 require 'Controllers/ShowuserController.php';
-
+require 'Controllers/NotificationController.php'; // Add this line
 
 $routes = new Router();
 
@@ -45,6 +45,12 @@ $routes->get('/products/details', [ProductController::class, 'show']);
 $routes->get('/products/prosuct_ratings', [ProductController::class, 'ratings']);
 
 $routes->get('/categories', [CategoryController::class, 'index']);
+
+// Add notification routes
+$routes->get('/notifications/get', [NotificationController::class, 'getNotifications']);
+$routes->post('/notifications/mark-as-read', [NotificationController::class, 'markAsRead']);
+$routes->post('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead']);
+$routes->get('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead']);
 
 $routes->dispatch();
 
