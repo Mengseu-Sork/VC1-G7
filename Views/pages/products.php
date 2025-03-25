@@ -37,13 +37,18 @@ $totalProducts = count($products);
                     foreach ($products as $product): 
                         $hiddenClass = ($index >= $initialProductsToShow) ? 'hidden product-hidden' : '';
                         $index++;
+                        $stockStatus = isset($product["stock_status"]) ? $product["stock_status"] : 1;
                     ?>
                         <div class="w-48 h-72 bg-white border border-gray-300 p-4 rounded-lg shadow-md transition duration-300 flex flex-col items-center bg-white dark:bg-darker border-b dark:border-primary-darker <?= $hiddenClass ?>">
                             <img src="../Assets/images/uploads/<?php echo $product["image"]; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="w-28 h-28 rounded-md mb-1 mt-1">
                             <h4 class="text-lg font-bold"><?= htmlspecialchars($product['name']) ?></h4>
-                            <p class="text-gl text-green-600 font-semibold"><span class="ml-4 bg-green-200 text-green-800 text-xs font-bold px-3 py-1 rounded-full">In Stock</span></p>
+                            <?php if ($stockStatus == 1): ?>
+                                <p class="text-gl text-green-600 font-semibold"><span class="ml-4 bg-green-200 text-green-800 text-xs font-bold px-3 py-1 rounded-full">In Stock</span></p>
+                            <?php else: ?>
+                                <p class="text-gl text-red-600 font-semibold"><span class="ml-4 bg-red-200 text-red-800 text-xs font-bold px-3 py-1 rounded-full">Out of Stock</span></p>
+                            <?php endif; ?>
                             <p class="text-gl font-semibold text-yellow-600"><?= htmlspecialchars($product['price']) ?></p>
-                            <button class="mt-3 border px-8 py-2 bg-blue-500 relative dark:bg-darker border-b dark:border-primary-darker hover:bg-blue-600 text-white font-semibold rounded-md transition">
+                            <button class="mt-3 border px-8 py-2 bg-blue-500 relative dark:bg-darker border-b dark:border-primary-darker hover:bg-blue-600 text-white font-semibold rounded-md transition" <?= $stockStatus == 0 ? 'disabled style="opacity: 0.6; cursor: not-allowed;"' : '' ?>>
                                 <i class="fas fa-shopping-cart mr-2" style="color: orange;"></i> ORDER
                             </button>
                         </div>
@@ -71,5 +76,3 @@ $totalProducts = count($products);
     let shownProducts = initialProductsToShow;
     const totalProducts = <?= $totalProducts ?>;
 </script>
-
-<script src="/Assets/js/notification.js"></script>
