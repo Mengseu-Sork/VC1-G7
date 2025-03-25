@@ -14,6 +14,7 @@ $initialProductsToShow = $productsPerRow * $initialRows;
 $totalProducts = count($products);
 ?>
 
+<link rel="stylesheet" href="/Assets/css/notification.css">
 <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
     <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
         <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
@@ -69,56 +70,6 @@ $totalProducts = count($products);
     let initialProductsToShow = <?= $initialProductsToShow ?>;
     let shownProducts = initialProductsToShow;
     const totalProducts = <?= $totalProducts ?>;
-
-    function showMoreProducts() {
-        let hiddenProducts = document.querySelectorAll('.product-hidden');
-        let counter = 0;
-
-        hiddenProducts.forEach(product => {
-            if (counter < (productsPerRow * rowsPerClick)) {
-                product.classList.remove('hidden');
-                product.classList.remove('product-hidden');
-                counter++;
-            }
-        });
-
-        shownProducts += counter;
-
-        // Show "Back" button when "See More" is clicked
-        document.getElementById('backButton').classList.remove('hidden');
-
-        // Hide the "See More" button if all products are shown
-        if (shownProducts >= totalProducts) {
-            document.getElementById('seeMoreButton').style.display = 'none';
-        }
-    }
-
-    function resetProducts() {
-        let allProducts = document.querySelectorAll('.container .w-48.h-72');
-        allProducts.forEach((product, index) => {
-            if (index >= initialProductsToShow) {
-                product.classList.add('hidden');
-                product.classList.add('product-hidden');
-            }
-        });
-
-        shownProducts = initialProductsToShow;
-
-        // Show "See More" button again
-        document.getElementById('seeMoreButton').style.display = 'block';
-
-        // Hide "Back" button after resetting
-        document.getElementById('backButton').classList.add('hidden');
-    }
 </script>
 
-<style>
-    /* Center the button container */
-    #buttonContainer {
-        display: flex;
-        justify-content: center;
-        margin-top: 15px;
-        margin-bottom: 15px;
-        padding: 10px;
-    }
-</style>
+<script src="/Assets/js/notification.js"></script>
