@@ -23,7 +23,7 @@
                   class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-home icon"></i>
+                    <i class="fas fa-home icon text-blue-500"></i>
                   </span>
                   <span class="ml-2 text-5sm"> Dashboards </span>
                   <span class="ml-auto" aria-hidden="true">
@@ -38,7 +38,7 @@
                   class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-cube icon"></i>
+                    <i class="fas fa-cube icon text-blue-500"></i>
                   </span>
                   <span class="ml-3 text-5sm "> Products </span>
                   <span class="ml-auto" aria-hidden="true">
@@ -55,8 +55,20 @@
 
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-box icon"></i> 
+                    <i class="fas fa-box icon text-blue-500"></i> 
                   <span class="ml-2 text-5sm"> Inventory </span>
+                </a>
+              </div>
+              <div>
+                <!-- active classes 'bg-primary-100 dark:bg-primary' -->
+                <a
+                  href="/categories"
+                  class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+
+                >
+                  <span aria-hidden="true">
+                  <i class="fas fa-list icon text-blue-500"></i>
+                  <span class="ml-2 text-5sm"> Category </span>
                 </a>
               </div>
 
@@ -67,7 +79,7 @@
                   class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-file-alt icon"></i>
+                    <i class="fas fa-file-alt icon text-blue-500"></i>
                   </span>
                   <span class="ml-4 text-5sm"> Report </span>
                   <span aria-hidden="true" class="ml-auto">
@@ -85,7 +97,7 @@
 
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-shopping-cart icon"></i>
+                    <i class="fas fa-shopping-cart icon text-blue-500"></i>
                   </span>
                   <span class="ml-2 text-5sm"> Order </span>
                   <span aria-hidden="true" class="ml-auto">
@@ -103,7 +115,7 @@
 
                   >
                     <span aria-hidden="true">
-                      <i class="fas fa-dollar-sign icon1"></i>
+                      <i class="fas fa-dollar-sign icon1 text-blue-500"></i>
                     </span>
                     <span class="ml-4 text-5sm"> Payments </span>
                     <span aria-hidden="true" class="ml-auto">
@@ -116,7 +128,7 @@
                   class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                   >
                   <span aria-hidden="true">
-                    <i class="fas fa-users icon"></i>
+                    <i class="fas fa-users icon text-blue-500"></i>
                   </span>
                   <span class="ml-2 text-sm"> Users </span>
                   <span aria-hidden="true" class="ml-auto">
@@ -131,7 +143,7 @@
                   class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-sign-out-alt icon"></i>
+                    <i class="fas fa-sign-out-alt icon text-blue-500"></i>
                   </span>
                   <span class="ml-3 text-5sm"> Sign Out </span>
                 </a>
@@ -256,28 +268,6 @@
                           </svg>
                           </button>
 
-                          <!-- Search button -->
-                          <button
-                            @click="openSearchPanel"
-                            class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker"
-                            >
-                            <span class="sr-only">Open search panel</span>
-                            <svg
-                                class="w-7 h-7"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                aria-hidden="true"
-                            >
-                                <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                />
-                          </svg>
-                          </button>
 
                           <!-- Settings button -->
                           <button

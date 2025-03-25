@@ -1,5 +1,5 @@
 
-    <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto ">
+<div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto ">
         <div class="container mx-auto p-8">  
             <?php if (isset($product) && $product): ?>
             <div class="flex flex-col md:flex-row bg-white shadow-lg rounded-lg bg-white dark:bg-darker border-b dark:border-primary-darker">  

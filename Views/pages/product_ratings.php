@@ -16,12 +16,12 @@
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold">Customer Reviews</h2>
                 <?php if (isset($_GET['id'])): ?>
-                    <a href="/products/details?id=<?php echo htmlspecialchars($_GET['id']); ?>" class="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors">
+                    <a href="/pages/details?id=<?php echo htmlspecialchars($_GET['id']); ?>" class="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors">
                         <i class="fas fa-arrow-left"></i>
                         Back to Product Details
                     </a>
                 <?php else: ?>
-                    <a href="/products" class="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors">
+                    <a href="/pages" class="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors">
                         <i class="fas fa-arrow-left"></i>
                         Back to Products
                     </a>
@@ -172,12 +172,12 @@
                         <!-- Back to Product Button (Mobile) -->
                         <div class="mt-8 md:hidden">
                             <?php if (isset($_GET['id'])): ?>
-                                <a href="/products/details?id=<?php echo htmlspecialchars($_GET['id']); ?>" class="flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors w-full">
+                                <a href="/pages/details?id=<?php echo htmlspecialchars($_GET['id']); ?>" class="flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors w-full">
                                     <i class="fas fa-arrow-left"></i>
                                     Back to Product Details
                                 </a>
                             <?php else: ?>
-                                <a href="/products" class="flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors w-full">
+                                <a href="/pages" class="flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors w-full">
                                     <i class="fas fa-arrow-left"></i>
                                     Back to Products
                                 </a>

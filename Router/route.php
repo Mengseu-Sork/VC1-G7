@@ -4,7 +4,7 @@ require_once 'controllers/UserController.php';
 require_once 'Controllers/DashboardController.php';
 require_once 'Controllers/CategoryController.php';
 require 'Controllers/ProductController.php';
-require 'Controllers/AdminController.php';
+// require 'Controllers/AdminController.php';
 require 'Controllers/ShowproductController.php';
 require_once 'Controllers/OrderController.php';
 
@@ -15,11 +15,14 @@ $routes = new Router();
 $routes->get('/', [DashboardController::class, 'index']);
 
 // Homepage
-$routes->get('/pages', [ShowproductController::class, 'show']);
+$routes->get('/pages', [ShowproductController::class, 'index']);
+$routes->get('/pages/products', [ShowproductController::class, 'index']);
+$routes->get('/pages/details', [ShowproductController::class, 'show']);
+$routes->get('/pages/prosuct_ratings', [ShowproductController::class, 'ratings']);
 
-// $routes->get('/auth/signup', [AdminController::class, 'signup']);
-// $routes->post('/signup', [AdminController::class, 'signup']);
-// $routes->post('/auth/signout', [AdminController::class, 'signup']);
+// $routes->get('/auth/login', [AdminController::class, 'login']);
+// $routes->post('/auth/login', [AdminController::class, 'login']);
+// $routes->post('/auth/logout', [AdminController::class, 'logout']);
 
 // user
 $routes->get('/user', [UserController::class, 'index']);
@@ -37,11 +40,15 @@ $routes->post('/products/store', [ProductController::class, 'store']);
 $routes->get('/products/edit', [ProductController::class, 'edit']);
 $routes->post('/products/update', [ProductController::class, 'update']);
 $routes->get('/products/delete', [ProductController::class, 'delete']); 
-$routes->get('/products/order', [ProductController::class, 'order']); 
-// Make sure this line exists in your routes:
 $routes->get('/products/details', [ProductController::class, 'show']);
+$routes->get('/products/prosuct_ratings', [ProductController::class, 'ratings']);
 
 $routes->get('/categories', [CategoryController::class, 'index']);
+$routes->get('/categories/create', [CategoryController::class, 'create']);
+$routes->get('/categories/store', [CategoryController::class, 'store']);
+$routes->get('/categories/edit', [CategoryController::class, 'edit']);
+$routes->get('/categories/update', [CategoryController::class, 'update']);
+$routes->get('/categories/delete', [CategoryController::class, 'delete']);
 
 $routes->get('/order', [OrderController::class, 'index']);
 $routes->get('/order/view', [OrderController::class, 'view']);  

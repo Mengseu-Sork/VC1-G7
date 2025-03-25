@@ -1,4 +1,4 @@
-<?php require __DIR__.'/../layout/admin/header.php'; ?>
+<?php require __DIR__.'/../layout/header.php'; ?>
 <div class="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-6">
     <h1 class="text-9xl font-extrabold text-red-600 drop-shadow-lg">404</h1>
     <p class="text-2xl md:text-3xl text-gray-700 mt-4 font-semibold text-center">
@@ -10,4 +10,4 @@
         Go to Homepage
     </a>
 </div>
-<?php require __DIR__.'/../layout/admin/footer.php'; ?>
+<?php require __DIR__.'/../layout/footer.php'; ?>

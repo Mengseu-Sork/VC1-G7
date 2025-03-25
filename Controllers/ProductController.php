@@ -15,7 +15,12 @@ class ProductController extends BaseController {
         $categories = $this->model->getAllCategories();
         $this->view('Products/Product_list', ['products' => $products, 'product_types' => $product_types, 'categories' => $categories]);
     }
-    
+    function ratings() {
+        $products = $this->model->getAllProducts();
+        $product_types = $this->model->getProductTypes();
+        $categories = $this->model->getAllCategories();
+        $this->view('Products/Product_ratings', ['products' => $products, 'product_types' => $product_types, 'categories' => $categories]);
+    }
     function create(){
         $categories = $this->model->getAllCategories();
         $this->view('Products/create', ['categories' => $categories]);
