@@ -57,7 +57,8 @@ class ProductController extends BaseController {
                 'category_id' => $_POST['type'],
                 'date' => $_POST['date-start'],
                 'image' => $imageName,
-                'description' => isset($_POST['product_content']) ? $_POST['product_content'] : ''
+                'description' => isset($_POST['product_content']) ? $_POST['product_content'] : '',
+                'stock_status' => isset($_POST['stock_status']) ? $_POST['stock_status'] : 1 // Default to in stock
             ];
     
             // Save Product to Database
@@ -103,7 +104,8 @@ class ProductController extends BaseController {
                 'category_id' => $_POST['type'],
                 'date' => $_POST['date-start'],
                 'image' => $imageName,
-                'description' => isset($_POST['product_content']) ? $_POST['product_content'] : ''
+                'description' => isset($_POST['product_content']) ? $_POST['product_content'] : '',
+                'stock_status' => isset($_POST['stock_status']) ? $_POST['stock_status'] : 1
             ];
             
             if ($this->model->updateProduct($data)) {
@@ -190,4 +192,55 @@ class ProductController extends BaseController {
             ]);
         }
     }
+
+    function updateStock() {
+        // Debug information
+        error_log("updateStock method called");
+        error_log("POST data: " . json_encode($_POST));
+        
+        header('Content-Type: application/json');
+        
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id']) && isset($_POST['stock_status'])) {
+            $id = $_POST['id'];
+            $status = $_POST['stock_status'];
+            
+            error_log("Updating product ID: $id to stock status: $status");
+            
+            if ($this->model->updateStockStatus($id, $status)) {
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Failed to update stock status']);
+            }
+            exit;
+        }
+        error_log("Invalid request to updateStock");
+        echo json_encode(['success' => false, 'message' => 'Invalid request']);
+        exit;
+    }
+
+    function updateBulkStock() {
+        // Debug information
+        error_log("updateBulkStock method called");
+        error_log("POST data: " . json_encode($_POST));
+        
+        header('Content-Type: application/json');
+        
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['ids']) && isset($_POST['stock_status'])) {
+            $ids = $_POST['ids'];
+            $status = $_POST['stock_status'];
+            
+            error_log("Updating products with IDs: $ids to stock status: $status");
+            
+            if ($this->model->updateBulkStockStatus($ids, $status)) {
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Failed to update stock status']);
+            }
+            exit;
+        }
+        error_log("Invalid request to updateBulkStock");
+        echo json_encode(['success' => false, 'message' => 'Invalid request']);
+        exit;
+    }
 }
+?>

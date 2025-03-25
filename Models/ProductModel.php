@@ -6,6 +6,7 @@ class ProductModel {
     public function __construct() {
         $this->db = new Database(); 
     }
+    
     public function getAllCategories() {
         $query = "SELECT * FROM categories";
         $result = $this->db->query($query);
@@ -20,7 +21,8 @@ class ProductModel {
                 products.price, 
                 products.date, 
                 products.image,
-                products.category_id,   
+                products.category_id,
+                products.stock_status,   
                 categories.name AS category_name
                 FROM products 
                 LEFT JOIN categories ON products.category_id = categories.category_id");
@@ -41,27 +43,24 @@ class ProductModel {
         }
     }
 
-    // public function createProduct($data) {
-    //     try {
-    //         $query = "INSERT INTO products (name, price, category_id, date, image, description) 
-    //                   VALUES (:name, :price, :category_id, :date, :image, :description)";
-            
-    //         $params = [
-    //             'name' => $data['name'],
-    //             'price' => $data['price'],
-    //             'category_id' => $data['category_id'],
-    //             'date' => $data['date'],
-    //             'image' => $data['image'],
-    //             'description' => $data['description']
-    //         ];
-            
-    //         $this->db->query($query, $params);
-    //         return $this->db->lastInsertId();
-    //     } catch (Exception $e) {
-    //         error_log("Error creating product: " . $e->getMessage());
-    //         return false;
-    //     }
-    // }
+    function createProduct($data) {
+        try {
+            $stmt = "INSERT INTO products (name, price, category_id, date, image, stock_status) 
+                     VALUES (:name, :price, :category_id, :date, :image, :stock_status)";
+            $this->db->query($stmt, [
+                'name' => $data['name'],
+                'price' => $data['price'],
+                'category_id' => $data['category_id'],
+                'date' => $data['date'],
+                'image' => $data['image'],
+                'stock_status' => isset($data['stock_status']) ? $data['stock_status'] : 1, // Default to in stock
+            ]);
+            return true;
+        } catch (Exception $e) {
+            error_log("Error creating product: " . $e->getMessage());
+            return false;
+        }
+    }
 
     function getProductById($id){
         try {
@@ -96,15 +95,22 @@ class ProductModel {
     //             $params['image'] = $data['image'];
     //         }
             
-    //         $stmt .= " WHERE id = :id";
+            // Include stock status in the update
+            if (isset($data['stock_status'])) {
+                $stmt .= ", stock_status = :stock_status";
+                $params['stock_status'] = $data['stock_status'];
+            }
             
-    //         $this->db->query($stmt, $params);
-    //         return true;
-    //     } catch (Exception $e) {
-    //         error_log("Error updating product: " . $e->getMessage());
-    //         return false;
-    //     }
-    // }
+            $stmt .= " WHERE id = :id";
+            
+            $this->db->query($stmt, $params);
+            return true;
+        } catch (Exception $e) {
+            error_log("Error updating product: " . $e->getMessage());
+            return false;
+        }
+    }
+
     function getCategoryById($category_id) {
         try {
             $query = "SELECT * FROM categories WHERE category_id = :category_id";
@@ -126,67 +132,68 @@ class ProductModel {
             return false;
         }
     }
-    // Inside the createProduct method of ProductModel.php
-public function createProduct($data)
-{
-    try {
-        $sql = "INSERT INTO products (name, price, category_id, date, image) 
-                VALUES (:name, :price, :category_id, :date, :image)";
-        
-        $params = [
-            ':name' => $data['name'],
-            ':price' => $data['price'],
-            ':category_id' => $data['category_id'],
-            ':date' => $data['date'],
-            ':image' => $data['image']
-        ];
-        
-        $this->db->query($sql, $params);
-        return $this->db->lastInsertId();
-    } catch (Exception $e) {
-        error_log("Error creating product: " . $e->getMessage());
-        return false;
+
+    function updateStockStatus($id, $status) {
+        try {
+            error_log("Model: Updating product ID: $id to stock status: $status");
+            
+            // Make sure the parameters are of the correct type
+            $id = (int)$id;
+            $status = (int)$status;
+            
+            $stmt = "UPDATE products SET stock_status = :stock_status WHERE id = :id";
+            $result = $this->db->query($stmt, [
+                'id' => $id,
+                'stock_status' => $status
+            ]);
+            
+            // Check if any rows were affected
+            $success = ($result !== false);
+            error_log("Update result: " . ($success ? "success" : "failure"));
+            
+            return $success;
+        } catch (Exception $e) {
+            error_log("Error updating stock status: " . $e->getMessage());
+            return false;
+        }
     }
-}
 
-// Inside the updateProduct method of ProductModel.php
-public function updateProduct($data)
-{
-    try {
-        $sql = "UPDATE products 
-                SET name = :name, price = :price, category_id = :category_id, 
-                    date = :date, image = :image 
-                WHERE id = :id";
-        
-        $params = [
-            ':id' => $data['id'],
-            ':name' => $data['name'],
-            ':price' => $data['price'],
-            ':category_id' => $data['category_id'],
-            ':date' => $data['date'],
-            ':image' => $data['image']
-        ];
-        
-        $this->db->query($sql, $params);
-        return true;
-    } catch (Exception $e) {
-        error_log("Error updating product: " . $e->getMessage());
-        return false;
+    function updateBulkStockStatus($ids, $status) {
+        try {
+            error_log("Model: Updating bulk stock status. IDs: " . (is_string($ids) ? $ids : json_encode($ids)) . ", Status: $status");
+            
+            // Check if ids is a JSON string and decode it
+            if (is_string($ids) && json_decode($ids) !== null) {
+                $ids = json_decode($ids);
+            }
+            
+            // Ensure $ids is an array
+            if (!is_array($ids)) {
+                $ids = [$ids];
+            }
+            
+            // Make sure status is an integer
+            $status = (int)$status;
+            
+            // Create placeholders for the query
+            $placeholders = implode(',', array_fill(0, count($ids), '?'));
+            $stmt = "UPDATE products SET stock_status = ? WHERE id IN ($placeholders)";
+            $params = array_merge([$status], $ids);
+            
+            error_log("SQL Query: $stmt");
+            error_log("Parameters: " . json_encode($params));
+            
+            $result = $this->db->query($stmt, $params);
+            
+            // Check if any rows were affected
+            $success = ($result !== false);
+            error_log("Bulk update result: " . ($success ? "success" : "failure"));
+            
+            return $success;
+        } catch (Exception $e) {
+            error_log("Error updating bulk stock status: " . $e->getMessage());
+            return false;
+        }
     }
-}
-
-    // function incrementViewCount($id) {
-    //     try {
-    //         $stmt = "UPDATE products SET views = views + 1 WHERE id = :id";
-    //         $this->db->query($stmt, ['id' => $id]);
-    //     } catch (Exception $e) {
-    //         error_log("Error incrementing view count: " . $e->getMessage());
-    //     }
-    // }
-
-
-
-    
 }
 ?>
-
