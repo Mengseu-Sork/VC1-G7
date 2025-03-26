@@ -62,13 +62,13 @@
               <div>
                 <!-- active classes 'bg-primary-100 dark:bg-primary' -->
                 <a
-                  href="pages/stock"
+                  href="/categories"
                   class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
 
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-warehouse icon"></i> 
-                  <span class="ml-2 text-5sm"> Stock </span>
+                    <i class="fas fa-box icon"></i> 
+                  <span class="ml-2 text-5sm"> Category </span>
                 </a>
               </div>
 
@@ -268,28 +268,6 @@
                           </svg>
                           </button>
 
-                          <!-- Search button -->
-                          <button
-                            @click="openSearchPanel"
-                            class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker"
-                            >
-                            <span class="sr-only">Open search panel</span>
-                            <svg
-                                class="w-7 h-7"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                aria-hidden="true"
-                            >
-                                <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                />
-                          </svg>
-                          </button>
 
                           <!-- Settings button -->
                           <button
