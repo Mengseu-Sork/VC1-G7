@@ -30,26 +30,27 @@ class ProductController extends BaseController {
         $categories = $this->model->getAllCategories();
         $this->view('Products/create', ['categories' => $categories]);
     }
-    public function store() {
+    
+    function store() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $imageName = null;
-    
+
             // Handle Image Upload
             if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
                 $target_dir = "Assets/images/uploads/";
                 if (!is_dir($target_dir)) {
                     mkdir($target_dir, 0777, true);
                 }
-    
+
                 $imageName = basename($_FILES['image']['name']);
                 $targetPath = $target_dir . $imageName;
-    
+
                 if (!move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
                     echo "Error: Failed to upload image.";
                     return;
                 }
             }
-    
+
             // Prepare Data
             $data = [
                 'name' => $_POST['name'],
@@ -57,10 +58,9 @@ class ProductController extends BaseController {
                 'category_id' => $_POST['type'],
                 'date' => $_POST['date-start'],
                 'image' => $imageName,
-                'description' => isset($_POST['product_content']) ? $_POST['product_content'] : '',
-                'stock_status' => isset($_POST['stock_status']) ? $_POST['stock_status'] : 1 // Default to in stock
+                'description' => isset($_POST['product_content']) ? $_POST['product_content'] : ''
             ];
-    
+
             // Save Product to Database
             if ($productId = $this->model->createProduct($data)) {
                 // Create notification for the new product
@@ -73,7 +73,7 @@ class ProductController extends BaseController {
             }
         }
     }
-    
+
     function update() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $id = $_POST['id'];
@@ -104,8 +104,7 @@ class ProductController extends BaseController {
                 'category_id' => $_POST['type'],
                 'date' => $_POST['date-start'],
                 'image' => $imageName,
-                'description' => isset($_POST['product_content']) ? $_POST['product_content'] : '',
-                'stock_status' => isset($_POST['stock_status']) ? $_POST['stock_status'] : 1
+                'description' => isset($_POST['product_content']) ? $_POST['product_content'] : ''
             ];
             
             if ($this->model->updateProduct($data)) {
@@ -119,6 +118,118 @@ class ProductController extends BaseController {
             }
         }
     }
+    
+    // Other methods remain unchanged...
+
+
+
+    // public function index() {
+    //     $products = $this->model->getAllProducts();
+    //     $product_types = $this->model->getProductTypes();
+    //     $categories = $this->model->getAllCategories();
+    //     $this->view('Products/Product_list', ['products' => $products, 'product_types' => $product_types, 'categories' => $categories]);
+    // }
+    
+    // function ratings() {
+    //     $products = $this->model->getAllProducts();
+    //     $product_types = $this->model->getProductTypes();
+    //     $categories = $this->model->getAllCategories();
+    //     $this->view('Products/Product_ratings', ['products' => $products, 'product_types' => $product_types, 'categories' => $categories]);
+    // }
+    
+    // function create(){
+    //     $categories = $this->model->getAllCategories();
+    //     $this->view('Products/create', ['categories' => $categories]);
+    // }
+    // public function store() {
+    //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    //         $imageName = null;
+    
+    //         // Handle Image Upload
+    //         if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+    //             $target_dir = "Assets/images/uploads/";
+    //             if (!is_dir($target_dir)) {
+    //                 mkdir($target_dir, 0777, true);
+    //             }
+    
+    //             $imageName = basename($_FILES['image']['name']);
+    //             $targetPath = $target_dir . $imageName;
+    
+    //             if (!move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
+    //                 echo "Error: Failed to upload image.";
+    //                 return;
+    //             }
+    //         }
+    
+    //         // Prepare Data
+    //         $data = [
+    //             'name' => $_POST['name'],
+    //             'price' => floatval($_POST['price']),
+    //             'category_id' => $_POST['type'],
+    //             'date' => $_POST['date-start'],
+    //             'image' => $imageName,
+    //             'description' => isset($_POST['product_content']) ? $_POST['product_content'] : '',
+    //             'stock_status' => isset($_POST['stock_status']) ? $_POST['stock_status'] : 1 // Default to in stock
+    //         ];
+    
+    //         // Save Product to Database
+    //         if ($productId = $this->model->createProduct($data)) {
+    //             // Create notification for the new product
+    //             $message = "New product '{$data['name']}' has been added";
+    //             $this->notificationModel->createNotification($message, $productId, 'product');
+                
+    //             $this->redirect('/products');
+    //         } else {
+    //             echo "Error: Failed to save product.";
+    //         }
+    //     }
+    // }
+    
+    // function update() {
+    //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    //         $id = $_POST['id'];
+            
+    //         // Image Upload Handling
+    //         $imageName = null;
+    //         if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+    //             $target_dir = "Assets/images/uploads/";
+    //             if (!is_dir($target_dir)) {
+    //                 mkdir($target_dir, 0777, true);
+    //             }
+    //             $imageName = basename($_FILES['image']['name']);
+    //             $targetPath = $target_dir . $imageName;
+    //             if (!move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
+    //                 echo "Error: Failed to upload image.";
+    //                 return;
+    //             }
+    //         } else {
+    //             // If no new image is uploaded, keep the existing image
+    //             $product = $this->model->getProductById($id);
+    //             $imageName = $product['image'];
+    //         }
+
+    //         $data = [
+    //             'id' => $id,
+    //             'name' => $_POST['name'],
+    //             'price' => floatval($_POST['price']),
+    //             'category_id' => $_POST['type'],
+    //             'date' => $_POST['date-start'],
+    //             'image' => $imageName,
+    //             'description' => isset($_POST['product_content']) ? $_POST['product_content'] : '',
+    //             'stock_status' => isset($_POST['stock_status']) ? $_POST['stock_status'] : 1
+    //         ];
+            
+    //         if ($this->model->updateProduct($data)) {
+    //             // Create notification for the updated product
+    //             $message = "Product '{$data['name']}' has been updated";
+    //             $this->notificationModel->createNotification($message, $id, 'product');
+                
+    //             $this->redirect('/products');
+    //         } else {
+    //             echo "Error: Failed to update product.";
+    //         }
+    //     }
+    // }
 
    
     function edit(){

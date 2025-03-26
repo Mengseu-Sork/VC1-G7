@@ -46,3 +46,4 @@ class NotificationController extends BaseController {
         echo json_encode(['success' => $success]);
     }
 }
+
