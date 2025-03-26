@@ -37,5 +37,10 @@ class Database
     {
         $this->pdo = null;
     }
+    // Add this method to your Database class if it doesn't already exist
+public function getLastInsertId() {
+    return $this->pdo->lastInsertId();
+}
+
 }
 ?>
