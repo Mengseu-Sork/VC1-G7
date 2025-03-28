@@ -68,8 +68,8 @@
 
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-warehouse icon"></i> 
-                  <span class="ml-2 text-5sm"> Stock </span>
+                    <i class="fas fa-warehouse text-blue-500"></i> 
+                  <span class="ml-4 text-5sm"> Stock </span>
                 </a>
               </div>
 
