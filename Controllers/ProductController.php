@@ -1,15 +1,15 @@
 <?php
 require_once 'Models/ProductModel.php';
-require_once 'Models/NotificationModel.php';
+// require_once 'Models/NotificationModel.php';
 require_once 'BaseController.php';
 
 class ProductController extends BaseController {
     private $model;
-    private $notificationModel;
+    // private $notificationModel;
 
     public function __construct() {
         $this->model = new ProductModel();
-        $this->notificationModel = new NotificationModel();
+        // $this->notificationModel = new NotificationModel();
     }
 
     public function index() {
@@ -65,7 +65,7 @@ class ProductController extends BaseController {
             if ($productId = $this->model->createProduct($data)) {
                 // Create notification for the new product
                 $message = "New product '{$data['name']}' has been added";
-                $this->notificationModel->createNotification($message, $productId, 'product');
+                // $this->notificationModel->createNotification($message, $productId, 'product');
                 
                 $this->redirect('/products');
             } else {
@@ -110,7 +110,7 @@ class ProductController extends BaseController {
             if ($this->model->updateProduct($data)) {
                 // Create notification for the updated product
                 $message = "Product '{$data['name']}' has been updated";
-                $this->notificationModel->createNotification($message, $id, 'product');
+                // $this->notificationModel->createNotification($message, $id, 'product');
                 
                 $this->redirect('/products');
             } else {
@@ -256,7 +256,7 @@ class ProductController extends BaseController {
             if ($product && $this->model->deleteProduct($id)) {
                 // Create notification for the deleted product
                 $message = "Product '{$product['name']}' has been deleted";
-                $this->notificationModel->createNotification($message, null, 'product');
+                // $this->notificationModel->createNotification($message, null, 'product');
                 
                 $this->redirect('/products');
             } else {
