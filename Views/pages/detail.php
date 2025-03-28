@@ -15,7 +15,7 @@
             <table class="min-w-full bg-white border border-gray-300">
                 <thead>
                     <tr class="bg-gray-200 text-gray-600 uppercase text-xs leading-normal">
-                        <th class="py-3 px-6 text-left">ID</th>
+                        <!-- <th class="py-3 px-6 text-left">ID</th> -->
                         <th class="py-3 px-6 text-left">Name</th>
                         <th class="py-3 px-6 text-left">Quantity</th>
                         <th class="py-3 px-6 text-left">Last Update</th>
@@ -23,13 +23,16 @@
                 </thead>
                 <tbody class="text-gray-600 text-sm font-light">
                     <tr class="border-b border-gray-300 hover:bg-gray-100">
-                        <td class="py-3 px-6">1</td>
-                        <td class="py-3 px-6"><?php echo htmlspecialchars($stock['product_name']); ?></td>
-                        <td class="py-3 px-6"><?php echo htmlspecialchars($stock['quantity']); ?></td>
-                        <td class="py-3 px-6"><?php echo htmlspecialchars($stock['last_update']); ?></td>
+                        <!-- <td class="py-3 px-6">1</td> -->
+                        <td class="py-3 px-6"><?php echo $stock['product_name']; ?></td>
+                        <td class="py-3 px-6"><?php echo $stock['quantity']; ?></td>
+                        <td class="py-3 px-6"><?php echo $stock['last_updated']; ?></td>
                     </tr>
                 </tbody>
             </table>
+            <div class="mt-6">                
+                <a href="/pages/stock" class="ml-2  bg-red-400  text-white py-2 px-4 rounded hover:bg-red-500">Back</a>
+            </div>  
         <?php else : ?>
             <p class="text-red-500">Stock not found.</p>
         <?php endif; ?>

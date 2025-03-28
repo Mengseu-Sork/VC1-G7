@@ -26,7 +26,7 @@ class StockController extends BaseController
             $this->view('pages/detail', ['error' => "Stock not found."]);
             return;
         }
-        $this->view('pages/detail', ['stock' => $stock]);
+         $this->view('pages/detail', ['stock' => $stock]);
     }
     function detailsProduct($id)
     {

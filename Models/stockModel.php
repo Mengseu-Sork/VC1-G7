@@ -19,7 +19,8 @@ class StockModel
                 products.price, 
                 products.date, 
                 products.image,
-                products.category_id
+                products.category_id,
+                products.stock_status
                 FROM products");
             return $result->fetchAll();
         } catch (Exception $e) {
@@ -42,8 +43,8 @@ class StockModel
                 products.id, 
                 products.name, 
                 products.type, 
-                stock.quantity, 
-                stock.last_updated 
+                stock.last_updated,
+                stock.quantity
                 FROM products 
                 LEFT JOIN stock ON products.id = stock.product_id 
                 WHERE products.id = :id");
@@ -59,13 +60,13 @@ class StockModel
     public function getStockById($id)
     {
         // SQL query with a placeholder for the id
-        $query = "SELECT products.name AS product_name, stock.quantity 
+        $query = "SELECT products.name AS product_name, stock.quantity, stock.last_updated
                   FROM stock 
                   JOIN products ON stock.product_id = products.id
-                  WHERE stock.stock_id = :id"; // Ensure this matches the parameter name
+                  WHERE stock.product_id = :id"; 
 
         // Execute the query and pass the parameters correctly
-        return $this->db->query($query, ['id' => $id])->fetch(PDO::FETCH_ASSOC); // Ensure the 'id' key is used here
+        return $this->db->query($query, ['id' => $id])->fetch(PDO::FETCH_ASSOC); 
     }
     function detailsProduct($id)
     {
