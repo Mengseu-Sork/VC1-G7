@@ -7,7 +7,8 @@ require 'Controllers/ProductController.php';
 // require 'Controllers/AdminController.php';
 require 'Controllers/ShowproductController.php';
 require 'Controllers/ShowuserController.php';
-require 'Controllers/NotificationController.php'; // Add this line
+require 'Controllers/StockController.php';
+
 
 $routes = new Router();
 
@@ -15,6 +16,10 @@ $routes = new Router();
 $routes->get('/', [DashboardController::class, 'index']);
 
 // Homepage
+$routes->get('/pages', [ShowproductController::class, 'index']);
+$routes->get('/pages/stock', [StockController::class, 'index']);
+$routes->get('/pages/detail', [StockController::class, 'show']);
+
 $routes->get('/pages', [ShowproductController::class, 'index']);
 $routes->get('/pages/products', [ShowproductController::class, 'index']);
 $routes->get('/pages/details', [ShowproductController::class, 'show']);

@@ -69,6 +69,31 @@ $totalProducts = count($products);
     </div>
 </div>
 
+<!-- JavaScript for Filtering -->  
+<script>  
+        function filterByCategory(category) {
+            const rows = document.querySelectorAll("#product-table-body tr");
+            rows.forEach(row => {
+                const productCategory = row.getAttribute("data-category");
+                row.style.display = (category === "" || productCategory === category) ? "" : "none";
+            });
+        }
+   
+    function filterByCategory(category) {  
+        const productCards = document.querySelectorAll("#productContainer div[data-category]");  
+
+        productCards.forEach(card => {  
+            const productCategory = card.getAttribute("data-category").toLowerCase();  
+            
+            // Check if category is selected and matches or show all products  
+            if (!category || productCategory === category.toLowerCase()) {  
+                card.style.display = "";  
+            } else {  
+                card.style.display = "none";  
+            }  
+        });  
+    }  
+</script>  
 <script>
     let productsPerRow = <?= $productsPerRow ?>; 
     let rowsPerClick = <?= $rowsPerClick ?>;
