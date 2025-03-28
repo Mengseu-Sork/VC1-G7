@@ -20,10 +20,10 @@
             <div>
                 <a
                   href="/"
-                  class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                  class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-home icon text-blue-500"></i>
+                    <i class="fas fa-home icon text-blue-500 dark:text-light"></i>
                   </span>
                   <span class="ml-2 text-5sm"> Dashboards </span>
                   <span class="ml-auto" aria-hidden="true">
@@ -35,10 +35,10 @@
               <div>
                 <a
                   href="/pages"
-                  class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                  class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-cube icon text-blue-500"></i>
+                    <i class="fas fa-cube icon text-blue-500 dark:text-light"></i>
                   </span>
                   <span class="ml-3 text-5sm "> Products </span>
                   <span class="ml-auto" aria-hidden="true">
@@ -52,11 +52,11 @@
                 <!-- active classes 'bg-primary-100 dark:bg-primary' -->
                 <a
                   href="/products"
-                  class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                  class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
 
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-box icon text-blue-500"></i> 
+                    <i class="fas fa-box icon text-blue-500 dark:text-light"></i> 
                   <span class="ml-2 text-5sm"> Inventory </span>
                 </a>
               </div>
@@ -77,11 +77,11 @@
                 <!-- active classes 'bg-primary-100 dark:bg-primary' -->
                 <a
                   href="/categories"
-                  class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                  class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
 
                 >
                   <span aria-hidden="true">
-                  <i class="fas fa-list icon text-blue-500"></i>
+                  <i class="fas fa-list icon text-blue-500 dark:text-light"></i>
                   <span class="ml-2 text-5sm"> Category </span>
                 </a>
               </div>
@@ -90,10 +90,10 @@
               <div>
                 <a
                   href="#"
-                  class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                  class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-file-alt icon text-blue-500"></i>
+                    <i class="fas fa-file-alt icon text-blue-500 dark:text-light"></i>
                   </span>
                   <span class="ml-4 text-5sm"> Report </span>
                   <span aria-hidden="true" class="ml-auto">
@@ -107,11 +107,11 @@
               <div>
                 <a
                   href="#"
-                  class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                  class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
 
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-shopping-cart icon text-blue-500"></i>
+                    <i class="fas fa-shopping-cart icon text-blue-500 dark:text-light"></i>
                   </span>
                   <span class="ml-2 text-5sm"> Order </span>
                   <span aria-hidden="true" class="ml-auto">
@@ -125,11 +125,11 @@
               <div>
                 <a
                     href="#"
-                    class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                    class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
 
                   >
                     <span aria-hidden="true">
-                      <i class="fas fa-dollar-sign icon1 text-blue-500"></i>
+                      <i class="fas fa-dollar-sign icon1 text-blue-500 dark:text-light"></i>
                     </span>
                     <span class="ml-4 text-5sm"> Payments </span>
                     <span aria-hidden="true" class="ml-auto">
@@ -139,10 +139,10 @@
               <div>
                 <a
                   href="/user"
-                  class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                  class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                   >
                   <span aria-hidden="true">
-                    <i class="fas fa-users icon text-blue-500"></i>
+                    <i class="fas fa-users icon text-blue-500 dark:text-light"></i>
                   </span>
                   <span class="ml-2 text-sm"> Users </span>
                   <span aria-hidden="true" class="ml-auto">
@@ -153,16 +153,15 @@
               </div>
               <div>
                 <a
-                  href="/auth/signout"
-                  class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                  href="/auth/logout"
+                  class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-sign-out-alt icon text-blue-500"></i>
+                    <i class="fas fa-sign-out-alt icon text-blue-500 dark:text-light"></i>
                   </span>
-                  <span class="ml-3 text-5sm"> Sign Out </span>
+                  <span class="ml-3 text-5sm"> Logout </span>
                 </a>
               </div>
-
             </nav>
           </div>
         </aside>
@@ -261,99 +260,18 @@
 
                           <!-- Add this where you want the notification bell to appear -->
                           
-<?php include_once 'Views/Components/notification-bell.php'; ?>
+<?php 
+// include_once 'Views/Components/notification-bell.php'; 
+?>
 
-                          <!-- Settings button -->
+                          <!-- Color button -->
                           <button
                           @click="openSettingsPanel"
                           class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker"
                           >
                           <span class="sr-only">Open settings panel</span>
-                          <svg
-                              class="w-7 h-7"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              aria-hidden="true"
-                          >
-                              <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                              />
-                              <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                              />
-                          </svg>
+                            <i class="fas fa-palette" style="font-size: 1.75rem;"></i>
                           </button>
-                                                  <!-- User avatar button -->
-                        <div class="relative" x-data="{ open: false }">
-                          <button
-                              @click="open = !open; $nextTick(() => { if(open){ $refs.userMenu.focus() } })"
-                              type="button"
-                              aria-haspopup="true"
-                              :aria-expanded="open ? 'true' : 'false'"
-                              class="transition-opacity duration-200 rounded-full dark:opacity-75 dark:hover:opacity-100 focus:outline-none focus:ring dark:focus:opacity-100"
-                          >
-                              <span class="sr-only">User menu</span>
-                              <img class="w-10 h-10 rounded-full" src="../../../Assets/images/user/pic5.jpg" alt="Ahmed Kamel" />
-                          </button>
-
-                          <!-- User dropdown menu -->
-                          <div
-                              x-show="open"
-                              x-ref="userMenu"
-                              x-transition:enter="transition-all transform ease-out"
-                              x-transition:enter-start="translate-y-1/2 opacity-0"
-                              x-transition:enter-end="translate-y-0 opacity-100"
-                              x-transition:leave="transition-all transform ease-in"
-                              x-transition:leave-start="translate-y-0 opacity-100"
-                              x-transition:leave-end="translate-y-1/2 opacity-0"
-                              @click.away="open = false"
-                              @keydown.escape="open = false"
-                              class="absolute right-0 w-48 py-1 bg-white rounded-md shadow-lg top-12 ring-1 ring-black ring-opacity-5 dark:bg-dark focus:outline-none"
-                              tabindex="-1"
-                              role="menu"
-                              aria-orientation="vertical"
-                              aria-label="User menu"
-                            >
-                            <div class="px-4 py-2 text-sm text-gray-700 dark:text-light text-center flex flex-col items-center">
-                                <img class="w-10 h-10 rounded-full" src="../../../../Assets/images/user/pic5.jpg" alt="User Profile" />
-                                <p class="font-semibold mt-2">MENGSEU SORK</p>
-                            </div>
-                            <ul class="mt-2 ml-4 space-y-2">
-                              <li class="flex items-center gap-3 p-1 text-gray-700 hover:text-blue-500 cursor-pointer">
-                                  <i class="fas fa-user"></i>
-                                </span>
-                                <a class="block py-2 text-sm text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 nav-link" href="views/profile/showuser.php">Your Profile</a>
-                              </li>
-                              <li class="flex items-center gap-3 p-1 text-gray-700 hover:text-blue-500 cursor-pointer">
-                                <span class="text-green-500">
-                                  <i class="fas fa-pencil-alt"></i>
-                                </span>
-                                <a  class="block py-2 text-sm text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="user/edit">Edit Profile</a>
-                              </li>
-                              <li class="flex items-center gap-3 p-1 text-gray-700 hover:text-blue-500 cursor-pointer">
-                                <span class="text-yellow-500">
-                                  <i class="fas fa-user-plus"></i>
-                                </span>
-                                <a  class="block py-2 text-sm text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="">Add new account</a>
-                              </li>
-                              <li class="flex items-center gap-3 p-1 text-gray-700 hover:text-blue-500 cursor-pointer">
-                                <span class="text-red-500">
-                                  <i class="fas fa-sign-out-alt"></i>
-                                </span>
-                                <a  class="block py-2 text-sm text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400" href="">Logout</a>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
                       </nav>
                   </div>
           </header>           
-        

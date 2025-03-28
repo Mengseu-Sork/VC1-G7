@@ -43,7 +43,7 @@
                     <div class="mt-6">  
                         
                     <a href="/products/prosuct_ratings?id=<?php echo $product['id']; ?>" class="ml-2 bg-green-200 text-gray-800 py-2 px-4 rounded hover:bg-green-100">Ratings</a>
-                        <a href="/products" class="ml-2  bg-red-400  text-white py-2 px-4 rounded hover:bg-red-500">Back to Products</a>
+                        <a href="/pages" class="ml-2  bg-red-400  text-white py-2 px-4 rounded hover:bg-red-500">Back to Products</a>
                     </div>  
                 </div>  
             </div>
@@ -52,7 +52,7 @@
                 <h1 class="text-2xl font-bold text-red-500">Product Not Found</h1>
                 <p class="mt-4">Sorry, the product you are looking for does not exist or has been removed.</p>
                 <div class="mt-6">
-                    <a href="/products" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-400">Back to Products</a>
+                    <a href="/pages" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-400">Back to Products</a>
                 </div>
             </div>
             <?php endif; ?>
