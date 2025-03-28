@@ -37,12 +37,5 @@ class Database
     {
         $this->pdo = null;
     }
-    public function lastInsertId()
-    {
-        return $this->pdo->lastInsertId();
-
-    }
-    
 }
-
 ?>

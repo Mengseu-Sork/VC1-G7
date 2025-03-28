@@ -1,4 +1,3 @@
-
 <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto ">
         <div class="container mx-auto p-8">  
             <?php if (isset($product) && $product): ?>

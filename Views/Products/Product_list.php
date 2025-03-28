@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
     <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
         <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
-            <div class="shadow-lg rounded-lg p-6 border-2 mb-16 border-gray-200 dark:border-primary-darker transition duration-300"
+            <div class="shadow-lg rounded-lg mb-16 p-6 border-2 border-gray-200 dark:border-primary-darker transition duration-300"
                  :style="{ backgroundColor: bgColor }">
                 <h2 class="text-left ml-1 text-2xl font-bold mb-6">Products List</h2>
                 <div class="flex justify-between flex-col md:flex-row items-center gap-4 mb-6">
@@ -80,9 +80,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <table id="productsTable" class="w-full table-auto border-collapse">
                         <thead>
                             <tr class="bg-blue-500 text-white uppercase text-xs sm:text-sm leading-normal">
-                            <th class="py-1 px-4 text-center"><input type="checkbox" id="selectAll"></th>
+                                <th class="py-1 px-4 text-center"><input type="checkbox" id="selectAll"></th>
                                 <th class="py-3 px-6 text-left">Image</th>
-                                <th class="py-3 px-3 text-left">Product Name</th>
+                                <th class="py-3 px-6 text-left">Product Name</th>
                                 <th class="py-3 px-6 text-left">Price</th>
                                 <th class="py-3 px-6 text-left">Date</th>
                                 <th class="py-3 px-6 text-left">
@@ -123,6 +123,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <i class="fas fa-trash-alt mr-1" style="color: red"></i>
                                         </a>
 
+                                        <!-- Replace this line: -->
+                                        <!-- <a href="../Views/Products/show.php" -->
 
                                         <!-- With this: -->
                                         <a href="/pages/details?id=<?php echo htmlspecialchars($product['id']); ?>"
