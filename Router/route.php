@@ -56,9 +56,9 @@ $routes->get('/categories/update', [CategoryController::class, 'update']);
 $routes->get('/categories/delete', [CategoryController::class, 'delete']);
 
 // Add notification routes
-$routes->get('/notifications', [NotificationController::class, 'getNotifications']);
-$routes->post('/notifications/mark-as-read', [NotificationController::class, 'markAsRead']);
-$routes->post('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead']);
+// $routes->get('/notifications', [NotificationController::class, 'getNotifications']);
+// $routes->post('/notifications/mark-as-read', [NotificationController::class, 'markAsRead']);
+// $routes->post('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead']);
 
 $routes->dispatch();
 
