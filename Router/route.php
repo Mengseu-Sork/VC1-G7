@@ -16,11 +16,11 @@ $routes = new Router();
 $routes->get('/', [DashboardController::class, 'index']);
 
 // Homepage
-// $routes->get('/pages', [ShowproductController::class, 'show']);
 $routes->get('/pages', [ShowproductController::class, 'index']);
 $routes->get('/pages/stock', [StockController::class, 'index']);
 $routes->get('/pages/detail', [StockController::class, 'show']);
 
+$routes->get('/pages', [ShowproductController::class, 'index']);
 $routes->get('/pages/products', [ShowproductController::class, 'index']);
 $routes->get('/pages/details', [ShowproductController::class, 'show']);
 $routes->get('/pages/prosuct_ratings', [ShowproductController::class, 'ratings']);

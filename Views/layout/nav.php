@@ -48,6 +48,7 @@
                 </a>
               </div>
               <div>
+
                 <!-- active classes 'bg-primary-100 dark:bg-primary' -->
                 <a
                   href="/products"
@@ -59,6 +60,19 @@
                   <span class="ml-2 text-5sm"> Inventory </span>
                 </a>
               </div>
+              <div>
+                <!-- active classes 'bg-primary-100 dark:bg-primary' -->
+                <a
+                  href="/pages/stock"
+                  class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+
+                >
+                  <span aria-hidden="true">
+                    <i class="fas fa-warehouse icon"></i> 
+                  <span class="ml-2 text-5sm"> Stock </span>
+                </a>
+              </div>
+
               <div>
                 <!-- active classes 'bg-primary-100 dark:bg-primary' -->
                 <a
