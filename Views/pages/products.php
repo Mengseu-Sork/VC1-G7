@@ -57,35 +57,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }  
 ?>  
 
-<!-- Styles -->  
-<style>  
-    .product-image-container {  
-        position: relative;  
-        width: 100%;  
-        height: 100%;  
-    }  
-    .view-more-overlay {  
-        position: absolute;  
-        top: 0;  
-        left: 0;  
-        width: 100%;  
-        height: 100%;  
-        background: rgba(255, 209, 129, 0.58);  
-        color: white;  
-        display: flex;  
-        align-items: center;  
-        justify-content: center;  
-        opacity: 0;  
-        transition: opacity 0.3s ease;  
-        border-radius: 5px;  
-        pointer-events: none;  
-    }  
-    .product-image-container:hover .view-more-overlay {  
-        opacity: 1;  
-    }  
-</style>  
-
-<!-- HTML Structure -->  
 <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">  
     <div class="grid grid-cols-1 md:grid-cols-1 gap-6">  
         <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">  
