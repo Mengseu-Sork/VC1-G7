@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
     <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
         <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
-            <div class="shadow-lg rounded-lg p-6 border-2 border-gray-200 dark:border-primary-darker transition duration-300"
+            <div class="shadow-lg rounded-lg p-6 border-2 mb-16 border-gray-200 dark:border-primary-darker transition duration-300"
                  :style="{ backgroundColor: bgColor }">
                 <h2 class="text-left ml-1 text-2xl font-bold mb-6">Products List</h2>
                 <div class="flex justify-between flex-col md:flex-row items-center gap-4 mb-6">
@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </a>
                     <div class="flex w-full md:w-auto gap-2 relative">
                         <input type="text" id="searchInput" placeholder="Search products..." required
-                            class="w-full md:w-64 px-4 py-2 pl-10 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 outline-none"
+                            class="w-full md:w-64 px-4 py-2 pl-10 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 outline-none bg-white dark:bg-darker border-b dark:border-primary-darker"
                             oninput="searchProducts()">
                         <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                         <button type="button" onclick="searchProducts()"
@@ -80,6 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <table id="productsTable" class="w-full table-auto border-collapse">
                         <thead>
                             <tr class="bg-blue-500 text-white uppercase text-xs sm:text-sm leading-normal">
+                            <th class="py-1 px-4 text-center"><input type="checkbox" id="selectAll"></th>
                                 <th class="py-3 px-6 text-left">Image</th>
                                 <th class="py-3 px-6 text-left">Product Name</th>
                                 <th class="py-3 px-6 text-left">Price</th>
@@ -94,20 +95,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <?php endforeach; ?>
                                     </select>
                                 </th>
+                                <th class="py-3 px-6 text-center">Stock Status</th>
                                 <th class="py-3 px-6 text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="product-table-body">
-                            <?php foreach ($products as $product): ?>
-                                <tr data-category="<?= $product['category_name']; ?>"
+                            <?php foreach ($products as $product): 
+                                $stockStatus = isset($product["stock_status"]) ? $product["stock_status"] : 1;
+                            ?>
+                                <tr data-category="<?= $product['category_name']; ?>" data-product-id="<?= $product['id']; ?>"
                                     class="duration-200 rounded-lg shadow-md transition bg-white dark:text-light dark:bg-darker border-b dark:border-primary-darker">
+                                    <td class="py-1 px-4 font-semibold">
+                                        <input type="checkbox" class="productCheckbox" data-id="<?= $product['id']; ?>">
+                                    </td>
                                     <td>
                                         <img src="../Assets/images/uploads/<?php echo $product["image"]?>" class="ml-4" alt="" width="40" height="40" style="border-radius: 5px">
                                     </td>
                                     <td class="py-3 px-6 font-semibold"><?php echo $product['name']; ?></td>
-                                    <td class="py-3 px-6 font-semibold"><?php echo $product['price']; ?></td>
+                                    <td class="py-3 px-6 font-semibold"><?php echo $product['price']; ?>$</td>
                                     <td class="py-3 px-6 font-semibold"><?php echo $product['date']; ?></td>
                                     <td class="py-3 px-6 font-semibold"><?php echo $product['category_name']; ?></td>
+                                    <td class="py-3 px-6 font-semibold text-center">
+                                        <select class="stock-status-select border border-gray-300 rounded-md p-1" 
+                                                data-id="<?= $product['id']; ?>" 
+                                                onchange="updateStockStatus(this)">
+                                            <option value="1" <?= $stockStatus == 1 ? 'selected' : '' ?>>In Stock</option>
+                                            <option value="0" <?= $stockStatus == 0 ? 'selected' : '' ?>>Out of Stock</option>
+                                        </select>
+                                    </td>
                                     <td class="flex py-3 px-6 font-semibold justify-center relative">
                                         <a href="/products/edit?id=<?= $product['id'] ?>"
                                            class="block px-2 py-2 text-gray-700 flex items-center">
@@ -119,8 +134,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <i class="fas fa-trash-alt mr-1" style="color: red"></i>
                                         </a>
 
-                                        <!-- Replace this line: -->
-                                        <!-- <a href="../Views/Products/show.php" -->
 
                                         <!-- With this: -->
                                         <a href="/products/details?id=<?= $product['id'] ?>"
@@ -157,28 +170,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 </div>
 
-<script>
-    // Filter products by category
-    function filterByCategory(category) {
-        const rows = document.querySelectorAll("#product-table-body tr");
-        rows.forEach(row => {
-            const productCategory = row.getAttribute("data-category").toLowerCase();
-            if (category === "" || productCategory === category.toLowerCase()) {
-                row.style.display = ""; // Show the row
-            } else {
-                row.style.display = "none"; // Hide the row
-            }
-        });
-    }
+<!-- Stock Status Modal -->
+<div id="stockStatusModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h2 class="text-lg font-semibold">Update Stock Status</h2>
+        <p class="mt-4">Select stock status for selected products:</p>
 
-    // Open modal for deletion
-    function openModal(modalId) {
-        document.getElementById(modalId).classList.remove('hidden');
-    }
+        <div class="mt-6">
+            <select id="bulkStockStatus" class="w-full border border-gray-300 rounded-md p-2">
+                <option value="1">In Stock</option>
+                <option value="0">Out of Stock</option>
+            </select>
+        </div>
 
-    // Close modal for deletion
-    function closeModal(modalId) {
-        document.getElementById(modalId).classList.add('hidden');
-    }
-</script>
+        <div class="mt-6 flex justify-end space-x-2">
+            <button onclick="closeStockModal()"
+                    class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 transition duration-200">
+                Cancel
+            </button>
 
+            <button onclick="updateBulkStockStatus()"
+                   class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200">
+                Update
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="/Assets/js/product_list.js"></script>

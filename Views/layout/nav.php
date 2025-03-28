@@ -23,7 +23,7 @@
                   class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-home icon"></i>
+                    <i class="fas fa-home icon text-blue-500"></i>
                   </span>
                   <span class="ml-2 text-5sm"> Dashboards </span>
                   <span class="ml-auto" aria-hidden="true">
@@ -38,7 +38,7 @@
                   class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-cube icon"></i>
+                    <i class="fas fa-cube icon text-blue-500"></i>
                   </span>
                   <span class="ml-3 text-5sm "> Products </span>
                   <span class="ml-auto" aria-hidden="true">
@@ -56,7 +56,7 @@
 
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-box icon"></i> 
+                    <i class="fas fa-box icon text-blue-500"></i> 
                   <span class="ml-2 text-5sm"> Inventory </span>
                 </a>
               </div>
@@ -81,7 +81,7 @@
 
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-box icon"></i> 
+                  <i class="fas fa-list icon text-blue-500"></i>
                   <span class="ml-2 text-5sm"> Category </span>
                 </a>
               </div>
@@ -93,7 +93,7 @@
                   class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-file-alt icon"></i>
+                    <i class="fas fa-file-alt icon text-blue-500"></i>
                   </span>
                   <span class="ml-4 text-5sm"> Report </span>
                   <span aria-hidden="true" class="ml-auto">
@@ -111,7 +111,7 @@
 
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-shopping-cart icon"></i>
+                    <i class="fas fa-shopping-cart icon text-blue-500"></i>
                   </span>
                   <span class="ml-2 text-5sm"> Order </span>
                   <span aria-hidden="true" class="ml-auto">
@@ -129,7 +129,7 @@
 
                   >
                     <span aria-hidden="true">
-                      <i class="fas fa-dollar-sign icon1"></i>
+                      <i class="fas fa-dollar-sign icon1 text-blue-500"></i>
                     </span>
                     <span class="ml-4 text-5sm"> Payments </span>
                     <span aria-hidden="true" class="ml-auto">
@@ -142,7 +142,7 @@
                   class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                   >
                   <span aria-hidden="true">
-                    <i class="fas fa-users icon"></i>
+                    <i class="fas fa-users icon text-blue-500"></i>
                   </span>
                   <span class="ml-2 text-sm"> Users </span>
                   <span aria-hidden="true" class="ml-auto">
@@ -157,7 +157,7 @@
                   class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
-                    <i class="fas fa-sign-out-alt icon"></i>
+                    <i class="fas fa-sign-out-alt icon text-blue-500"></i>
                   </span>
                   <span class="ml-3 text-5sm"> Sign Out </span>
                 </a>
@@ -259,29 +259,9 @@
                           </div>
                           </button>
 
-                          <!-- Notification button -->
-                          <button
-                          @click="openNotificationsPanel"
-                          class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker"
-                          >
-                          <span class="sr-only">Open Notification panel</span>
-                          <svg
-                              class="w-7 h-7"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              aria-hidden="true"
-                          >
-                              <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                              />
-                          </svg>
-                          </button>
-
+                          <!-- Add this where you want the notification bell to appear -->
+                          
+<?php include_once 'Views/Components/notification-bell.php'; ?>
 
                           <!-- Settings button -->
                           <button

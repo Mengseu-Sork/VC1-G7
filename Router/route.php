@@ -49,7 +49,21 @@ $routes->get('/products/delete', [ProductController::class, 'delete']);
 $routes->get('/products/details', [ProductController::class, 'show']);
 $routes->get('/products/prosuct_ratings', [ProductController::class, 'ratings']);
 
+// Add these new routes for stock status updates
+$routes->post('/products/update-stock', [ProductController::class, 'updateStock']);
+$routes->post('/products/update-bulk-stock', [ProductController::class, 'updateBulkStock']);
+
 $routes->get('/categories', [CategoryController::class, 'index']);
+$routes->get('/categories/create', [CategoryController::class, 'create']);
+$routes->get('/categories/store', [CategoryController::class, 'store']);
+$routes->get('/categories/edit', [CategoryController::class, 'edit']);
+$routes->get('/categories/update', [CategoryController::class, 'update']);
+$routes->get('/categories/delete', [CategoryController::class, 'delete']);
+
+// Add notification routes
+$routes->get('/notifications', [NotificationController::class, 'getNotifications']);
+$routes->post('/notifications/mark-as-read', [NotificationController::class, 'markAsRead']);
+$routes->post('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead']);
 
 $routes->dispatch();
 

@@ -1,96 +1,101 @@
-let orderList = [];
+function searchProducts() {
+    let input = document.getElementById("searchInput").value.toLowerCase().trim();
+    let productContainer = document.getElementById("productContainer");
+    let products = productContainer.getElementsByClassName("w-48");
 
-function addToOrder(productName, price, image) {
-    let qty = parseInt(document.getElementById('qty_' + productName).value);
-    let size = document.getElementById('size_' + productName).value;
-    let itemPrice = parseFloat(price.replace('$', ''));
+    // Loop through each product and check if it matches the search input
+    for (let product of products) {
+        let name = product.getAttribute("data-name").toLowerCase();
+        let price = product.getAttribute("data-price").toLowerCase();
 
-    let existingItem = orderList.find(item => item.name === productName && item.size === size);
-    if (existingItem) {
-        existingItem.quantity += qty;
-    } else {
-        let item = { 
-            name: productName, 
-            price: itemPrice, 
-            quantity: qty, 
-            size: size, 
-            image: image
-        };
-        orderList.push(item);
+        // Check if the search input matches the product's name, category, or price
+        if (name.includes(input) || price.includes(input)) {
+            product.style.display = ""; // Show the product if it matches the search
+        } else {
+            product.style.display = "none"; // Hide the product if it does not match
+        }
+    }
+}
+function filterByCategory(category) {
+        const rows = document.querySelectorAll("#product-table-body tr");
+        rows.forEach(row => {
+            const productCategory = row.getAttribute("data-category").toLowerCase();
+            if (category === "" || productCategory === category.toLowerCase()) {
+                row.style.display = ""; // Show the row
+            } else {
+                row.style.display = "none"; // Hide the row
+            }
+        });
     }
 
-    updateOrderList();
-}
-
-function updateOrderList() {
-    let listContainer = document.getElementById('orderList');
-    let total = 0;
-    listContainer.innerHTML = "";
-    
-    listContainer.style.maxHeight = "250px"; // Set max height for two items
-    listContainer.style.overflowY = "auto"; // Enable scrolling
-
-    orderList.forEach((item, index) => {
-        total += item.price * item.quantity;
-        listContainer.innerHTML += `
-            <div class="order-item">
-                <img src="${item.image}" alt="${item.name}" class="order-image">
-                <div class="order-details">
-                    <p>${item.name} (${item.size}) - $${(item.price * item.quantity).toFixed(2)}</p>
-                    <label>Quantity:</label>
-                    <input type="number" min="1" value="${item.quantity}" onchange="updateQuantity(${index}, this.value)">
-                    <label>Size:</label>
-                    <select onchange="updateSize(${index}, this.value)">
-                        <option value="S" ${item.size === 'S' ? 'selected' : ''}>S</option>
-                        <option value="M" ${item.size === 'M' ? 'selected' : ''}>M</option>
-                        <option value="L" ${item.size === 'L' ? 'selected' : ''}>L</option>
-                    </select>
-                    <button class="remove-btn" onclick="removeFromOrder(${index})">Remove</button>
-                </div>
-            </div>
-        `;
-    });
-
-    document.getElementById('totalPrice').innerText = total.toFixed(2);
-    document.getElementById('orderForm').style.display = "block";
-}
-
-function updateQuantity(index, newQuantity) {
-    orderList[index].quantity = parseInt(newQuantity);
-    updateOrderList();
-}
-
-function updateSize(index, newSize) {
-    let item = orderList[index];
-    let duplicateItem = orderList.find(i => i.name === item.name && i.size === newSize);
-    
-    if (duplicateItem) {
-        duplicateItem.quantity += item.quantity;
-        orderList.splice(index, 1);
-    } else {
-        item.size = newSize;
+    // Open modal for deletion
+    function openModal(modalId) {
+        document.getElementById(modalId).classList.remove('hidden');
     }
 
-    updateOrderList();
-}
-
-function removeFromOrder(index) {
-    orderList.splice(index, 1);
-    updateOrderList();
-}
-
-function closeOrderForm() {
-    document.getElementById('orderForm').style.display = "none";
-}
-
-function submitOrder() {
-    if (orderList.length === 0) {
-        alert("Your order is empty!");
-        return;
+    // Close modal for deletion
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.add('hidden');
     }
 
-    alert("Order submitted successfully!");
-    orderList = [];
-    updateOrderList();
-    closeOrderForm();
-}
+// document.addEventListener("DOMContentLoaded", function () {
+//     const selectAllCheckbox = document.getElementById("selectAll");
+//     const productCheckboxes = document.querySelectorAll(".productCheckbox");
+
+//     // Create add stock button dynamically
+//     const addStockButton = document.createElement("button");
+//     addStockButton.id = "addStockButton";
+//     addStockButton.textContent = "Add Stock";
+//     addStockButton.classList.add(
+//         "bg-blue-500", "hover:bg-blue-600", "text-white",
+//         "font-semibold", "py-2", "px-4", "rounded-lg",
+//         "shadow-md", "transition", "duration-300", "hidden", "mt-4", "mb-4", "ml-2"
+//     );
+//     addStockButton.addEventListener("click", addStockToSelectedProducts);
+
+//     // Find the table's parent container and append buttons after it
+//     const tableContainer = document.getElementById("productsTable").parentElement;
+//     tableContainer.appendChild(addStockButton);
+
+//     // Function to toggle button visibility
+//     function toggleButtons() {
+//         const anyChecked = Array.from(productCheckboxes).some(checkbox => checkbox.checked);
+//         addStockButton.classList.toggle("hidden", !anyChecked);
+//     }
+
+//     // Listen for changes on individual checkboxes
+//     productCheckboxes.forEach(checkbox => {
+//         checkbox.addEventListener("change", toggleButtons);
+//     });
+
+//     // Handle "Select All" checkbox
+//     selectAllCheckbox.addEventListener("change", function () {
+//         productCheckboxes.forEach(checkbox => {
+//             checkbox.checked = selectAllCheckbox.checked;
+//         });
+//         toggleButtons();
+//     });
+
+//     // Function to add stock to selected products
+//     function addStockToSelectedProducts() {
+//         const selectedIds = Array.from(productCheckboxes)
+//             .filter(checkbox => checkbox.checked)
+//             .map(checkbox => checkbox.closest("tr").dataset.productId);
+
+//         if (selectedIds.length === 0) return;
+//         if (!confirm("Are you sure you want to add stock to the selected products?")) return;
+
+//         fetch('/products/add-stock-multiple', {
+//             method: 'POST',
+//             headers: { 'Content-Type': 'application/json' },
+//             body: JSON.stringify({ ids: selectedIds })
+//         }).then(response => response.json())
+//           .then(data => {
+//               if (data.success) {
+//                   alert("Stock added successfully!");
+//               } else {
+//                   alert("Failed to add stock.");
+//               }
+//           }).catch(error => console.error("Error:", error));
+//     }
+// });
