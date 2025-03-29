@@ -4,7 +4,7 @@ require_once 'controllers/UserController.php';
 require_once 'Controllers/DashboardController.php';
 require_once 'Controllers/CategoryController.php';
 require 'Controllers/ProductController.php';
-// require 'Controllers/AdminController.php';
+require 'Controllers/AuthController.php';
 require 'Controllers/ShowproductController.php';
 require_once 'Controllers/OrderController.php';
 
@@ -20,9 +20,9 @@ $routes->get('/pages/products', [ShowproductController::class, 'index']);
 $routes->get('/pages/details', [ShowproductController::class, 'show']);
 $routes->get('/pages/prosuct_ratings', [ShowproductController::class, 'ratings']);
 
-// $routes->get('/auth/login', [AdminController::class, 'login']);
-// $routes->post('/auth/login', [AdminController::class, 'login']);
-// $routes->post('/auth/logout', [AdminController::class, 'logout']);
+// $routes->get('/auth/login', [AuthController::class, 'login']);
+// $routes->post('/auth/login', [AuthController::class, 'login']);
+// $routes->post('/auth/logout', [AuthController::class, 'logout']);
 
 // user
 $routes->get('/user', [UserController::class, 'index']);
@@ -50,9 +50,7 @@ $routes->get('/categories/edit', [CategoryController::class, 'edit']);
 $routes->get('/categories/update', [CategoryController::class, 'update']);
 $routes->get('/categories/delete', [CategoryController::class, 'delete']);
 
-$routes->get('/order', [OrderController::class, 'index']);
-$routes->get('/order/view', [OrderController::class, 'view']);  
-$routes->delete('/order/delete', [OrderController::class, 'delete']);
+$routes->get('/pages/order', [OrderController::class, 'index']); 
+$routes->post('/products/order', [OrderController::class, 'processOrder']);
 
 $routes->dispatch();
-

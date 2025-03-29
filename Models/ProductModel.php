@@ -125,22 +125,23 @@ class ProductModel {
 
 
     // Add this method to your ProductModel class
-    public function getProductForOrder($id) {
-        try {
-            $query = "SELECT id, name, price, image, stock FROM products WHERE id = :id";
-            $result = $this->db->query($query, ['id' => $id]);
-            $product = $result->fetch();
+    // public function getProductForOrder($id) {
+    //     try {
+    //         $query = "SELECT id, name, price, image, stock FROM products WHERE id = :id";
+    //         $result = $this->db->query($query, ['id' => $id]);
+    //         $product = $result->fetch();
             
-            if ($product) {
-                $product['numericPrice'] = floatval(str_replace(['$', ','], '', $product['price']));
-                return $product;
-            }
-            return null;
-        } catch (Exception $e) {
-            error_log("Error getting product for order: " . $e->getMessage());
-            return null;
-        }
-    }
+    //         if ($product) {
+    //             $product['numericPrice'] = floatval(str_replace(['$', ','], '', $product['price']));
+    //             return $product;
+    //         }
+    //         return null;
+    //     } catch (Exception $e) {
+    //         error_log("Error getting product for order: " . $e->getMessage());
+    //         return null;
+    //     }
+    // }
+    
 }
 ?>
 

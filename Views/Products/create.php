@@ -329,10 +329,7 @@
                 event.preventDefault();
             }
         });
-
-        
-
-        
+ 
     </script>
 </body>
 </html>

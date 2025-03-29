@@ -31,16 +31,33 @@ class Database
         }
     }
 
-    public function fetchAll($stmt)
-    {
-        return $stmt->fetchAll();
+    // public function fetchAll($stmt)
+    // {
+    //     return $stmt->fetchAll();
+    // }
+
+    // public function fetch($stmt)
+    // {
+    //     return $stmt->fetch();
+    // }
+    
+
+    public function beginTransaction() {
+        return $this->pdo->beginTransaction();
     }
 
-    public function fetch($stmt)
-    {
-        return $stmt->fetch();
+    public function commit() {
+        return $this->pdo->commit();
     }
-    
+
+    public function rollBack() {
+        return $this->pdo->rollBack();
+    }
+
+    public function lastInsertId() {
+        return $this->pdo->lastInsertId();
+    }
+
     public function closeConnection()
     {
         $this->pdo = null;

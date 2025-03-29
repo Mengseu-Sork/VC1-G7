@@ -199,26 +199,26 @@ class ProductController extends BaseController {
     //     }
     // }
 
-    public function order() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            header("Content-Type: application/json");
-            $input = json_decode(file_get_contents('php://input'), true) ?? [];
+    // public function order() {
+    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //         header("Content-Type: application/json");
+    //         $input = json_decode(file_get_contents('php://input'), true) ?? [];
 
-            if (empty($input['productName']) || !isset($input['quantity']) || !isset($input['total'])) {
-                echo json_encode(['success' => false, 'message' => 'Invalid order data']);
-                return;
-            }
+    //         if (empty($input['productName']) || !isset($input['quantity']) || !isset($input['total'])) {
+    //             echo json_encode(['success' => false, 'message' => 'Invalid order data']);
+    //             return;
+    //         }
 
-            // Here you could add logic to save the order to a database
-            echo json_encode([
-                'success' => true,
-                'message' => 'Order processed successfully',
-                'data' => $input
-            ]);
-        } else {
-            $this->view('Order/index', []);
-        }
-    }
+    //         // Here you could add logic to save the order to a database
+    //         echo json_encode([
+    //             'success' => true,
+    //             'message' => 'Order processed successfully',
+    //             'data' => $input
+    //         ]);
+    //     } else {
+    //         $this->view('Order/index', []);
+    //     }
+    // }
 }
 ?>
 
