@@ -30,10 +30,39 @@ class CategoryModel {
 }
 
     // Get category by ID
-    // public function getCategoryById($id) {
-    //     $query = "SELECT * FROM categories WHERE category_id = :id";
-    //     $stmt = $this->db->query($query, ['id' => $id]); 
-    //     return $stmt->fetch();
-    // }
+    public function getCategoryById($id) {
+        $query = "SELECT * FROM categories WHERE category_id = :id";
+        $stmt = $this->db->query($query, ['id' => $id]); 
+        return $stmt->fetch();
+    }
+
+    function createCategories($data)
+    {
+        $this->db->query("INSERT INTO categories (name, description) VALUES (:name, :description)",
+        [
+            'name' => $data['name'],
+            'description' => $data['description'],
+        ]);
+    }
+
+    function getCategories($id)
+    {
+        $stmt = $this->db->query("SELECT * FROM categories WHERE category_id = :category_id", ['category_id' => $id]);
+        return $stmt->fetch();
+    }
+    function updateCategories($id, $data)
+    {
+        $this->db->query("UPDATE categories SET name = :name , description = :description WHERE category_id = :category_id",
+        [
+            'name' => $data['name'],
+            'description' => $data['description'],
+            'category_id' => $id
+        ]);
+    }
+    function deleteCategories($id)
+    {
+        return $this->db->query("DELETE FROM categories WHERE category_id = :category_id", ['category_id' => $id]);
+    }
+
 }
 ?>

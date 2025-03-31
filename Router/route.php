@@ -6,7 +6,7 @@ require_once 'Controllers/CategoryController.php';
 require 'Controllers/ProductController.php';
 // require 'Controllers/AdminController.php';
 require 'Controllers/ShowproductController.php';
-require 'Controllers/ShowuserController.php';
+// require 'Controllers/ShowuserController.php';
 
 
 $routes = new Router();

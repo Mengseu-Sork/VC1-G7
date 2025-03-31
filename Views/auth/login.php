@@ -63,7 +63,7 @@
 
         <!-- Register Link -->
         <div class="text-center text-gray-600">
-            <p>Don't have an account? <a href="/register" class="text-blue-500 hover:underline">Register</a></p>
+            <p>Don't have an account? <a href="/Views/auth/register.php" class="text-blue-500 hover:underline">Register</a></p>
         </div>
     </div>
 
