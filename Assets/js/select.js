@@ -13,4 +13,21 @@
         });
     }
 
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const links = document.querySelectorAll(".sidebar-link");
+    
+        links.forEach(link => {
+            if (link.href === window.location.href) {
+                link.classList.add("bg-primary-100", "dark:bg-primary", "text-white");
+            } else {
+                link.classList.remove("bg-primary-100", "dark:bg-primary", "text-white");
+            }
+    
+            link.addEventListener("click", function () {
+                links.forEach(l => l.classList.remove("bg-primary-100", "dark:bg-primary", "text-white"));
+                link.classList.add("bg-primary-100", "dark:bg-primary", "text-white");
+            });
+        });
+    });
     

@@ -6,6 +6,7 @@ class ProductModel {
     public function __construct() {
         $this->db = new Database(); 
     }
+    
     public function getAllCategories() {
         $query = "SELECT * FROM categories";
         $result = $this->db->query($query);
@@ -20,7 +21,8 @@ class ProductModel {
                 products.price, 
                 products.date, 
                 products.image,
-                products.category_id,   
+                products.category_id,
+                products.stock_status,   
                 categories.name AS category_name
                 FROM products 
                 LEFT JOIN categories ON products.category_id = categories.category_id");
@@ -43,14 +45,15 @@ class ProductModel {
 
     function createProduct($data) {
         try {
-            $stmt = "INSERT INTO products (name, price, category_id, date, image) 
-                     VALUES (:name, :price, :category_id, :date, :image)";
+            $stmt = "INSERT INTO products (name, price, category_id, date, image, stock_status) 
+                     VALUES (:name, :price, :category_id, :date, :image, :stock_status)";
             $this->db->query($stmt, [
                 'name' => $data['name'],
                 'price' => $data['price'],
                 'category_id' => $data['category_id'],
                 'date' => $data['date'],
                 'image' => $data['image'],
+                'stock_status' => isset($data['stock_status']) ? $data['stock_status'] : 1, // Default to in stock
             ]);
             return true;
         } catch (Exception $e) {
@@ -90,6 +93,12 @@ class ProductModel {
             if (!empty($data['image'])) {
                 $stmt .= ", image = :image";
                 $params['image'] = $data['image'];
+            }
+            
+            // Include stock status in the update
+            if (isset($data['stock_status'])) {
+                $stmt .= ", stock_status = :stock_status";
+                $params['stock_status'] = $data['stock_status'];
             }
             
             $stmt .= " WHERE id = :id";

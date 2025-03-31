@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
     <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
         <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
-            <div class="shadow-lg rounded-lg p-6 border-2 mb-16 border-gray-200 dark:border-primary-darker transition duration-300"
+            <div class="shadow-lg rounded-lg mb-16 p-6 border-2 border-gray-200 dark:border-primary-darker transition duration-300"
                  :style="{ backgroundColor: bgColor }">
                 <h2 class="text-left ml-1 text-2xl font-bold mb-6">Products List</h2>
                 <div class="flex justify-between flex-col md:flex-row items-center gap-4 mb-6">
@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <table id="productsTable" class="w-full table-auto border-collapse">
                         <thead>
                             <tr class="bg-blue-500 text-white uppercase text-xs sm:text-sm leading-normal">
-                            <th class="py-1 px-4 text-center"><input type="checkbox" id="selectAll"></th>
+                                <th class="py-1 px-4 text-center"><input type="checkbox" id="selectAll"></th>
                                 <th class="py-3 px-6 text-left">Image</th>
                                 <th class="py-3 px-6 text-left">Product Name</th>
                                 <th class="py-3 px-6 text-left">Price</th>
@@ -108,8 +108,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <td>
                                         <img src="../Assets/images/uploads/<?php echo $product["image"]?>" class="ml-4" alt="" width="40" height="40" style="border-radius: 5px">
                                     </td>
-                                    <td class="py-3 px-6 font-semibold"><?php echo $product['name']; ?></td>
-                                    <td class="py-3 px-6 font-semibold"><?php echo $product['price']; ?></td>
+                                    <td class="py-3 px-3 font-semibold"><?php echo $product['name']; ?></td>
+                                    <td class="py-3 px-6 font-semibold"><?php echo $product['price']; ?>$</td>
                                     <td class="py-3 px-6 font-semibold"><?php echo $product['date']; ?></td>
                                     <td class="py-3 px-6 font-semibold"><?php echo $product['category_name']; ?></td>
                                     <td class="flex py-3 px-6 font-semibold justify-center relative">
@@ -123,9 +123,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <i class="fas fa-trash-alt mr-1" style="color: red"></i>
                                         </a>
 
-
                                         <!-- With this: -->
-                                        <a href="/products/details?id=<?= $product['id'] ?>"
+                                        <a href="/pages/details?id=<?php echo htmlspecialchars($product['id']); ?>"
                                         class="block px-2 py-2 text-gray-700 flex items-center">
                                             <i class="far fa-eye mr-1" style="color: blue;"></i>
                                         </a>
@@ -142,17 +141,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                     Cancel
                                                 </button>
                                                 
-                                                <!-- <form action="/products/delete?id=<?= $product['id'] ?>" method="POST">
+                                                <form action="/products/delete?id=<?= $product['id'] ?>" method="POST">
                                                         <input type="hidden" name="id" value="<?= $row['id'] ?>">
                                                         <button type="submit"
                                                             class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
                                                             Delete
                                                         </button>
-                                                    </form> -->
-                                                <a href="/products/delete?id=<?= $product['id'] ?>" 
-                                                   class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200 inline-block text-center">
-                                                    Delete
-                                                </a>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -323,4 +318,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 </script>
+<<<<<<< HEAD
 
+=======
+>>>>>>> d14297b7cbbc4c1a9c85f91d7b5c394df3bb3ff5
