@@ -62,7 +62,7 @@ $totalProducts = count($products);
                     <button onclick="showMoreProducts()" id="seeMoreButton" class="px-6 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition">
                         See More
                     </button>
-                    <button onclick="resetProducts()" id="backButton" class="px-6 py-2 bg-gray-500 text-white font-semibold rounded-md hover:bg-gray-600 transition hidden">
+                    <button onclick="resetProducts()" id="backButton" class="px-6 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-gray-600 transition hidden">
                         Back
                     </button>
                 </div>
@@ -78,4 +78,5 @@ $totalProducts = count($products);
     let shownProducts = initialProductsToShow;
     const totalProducts = <?= $totalProducts ?>;
 </script>
+
 <script src="/Assets/js/product-pagination.js"></script>
