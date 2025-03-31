@@ -6,11 +6,11 @@ class DashboardController extends BaseController
     public function index()
     {
         session_start();
-        if (!isset($_SESSION["admin"])) {
-            header("Location: /auth/login");
+        if (!isset($_SESSION["user_id"])) { 
+            header("Location: ../auth/login");
             exit();
         }
     
-        $this->view('/Dashboard/list');;
+        $this->view('/Dashboard/list');
     }
 }

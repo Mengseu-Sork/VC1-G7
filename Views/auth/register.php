@@ -67,7 +67,7 @@
         </form>
 
         <div class="text-center text-gray-600">
-            <p>Already have an account? <a href="/Views/auth/signin.php" class="text-blue-500 hover:underline">Sign In</a></p>
+            <p>Already have an account? <a href="/Views/auth/login.php" class="text-blue-500 hover:underline">Sign In</a></p>
         </div>
     </div>
     <script>

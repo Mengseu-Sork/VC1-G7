@@ -1,41 +1,57 @@
 <?php
-require_once __DIR__ . '/BaseController.php';
-require_once __DIR__ . '/../Models/UserModel.php';
+require_once 'Models/AuthModel.php';
 
-class AuthController extends BaseController {
-    private $userModel;
+class AuthController {
+    private $model;
 
     public function __construct() {
-        session_start(); // Add this to initialize session
-        $this->userModel = new UserModel();
+        session_start();
+        $this->model = new AuthModel();
     }
 
     public function login() {
         if (isset($_SESSION['user_id'])) {
-            $this->redirect('/dashboard');
+            header("Location: /dashboard");
+            exit;
         }
 
-        $data = [];
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = $_POST['email'] ?? '';
-            $password = $_POST['password'] ?? '';
 
-            $user = $this->userModel->login($email, $password);
-            if ($user) {
-                $_SESSION['user_id'] = $user['id'];
-                $this->redirect('/dashboard');
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
+            $password = trim($_POST['password'] ?? '');
+
+            // Validate input fields
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $error = 'Invalid email format.';
+            } elseif (empty($password)) {
+                $error = 'Password is required.';
             } else {
-                $data['error'] = "Invalid email or password.";
+                $user = $this->model->getUserByEmail($email);
+                if ($user && password_verify($password, $user['password'])) {
+                    session_regenerate_id(true); 
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['user_email'] = $user['email'];
+                    header("Location: /dashboard");
+                    exit;
+                } else {
+                    $error = 'Invalid email or password.';
+                }
             }
         }
 
-        $this->view('auth/login', $data);
+        $viewPath = __DIR__ . '/../views/auth/login.php';
+        if (file_exists($viewPath)) {
+            require $viewPath;
+        } else {
+            die("Error: View file '$viewPath' not found.");
+        }
     }
 
     public function logout() {
-        session_start(); // Ensure session is started before destroying
         session_unset();
         session_destroy();
-        $this->redirect('/auth/login');
+        header("Location: /auth/login");
+        exit;
     }
 }
+?>

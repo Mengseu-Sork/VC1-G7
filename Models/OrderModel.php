@@ -12,14 +12,14 @@ class OrderModel {
         try {
             $this->db->beginTransaction();
 
-            // Check if user exists
+
             $userCheck = $this->db->query("SELECT id FROM users WHERE id = :user_id", [':user_id' => $user_id]);
             if (!$userCheck->fetch()) {
                 $this->db->rollBack();
                 return "Error: User does not exist";
             }
 
-            // Insert order
+
             $query = "INSERT INTO orders (user_id, order_date, total_amount, product_name, quantity, price) 
                       VALUES (:user_id, :order_date, :total_amount, :product_name, :quantity, :price)";
             $params = [
@@ -28,7 +28,7 @@ class OrderModel {
                 ':total_amount' => $total_amount,
                 ':product_name' => $product_name,
                 ':quantity' => $quantity,
-                ':price' => $total_amount / $quantity 
+                ':price' => $total_amount / max(1, $quantity) 
             ];
             $this->db->query($query, $params);
 
@@ -44,8 +44,7 @@ class OrderModel {
     public function getAllOrders() {
         try {
             $query = "SELECT * FROM orders ORDER BY order_date DESC";
-            $result = $this->db->query($query);
-            return $result->fetchAll(PDO::FETCH_ASSOC);
+            return $this->db->query($query)->fetchAll(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
             error_log("Error fetching orders: " . $e->getMessage());
             return [];
