@@ -12,7 +12,7 @@ require_once 'Controllers/AuthController.php';
 $routes = new Router();
 
 // dashboard
-$routes->get('/dashboard', [DashboardController::class, 'index']);
+$routes->get('/', [DashboardController::class, 'index']);
 
 // Homepage
 $routes->get('/pages', [ShowproductController::class, 'index']);
@@ -20,9 +20,7 @@ $routes->get('/pages/products', [ShowproductController::class, 'index']);
 $routes->get('/pages/details', [ShowproductController::class, 'show']);
 $routes->get('/pages/prosuct_ratings', [ShowproductController::class, 'ratings']);
 
-$routes->get('/', [AuthController::class, 'login']);
-$routes->post('/auth/login', [AuthController::class, 'login']);
-$routes->post('/auth/logout', [AuthController::class, 'logout']);
+
 
 // user
 $routes->get('/user', [UserController::class, 'index']);

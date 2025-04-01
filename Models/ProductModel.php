@@ -21,8 +21,7 @@ class ProductModel {
                 products.price, 
                 products.date, 
                 products.image,
-                products.category_id,
-                products.stock_status,   
+                products.category_id,  
                 categories.name AS category_name
                 FROM products 
                 LEFT JOIN categories ON products.category_id = categories.category_id");
@@ -45,15 +44,14 @@ class ProductModel {
 
     function createProduct($data) {
         try {
-            $stmt = "INSERT INTO products (name, price, category_id, date, image, stock_status) 
-                     VALUES (:name, :price, :category_id, :date, :image, :stock_status)";
+            $stmt = "INSERT INTO products (name, price, category_id, date, image) 
+                     VALUES (:name, :price, :category_id, :date, :image)";
             $this->db->query($stmt, [
                 'name' => $data['name'],
                 'price' => $data['price'],
                 'category_id' => $data['category_id'],
                 'date' => $data['date'],
-                'image' => $data['image'],
-                'stock_status' => isset($data['stock_status']) ? $data['stock_status'] : 1, // Default to in stock
+                'image' => $data['image']
             ]);
             return true;
         } catch (Exception $e) {
@@ -89,16 +87,9 @@ class ProductModel {
                 'id' => $data['id']
             ];
             
-            // Only include image in the update if it's provided
             if (!empty($data['image'])) {
                 $stmt .= ", image = :image";
                 $params['image'] = $data['image'];
-            }
-            
-            // Include stock status in the update
-            if (isset($data['stock_status'])) {
-                $stmt .= ", stock_status = :stock_status";
-                $params['stock_status'] = $data['stock_status'];
             }
             
             $stmt .= " WHERE id = :id";
@@ -123,34 +114,18 @@ class ProductModel {
     
     function deleteProduct($id){
         try {
+            $stmt = "DELETE FROM stock WHERE product_id = :id";
+            $this->db->query($stmt, ['id' => $id]);
+    
             $stmt = "DELETE FROM products WHERE id = :id";
             $this->db->query($stmt, ['id' => $id]);
+    
             return true;
         } catch (Exception $e) {
             error_log("Error deleting product: " . $e->getMessage());
             return false;
         }
     }
-
-
-    // Add this method to your ProductModel class
-    // public function getProductForOrder($id) {
-    //     try {
-    //         $query = "SELECT id, name, price, image, stock FROM products WHERE id = :id";
-    //         $result = $this->db->query($query, ['id' => $id]);
-    //         $product = $result->fetch();
-            
-    //         if ($product) {
-    //             $product['numericPrice'] = floatval(str_replace(['$', ','], '', $product['price']));
-    //             return $product;
-    //         }
-    //         return null;
-    //     } catch (Exception $e) {
-    //         error_log("Error getting product for order: " . $e->getMessage());
-    //         return null;
-    //     }
-    // }
     
 }
 ?>
-

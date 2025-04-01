@@ -19,7 +19,7 @@
 
             <div>
                 <a
-                  href="/dashboard"
+                  href="/"
                   class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">

@@ -6,7 +6,7 @@ class OrderController extends BaseController {
     private $orderModel;
 
     public function __construct() {
-        $this->orderModel = new OrderModel(new Database()); 
+        $this->orderModel = new OrderModel();
     }
 
     public function index() {
@@ -15,40 +15,24 @@ class OrderController extends BaseController {
     }
 
     public function process() {
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            header("Content-Type: application/json");
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $orderData = [
+                'user_id' => $_POST['user_id'], 
+                'product_id' => $_POST['product_id'],
+                'quantity' => $_POST['quantity'],
+                'total_price' => $_POST['total_price'],
+                'order_status' => 'pending',
+                'order_date' => date('Y-m-d')
+            ];
 
-            // Validate inputs
-            $productName = $_POST['product_name'] ?? null;
-            $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 0;
-            $price = isset($_POST['price']) ? (float)$_POST['price'] : 0.0;
+            $orderID = $this->orderModel->insertOrder($orderData);
 
-            if (!$productName || $quantity <= 0 || $price <= 0) {
-                echo json_encode([
-                    "success" => false,
-                    "message" => "Invalid product details."
-                ]);
-                exit;
-            }
-
-            $total = $quantity * $price;
-            $user_id = $_SESSION['user_id'] ?? 1; 
-            $order_date = date('Y-m-d');
-
-            $result = $this->orderModel->insertOrder($user_id, $order_date, $total, $productName, $quantity);
-
-            if ($result === true) {
-                echo json_encode([
-                    "success" => true,
-                    "message" => "Order placed successfully for $productName (Quantity: $quantity, Total: $$total)!"
-                ]);
+            if ($orderID) {
+                echo json_encode(['success' => true, 'orderID' => $orderID]);
             } else {
-                echo json_encode([
-                    "success" => false,
-                    "message" => $result
-                ]);
+                echo json_encode(['success' => false, 'message' => 'Failed to place order']);
             }
-            exit;
         }
     }
 }
+?>

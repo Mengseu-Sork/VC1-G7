@@ -123,6 +123,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <i class="fas fa-trash-alt mr-1" style="color: red"></i>
                                         </a>
 
+                                        <!-- Replace this line: -->
+                                        <!-- <a href="../Views/Products/show.php" -->
+
                                         <!-- With this: -->
                                         <a href="/pages/details?id=<?php echo htmlspecialchars($product['id']); ?>"
                                         class="block px-2 py-2 text-gray-700 flex items-center">
@@ -130,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         </a>
                                     </td>
                                     <div id="deleteProductModal<?= $product['id'] ?>"
-                                         class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+                                         class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50">
                                         <div class="bg-white p-6 rounded-lg shadow-lg w-96">
                                             <h2 class="text-lg font-semibold">Delete Product</h2>
                                             <p class="mt-4">Are you sure you want to delete this product?</p>
@@ -140,14 +143,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                         class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 transition duration-200">
                                                     Cancel
                                                 </button>
-                                                
-                                                <form action="/products/delete?id=<?= $product['id'] ?>" method="POST">
-                                                        <input type="hidden" name="id" value="<?= $row['id'] ?>">
-                                                        <button type="submit"
-                                                            class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
-                                                            Delete
-                                                        </button>
-                                                </form>
+
+                                                <a href="/products/delete?id=<?= $product['id'] ?>" 
+                                                   class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200 inline-block text-center">
+                                                    Delete
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -318,7 +318,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 </script>
-<<<<<<< HEAD
-
-=======
->>>>>>> d14297b7cbbc4c1a9c85f91d7b5c394df3bb3ff5
