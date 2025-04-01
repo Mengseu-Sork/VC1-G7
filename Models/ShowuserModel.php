@@ -14,5 +14,4 @@ class ShowuserModel
     {
         return $this->pdo->query('SELECT * FROM users ORDER BY id DESC')->fetchAll();
     }
- 
 }
