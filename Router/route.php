@@ -7,6 +7,7 @@ require 'Controllers/ProductController.php';
 require 'Controllers/ShowproductController.php';
 require_once 'Controllers/OrderController.php';
 require_once 'Controllers/AuthController.php';
+require_once 'controllers/StockController.php';
 
 
 $routes = new Router();
@@ -19,6 +20,12 @@ $routes->get('/pages', [ShowproductController::class, 'index']);
 $routes->get('/pages/products', [ShowproductController::class, 'index']);
 $routes->get('/pages/details', [ShowproductController::class, 'show']);
 $routes->get('/pages/prosuct_ratings', [ShowproductController::class, 'ratings']);
+
+//stock
+$routes->get('/stock', [StockController::class, 'index']);
+$routes->get('/pages/stock', [StockController::class, 'show']);
+$routes->get('/pages/detail', [StockController::class, 'detailsProduct']);
+
 
 
 
