@@ -20,7 +20,7 @@
             <div>
                 <a
                   href="/"
-                  class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                  class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
                     <i class="fas fa-home icon text-blue-500 dark:text-light"></i>
@@ -106,8 +106,8 @@
               <!-- Authentication links -->
               <div>
                 <a
-                  href="#"
-                  class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                  href="/Views/pages/order.php"
+                  class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
 
                 >
                   <span aria-hidden="true">
