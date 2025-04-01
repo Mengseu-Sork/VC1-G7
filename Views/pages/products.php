@@ -88,9 +88,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
         <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+            
             <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
                 <div class="shadow-lg rounded-lg p-6 mb-16 border-2 border-gray-200 dark:border-primary-darker transition duration-300"
                     :style="{ backgroundColor: bgColor }">
+                    
                     <h1 class="text-left ml-4 text-3xl font-bold">Products</h1>
                     <div class="flex flex-wrap gap-8 p-4 justify-between">
                         <div class="flex w-full md:w-auto gap-2 relative">
@@ -106,12 +108,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <select id="category-filter"
                             class="pr-5 pl-2 border border-gray-300 rounded-md transition duration-300 mr-1 bg-white dark:bg-darker border-b dark:border-primary-darker"
                             onchange="filterByCategory(this.value)">
+                            
                             <option value="">All Products</option>
                             <?php foreach ($categories_name as $key => $value): ?>
                                 <option value="<?= $key ?>"><?= $value ?></option>
                             <?php endforeach; ?>
                         </select>
+                          
+                        
                     </div>
+                    <div class="flex justify-end mb-4">  
+                                <i class="fas fa-shopping-cart text-xl text-green-600 mr-2"></i>  
+                                <!-- <span class="text-lg">Shopping Cart</span>   -->
+                                
+                        </div>
                     <div class="container flex flex-wrap gap-8 p-4" id="productContainer">
                         <?php foreach ($products as $product): ?>
                             <?php $isInStock = ($product['stock'] ?? 'In stock') === 'In stock'; ?>
@@ -148,11 +158,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <i class="fas fa-shopping-cart mr-2" style="color: orange;"></i> ORDER
                                 </button>
                             </div>
-                        <?php endforeach; ?>
+                            <?php endforeach; ?>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 
     <!-- Modal with Form (Added Product Name) -->
@@ -196,6 +207,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button id="closeSuccess" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-300">OK</button>
         </div>
     </div>
+
+
 
     <!-- Updated JavaScript -->
     <script>
