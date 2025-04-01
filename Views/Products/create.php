@@ -130,8 +130,5 @@
                 event.preventDefault();
             }
         });
-
-        
-
-        
+ 
     </script>

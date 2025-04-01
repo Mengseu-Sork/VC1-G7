@@ -1,5 +1,5 @@
 
-<div class="modal fade" id="deleteModal<?= $row['id'] ?>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteModal<?= $product['id'] ?>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,7 +10,7 @@
                 Are you sure you want to delete?
             </div>
             <div class="modal-footer">
-                <form action="/products/delete?id=<?= $row['id']?>" method="POST">
+                <form action="/products/delete?id=<?= $product['id']?>" method="POST">
                     <button type="submit" class="btn btn-danger">Delete</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 </form>

@@ -41,7 +41,7 @@ class CategoryModel {
         $this->db->query("INSERT INTO categories (name, description) VALUES (:name, :description)",
         [
             'name' => $data['name'],
-            'description' => $data['descrption'],
+            'description' => $data['description'],
         ]);
     }
 
@@ -61,7 +61,7 @@ class CategoryModel {
     }
     function deleteCategories($id)
     {
-        $this->db->query("DELETE FROM categories WHERE category_id = :category_id", ['category_id' => $id]);
+        return $this->db->query("DELETE FROM categories WHERE category_id = :category_id", ['category_id' => $id]);
     }
 
 }

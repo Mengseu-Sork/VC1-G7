@@ -99,3 +99,31 @@ function filterByCategory(category) {
 //           }).catch(error => console.error("Error:", error));
 //     }
 // });
+
+document.getElementById("placeOrderBtn").addEventListener("click", function() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+
+    fetch("Router.php?route=placeOrder", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            user_id: 1, // Replace with logged-in user ID
+            cart: cart
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert("Order placed successfully! Order ID: " + data.order_id);
+            localStorage.removeItem("cart"); // Clear cart after order
+        } else {
+            alert("Order failed. Try again.");
+        }
+    })
+    .catch(error => console.error("Error:", error));
+});
