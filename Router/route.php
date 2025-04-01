@@ -22,9 +22,9 @@ $routes->get('/pages/details', [ShowproductController::class, 'show']);
 $routes->get('/pages/prosuct_ratings', [ShowproductController::class, 'ratings']);
 
 //stock
-$routes->get('/stock', [StockController::class, 'index']);
-$routes->get('/pages/stock', [StockController::class, 'show']);
-$routes->get('/pages/detail', [StockController::class, 'detailsProduct']);
+$routes->get('/pages', [ShowproductController::class, 'show']);
+$routes->get('/pages/stock', [StockController::class, 'index']);
+$routes->get('/pages/detail', [StockController::class, 'show']);
 
 
 
