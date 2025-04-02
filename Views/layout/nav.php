@@ -280,7 +280,6 @@
                             </svg>
                           </button>
 
-
                           <!-- Color button -->
                           <button
                           @click="openSettingsPanel"
