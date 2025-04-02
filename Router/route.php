@@ -4,10 +4,10 @@ require_once 'controllers/UserController.php';
 require_once 'Controllers/DashboardController.php';
 require_once 'Controllers/CategoryController.php';
 require 'Controllers/ProductController.php';
-// require 'Controllers/AdminController.php';
 require 'Controllers/ShowproductController.php';
-require 'Controllers/ShowuserController.php';
-require 'Controllers/NotificationController.php'; // Add this line
+require_once 'Controllers/OrderController.php';
+require_once 'Controllers/AuthController.php';
+
 
 $routes = new Router();
 
@@ -20,9 +20,7 @@ $routes->get('/pages/products', [ShowproductController::class, 'index']);
 $routes->get('/pages/details', [ShowproductController::class, 'show']);
 $routes->get('/pages/prosuct_ratings', [ShowproductController::class, 'ratings']);
 
-// $routes->get('/auth/login', [AdminController::class, 'login']);
-// $routes->post('/auth/login', [AdminController::class, 'login']);
-// $routes->post('/auth/logout', [AdminController::class, 'logout']);
+
 
 // user
 $routes->get('/user', [UserController::class, 'index']);
@@ -44,21 +42,9 @@ $routes->get('/products/delete', [ProductController::class, 'delete']);
 $routes->get('/products/details', [ProductController::class, 'show']);
 $routes->get('/products/prosuct_ratings', [ProductController::class, 'ratings']);
 
-// Add these new routes for stock status updates
-$routes->post('/products/update-stock', [ProductController::class, 'updateStock']);
-$routes->post('/products/update-bulk-stock', [ProductController::class, 'updateBulkStock']);
-
 $routes->get('/categories', [CategoryController::class, 'index']);
-$routes->get('/categories/create', [CategoryController::class, 'create']);
-$routes->get('/categories/store', [CategoryController::class, 'store']);
-$routes->get('/categories/edit', [CategoryController::class, 'edit']);
-$routes->get('/categories/update', [CategoryController::class, 'update']);
-$routes->get('/categories/delete', [CategoryController::class, 'delete']);
 
-// Add notification routes
-$routes->get('/notifications', [NotificationController::class, 'getNotifications']);
-$routes->post('/notifications/mark-as-read', [NotificationController::class, 'markAsRead']);
-$routes->post('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead']);
+$routes->get('/pages/order', [OrderController::class, 'index']); 
+$routes->post('/products/order', [OrderController::class, 'process']);
 
 $routes->dispatch();
-

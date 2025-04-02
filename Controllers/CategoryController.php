@@ -21,35 +21,42 @@ class CategoryController extends BaseController {
         $this->view('categories/create');
     }
 
-    function store()
-    {
+    function store() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = [
                 'name' => $_POST['name'],
-                'descript' => $_POST['descript']
+                'description' => $_POST['description']
             ];
             $this->model->createCategories($data);
             $this->redirect('/categories');
         }
     }
+    
 
     function edit($id)
     {
-        $categories = $this->model->getCategories($id);
-        $this->view('categories/edit',['categories'=>$categories]);
+        $category = $this->model->getCategories($id); 
+        $this->view('categories/edit', ['category' => $category]); 
+    }
 
-    }
-    function update($id)
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $data = [
-                'name' => $_POST['name'],
-                'descript' => $_POST['descript']
-            ];
-            $this->model->updateCategories($id, $data);
-            $this->redirect('/categories');
+function update()
+{
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            die("Category ID is missing.");
         }
+
+        $data = [
+            'name' => $_POST['name'],
+            'description' => $_POST['description']
+        ];
+        
+        $this->model->updateCategories($id, $data);
+        $this->redirect('/categories');
     }
+}
+
 
     function destroy($id)
     {

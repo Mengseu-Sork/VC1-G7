@@ -37,15 +37,14 @@
                                     <td class="px-6 py-4"><?php echo htmlspecialchars($category['name']); ?></td>
                                     <td class="px-6 py-4"><?php echo htmlspecialchars($category['description']); ?></td>
                                     <td class="flex py-3 px-6 font-semibold justify-center relative">
-                                        <a href="/categories/edit?id=<?= $category['category_id'] ?>"
-                                           class="block px-2 py-2 text-gray-700 flex items-center">
+                                        <a href="/categories/edit?id=<?= htmlspecialchars($category['category_id']) ?>"
+                                        class="block px-2 py-2 text-gray-700 flex items-center">
                                             <i class="far fa-edit mr-1" style="color: green;"></i>
                                         </a>
-
-                                        <a href="javascript:void(0)" onclick="openModal('deleteCategoriesModal<?= $category['category_id'] ?>')"
+                                        <button onclick="openModal('deleteCategoriesModal<?= $category['category_id'] ?>')" 
                                                 class="block text-left px-2 py-2 text-gray-700 flex items-center">
-                                            <i class="fas fa-trash-alt mr-1" style="color: red"></i>
-                                        </a>
+                                                <i class="fas fa-trash-alt mr-1" style="color: red"></i>
+                                        </button>
 
                                     </td>
                                     <div id="deleteCategoriesModal<?= $category['category_id'] ?>"
