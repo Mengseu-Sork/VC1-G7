@@ -30,9 +30,8 @@
             </div>
         <?php endif; ?>
 
-        <!-- Login Form -->
+
         <form action="/auth/login" method="post" class="space-y-4">
-            <!-- Email -->
             <div>
                 <label for="email" class="block font-medium">Email</label>
                 <div class="relative mt-1">
@@ -42,7 +41,6 @@
                 </div>
             </div>
 
-            <!-- Password -->
             <div>
                 <label for="password" class="block font-medium">Password</label>
                 <div class="relative mt-1">
@@ -54,19 +52,14 @@
                     </button>
                 </div>
             </div>
-
-            <!-- Remember Me & Forgot Password -->
             <div class="flex justify-between items-center text-sm mt-3">
                 <a href="/Views/auth/forword_password.php" class="text-blue-500 hover:underline pl-4 ml-64">Forgot Password?</a>
             </div>
-
-            <!-- Login Button -->
             <button type="submit" class="w-full py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">
                 Login
             </button>
         </form>
 
-        <!-- Register Link -->
         <div class="text-center text-gray-600">
             <p>Don't have an account? <a href="/Views/auth/register.php" class="text-blue-500 hover:underline">Register</a></p>
         </div>
