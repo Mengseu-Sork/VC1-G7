@@ -7,9 +7,9 @@ $categories_name = [
     'Drinks' => 'Drinks Products'
 ];
 
-$productsPerRow = 5; // Number of products per row
-$rowsPerClick = 2; // Show 2 more rows per click
-$initialRows = 2; // Initially displayed rows
+$productsPerRow = 5;
+$rowsPerClick = 2;
+$initialRows = 2;
 $initialProductsToShow = $productsPerRow * $initialRows;
 $totalProducts = count($products);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
