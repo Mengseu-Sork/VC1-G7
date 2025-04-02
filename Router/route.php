@@ -6,12 +6,22 @@ require_once 'Controllers/CategoryController.php';
 require 'Controllers/ProductController.php';
 require 'Controllers/ShowproductController.php';
 require 'Controllers/StockController.php';
+require 'Controllers/AuthController.php';
+
 
 
 $routes = new Router();
 
 // dashboard
-$routes->get('/', [DashboardController::class, 'index']);
+$routes->get('/Dashboard', [DashboardController::class, 'index']);
+
+
+// Authentication routes
+$routes->get('/', [AuthController::class, 'login']);
+$routes->post('/auth/login', [AuthController::class, 'login']);
+$routes->get('/auth/register', [AuthController::class, 'register']);
+$routes->post('/auth/register', [AuthController::class, 'register']);
+$routes->get('/auth/logout', [AuthController::class, 'logout']);
 
 // Homepage
 $routes->get('/pages', [ShowproductController::class, 'index']);

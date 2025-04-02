@@ -32,7 +32,8 @@ class UserController extends BaseController
                 'FirstName' => $_POST['FirstName'],
                 'LastName' => $_POST['LastName'],
                 'email' => $_POST['email'],
-                'password' => $_POST['password'],
+                'phone' => $_POST['phone'],
+                'password' => $_POST['password']
             ];
             $this->model->createUser($data);
             $this->redirect('/user');
@@ -44,48 +45,42 @@ class UserController extends BaseController
         $user = $this->model->getUser($id);
         $this->view('user/edit',['user'=>$user]);
     }
+
+
+    
     function update($id)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $user = $this->model->getUser($id);
-            $imagePath = $user['image'];
-    
-            // Check if a new image is uploaded
-            if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
-                // Define the upload directory
-                $target_dir = "Assets/images/uploads/";
-    
-                // Create the directory if it doesn't exist
-                if (!is_dir($target_dir)) {
-                    mkdir($target_dir, 0777, true);
+            if (!empty($_FILES['image']['name'])) {
+                $targetDir = "Assets/images/uploads/";
+                $newFileName = time() . "_" .basename($_FILES["image"]["name"]);
+                $targetFile = $targetDir . $newFileName;
+
+                if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
+                    $profileImage = $newFileName;
+                } else {
+                    $profileImage = $_POST['old_image'];
                 }
-    
-                // Generate a unique name for the image to prevent overwriting
-                $imagePath = $target_dir . time() . '-' . basename($_FILES['image']['name']);
-    
-                // Move the uploaded file to the target directory
-                if (!move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
-                    echo "Error: Failed to upload image.";
-                    return;
-                }
+            } else {
+                $profileImage = $_POST['old_image'];
             }
-    
-            // Prepare the data to update
+
             $data = [
-                'image' => $imagePath,
+                'image' => $profileImage,
                 'FirstName' => $_POST['FirstName'],
                 'LastName' => $_POST['LastName'],
                 'email' => $_POST['email'],
-                'password' => $_POST['password'], // Ensure password is securely handled
+                'phone' => $_POST['phone'],
+                'password' => $_POST['password'],
             ];
-    
-            // Update the user in the database
+
             $this->model->updateUser($id, $data);
-    
-            // Redirect to user listing page after update
             $this->redirect('/user');
         }
     }
+
+
+      
 
 
     function destroy($id)

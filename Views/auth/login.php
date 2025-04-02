@@ -9,7 +9,12 @@
 </head>
 <body class="flex flex-col items-center justify-center min-h-screen bg-cover bg-center" 
       style="background-image: url('../../../Assets/images/photo_2025-03-12_07-22-11.jpg');">
-    
+      <?php if (isset($_SESSION['error'])): ?>
+    <div class="flex items-center p-3 text-red-600 bg-red-100 rounded-md">
+        <i class="fas fa-exclamation-circle mr-2"></i>
+        <span><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></span>
+    </div>
+    <?php endif; ?>
     <div class="w-full max-w-md p-8 space-y-6 bg-white shadow-md rounded-lg">
         <div class="text-center">
             <img src="../../../Assets/images/FX12 LOGO.png" alt="XING FU CHA Logo" class="w-24 mx-auto">
@@ -42,7 +47,7 @@
                 <label for="password" class="block font-medium">Password</label>
                 <div class="relative mt-1">
                     <i class="fas fa-lock absolute left-3 top-3 text-gray-400"></i>
-                    <input type="password" id="password" name="password_hash" placeholder="Enter your password" required 
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required 
                         class="w-full px-10 py-2 border rounded-md pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <button type="button" id="togglePassword" class="absolute right-3 top-3 text-gray-500">
                         <i class="fas fa-eye"></i>
@@ -52,7 +57,7 @@
 
             <!-- Remember Me & Forgot Password -->
             <div class="flex justify-between items-center text-sm mt-3">
-                <a href="/forgot-password" class="text-blue-500 hover:underline pl-4 ml-64">Forgot Password?</a>
+                <a href="/Views/auth/forword_password.php" class="text-blue-500 hover:underline pl-4 ml-64">Forgot Password?</a>
             </div>
 
             <!-- Login Button -->

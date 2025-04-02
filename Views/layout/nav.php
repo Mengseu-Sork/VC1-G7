@@ -19,7 +19,7 @@
 
             <div>
                 <a
-                  href="/"
+                  href="/Dashboard"
                   class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
@@ -153,7 +153,7 @@
               </div>
               <div>
                 <a
-                  href="/auth/logout"
+                  href="/Views/auth/login.php"
                   class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
@@ -289,6 +289,7 @@
                           <span class="sr-only">Open settings panel</span>
                             <i class="fas fa-palette" style="font-size: 1.75rem;"></i>
                           </button>
+                          <?php require_once './Views/profile/profile.php'?>
                       </nav>
                   </div>
           </header>           
