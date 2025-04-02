@@ -32,15 +32,12 @@
 
         <!-- Registration Form -->
         <form action="/auth/register" method="post" class="space-y-4">
-            <!-- First Name -->
             <div class="flex justify-between gap-5">
                 <div class="flex-1">
                     <label for="first_name" class="block font-medium mb-1">First Name</label>
                     <input type="text" id="first_name" name="FirstName" placeholder="Enter your first name" required 
                         class="w-full px-5 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
-
-                <!-- Last Name -->
                 <div class="flex-1">
                     <label for="last_name" class="block font-medium mb-1">Last Name</label>
                     <input type="text" id="last_name" name="LastName" placeholder="Enter your last name" required 
