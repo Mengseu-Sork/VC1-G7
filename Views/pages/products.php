@@ -7,6 +7,11 @@ $categories_name = [
     'Drinks' => 'Drinks Products'
 ];
 
+$productsPerRow = 5; // Number of products per row
+$rowsPerClick = 2; // Show 2 more rows per click
+$initialRows = 2; // Initially displayed rows
+$initialProductsToShow = $productsPerRow * $initialRows;
+$totalProducts = count($products);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Content-Type: application/json");
 
@@ -50,47 +55,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit;
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Listing</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        .product-image-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        .view-more-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 209, 129, 0.58);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            border-radius: 5px;
-            pointer-events: none;
-        }
-        .product-image-container:hover .view-more-overlay {
-            opacity: 1;
-        }
-    </style>
 </head>
 <body>
     <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
         <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+            
             <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
                 <div class="shadow-lg rounded-lg p-6 mb-16 border-2 border-gray-200 dark:border-primary-darker transition duration-300"
                     :style="{ backgroundColor: bgColor }">
+                    
                     <h1 class="text-left ml-4 text-3xl font-bold">Products</h1>
                     <div class="flex flex-wrap gap-8 p-4 justify-between">
                         <div class="flex w-full md:w-auto gap-2 relative">
@@ -106,22 +79,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <select id="category-filter"
                             class="pr-5 pl-2 border border-gray-300 rounded-md transition duration-300 mr-1 bg-white dark:bg-darker border-b dark:border-primary-darker"
                             onchange="filterByCategory(this.value)">
+                            
                             <option value="">All Products</option>
                             <?php foreach ($categories_name as $key => $value): ?>
                                 <option value="<?= $key ?>"><?= $value ?></option>
                             <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="container flex flex-wrap gap-8 p-4" id="productContainer">
-                        <?php foreach ($products as $product): ?>
-                            <?php $isInStock = ($product['stock'] ?? 'In stock') === 'In stock'; ?>
-                            <div class="w-48 h-76 border border-gray-300 p-4 rounded-lg shadow-md transition duration-300 flex flex-col items-center border-2 border-gray-200 dark:border-primary-darker"
-                                data-category="<?= htmlspecialchars($product['category_name'] ?? 'Uncategorized') ?>"
+                        </select>                      
+                    </div>                
+                <div class="container flex flex-wrap gap-8 p-4 justify-center" id="productContainer">
+                    <?php 
+                    $index = 0;
+                    foreach ($products as $product): 
+                        $hiddenClass = ($index >= $initialProductsToShow) ? 'hidden product-hidden' : '';
+                        $stockStatus = isset($product["stock_status"]) ? $product["stock_status"] : 1;
+                    ?>
+                    <?php $isInStock = ($product['stock'] ?? 'In stock') === 'In stock'; ?>
+                        <div class="w-48 h-72 bg-white border border-gray-300 p-4 rounded-lg shadow-md transition duration-300 flex flex-col items-center bg-white dark:bg-darker border-b dark:border-primary-darker <?= $hiddenClass ?>" data-category="<?= $product['category_name'] ?>"
+                        data-category="<?= htmlspecialchars($product['category_name'] ?? 'Uncategorized') ?>"
                                 data-name="<?= htmlspecialchars($product['name'] ?? '') ?>"
                                 data-price="<?= htmlspecialchars($product['price'] ?? 0.00) ?>"
                                 data-stock-quantity="<?= htmlspecialchars($product['stock_quantity'] ?? 0) ?>">
-                                <!-- Product Picture -->
-                                <div class="product-image-container flex justify-center">
+                            <div class="product-image-container flex justify-center">
                                     <a href="/pages/details?id=<?= htmlspecialchars($product['id'] ?? '') ?>">
                                         <img src="../Assets/images/uploads/<?= htmlspecialchars($product['image'] ?? 'default.jpg') ?>"
                                             alt="<?= htmlspecialchars($product['name'] ?? '') ?>"
@@ -129,15 +107,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <div class="view-more-overlay">View More</div>
                                     </a>
                                 </div>
-                                <!-- Product Name Below Picture -->
                                 <h4 class="text-lg font-bold mt-2 text-black"><?= htmlspecialchars($product['name'] ?? 'Unnamed Product') ?></h4>
-                                <p class="text-gl font-semibold mt-2 mb-2 <?= $isInStock ? 'text-green-600' : 'text-red-600' ?>">
+                                <p class="text-gl font-semibold mt-2 mb-2">
                                     <?= htmlspecialchars($product['stock'] ?? 'In stock') ?>
                                 </p>
                                 <p class="text-gl font-semibold text-yellow-600">
                                     $<?= number_format($product['price'] ?? 0.00, 2) ?>
                                 </p>
-                                <button class="mt-3 border px-8 py-2 <?= $isInStock ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-400 cursor-not-allowed' ?> text-white font-semibold rounded-md transition show-order-modal"
+                                <button class="mt-1 border px-8 py-2 <?= $isInStock ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-400 cursor-not-allowed' ?> text-white font-semibold rounded-md transition show-order-modal"
                                     data-product-image="<?= htmlspecialchars($product['image'] ?? 'default.jpg') ?>"
                                     data-product-id="<?= htmlspecialchars($product['id'] ?? '') ?>"
                                     data-product-name="<?= htmlspecialchars($product['name'] ?? '') ?>"
@@ -145,14 +122,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     data-stock="<?= htmlspecialchars($product['stock'] ?? 'In stock') ?>"
                                     data-stock-quantity="<?= htmlspecialchars($product['stock_quantity'] ?? 0) ?>"
                                     <?= $isInStock ? '' : 'disabled' ?>>
-                                    <i class="fas fa-shopping-cart mr-2" style="color: orange;"></i> ORDER
+                                    <i class="fas fa-shopping-cart mr-1" style="color: orange;"></i> ORDER
                                 </button>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
+                        </div>
+                    <?php 
+                        $index++;
+                    endforeach; 
+                    ?>
+                </div>
+
+                <!-- Buttons Container -->
+                <div class="flex justify-center mt-6 gap-4" id="buttonContainer">
+                    <button onclick="showMoreProducts()" id="seeMoreButton" class="px-6 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition">
+                        See More
+                    </button>
+                    <button onclick="resetProducts()" id="backButton" class="px-6 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-gray-600 transition hidden">
+                        Back
+                    </button>
                 </div>
             </div>
-        </div>
     </div>
 
     <!-- Modal with Form (Added Product Name) -->
@@ -197,146 +185,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 
-    <!-- Updated JavaScript -->
-    <script>
-        function filterByCategory(category) {
-            const productCards = document.querySelectorAll("#productContainer div[data-category]");
-            productCards.forEach(card => {
-                const productCategory = card.getAttribute("data-category").toLowerCase();
-                if (!category || productCategory === category.toLowerCase()) {
-                    card.style.display = "";
-                } else {
-                    card.style.display = "none";
-                }
-            });
-        }
-
-        function searchProducts() {
-            let input = document.getElementById("searchInput").value.toLowerCase().trim();
-            let productContainer = document.getElementById("productContainer");
-            let products = productContainer.getElementsByClassName("w-48");
-            for (let product of products) {
-                let name = product.getAttribute("data-name").toLowerCase();
-                let price = product.getAttribute("data-price").toLowerCase();
-                if (name.includes(input) || price.includes(input)) {
-                    product.style.display = "";
-                } else {
-                    product.style.display = "none";
-                }
-            }
-            if (input === "") {
-                for (let product of products) {
-                    product.style.display = "";
-                }
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const modal = document.getElementById('orderModal');
-            const modalImage = document.getElementById('modalProductImage');
-            const modalPrice = document.getElementById('modalProductPrice');
-            const modalStockStatus = document.getElementById('modalStockStatus');
-            const modalProductNameDisplay = document.getElementById('modalProductNameDisplay');
-            const quantityInput = document.getElementById('quantity');
-            const totalPriceSpan = document.getElementById('totalPrice');
-            const cancelBtn = document.getElementById('cancelBtn');
-            const orderBtn = document.getElementById('orderBtn');
-            const modalProductName = document.getElementById('modalProductName');
-            const modalPriceInput = document.getElementById('modalPrice');
-            const orderForm = document.getElementById('orderForm');
-            const successMessage = document.getElementById('successMessage');
-            const closeSuccess = document.getElementById('closeSuccess');
-            const increaseQty = document.getElementById("increaseQty");
-            const decreaseQty = document.getElementById("decreaseQty");
-
-            let currentPrice = 0;
-            let currentStock = '';
-            let currentStockQuantity = 0;
-
-            function updateTotalPrice() {
-                const quantity = parseInt(quantityInput.value) || 1;
-                totalPriceSpan.textContent = (currentPrice * quantity).toFixed(2);
-            }
-
-            document.querySelectorAll('.show-order-modal').forEach(button => {
-                button.addEventListener('click', function () {
-                    const productName = this.getAttribute('data-product-name');
-                    const productImage = this.getAttribute('data-product-image');
-                    currentPrice = parseFloat(this.getAttribute('data-product-price')) || 0;
-                    currentStock = this.getAttribute('data-stock');
-                    currentStockQuantity = parseInt(this.getAttribute('data-stock-quantity')) || 0;
-
-                    modalProductName.value = productName;
-                    modalPriceInput.value = currentPrice;
-                    modalImage.src = `../Assets/images/uploads/${productImage}`;
-                    modalImage.classList.remove('hidden');
-                    modalPrice.textContent = `$${currentPrice.toFixed(2)}`;
-                    modalStockStatus.textContent = currentStock;
-                    modalStockStatus.className = `text-lg font-semibold mb-2 ${currentStock === 'In stock' ? 'text-green-600' : 'text-red-600'}`;
-                    modalProductNameDisplay.textContent = productName; // Populate product name in modal
-                    quantityInput.value = 1;
-                    updateTotalPrice();
-
-                    orderBtn.disabled = currentStock !== 'In stock';
-                    orderBtn.classList.toggle('bg-gray-400', currentStock !== 'In stock');
-                    orderBtn.classList.toggle('bg-blue-500', currentStock === 'In stock');
-                    modal.classList.remove('hidden');
-                });
-            });
-
-            quantityInput.addEventListener("input", function () {
-                let quantity = parseInt(quantityInput.value) || 1;
-                if (quantity < 1) quantity = 1;
-                if (currentStockQuantity > 0 && quantity > currentStockQuantity) quantity = currentStockQuantity;
-                quantityInput.value = quantity;
-                updateTotalPrice();
-            });
-
-            increaseQty.addEventListener("click", function () {
-                let quantity = parseInt(quantityInput.value) || 1;
-                if (currentStockQuantity > 0 && quantity >= currentStockQuantity) return;
-                quantityInput.value = quantity + 1;
-                updateTotalPrice();
-            });
-
-            decreaseQty.addEventListener("click", function () {
-                let quantity = parseInt(quantityInput.value) || 1;
-                if (quantity > 1) {
-                    quantityInput.value = quantity - 1;
-                    updateTotalPrice();
-                }
-            });
-
-            cancelBtn.addEventListener('click', function () {
-                modal.classList.add('hidden');
-                modalImage.classList.add('hidden');
-            });
-
-            orderForm.addEventListener('submit', function (e) {
-                e.preventDefault();
-                const quantity = parseInt(quantityInput.value) || 1;
-
-                if (currentStock !== 'In stock') {
-                    alert('Cannot order: Product is out of stock.');
-                    return;
-                }
-                if (quantity <= 0) {
-                    alert('Please enter a valid quantity greater than 0.');
-                    return;
-                }
-                if (currentStockQuantity > 0 && quantity > currentStockQuantity) {
-                    alert(`Cannot order: Only ${currentStockQuantity} items left in stock.`);
-                    return;
-                }
-
-                modal.classList.add('hidden');
-                successMessage.classList.remove('hidden');
-            });
-
-            closeSuccess.addEventListener('click', function () {
-                successMessage.classList.add('hidden');
-            });
-        });
-    </script>
 </body>
 </html>
+<script>
+    let productsPerRow = <?= $productsPerRow ?>; 
+    let rowsPerClick = <?= $rowsPerClick ?>;
+    let initialProductsToShow = <?= $initialProductsToShow ?>;
+    let shownProducts = initialProductsToShow;
+    const totalProducts = <?= $totalProducts ?>;
+</script>
+<script src="/Assets/js/product-pagination.js"></script>
