@@ -104,6 +104,7 @@ class ProductController extends BaseController {
                 $imageName = $product['image'];
             }
 
+
             $data = [
                 'id' => $id,
                 'name' => $_POST['name'],

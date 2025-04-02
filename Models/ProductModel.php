@@ -111,6 +111,7 @@ class ProductModel {
         }
     }
 
+
     function getCategoryById($category_id) {
         try {
             $query = "SELECT * FROM categories WHERE category_id = :category_id";

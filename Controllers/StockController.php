@@ -1,8 +1,7 @@
 <?php
-
 require_once 'Models/stockModel.php';
 require_once 'BaseController.php';
-
+require_once 'Models/productModel.php';
 class StockController extends BaseController
 {
     private $model;
@@ -29,14 +28,14 @@ class StockController extends BaseController
          $this->view('pages/detail', ['stock' => $stock]);
     }
     function detailsProduct($id)
-    {
-        $product = $this->model->detailsProduct($id);
-        if (!$product) {
-            $this->view('pages/detail', ['error' => "Product not found."]);
-            return;
-        }
-        $this->view('pages/detail', ['product' => $product]);
+{
+    $product = $this->model->detailsProduct($id);
+    if (!$product) {
+        $this->view('pages/detail', ['error' => "Product not found."]);
+        return;
     }
+    $this->view('pages/detail', ['stock' => $product]); // Use 'stock' key
+}
 
 }
 ?>
