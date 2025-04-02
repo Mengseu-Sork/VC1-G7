@@ -45,7 +45,7 @@ class AuthController{
             require_once 'views/auth/login.php';
         }
     }
-    
+
 
     // Logout method
     public function logout() {
