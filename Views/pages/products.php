@@ -55,32 +55,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit;
 }
 ?>
-    <style>
-        .product-image-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        .view-more-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 209, 129, 0.58);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            border-radius: 5px;
-            pointer-events: none;
-        }
-        .product-image-container:hover .view-more-overlay {
-            opacity: 1;
-        }
-    </style>
 </head>
 <body>
     <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
@@ -119,8 +93,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $hiddenClass = ($index >= $initialProductsToShow) ? 'hidden product-hidden' : '';
                         $stockStatus = isset($product["stock_status"]) ? $product["stock_status"] : 1;
                     ?>
-                        <div class="w-48 h-72 bg-white border border-gray-300 p-4 rounded-lg shadow-md transition duration-300 flex flex-col items-center bg-white dark:bg-darker border-b dark:border-primary-darker <?= $hiddenClass ?>" data-category="<?= $product['category_name'] ?>">
-                            
+                    <?php $isInStock = ($product['stock'] ?? 'In stock') === 'In stock'; ?>
+                        <div class="w-48 h-72 bg-white border border-gray-300 p-4 rounded-lg shadow-md transition duration-300 flex flex-col items-center bg-white dark:bg-darker border-b dark:border-primary-darker <?= $hiddenClass ?>" data-category="<?= $product['category_name'] ?>"
+                        data-category="<?= htmlspecialchars($product['category_name'] ?? 'Uncategorized') ?>"
+                                data-name="<?= htmlspecialchars($product['name'] ?? '') ?>"
+                                data-price="<?= htmlspecialchars($product['price'] ?? 0.00) ?>"
+                                data-stock-quantity="<?= htmlspecialchars($product['stock_quantity'] ?? 0) ?>">
                             <div class="product-image-container flex justify-center">
                                     <a href="/pages/details?id=<?= htmlspecialchars($product['id'] ?? '') ?>">
                                         <img src="../Assets/images/uploads/<?= htmlspecialchars($product['image'] ?? 'default.jpg') ?>"
@@ -129,17 +107,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <div class="view-more-overlay">View More</div>
                                     </a>
                                 </div>
-                            <h4 class="text-lg font-bold"><?= htmlspecialchars($product['name']) ?></h4>
-                            <?php if ($stockStatus == 1): ?>
-                                <p class="text-gl text-green-600 font-semibold"><span class="ml-4 bg-green-200 text-green-800 text-xs font-bold px-3 py-1 rounded-full">In Stock</span></p>
-                            <?php else: ?>
-                                <p class="text-gl text-red-600 font-semibold"><span class="ml-4 bg-red-200 text-red-800 text-xs font-bold px-3 py-1 rounded-full">Out of Stock</span></p>
-                            <?php endif; ?>
-                            <p class="text-gl font-semibold text-yellow-600"><?= htmlspecialchars($product['price']) ?>$</p>
-                            <button class="mt-3 border px-8 py-2 bg-blue-500 relative dark:bg-darker border-b dark:border-primary-darker hover:bg-blue-600 text-white font-semibold rounded-md transition" <?= $stockStatus == 0 ? 'disabled style="opacity: 0.6; cursor: not-allowed;"' : '' ?>>
-                                <i class="fas fa-shopping-cart mr-2" style="color: orange;"></i> ORDER
-                            </button>
-                            
+                                <h4 class="text-lg font-bold mt-2 text-black"><?= htmlspecialchars($product['name'] ?? 'Unnamed Product') ?></h4>
+                                <p class="text-gl font-semibold mt-2 mb-2">
+                                    <?= htmlspecialchars($product['stock'] ?? 'In stock') ?>
+                                </p>
+                                <p class="text-gl font-semibold text-yellow-600">
+                                    $<?= number_format($product['price'] ?? 0.00, 2) ?>
+                                </p>
+                                <button class="mt-1 border px-8 py-2 <?= $isInStock ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-400 cursor-not-allowed' ?> text-white font-semibold rounded-md transition show-order-modal"
+                                    data-product-image="<?= htmlspecialchars($product['image'] ?? 'default.jpg') ?>"
+                                    data-product-id="<?= htmlspecialchars($product['id'] ?? '') ?>"
+                                    data-product-name="<?= htmlspecialchars($product['name'] ?? '') ?>"
+                                    data-product-price="<?= htmlspecialchars($product['price'] ?? 0.00) ?>"
+                                    data-stock="<?= htmlspecialchars($product['stock'] ?? 'In stock') ?>"
+                                    data-stock-quantity="<?= htmlspecialchars($product['stock_quantity'] ?? 0) ?>"
+                                    <?= $isInStock ? '' : 'disabled' ?>>
+                                    <i class="fas fa-shopping-cart mr-1" style="color: orange;"></i> ORDER
+                                </button>
                         </div>
                     <?php 
                         $index++;
@@ -210,5 +194,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     let shownProducts = initialProductsToShow;
     const totalProducts = <?= $totalProducts ?>;
 </script>
-
 <script src="/Assets/js/product-pagination.js"></script>

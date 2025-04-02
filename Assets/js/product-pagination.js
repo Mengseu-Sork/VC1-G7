@@ -103,4 +103,141 @@ document.addEventListener("DOMContentLoaded", () => {
     updateButtonVisibility()
   }
   
-  
+  function filterByCategory(category) {
+    const productCards = document.querySelectorAll("#productContainer div[data-category]");
+    productCards.forEach(card => {
+        const productCategory = card.getAttribute("data-category").toLowerCase();
+        if (!category || productCategory === category.toLowerCase()) {
+            card.style.display = "";
+        } else {
+            card.style.display = "none";
+        }
+    });
+}
+
+function searchProducts() {
+    let input = document.getElementById("searchInput").value.toLowerCase().trim();
+    let productContainer = document.getElementById("productContainer");
+    let products = productContainer.getElementsByClassName("w-48");
+    for (let product of products) {
+        let name = product.getAttribute("data-name").toLowerCase();
+        let price = product.getAttribute("data-price").toLowerCase();
+        if (name.includes(input) || price.includes(input)) {
+            product.style.display = "";
+        } else {
+            product.style.display = "none";
+        }
+    }
+    if (input === "") {
+        for (let product of products) {
+            product.style.display = "";
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('orderModal');
+    const modalImage = document.getElementById('modalProductImage');
+    const modalPrice = document.getElementById('modalProductPrice');
+    const modalStockStatus = document.getElementById('modalStockStatus');
+    const modalProductNameDisplay = document.getElementById('modalProductNameDisplay');
+    const quantityInput = document.getElementById('quantity');
+    const totalPriceSpan = document.getElementById('totalPrice');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const orderBtn = document.getElementById('orderBtn');
+    const modalProductName = document.getElementById('modalProductName');
+    const modalPriceInput = document.getElementById('modalPrice');
+    const orderForm = document.getElementById('orderForm');
+    const successMessage = document.getElementById('successMessage');
+    const closeSuccess = document.getElementById('closeSuccess');
+    const increaseQty = document.getElementById("increaseQty");
+    const decreaseQty = document.getElementById("decreaseQty");
+
+    let currentPrice = 0;
+    let currentStock = '';
+    let currentStockQuantity = 0;
+
+    function updateTotalPrice() {
+        const quantity = parseInt(quantityInput.value) || 1;
+        totalPriceSpan.textContent = (currentPrice * quantity).toFixed(2);
+    }
+
+    document.querySelectorAll('.show-order-modal').forEach(button => {
+        button.addEventListener('click', function () {
+            const productName = this.getAttribute('data-product-name');
+            const productImage = this.getAttribute('data-product-image');
+            currentPrice = parseFloat(this.getAttribute('data-product-price')) || 0;
+            currentStock = this.getAttribute('data-stock');
+            currentStockQuantity = parseInt(this.getAttribute('data-stock-quantity')) || 0;
+
+            modalProductName.value = productName;
+            modalPriceInput.value = currentPrice;
+            modalImage.src = `../Assets/images/uploads/${productImage}`;
+            modalImage.classList.remove('hidden');
+            modalPrice.textContent = `$${currentPrice.toFixed(2)}`;
+            modalStockStatus.textContent = currentStock;
+            modalStockStatus.className = `text-lg font-semibold mb-2 ${currentStock === 'In stock' ? 'text-green-600' : 'text-red-600'}`;
+            modalProductNameDisplay.textContent = productName; // Populate product name in modal
+            quantityInput.value = 1;
+            updateTotalPrice();
+
+            orderBtn.disabled = currentStock !== 'In stock';
+            orderBtn.classList.toggle('bg-gray-400', currentStock !== 'In stock');
+            orderBtn.classList.toggle('bg-blue-500', currentStock === 'In stock');
+            modal.classList.remove('hidden');
+        });
+    });
+
+    quantityInput.addEventListener("input", function () {
+        let quantity = parseInt(quantityInput.value) || 1;
+        if (quantity < 1) quantity = 1;
+        if (currentStockQuantity > 0 && quantity > currentStockQuantity) quantity = currentStockQuantity;
+        quantityInput.value = quantity;
+        updateTotalPrice();
+    });
+
+    increaseQty.addEventListener("click", function () {
+        let quantity = parseInt(quantityInput.value) || 1;
+        if (currentStockQuantity > 0 && quantity >= currentStockQuantity) return;
+        quantityInput.value = quantity + 1;
+        updateTotalPrice();
+    });
+
+    decreaseQty.addEventListener("click", function () {
+        let quantity = parseInt(quantityInput.value) || 1;
+        if (quantity > 1) {
+            quantityInput.value = quantity - 1;
+            updateTotalPrice();
+        }
+    });
+
+    cancelBtn.addEventListener('click', function () {
+        modal.classList.add('hidden');
+        modalImage.classList.add('hidden');
+    });
+
+    orderForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const quantity = parseInt(quantityInput.value) || 1;
+
+        if (currentStock !== 'In stock') {
+            alert('Cannot order: Product is out of stock.');
+            return;
+        }
+        if (quantity <= 0) {
+            alert('Please enter a valid quantity greater than 0.');
+            return;
+        }
+        if (currentStockQuantity > 0 && quantity > currentStockQuantity) {
+            alert(`Cannot order: Only ${currentStockQuantity} items left in stock.`);
+            return;
+        }
+
+        modal.classList.add('hidden');
+        successMessage.classList.remove('hidden');
+    });
+
+    closeSuccess.addEventListener('click', function () {
+        successMessage.classList.add('hidden');
+    });
+});
