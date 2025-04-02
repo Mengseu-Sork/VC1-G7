@@ -86,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php endforeach; ?>
                         </select>                      
                     </div>                
-                <div class="container flex flex-wrap gap-8 p-4 justify-center" id="productContainer">
+                <div class="container flex flex-wrap gap-8 p-4 " id="productContainer">
                     <?php 
                     $index = 0;
                     foreach ($products as $product): 
@@ -94,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $stockStatus = isset($product["stock_status"]) ? $product["stock_status"] : 1;
                     ?>
                     <?php $isInStock = ($product['stock'] ?? 'In stock') === 'In stock'; ?>
-                        <div class="w-48 h-72 bg-white border border-gray-300 p-4 rounded-lg shadow-md transition duration-300 flex flex-col items-center bg-white dark:bg-darker border-b dark:border-primary-darker <?= $hiddenClass ?>" data-category="<?= $product['category_name'] ?>"
+                        <div class="w-48 h-76 bg-white border border-gray-300 p-4 rounded-lg shadow-md transition duration-300 flex flex-col items-center bg-white dark:bg-darker border-b dark:border-primary-darker <?= $hiddenClass ?>" data-category="<?= $product['category_name'] ?>"
                         data-category="<?= htmlspecialchars($product['category_name'] ?? 'Uncategorized') ?>"
                                 data-name="<?= htmlspecialchars($product['name'] ?? '') ?>"
                                 data-price="<?= htmlspecialchars($product['price'] ?? 0.00) ?>"
