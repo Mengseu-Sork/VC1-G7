@@ -15,7 +15,8 @@ class StockController extends BaseController
     {
         $stocks = $this->model->getAllStock();
         $products = $this->model->getAllProducts();
-        $this->view('pages/stock', ['stocks' => $stocks, 'products' => $products]); 
+        $this->view('pages/stock', ['stocks' => $stocks, 'products' => $products]);
+       
     }
 
     public function show($id)
@@ -25,17 +26,24 @@ class StockController extends BaseController
             $this->view('pages/detail', ['error' => "Stock not found."]);
             return;
         }
-         $this->view('pages/detail', ['stock' => $stock]);
+        $this->view('pages/detail', ['stock' => $stock]);
     }
     function detailsProduct($id)
-{
-    $product = $this->model->detailsProduct($id);
-    if (!$product) {
-        $this->view('pages/detail', ['error' => "Product not found."]);
-        return;
+    {
+        $product = $this->model->detailsProduct($id);
+        if (!$product) {
+            $this->view('pages/detail', ['error' => "Product not found."]);
+            return;
+        }
+        $this->view('pages/detail', ['stock' => $product]); // Use 'stock' key
     }
-    $this->view('pages/detail', ['stock' => $product]); // Use 'stock' key
+    function getProductStock($id)
+    {
+        $product = $this->model->getProductStock($id);
+        if (!$product) {
+            $this->view('pages/detail', ['error' => "Product not found."]);
+            return;
+        }
+        $this->view('pages/detail', ['stock' => $product]); // Use 'stock' key
+    }
 }
-
-}
-?>
