@@ -56,20 +56,4 @@ class Router
     
 }
 
-
-
-// if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-//     if (isset($_GET['action'])) {
-//         switch ($_GET['action']) {
-//             case 'list':
-//                 $controller->listCategories();
-//                 break;
-//             case 'view':
-//                 if (isset($_GET['id'])) {
-//                     $controller->viewCategory($_GET['id']);
-//                 }
-//                 break;
-//         }
-//     }
-// }
 ?>

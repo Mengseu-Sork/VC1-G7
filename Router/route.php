@@ -1,18 +1,28 @@
 <?php
-require 'Router.php';
+require_once 'Router.php';
 require_once 'controllers/UserController.php';
 require_once 'Controllers/DashboardController.php';
 require_once 'Controllers/CategoryController.php';
-require 'Controllers/ProductController.php';
-// require 'Controllers/AdminController.php';
-require 'Controllers/ShowproductController.php';
-// require 'Controllers/ShowuserController.php';
+require_once 'Controllers/ProductController.php';
+require_once 'Controllers/ShowproductController.php';
+require_once 'Controllers/OrderController.php';
+require_once 'Controllers/AuthController.php';
+require_once 'Controllers/StockController.php';
+
 
 
 $routes = new Router();
 
 // dashboard
-$routes->get('/', [DashboardController::class, 'index']);
+$routes->get('/Dashboard', [DashboardController::class, 'index']);
+
+
+// Authentication routes
+$routes->get('/', [AuthController::class, 'login']);
+$routes->post('/auth/login', [AuthController::class, 'login']);
+$routes->get('/auth/register', [AuthController::class, 'register']);
+$routes->post('/auth/register', [AuthController::class, 'register']);
+$routes->get('/auth/logout', [AuthController::class, 'logout']);
 
 // Homepage
 $routes->get('/pages', [ShowproductController::class, 'index']);
@@ -20,9 +30,7 @@ $routes->get('/pages/products', [ShowproductController::class, 'index']);
 $routes->get('/pages/details', [ShowproductController::class, 'show']);
 $routes->get('/pages/prosuct_ratings', [ShowproductController::class, 'ratings']);
 
-// $routes->get('/auth/login', [AdminController::class, 'login']);
-// $routes->post('/auth/login', [AdminController::class, 'login']);
-// $routes->post('/auth/logout', [AdminController::class, 'logout']);
+
 
 // user
 $routes->get('/user', [UserController::class, 'index']);
@@ -57,4 +65,7 @@ $routes->get('/orders', [OrderController::class, 'index']);
 // $routes->get('/orders/show', [OrderController::class, 'show']);
 
 $routes->dispatch();
+$routes->get('/pages/order', [OrderController::class, 'index']); 
+$routes->post('/products/order', [OrderController::class, 'process']);
 
+$routes->dispatch();

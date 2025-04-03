@@ -8,10 +8,9 @@ class Database
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $dbname = "coffeeshop"; // Your database name
+        $dbname = "coffeeshop"; 
 
         try {
-            // Create PDO connection
             $this->pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password, [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -24,7 +23,6 @@ class Database
     public function query($sql, $params = [])
     {
         try {
-            // Prepare and execute SQL query
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute($params);
             return $stmt;
@@ -37,5 +35,10 @@ class Database
     {
         $this->pdo = null;
     }
+    // Add this method to your Database class if it doesn't already exist
+public function getLastInsertId() {
+    return $this->pdo->lastInsertId();
+}
+
 }
 ?>
