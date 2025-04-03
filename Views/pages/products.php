@@ -58,33 +58,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
-        <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-1 gap-2">
             
-            <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
+            <div x-data="{ bgColor: 'white' }" class="rounded-lg p-8">
                 <div class="shadow-lg rounded-lg p-6 mb-16 border-2 border-gray-200 dark:border-primary-darker transition duration-300"
-                    :style="{ backgroundColor: bgColor }">
+                :style="{ backgroundColor: bgColor }">
+                
+                <h1 class="text-left ml-4 text-3xl font-bold">Products</h1>
+                <div class="flex flex-wrap gap-8 p-4 justify-between">
+                    <div class="flex w-full md:w-auto gap-2 relative">
+                        <input type="text" id="searchInput" placeholder="Search products..." required
+                        class="w-full md:w-64 px-4 py-2 pl-10 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 outline-none bg-white dark:bg-darker border-b dark:border-primary-darker"
+                        oninput="searchProducts()">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <button type="button" onclick="searchProducts()"
+                        class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300">
+                        Search
+                    </button>
+                </div>
+                <div class="flex space-x-1 text-xl">  
+                    <a href="../../Views/orders/order.php">
+                        <i class="fas fa-shopping-cart mr-1" style="color: orange;">  </i>
+                    </a> 
+                    <select id="category-filter"
+                    class="pr-2 pl-2 border border-gray-200 rounded-md duration-200 bg-white dark:bg-darker border-b dark:border-primary-darker"
+                    onchange="filterByCategory(this.value)">
                     
-                    <h1 class="text-left ml-4 text-3xl font-bold">Products</h1>
-                    <div class="flex flex-wrap gap-8 p-4 justify-between">
-                        <div class="flex w-full md:w-auto gap-2 relative">
-                            <input type="text" id="searchInput" placeholder="Search products..." required
-                                class="w-full md:w-64 px-4 py-2 pl-10 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 outline-none bg-white dark:bg-darker border-b dark:border-primary-darker"
-                                oninput="searchProducts()">
-                            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                            <button type="button" onclick="searchProducts()"
-                                class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300">
-                                Search
-                            </button>
-                        </div>
-                        <select id="category-filter"
-                            class="pr-5 pl-2 border border-gray-300 rounded-md transition duration-300 mr-1 bg-white dark:bg-darker border-b dark:border-primary-darker"
-                            onchange="filterByCategory(this.value)">
-                            
-                            <option value="">All Products</option>
-                            <?php foreach ($categories_name as $key => $value): ?>
-                                <option value="<?= $key ?>"><?= $value ?></option>
-                            <?php endforeach; ?>
-                        </select>                      
+                    <option value="">All Products</option>
+                    <?php foreach ($categories_name as $key => $value): ?>
+                        <option value="<?= $key ?>"><?= $value ?></option>
+                        <?php endforeach; ?>
+                    </select>    
+                </div>     
+                                          
                     </div>                
                 <div class="container flex flex-wrap gap-8 p-4 " id="productContainer">
                     <?php 
@@ -140,7 +146,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         Back
                     </button>
                 </div>
-            </div>
+                
+            
     </div>
 
     <!-- Modal with Form (Added Product Name) -->
@@ -166,12 +173,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <span id="totalPrice" style="color: #D68C1E;">0.00</span>
                     </p>
                 </div>
+                
                 <div class="button-container flex justify-center gap-4 mb-4">
                     <button type="button" id="cancelBtn" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">CANCEL</button>
                     <button type="submit" id="orderBtn" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">ORDER</button>
                 </div>
             </form>
         </div>
+        
     </div>
 
     <!-- Success Message -->
