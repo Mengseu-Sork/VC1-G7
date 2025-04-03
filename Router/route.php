@@ -25,6 +25,9 @@ $routes->get('/pages/prosuct_ratings', [ShowproductController::class, 'ratings']
 $routes->get('/pages', [ShowproductController::class, 'show']);
 $routes->get('/pages/stock', [StockController::class, 'index']);
 $routes->get('/pages/detail', [StockController::class, 'getProductStock']);
+$routes->get('/pages/create', [StockController::class, 'create']);
+$routes->post('/pages/store', [StockController::class, 'store']);
+$routes->get('/pages/update', [StockController::class, 'update']);
 
 
 

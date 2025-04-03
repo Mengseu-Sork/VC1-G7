@@ -110,4 +110,46 @@ class StockModel
             return [];
         }
     }
+    public function createStock($data)
+    {
+        try {
+            $query = "INSERT INTO stock (product_id, quantity, last_updated) 
+                      VALUES (:product_id, :quantity, :last_updated)";
+            $this->db->query($query, [
+                'product_id' => $data['product_id'],
+                'quantity' => $data['quantity'],
+                'last_updated' => date('Y-m-d H:i:s')
+            ]);
+            return true;
+        } catch (Exception $e) {
+            error_log("Error creating stock: " . $e->getMessage());
+            return false;
+        }
+    }
+    public function updateStock($id, $data)
+    {
+        try {
+            $query = "UPDATE stock SET quantity = :quantity, last_updated = :last_updated WHERE product_id = :id";
+            $this->db->query($query, [
+                'quantity' => $data['quantity'],
+                'last_updated' => date('Y-m-d H:i:s'),
+                'id' => $id
+            ]);
+            return true;
+        } catch (Exception $e) {
+            error_log("Error updating stock: " . $e->getMessage());
+            return false;
+        }
+    }
+    public function deleteStock($id)
+    {
+        try {
+            $query = "DELETE FROM stock WHERE product_id = :id";
+            $this->db->query($query, ['id' => $id]);
+            return true;
+        } catch (Exception $e) {
+            error_log("Error deleting stock: " . $e->getMessage());
+            return false;
+        }
+    }
 }

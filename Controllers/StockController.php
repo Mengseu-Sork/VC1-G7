@@ -18,7 +18,39 @@ class StockController extends BaseController
         $this->view('pages/stock', ['stocks' => $stocks, 'products' => $products]);
        
     }
-
+    public function create()
+    {
+        $stock = $this->model->getAllProducts();
+        $this->view('pages/create', ['stock' => $stock]);
+    }
+    function update($id)
+    {
+        $stock = $this->model->getStockById($id);
+        if (!$stock) {
+            $this->view('pages/detail', ['error' => "Stock not found."]);
+            return;
+        }
+        $this->view('pages/update', ['stock' => $stock]);
+    }
+    function store()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $data = [
+                'product_id' => $_POST['product_id'],
+                'quantity' => $_POST['quantity'],
+                'category_id' => $_POST['category_id'], 
+                'last_updated' => date('Y-m-d H:i:s')
+            ];
+    
+            if ($this->model->createStock($data)) {
+                header("Location: /pages/stock");
+                exit;
+            } else {
+                echo "Error: Failed to create stock.";
+            }
+        }
+    }
+    
     public function show($id)
     {
         $stock = $this->model->getStockById($id);
