@@ -44,7 +44,10 @@ $routes->get('/products/prosuct_ratings', [ProductController::class, 'ratings'])
 
 $routes->get('/categories', [CategoryController::class, 'index']);
 
-$routes->get('/pages/order', [OrderController::class, 'index']); 
-$routes->post('/products/order', [OrderController::class, 'process']);
+$routes->post('/order/process', [OrderController::class, 'process']);
+$routes->get('/pages/order', [OrderController::class, 'index']);
+// $routes->get('/pages/products', [ShowproductController::class, 'index']);
+$routes->get('/pages/viewOrder', [OrderController::class, 'viewOrder']);
+
 
 $routes->dispatch();

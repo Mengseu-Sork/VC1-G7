@@ -50,42 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit;
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Listing</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        .product-image-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        .view-more-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 209, 129, 0.58);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            border-radius: 5px;
-            pointer-events: none;
-        }
-        .product-image-container:hover .view-more-overlay {
-            opacity: 1;
-        }
-    </style>
-</head>
-<body>
     <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
         <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
             <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
@@ -199,144 +163,184 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- Updated JavaScript -->
     <script>
-        function filterByCategory(category) {
-            const productCards = document.querySelectorAll("#productContainer div[data-category]");
-            productCards.forEach(card => {
-                const productCategory = card.getAttribute("data-category").toLowerCase();
-                if (!category || productCategory === category.toLowerCase()) {
-                    card.style.display = "";
-                } else {
-                    card.style.display = "none";
-                }
-            });
-        }
+    function filterByCategory(category) {
+        const productCards = document.querySelectorAll("#productContainer div[data-category]");
+        productCards.forEach(card => {
+            const productCategory = card.getAttribute("data-category").toLowerCase();
+            if (!category || productCategory === category.toLowerCase()) {
+                card.style.display = "";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    }
 
-        function searchProducts() {
-            let input = document.getElementById("searchInput").value.toLowerCase().trim();
-            let productContainer = document.getElementById("productContainer");
-            let products = productContainer.getElementsByClassName("w-48");
+    function searchProducts() {
+        let input = document.getElementById("searchInput").value.toLowerCase().trim();
+        let productContainer = document.getElementById("productContainer");
+        let products = productContainer.getElementsByClassName("w-48");
+        for (let product of products) {
+            let name = product.getAttribute("data-name").toLowerCase();
+            let price = product.getAttribute("data-price").toLowerCase();
+            if (name.includes(input) || price.includes(input)) {
+                product.style.display = "";
+            } else {
+                product.style.display = "none";
+            }
+        }
+        if (input === "") {
             for (let product of products) {
-                let name = product.getAttribute("data-name").toLowerCase();
-                let price = product.getAttribute("data-price").toLowerCase();
-                if (name.includes(input) || price.includes(input)) {
-                    product.style.display = "";
-                } else {
-                    product.style.display = "none";
-                }
-            }
-            if (input === "") {
-                for (let product of products) {
-                    product.style.display = "";
-                }
+                product.style.display = "";
             }
         }
+    }
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const modal = document.getElementById('orderModal');
-            const modalImage = document.getElementById('modalProductImage');
-            const modalPrice = document.getElementById('modalProductPrice');
-            const modalStockStatus = document.getElementById('modalStockStatus');
-            const modalProductNameDisplay = document.getElementById('modalProductNameDisplay');
-            const quantityInput = document.getElementById('quantity');
-            const totalPriceSpan = document.getElementById('totalPrice');
-            const cancelBtn = document.getElementById('cancelBtn');
-            const orderBtn = document.getElementById('orderBtn');
-            const modalProductName = document.getElementById('modalProductName');
-            const modalPriceInput = document.getElementById('modalPrice');
-            const orderForm = document.getElementById('orderForm');
-            const successMessage = document.getElementById('successMessage');
-            const closeSuccess = document.getElementById('closeSuccess');
-            const increaseQty = document.getElementById("increaseQty");
-            const decreaseQty = document.getElementById("decreaseQty");
+    document.addEventListener('DOMContentLoaded', function () {
+        const modal = document.getElementById('orderModal');
+        const modalImage = document.getElementById('modalProductImage');
+        const modalPrice = document.getElementById('modalProductPrice');
+        const modalStockStatus = document.getElementById('modalStockStatus');
+        const modalProductNameDisplay = document.getElementById('modalProductNameDisplay');
+        const quantityInput = document.getElementById('quantity');
+        const totalPriceSpan = document.getElementById('totalPrice');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const orderBtn = document.getElementById('orderBtn');
+        const modalProductName = document.getElementById('modalProductName');
+        const modalPriceInput = document.getElementById('modalPrice');
+        const orderForm = document.getElementById('orderForm');
+        const successMessage = document.getElementById('successMessage');
+        const closeSuccess = document.getElementById('closeSuccess');
+        const increaseQty = document.getElementById("increaseQty");
+        const decreaseQty = document.getElementById("decreaseQty");
 
-            let currentPrice = 0;
-            let currentStock = '';
-            let currentStockQuantity = 0;
+        let currentPrice = 0;
+        let currentStock = '';
+        let currentStockQuantity = 0;
 
-            function updateTotalPrice() {
-                const quantity = parseInt(quantityInput.value) || 1;
-                totalPriceSpan.textContent = (currentPrice * quantity).toFixed(2);
-            }
+        function updateTotalPrice() {
+            const quantity = parseInt(quantityInput.value) || 1;
+            totalPriceSpan.textContent = (currentPrice * quantity).toFixed(2);
+        }
 
-            document.querySelectorAll('.show-order-modal').forEach(button => {
-                button.addEventListener('click', function () {
-                    const productName = this.getAttribute('data-product-name');
-                    const productImage = this.getAttribute('data-product-image');
-                    currentPrice = parseFloat(this.getAttribute('data-product-price')) || 0;
-                    currentStock = this.getAttribute('data-stock');
-                    currentStockQuantity = parseInt(this.getAttribute('data-stock-quantity')) || 0;
+        document.querySelectorAll('.show-order-modal').forEach(button => {
+            button.addEventListener('click', function () {
+                const productName = this.getAttribute('data-product-name');
+                const productImage = this.getAttribute('data-product-image');
+                const productId = this.getAttribute('data-product-id');
+                currentPrice = parseFloat(this.getAttribute('data-product-price')) || 0;
+                currentStock = this.getAttribute('data-stock');
+                currentStockQuantity = parseInt(this.getAttribute('data-stock-quantity')) || 0;
 
-                    modalProductName.value = productName;
-                    modalPriceInput.value = currentPrice;
-                    modalImage.src = `../Assets/images/uploads/${productImage}`;
-                    modalImage.classList.remove('hidden');
-                    modalPrice.textContent = `$${currentPrice.toFixed(2)}`;
-                    modalStockStatus.textContent = currentStock;
-                    modalStockStatus.className = `text-lg font-semibold mb-2 ${currentStock === 'In stock' ? 'text-green-600' : 'text-red-600'}`;
-                    modalProductNameDisplay.textContent = productName; // Populate product name in modal
-                    quantityInput.value = 1;
-                    updateTotalPrice();
+                // Store productId in a hidden input
+                document.getElementById('modalProductId')?.remove();
+                const productIdInput = document.createElement('input');
+                productIdInput.type = 'hidden';
+                productIdInput.id = 'modalProductId';
+                productIdInput.value = productId;
+                orderForm.appendChild(productIdInput);
 
-                    orderBtn.disabled = currentStock !== 'In stock';
-                    orderBtn.classList.toggle('bg-gray-400', currentStock !== 'In stock');
-                    orderBtn.classList.toggle('bg-blue-500', currentStock === 'In stock');
-                    modal.classList.remove('hidden');
-                });
-            });
-
-            quantityInput.addEventListener("input", function () {
-                let quantity = parseInt(quantityInput.value) || 1;
-                if (quantity < 1) quantity = 1;
-                if (currentStockQuantity > 0 && quantity > currentStockQuantity) quantity = currentStockQuantity;
-                quantityInput.value = quantity;
+                modalProductName.value = productName;
+                modalPriceInput.value = currentPrice;
+                modalImage.src = `../Assets/images/uploads/${productImage}`;
+                modalImage.classList.remove('hidden');
+                modalPrice.textContent = `$${currentPrice.toFixed(2)}`;
+                modalStockStatus.textContent = currentStock;
+                modalStockStatus.className = `text-lg font-semibold mb-2 ${currentStock === 'In stock' ? 'text-green-600' : 'text-red-600'}`;
+                modalProductNameDisplay.textContent = productName;
+                quantityInput.value = 1;
                 updateTotalPrice();
-            });
 
-            increaseQty.addEventListener("click", function () {
-                let quantity = parseInt(quantityInput.value) || 1;
-                if (currentStockQuantity > 0 && quantity >= currentStockQuantity) return;
-                quantityInput.value = quantity + 1;
-                updateTotalPrice();
-            });
-
-            decreaseQty.addEventListener("click", function () {
-                let quantity = parseInt(quantityInput.value) || 1;
-                if (quantity > 1) {
-                    quantityInput.value = quantity - 1;
-                    updateTotalPrice();
-                }
-            });
-
-            cancelBtn.addEventListener('click', function () {
-                modal.classList.add('hidden');
-                modalImage.classList.add('hidden');
-            });
-
-            orderForm.addEventListener('submit', function (e) {
-                e.preventDefault();
-                const quantity = parseInt(quantityInput.value) || 1;
-
-                if (currentStock !== 'In stock') {
-                    alert('Cannot order: Product is out of stock.');
-                    return;
-                }
-                if (quantity <= 0) {
-                    alert('Please enter a valid quantity greater than 0.');
-                    return;
-                }
-                if (currentStockQuantity > 0 && quantity > currentStockQuantity) {
-                    alert(`Cannot order: Only ${currentStockQuantity} items left in stock.`);
-                    return;
-                }
-
-                modal.classList.add('hidden');
-                successMessage.classList.remove('hidden');
-            });
-
-            closeSuccess.addEventListener('click', function () {
-                successMessage.classList.add('hidden');
+                orderBtn.disabled = currentStock !== 'In stock';
+                orderBtn.classList.toggle('bg-gray-400', currentStock !== 'In stock');
+                orderBtn.classList.toggle('bg-blue-500', currentStock === 'In stock');
+                modal.classList.remove('hidden');
             });
         });
-    </script>
-</body>
-</html>
+
+        quantityInput.addEventListener("input", function () {
+            let quantity = parseInt(quantityInput.value) || 1;
+            if (quantity < 1) quantity = 1;
+            if (currentStockQuantity > 0 && quantity > currentStockQuantity) quantity = currentStockQuantity;
+            quantityInput.value = quantity;
+            updateTotalPrice();
+        });
+
+        increaseQty.addEventListener("click", function () {
+            let quantity = parseInt(quantityInput.value) || 1;
+            if (currentStockQuantity > 0 && quantity >= currentStockQuantity) return;
+            quantityInput.value = quantity + 1;
+            updateTotalPrice();
+        });
+
+        decreaseQty.addEventListener("click", function () {
+            let quantity = parseInt(quantityInput.value) || 1;
+            if (quantity > 1) {
+                quantityInput.value = quantity - 1;
+                updateTotalPrice();
+            }
+        });
+
+        cancelBtn.addEventListener('click', function () {
+            modal.classList.add('hidden');
+            modalImage.classList.add('hidden');
+        });
+
+        orderForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const quantity = parseInt(quantityInput.value) || 1;
+            const productId = document.getElementById('modalProductId')?.value;
+            const productName = modalProductName.value;
+            const price = parseFloat(modalPriceInput.value);
+
+            if (currentStock !== 'In stock') {
+                alert('Cannot order: Product is out of stock.');
+                return;
+            }
+            if (quantity <= 0) {
+                alert('Please enter a valid quantity greater than 0.');
+                return;
+            }
+            if (currentStockQuantity > 0 && quantity > currentStockQuantity) {
+                alert(`Cannot order: Only ${currentStockQuantity} items left in stock.`);
+                return;
+            }
+
+            const orderData = {
+                user_id: 4,
+                total_amount: price * quantity,
+                products: [{
+                    product_id: productId,
+                    quantity: quantity,
+                    subtotal: price * quantity
+                }]
+            };
+
+            fetch('/order/process', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response:', data);
+                if (data.success) {
+                    modal.classList.add('hidden');
+                    successMessage.classList.remove('hidden');
+                    console.log('Order ID:', data.orderID);
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while placing the order.');
+            });
+        });
+
+        closeSuccess.addEventListener('click', function () {
+            successMessage.classList.add('hidden');
+        });
+    });
+</script>
