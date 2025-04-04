@@ -19,7 +19,9 @@ class UserModel
 {
     $stmt = $this->pdo->query("SELECT * FROM admins WHERE email = ?", [$email]);
     return $stmt->fetch();
-}
+    }
+
+
     function createUser($data)
     {
         return $this->pdo->query("INSERT INTO admins (image, FirstName, LastName, email, password) 
@@ -28,6 +30,7 @@ class UserModel
             'FirstName' => $data['FirstName'],
             'LastName' => $data['LastName'],
             'email' => $data['email'],
+            'phone' => $data['phone'],
             'password' => password_hash($data['password'], PASSWORD_DEFAULT),
         ]);
     }
@@ -45,10 +48,13 @@ class UserModel
             'FirstName' => $data['FirstName'],
             'LastName' => $data['LastName'],
             'email' => $data['email'],
+            'phone' => $data['phone'],
             'password' => password_hash($data['password'], PASSWORD_DEFAULT),
             'id' => $id
         ]);
     }
+
+
     function deleteUser($id)
     {
         return $this->pdo->query("DELETE FROM admins WHERE id = :id", ['id' => $id]);
