@@ -1,3 +1,8 @@
+<?php
+// This file should be in Views/pages/order.php
+$orders = $data['orders'] ?? []; // $data is passed from the controller
+?>
+
 <div class="container mx-auto p-6">
     <h1 class="text-3xl font-bold mb-6">Order History</h1>
     <table class="w-full border-collapse border border-gray-300">
@@ -24,7 +29,7 @@
                                     class="text-blue-600 hover:text-blue-800" title="View Order Details">
                                     <i class="far fa-eye mr-1" style="color: blue;"></i>
                                 </a>
-                                <a href="/pages/deleteOrder.php?id=<?= htmlspecialchars((string) $order['order_id']) ?>"
+                                <a href="/pages/deleteOrder?id=<?= htmlspecialchars((string) $order['order_id']) ?>"
                                     class="text-red-600 hover:text-red-800" title="Delete Order"
                                     onclick="return confirm('Are you sure you want to delete this order?');">
                                     <i class="fas fa-trash-alt mr-1" style="color: red;"></i>

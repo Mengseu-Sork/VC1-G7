@@ -1,5 +1,3 @@
-<?php
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -174,73 +172,14 @@
 </head>
 <body>
     <div class="header">
-        <img src="https://i.pinimg.com/736x/bf/26/0a/bf260addea763484cb68b58213778a31.jpg" alt="Pizza" class="header-image">
+        <img src="https://i.pinimg.com/736x/bf/26/0a/bf260addea763484cb68b58213778a31.jpg" alt="Header Image" class="header-image">
         <h1>Order Details</h1>
     </div>
     
-    <form id="pizza-order-form">
+    <form id="order-form">
         <div class="menu-section">
             <h3>Products</h3>
-            
-            <div class="menu-item">
-                <div class="item-details">
-                    <img src="https://i.pinimg.com/736x/86/84/06/868406451e66c13b92c2c77ea70b009f.jpg" alt="Pizza Neapolitan" class="item-image">
-                    <div class="item-info">
-                        <h3>Cozy Abibio Arabica Coffee</h3>
-                        <p>Ingredients will be written here.</p>
-                    </div>
-                </div>
-                <div class="item-controls">
-                    <div class="quantity-control">
-                        <select name="neapolitan-quantity" id="neapolitan-quantity">
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                    </div>
-                    <div class="size-control">
-                        <select name="neapolitan-size" id="neapolitan-size">
-                            <option value="small">Small</option>
-                            <option value="medium">Medium</option>
-                            <option value="large">Large</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="item-price">$10.50</div>
-            </div>
-            
-            <div class="menu-item">
-                <div class="item-details">
-                    <img src="https://i.pinimg.com/736x/64/2b/7b/642b7b301d5da89c3118396a4660d2ac.jpg" alt="Grounds Coffee" class="item-image">
-                    <div class="item-info">
-                        <h3>Grounds Coffee</h3>
-                        <p>Ingredients will be written here.</p>
-                    </div>
-                </div>
-                <div class="item-controls">
-                    <div class="quantity-control">
-                        <select name="pepperoni-quantity" id="pepperoni-quantity">
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                    </div>
-                    <div class="size-control">
-                        <select name="pepperoni-size" id="pepperoni-size">
-                            <option value="small">Small</option>
-                            <option value="medium">Medium</option>
-                            <option value="large">Large</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="item-price">$13.00</div>
-            </div>
+            <div id="cartItems"></div>
         </div>
         
         <div class="total-section">
@@ -248,12 +187,12 @@
         </div>
         
         <div class="form-section">
-            <p class="small-text">loading smart payment buttons...</p>
+            <p class="small-text">Loading smart payment buttons...</p>
             
             <div class="pickup-details">
                 <div class="form-group">
                     <label for="pickup-date">Pickup Date</label>
-                    <input type="date" id="pickup-date" name="pickup-date" value="2024-03-04">
+                    <input type="date" id="pickup-date" name="pickup-date" value="2025-04-06">
                 </div>
                 
                 <div class="form-group" style="margin-top: 15px;">
@@ -293,22 +232,22 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="first-name">Name</label>
-                        <input type="text" id="first-name" name="first-name" placeholder="First Name">
+                        <input type="text" id="first-name" name="first-name" placeholder="First Name" required>
                     </div>
                     <div class="form-group">
-                        <label for="last-name">&nbsp;</label>
-                        <input type="text" id="last-name" name="last-name" placeholder="Last Name">
+                        <label for="last-name"> </label>
+                        <input type="text" id="last-name" name="last-name" placeholder="Last Name" required>
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="example@example.com">
+                        <input type="email" id="email" name="email" placeholder="example@example.com" required>
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" placeholder="(000) 000-0000">
+                        <input type="tel" id="phone" name="phone" placeholder="(000) 000-0000" required>
                     </div>
                 </div>
                 
@@ -320,35 +259,123 @@
         </div>
         
         <div class="payment-buttons">
-            <button type="button" class="btn btn-paypal">PayPal Checkout</button>
-            <button type="button" class="btn btn-card">Debit or Credit Card</button>
+            <button type="submit" class="btn btn-paypal">PayPal Checkout</button>
+            <button type="submit" class="btn btn-card">Debit or Credit Card</button>
             <div class="powered-by">Powered by PayPal</div>
         </div>
     </form>
 
     <script>
-        // Simple JavaScript to calculate the total
         document.addEventListener('DOMContentLoaded', function() {
-            const neapolitanQuantity = document.getElementById('neapolitan-quantity');
-            const pepperoniQuantity = document.getElementById('pepperoni-quantity');
-            const totalPrice = document.getElementById('total-price');
-            
-            function calculateTotal() {
-                const neapolitanPrice = 10.50;
-                const pepperoniPrice = 13.00;
-                
-                const neapolitanTotal = neapolitanPrice * parseInt(neapolitanQuantity.value || 0);
-                const pepperoniTotal = pepperoniPrice * parseInt(pepperoniQuantity.value || 0);
-                
-                const total = neapolitanTotal + pepperoniTotal;
-                totalPrice.textContent = '$' + total.toFixed(2);
+            const cartItemsContainer = document.getElementById('cartItems');
+            const totalPriceElement = document.getElementById('total-price');
+            const orderForm = document.getElementById('order-form');
+
+            function getCart() {
+                const cart = localStorage.getItem('cart');
+                return cart ? JSON.parse(cart) : [];
             }
-            
-            neapolitanQuantity.addEventListener('change', calculateTotal);
-            pepperoniQuantity.addEventListener('change', calculateTotal);
-            
-            // Initialize total
-            calculateTotal();
+
+            function saveCart(cart) {
+                localStorage.setItem('cart', JSON.stringify(cart));
+            }
+
+            function calculateTotal() {
+                const cart = getCart();
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                totalPriceElement.textContent = '$' + total.toFixed(2);
+            }
+
+            function renderCart() {
+                const cart = getCart();
+                cartItemsContainer.innerHTML = '';
+
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+                    totalPriceElement.textContent = '$0.00';
+                    return;
+                }
+
+                cart.forEach((item, index) => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'menu-item';
+                    itemElement.innerHTML = `
+                        <div class="item-details">
+                            <img src="../Assets/images/uploads/${item.image}" alt="${item.name}" class="item-image">
+                            <div class="item-info">
+                                <h3>${item.name}</h3>
+                                <p>Stock: ${item.stock}</p>
+                            </div>
+                        </div>
+                        <div class="item-controls">
+                            <div class="quantity-control">
+                                <select name="quantity-${index}" id="quantity-${index}">
+                                    ${[...Array(item.stock_quantity + 1).keys()].map(i => `<option value="${i}" ${i === item.quantity ? 'selected' : ''}>${i}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div class="size-control">
+                                <select name="size-${index}" id="size-${index}">
+                                    <option value="small">Small</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="large">Large</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+                    `;
+
+                    const quantitySelect = itemElement.querySelector(`#quantity-${index}`);
+                    quantitySelect.addEventListener('change', function() {
+                        const newQuantity = parseInt(this.value);
+                        if (newQuantity === 0) {
+                            cart.splice(index, 1);
+                        } else {
+                            cart[index].quantity = newQuantity;
+                        }
+                        saveCart(cart);
+                        renderCart();
+                        calculateTotal();
+                    });
+
+                    cartItemsContainer.appendChild(itemElement);
+                });
+
+                calculateTotal();
+            }
+
+            orderForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const cart = getCart();
+                if (cart.length === 0) {
+                    alert('Your cart is empty. Please add items to proceed.');
+                    return;
+                }
+
+                const formData = new FormData(orderForm);
+                const orderDetails = {
+                    cart: cart,
+                    pickup_date: formData.get('pickup-date'),
+                    pickup_time: `${formData.get('pickup-hour')}:${formData.get('pickup-minute')} ${formData.get('pickup-ampm')}`,
+                    customer: {
+                        first_name: formData.get('first-name'),
+                        last_name: formData.get('last-name'),
+                        email: formData.get('email'),
+                        phone: formData.get('phone'),
+                        notes: formData.get('notes')
+                    },
+                    total: parseFloat(totalPriceElement.textContent.replace('$', ''))
+                };
+
+                // Here you would typically send the order to a server
+                console.log('Order submitted:', orderDetails);
+
+                // Clear the cart after successful order
+                localStorage.removeItem('cart');
+                alert('Order placed successfully!');
+                window.location.href = '/path/to/confirmation/page'; // Redirect to a confirmation page
+            });
+
+            renderCart();
         });
     </script>
 </body>

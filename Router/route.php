@@ -61,7 +61,7 @@ $routes->get('/pages/viewOrder', [OrderController::class, 'viewOrder']);
 
 
 // order
-$routes->get('/orders', [OrderController::class, 'index']);
+// $routes->get('/orders', [OrderController::class, 'index']);
 // $routes->get('/orders/create', [OrderController::class, 'create']);
 // $routes->post('/orders/store', [OrderController::class, 'store']);
 // $routes->get('/orders/edit/{id}', [OrderController::class, 'edit']);
@@ -69,8 +69,7 @@ $routes->get('/orders', [OrderController::class, 'index']);
 // $routes->delete('/orders/delete', [OrderController::class, 'delete']);
 // $routes->get('/orders/show', [OrderController::class, 'show']);
 
-$routes->dispatch();
-$routes->get('/pages/order', [OrderController::class, 'index']); 
-$routes->post('/products/order', [OrderController::class, 'process']);
+$routes->post('/order/process', [OrderController::class, 'process']);
+$routes->get('/pages/order', [OrderController::class, 'index']);
 
 $routes->dispatch();

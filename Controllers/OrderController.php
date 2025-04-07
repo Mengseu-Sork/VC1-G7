@@ -1,111 +1,131 @@
 <?php
 require_once 'Models/OrderModel.php';
 require_once 'BaseController.php';
-class OrderController extends BaseController
-{
-    private $model;
 
-    public function __construct()
-    {
-        $this->model = new OrderModel();
+class OrderController extends BaseController {
+    private $orderModel;
+
+    public function __construct() {
+        $this->orderModel = new OrderModel();
     }
 
-    // Display all orders
-    // public function index()
-    // {
-    //     $orders = $this->model->getOrders();
-    //     $this->view('order/orders', ['orders' => $orders]);
-    // }
-
-    // // Show the order creation form
-    // public function create()
-    // {
-    //     $products = $this->model->getAllProducts(); // Fetch available products
-    //     $this->view('order/create', ['products' => $products]);
-    // }
-
-    // // Store a new order in the database
-    // public function store()
-    // {
-    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //         $data = [
-    //             'product_id'  => $_POST['product_id'],
-    //             'quantity'    => $_POST['quantity'],
-    //             'total_price' => $_POST['total_price'],
-    //             'order_date'  => date('Y-m-d')
-    //         ];
-
-    //         $this->model->createOrder($data);
-    //         $this->redirect('/orders');
-   
-    private $orderModel;
     public function index() {
         $orders = $this->orderModel->getAllOrders();
-        $this->view('pages/order', ['orders' => $orders]);
+        $this->view('pages/orderHistory', ['orders' => $orders]);
     }
 
     public function process() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $rawData = file_get_contents("php://input");
-            file_put_contents('debug_log.txt', $rawData . PHP_EOL, FILE_APPEND); // Append for multiple requests
-    
-            $data = json_decode($rawData, true);
-    
-            if (!$data) {
-                echo json_encode(['success' => false, 'message' => 'Invalid JSON data']);
-                exit;
-            }
-    
-            if (!isset($data['user_id'], $data['total_amount'], $data['products'])) {
-                echo json_encode(['success' => false, 'message' => 'Missing required fields: user_id, total_amount, or products']);
-                exit;
-            }
-    
-            $userId = (int) $data['user_id'];
-            $totalAmount = (float) $data['total_amount'];
-            $products = $data['products'];
-    
-            // Validate products array
-            foreach ($products as $product) {
-                if (!isset($product['product_id'], $product['quantity'], $product['subtotal'])) {
-                    echo json_encode(['success' => false, 'message' => 'Invalid product data: missing product_id, quantity, or subtotal']);
-                    exit;
-                }
-            }
-    
-            // Insert Order
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->sendJsonResponse(false, 'Invalid request method', 405);
+            return;
+        }
+
+        $rawData = file_get_contents("php://input");
+        $data = json_decode($rawData, true);
+
+        error_log("Received order data: " . print_r($data, true));
+
+        if (!$data || !isset($data['user_id'], $data['total_amount'], $data['products'])) {
+            error_log("Invalid or incomplete order data: " . $rawData);
+            $this->sendJsonResponse(false, 'Invalid or incomplete order data: Missing user_id, total_amount, or products', 400);
+            return;
+        }
+
+        if (!is_numeric($data['user_id']) || $data['user_id'] <= 0) {
+            $this->sendJsonResponse(false, 'Invalid user_id: Must be a positive integer', 400);
+            return;
+        }
+
+        if (!is_numeric($data['total_amount']) || $data['total_amount'] <= 0) {
+            $this->sendJsonResponse(false, 'Invalid total_amount: Must be a positive number', 400);
+            return;
+        }
+
+        if (!is_array($data['products']) || empty($data['products'])) {
+            $this->sendJsonResponse(false, 'Invalid products: Must be a non-empty array', 400);
+            return;
+        }
+
+        try {
+            $this->orderModel->beginTransaction();
+
             $orderData = [
-                'user_id' => $userId,
-                'total_amount' => $totalAmount,
-                'order_date' => date('Y-m-d H:i:s')
+                'user_id' => (int)$data['user_id'],
+                'order_date' => date('Y-m-d H:i:s'),
+                'total_amount' => (float)$data['total_amount']
             ];
-            $orderID = $this->orderModel->insertOrder($orderData);
-    
-            if (!$orderID) {
-                echo json_encode(['success' => false, 'message' => 'Failed to insert order into database']);
-                exit;
+
+            error_log("Inserting order: " . print_r($orderData, true));
+
+            $sqlCheckUser = "SELECT id FROM users WHERE id = :user_id";
+            $stmt = $this->orderModel->db->query($sqlCheckUser, [':user_id' => $orderData['user_id']]);
+            if (!$stmt->fetch()) {
+                throw new Exception("User ID {$orderData['user_id']} does not exist");
             }
-    
-            // Insert Order Details
-            foreach ($products as $product) {
+
+            $orderID = $this->orderModel->insertOrder($orderData);
+            if (!$orderID) {
+                throw new Exception('Failed to create order');
+            }
+
+            foreach ($data['products'] as $product) {
+                if (!isset($product['product_id'], $product['quantity'], $product['subtotal'])) {
+                    throw new Exception('Invalid product data: Missing product_id, quantity, or subtotal');
+                }
+
+                if (!is_numeric($product['product_id']) || $product['product_id'] <= 0) {
+                    throw new Exception('Invalid product_id: Must be a positive integer');
+                }
+
+                if (!is_numeric($product['quantity']) || $product['quantity'] <= 0) {
+                    throw new Exception('Invalid quantity: Must be a positive integer');
+                }
+
+                if (!is_numeric($product['subtotal']) || $product['subtotal'] <= 0) {
+                    throw new Exception('Invalid subtotal: Must be a positive number');
+                }
+
+                error_log("Inserting order details for product ID {$product['product_id']}: " . print_r($product, true));
+
                 $result = $this->orderModel->insertOrderDetails(
                     $orderID,
-                    (int) $product['product_id'],
-                    (int) $product['quantity'],
-                    (float) $product['subtotal']
+                    (int)$product['product_id'],
+                    (int)$product['quantity'],
+                    (float)$product['subtotal']
                 );
+
                 if (!$result) {
-                    echo json_encode(['success' => false, 'message' => 'Failed to insert order details']);
-                    exit;
+                    throw new Exception('Failed to save order details');
+                }
+
+                error_log("Updating stock for product ID {$product['product_id']}, quantity: {$product['quantity']}");
+                $stockUpdated = $this->orderModel->updateProductStock(
+                    (int)$product['product_id'],
+                    (int)$product['quantity']
+                );
+
+                if (!$stockUpdated) {
+                    throw new Exception('Failed to update product stock');
                 }
             }
-    
-            echo json_encode(['success' => true, 'orderID' => $orderID, 'message' => 'Order placed successfully!']);
-            exit;
+
+            $this->orderModel->commit();
+            $this->sendJsonResponse(true, 'Order placed successfully', 200, ['order_id' => $orderID]);
+
+        } catch (Exception $e) {
+            $this->orderModel->rollBack();
+            error_log("Order processing error: " . $e->getMessage());
+            $this->sendJsonResponse(false, 'Order processing failed: ' . $e->getMessage(), 500);
         }
-    
-        echo json_encode(['success' => false, 'message' => 'Invalid request method']);
+    }
+
+    private function sendJsonResponse($success, $message, $statusCode = 200, $data = []) {
+        http_response_code($statusCode);
+        header('Content-Type: application/json');
+        echo json_encode(array_merge([
+            'success' => $success,
+            'message' => $message
+        ], $data));
         exit;
     }
 }
-?>

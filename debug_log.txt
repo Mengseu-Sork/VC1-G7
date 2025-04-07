@@ -1,1 +1,0 @@
-{"user_id":4,"total_amount":7,"products":[{"product_id":"25","quantity":1,"subtotal":7}]}
