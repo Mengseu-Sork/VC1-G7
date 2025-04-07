@@ -17,6 +17,11 @@ class StockController extends BaseController
             session_start();
         }
         
+        if (!isset($_SESSION['user'])) {
+            header("Location: views/auth/login");
+            exit();
+        }
+
         $stocks = $this->model->getAllStock();
         $products = $this->model->getAllProducts();
         $this->view('pages/stock', ['stocks' => $stocks, 'products' => $products]);
@@ -24,6 +29,14 @@ class StockController extends BaseController
 
      function create()
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        if (!isset($_SESSION['user'])) {
+            header("Location: views/auth/login");
+            exit();
+        }
         $stock = $this->model->getAllProducts();
         $this->view('pages/create', ['stock' => $stock]);
     }  

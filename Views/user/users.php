@@ -18,6 +18,7 @@
                                     <th class="py-3 px-6 text-left">Email</th>
                                     <th class="py-3 px-6 text-left">Phone</th>
                                     <th class="py-3 px-6 text-left">Role</th>
+                                    <th class="py-3 px-6 text-left">Active</th>
                                     <th class="py-3 px-2 text-center">Action</th>
                                 </tr>
                             </thead>
@@ -32,6 +33,13 @@
                                         <td class="py-3 px-4 font-semibold"><?= $user['email'] ?></td>
                                         <td class="py-3 px-6 font-semibold"><?= $user['phone'] ?></td>
                                         <td class="py-3 px-6 font-semibold "><?= $user['role'] ?></td>
+                                        <td class="py-3 px-6 font-semibold">
+                                            <?php if ($user['active'] == 1): ?>
+                                                <span class="text-green-500 font-semibold">Active</span>
+                                            <?php else:?>
+                                                <span class="text-red-500 font-semibold">Inactive</span>
+                                            <?php endif; ?>
+                                        </td>
                                         <td class="flex py-3 px-2 font-semibold justify-center relative">
 
                                                 <!-- Edit Option -->
@@ -52,11 +60,6 @@
                                                         class="block text-left px-2 py-2 text-gray-700 flex items-center">
                                                             <i class="far fa-eye mr-1" style="color: blue;"></i>
                                                 </button>
-<!-- 
-                                                <a href="/user/show?id=<?= $user['id'] ?>" 
-                                                    class="block px-2 py-2 text-gray-700 flex items-center">
-                                                    <i class="far fa-eye mr-1" style="color: blue;"></i>
-                                                </a> -->
                                             </div>
                                         </td>
                                         <!-- Delete Confirmation Modal -->
@@ -85,7 +88,7 @@
                                         
                                         <!-- Edit Confirmation Modal -->
                                         <div id="editUserModal<?= $user['id'] ?>" class="fixed inset-0 flex items-center justify-end hidden z-50 mt-16">
-                                        <div class="max-auto flex-1 h-full ml-64 overflow-x-hidden overflow-y-auto bg-white dark:text-light dark:bg-darker">
+                                            <div class="max-auto flex-1 h-full ml-64 overflow-x-hidden overflow-y-auto bg-white dark:text-light dark:bg-darker">
                                                     <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
                                                         <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
                                                             <div class="shadow-lg rounded-lg p-6 border-2 mb-2 border-gray-200 dark:border-primary-darker transition duration-300"
