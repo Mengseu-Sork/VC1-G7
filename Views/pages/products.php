@@ -55,6 +55,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit;
 }
 ?>
+<style>
+    .shopping-bag {  
+    width: 50px;  
+    height: 50px;  
+    background-color: transparent;  
+    border: 1px solid #ccc;
+    border-radius: 50%;  
+    border-radius: 5px;  
+    position: relative;  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+}  
+
+.notification-badge {  
+    position: absolute;  
+    top: -5px;  
+    right: -5px;  
+    width: 20px;  
+    height: 20px;  
+    background-color: red;  
+    color: white;  
+    border-radius: 50%;  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    font-size: 14px;  
+}  
+</style>
 </head>
 <body>
     <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
@@ -78,7 +107,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="flex space-x-1 text-xl">  
                     <a href="../../Views/orders/order.php">
-                        <i class="fas fa-shopping-cart mr-1" style="color: orange;">  </i>
+                        <div class="shopping-bag">  
+                            <img src="../../Assets/images/Frame 1.png" alt="">
+                            <div class="notification-badge">!</div>  
+                        </div>  
                     </a> 
                     <select id="category-filter"
                     class="pr-2 pl-2 border border-gray-200 rounded-md duration-200 bg-white dark:bg-darker border-b dark:border-primary-darker"

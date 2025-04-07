@@ -8,6 +8,7 @@ class DashboardController extends BaseController
         session_start();
         if (!isset($_SESSION['user'])) {
             header("Location: views/auth/login");
+            
             exit();
         }
         $this->view('/Dashboard/list');;
