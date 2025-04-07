@@ -38,6 +38,7 @@ class User {
         return $user;
     }
 
+    // Check if an admin already exists
     private function checkAdminExists() {
         $sql = "SELECT COUNT(*) as admin_count FROM admins WHERE role = 'admin'";
         $stmt = $this->pdo->query($sql);
@@ -46,12 +47,24 @@ class User {
         return $result['admin_count'] > 1;
     }
 
+    // Update login time
     public function updateLoginTime($userId) {
         $sql = "UPDATE admins SET last_login = NOW() WHERE id = :id";
         $params = [':id' => $userId];
         return $this->pdo->query($sql, $params);
     }
     
+    // Set user as active or inactive
+    public function setUserActive($userId, $status) {
+        $sql = "UPDATE admins SET active = :status WHERE id = :id";
+        $params = [
+            ':status' => $status,
+            ':id' => $userId
+        ];
+        return $this->pdo->query($sql, $params);
+    }
+
+    // Get user login history
     public function getLoginHistory($userId) {
         $sql = "SELECT last_login FROM admins WHERE id = :id";
         $params = [':id' => $userId];
