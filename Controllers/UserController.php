@@ -13,11 +13,6 @@ class UserController extends BaseController
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        
-        if (!isset($_SESSION['user'])) {
-            header("Location: views/auth/login");
-            exit();
-        }
         $users = $this->model->getUsers();
         $this->view('user/users',['users'=>$users]);
     }
@@ -101,16 +96,4 @@ class UserController extends BaseController
         $this->view('user/detail', ['user' => $user]); 
     }
 
-    function profile() {
-        session_start();
-        if (!isset($_SESSION['user'])) {
-            
-            $this->redirect('/auth/login');
-            return;
-        }
-    
-        $userId = $_SESSION['user']['id'];
-        $user = $this->model->getUserProfile($userId);
-        $this->view('user/profile', ['user' => $user]);
-    }
 }

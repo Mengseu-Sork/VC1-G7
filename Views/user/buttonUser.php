@@ -8,13 +8,13 @@ $user = $_SESSION['user'] ?? null;
     onclick="toggleProfile()"
     class="block transition-opacity duration-200 rounded-full border-b dark:border-primary-darker dark:opacity-75 dark:hover:opacity-100 focus:outline-none focus:ring dark:focus:opacity-100">
     <span class="sr-only">User menu</span>
-    <a href="/user/profile"> <img class="w-10 h-10 rounded-full" 
+    <a href="/profile/profile"> <img class="w-10 h-10 rounded-full" 
       src="<?php echo '/Assets/images/uploads/' . htmlspecialchars($user['image'] ?? 'default.png'); ?>" alt="Profile"/></a>
 </button>
 
 <!-- Hidden profile menu -->
 <div id="profile-menu" class="">
-    <a href="/user/profile" class=""></a>
+    <a href="/profile/profile" class=""></a>
 </div>
 
 <script>

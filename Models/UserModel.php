@@ -37,8 +37,10 @@ class UserModel
     
     function getUser($id)
     {
-        return $this->pdo->query("SELECT * FROM admins WHERE id = :id", ['id' => $id])->fetch();
+        $sql = "SELECT * FROM admins WHERE id = :id";
+        return $this->pdo->query($sql, ['id' => $id])->fetch(PDO::FETCH_ASSOC);
     }
+    
     
     function updateUser($id, $data)
     {
@@ -68,10 +70,4 @@ class UserModel
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }   
     
-    public function getUserProfile($id) {
-        $sql = "SELECT id, image, FirstName, LastName, email, phone, role 
-                FROM admins 
-                WHERE id = :id";
-        return $this->pdo->query($sql, [':id' => $id])->fetch(PDO::FETCH_ASSOC);
-    }
 }
