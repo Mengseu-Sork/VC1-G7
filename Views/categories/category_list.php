@@ -50,12 +50,12 @@
                                     <div id="deleteCategoriesModal<?= $category['category_id'] ?>"
                                          class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50">
                                         <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-                                            <h2 class="text-lg font-semibold">Delete Product</h2>
-                                            <p class="mt-4">Are you sure you want to delete this product?</p>
+                                            <h2 class="text-lg font-semibold flex justify-center">Delete Category</h2>
+                                            <p class="mt-4">Are you sure you want to delete this Category?</p>
 
                                             <div class="mt-6 flex justify-end space-x-2">
                                                 <button onclick="closeModal('deleteCategoriesModal<?= $category['category_id'] ?>')"
-                                                        class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 transition duration-200">
+                                                        class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:opacity-90">
                                                     Cancel
                                                 </button>
 

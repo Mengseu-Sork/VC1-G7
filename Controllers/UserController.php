@@ -10,6 +10,9 @@ class UserController extends BaseController
     }
     function index()
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         $users = $this->model->getUsers();
         $this->view('user/users',['users'=>$users]);
     }
@@ -33,6 +36,7 @@ class UserController extends BaseController
                 'LastName' => $_POST['LastName'],
                 'email' => $_POST['email'],
                 'phone' => $_POST['phone'],
+                'role' => $_POST['role'],
                 'password' => $_POST['password']
             ];
             $this->model->createUser($data);
@@ -71,6 +75,7 @@ class UserController extends BaseController
                 'LastName' => $_POST['LastName'],
                 'email' => $_POST['email'],
                 'phone' => $_POST['phone'],
+                'role' => $_POST['role'],
                 'password' => $_POST['password'],
             ];
 
@@ -78,10 +83,6 @@ class UserController extends BaseController
             $this->redirect('/user');
         }
     }
-
-
-      
-
 
     function destroy($id)
     {
@@ -94,4 +95,5 @@ class UserController extends BaseController
         $user = $this->model->show($id);
         $this->view('user/detail', ['user' => $user]); 
     }
+
 }

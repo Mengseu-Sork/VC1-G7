@@ -10,67 +10,48 @@ class StockModel
     {
         $this->db = new Database();
     }
-
-    function getAllProducts() {
+    public function getAllStock()
+    {
         try {
-            $result = $this->db->query("SELECT 
-                products.id, 
-                products.name,
-                products.price, 
-                products.date, 
-                products.image,
-                products.category_id,
-                products.stock_status
-                FROM products");
-            return $result->fetchAll();
+            $query = "SELECT stock_id, name, product_id, quantity, last_updated FROM stock";
+            $result = $this->db->query($query)->fetchAll(PDO::FETCH_ASSOC);
+            error_log("Fetched stock data: " . print_r($result, true));
+            return $result;
+        } catch (Exception $e) {
+            error_log("Error fetching stock: " . $e->getMessage());
+            return [];
+        }
+    }
+    public function getAllProducts()
+    {
+        try {
+            $query = "SELECT 
+                id, 
+                name,
+                price, 
+                stock_status
+                FROM products";
+            $result = $this->db->query($query);
+            return $result->fetchAll(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
             error_log("Error fetching products: " . $e->getMessage());
             return [];
         }
     }
-    
-    public function getAllStock()
+    public function createStock($data)
     {
-        $query = "SELECT products.id, products.name AS product_name, stock.quantity
-                  FROM stock
-                  JOIN products ON stock.product_id = products.id";
-        return $this->db->query($query)->fetchAll(PDO::FETCH_ASSOC);
-    }
-    function getProductDetail($id) {
         try {
-            // Prepare the SQL statement to prevent SQL injection
-            $stmt = $this->db->query("SELECT 
-                products.id, 
-                products.name, 
-                products.type, 
-                stock.last_updated,
-                stock.quantity
-                FROM products 
-                LEFT JOIN stock ON products.id = stock.product_id 
-                WHERE products.id = :id");
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
-            return $stmt->fetch();
+            $query = "INSERT INTO stock (product_id, quantity, last_updated) 
+                      VALUES (:product_id, :quantity, :last_updated)";
+            $this->db->query($query, [
+                'product_id' => $data['product_id'],
+                'quantity' => (int)$data['quantity'],
+                'last_updated' => date('Y-m-d H:i:s')
+            ]);
+            return true;
         } catch (Exception $e) {
-            error_log("Error fetching product details: " . $e->getMessage());
-            return null;
+            error_log("Error creating stock: " . $e->getMessage());
+            return false;
         }
-    }
-
-    public function getStockById($id)
-    {
-        // SQL query with a placeholder for the id
-        $query = "SELECT products.name AS product_name, stock.quantity, stock.last_updated
-                  FROM stock 
-                  JOIN products ON stock.product_id = products.id
-                  WHERE stock.product_id = :id"; 
-
-        // Execute the query and pass the parameters correctly
-        return $this->db->query($query, ['id' => $id])->fetch(PDO::FETCH_ASSOC); 
-    }
-    function detailsProduct($id)
-    {
-        $query = "SELECT * FROM products WHERE id = :id";
-        return $this->db->query($query, ['id' => $id])->fetch(PDO::FETCH_ASSOC);
     }
 }
