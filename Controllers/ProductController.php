@@ -10,11 +10,21 @@ class ProductController extends BaseController {
     }
 
     public function index() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        if (!isset($_SESSION['user'])) {
+            header("Location: views/auth/login");
+            exit();
+        }
         $products = $this->model->getAllProducts();
         $product_types = $this->model->getProductTypes();
         $categories = $this->model->getAllCategories();
         $this->view('Products/Product_list', ['products' => $products, 'product_types' => $product_types, 'categories' => $categories]);
     }
+
+    
     function ratings() {
         $products = $this->model->getAllProducts();
         $product_types = $this->model->getProductTypes();
@@ -135,21 +145,17 @@ class ProductController extends BaseController {
         }
     }
     function show($id = null) {
-        // If no ID is provided in the URL, try to get it from GET parameters
         if ($id === null && isset($_GET['id'])) {
             $id = $_GET['id'];
         }
         
-        // Validate that we have an ID
         if (!$id) {
             echo "Error: No product ID specified.";
             return;
         }
-        
-        // Get product details from the database
+
         $product = $this->model->getProductById($id);
-        
-        // Get category information
+
         $category = null;
         if ($product && isset($product['category_id'])) {
             $category = $this->model->getCategoryById($product['category_id']);
@@ -157,13 +163,11 @@ class ProductController extends BaseController {
         
         // Check if product exists
         if ($product) {
-            // Pass both product and category data to the view
             $this->view('Products/show', [
                 'product' => $product,
                 'category' => $category
             ]);
         } else {
-            // Product not found, still render the view but with no product data
             $this->view('Products/show', [
                 'product' => null,
                 'category' => null

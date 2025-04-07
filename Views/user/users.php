@@ -17,7 +17,7 @@
                                     <th class="py-3 px-4 text-left">Last Name</th>
                                     <th class="py-3 px-6 text-left">Email</th>
                                     <th class="py-3 px-6 text-left">Phone</th>
-                                    <!-- <th class="py-3 px-6 text-left">Role</th> -->
+                                    <th class="py-3 px-6 text-left">Role</th>
                                     <th class="py-3 px-2 text-center">Action</th>
                                 </tr>
                             </thead>
@@ -31,7 +31,7 @@
                                         <td class="py-3 px-4 font-semibold"><?= $user['LastName'] ?></td>
                                         <td class="py-3 px-4 font-semibold"><?= $user['email'] ?></td>
                                         <td class="py-3 px-6 font-semibold"><?= $user['phone'] ?></td>
-                                        <!-- <td class="py-3 px-6 font-semibold "><?= $user['role'] ?></td> -->
+                                        <td class="py-3 px-6 font-semibold "><?= $user['role'] ?></td>
                                         <td class="flex py-3 px-2 font-semibold justify-center relative">
 
                                                 <!-- Edit Option -->
@@ -56,12 +56,12 @@
                                     <div id="deleteUserModal<?= $user['id'] ?>" 
                                         class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
                                         <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-                                            <h2 class="text-lg font-semibold">Delete User</h2>
+                                            <h2 class="text-lg font-semibold flex justify-center">Delete User</h2>
                                             <p class="mt-4">Are you sure you want to delete this user?</p>
 
                                             <div class="mt-6 flex justify-end space-x-2">
                                                 <button onclick="closeModal('deleteUserModal<?= $user['id'] ?>')"
-                                                    class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 transition duration-200">
+                                                    class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:opacity-90">
                                                     Cancel
                                                 </button>
 

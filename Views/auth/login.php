@@ -17,13 +17,13 @@
     <?php endif; ?>
     <div class="w-full max-w-md p-8 space-y-6 bg-white shadow-md rounded-lg">
         <div class="text-center">
-            <img src="../../../Assets/images/FX12 LOGO.png" alt="XING FU CHA Logo" class="w-24 mx-auto">
+            <img src="../../../Assets/images/FX12 LOGO.png" alt="Cafe Logo" class="w-24 mx-auto">
             <h2 class="text-2xl font-semibold mt-4">Welcome to Cafe Shop</h2>
             <p class="text-gray-600">Login to your account to continue</p>
         </div>
 
         <!-- Error Message -->
-        <?php if(isset($error)): ?>
+        <?php if (isset($error) && !empty($error)): ?>
             <div class="flex items-center p-3 text-red-600 bg-red-100 rounded-md">
                 <i class="fas fa-exclamation-circle mr-2"></i>
                 <span><?php echo $error; ?></span>

@@ -1,3 +1,4 @@
+
 <div x-data="setup()" x-init="$refs.loading.classList.add('hidden'); setColors(color);" :class="{ 'dark': isDark}">
       <div class="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
         <!-- Loading screen -->
@@ -106,8 +107,8 @@
               <!-- Authentication links -->
               <div>
                 <a
-                  href="#"
-                  class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                  href="/Views/pages/order.php"
+                  class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
 
                 >
                   <span aria-hidden="true">
@@ -281,14 +282,10 @@
                           </button>
 
                           <!-- Color button -->
-                          <button
-                          @click="openSettingsPanel"
-                          class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker"
-                          >
-                          <span class="sr-only">Open settings panel</span>
-                            <i class="fas fa-palette" style="font-size: 1.75rem;"></i>
-                          </button>
-                          <?php require_once './Views/profile/profile.php'?>
+                          <?php require_once './Views/layout/colorNavbar.php'?>
+                          <?php require_once './Views/user/buttonUser.php'?>
                       </nav>
                   </div>
           </header>           
+
+       

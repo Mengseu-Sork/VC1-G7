@@ -43,7 +43,19 @@
 
                     <div class="mt-4">
                         <label class="block font-semibold mb-2">Password:</label>
-                        <input type="password" name="password" value="<?= $user['password'] ?>" 
+                        <div class="relative">
+                            <input id="password" type="password" name="password" value="<?= htmlspecialchars($user['password']) ?>"
+                                class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 duration-200 rounded-lg shadow-md transition bg-white dark:text-light dark:bg-darker border-b dark:border-primary-darker">
+                            <button type="button" id="togglePassword" class="absolute right-3 top-1/2 transform -translate-y-1/2">
+                                👁️
+                            </button>
+                        </div>
+                    </div>
+
+                    
+                    <div class="mt-4">
+                        <label class="block font-semibold mb-2">Role:</label>
+                        <input type="role" name="role" value="<?= $user['role'] ?>"
                                class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 duration-200 rounded-lg shadow-md transition bg-white dark:text-light dark:bg-darker border-b dark:border-primary-darker">
                     </div>
 
@@ -84,6 +96,12 @@
             imgPreview.classList.remove('hidden');
         };
         reader.readAsDataURL(file);
+        }
     }
-}
+
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        var passwordField = document.getElementById('password');
+        var currentType = passwordField.type;
+        passwordField.type = currentType === 'password' ? 'text' : 'password';
+    });
 </script>
