@@ -9,7 +9,7 @@
                         <!-- Profile Image Section -->
                         <div class="flex flex-col items-center mt-2">
                             <div class="relative">
-                                <img src="../../Assets/images/user/<?= $user['image'] ?>" 
+                                <img src="../Assets/images/uploads/<?= $user['image'] ?>" 
                                     alt="Profile Image" 
                                     class="w-48 h-60 border border-gray-300 shadow-md">
                             </div>
@@ -39,12 +39,16 @@
                             </div>
 
                             <div class="mt-4">
-                                <label class="block font-semibold mb-1">Password</label>
+                                <label class="block font-semibold mb-1">Phone</label>
                                 <div class="flex items-center border border-gray-300 rounded-md dark:border-primary-darker">
-                                    <span class="w-full p-2 focus:ring-2 focus:ring-blue-500 "><?= $user['password']?></span>  
+                                    <span class="w-full p-2 focus:ring-2 focus:ring-blue-500 "><?= $user['phone']?></span>  
                                     <span class="px-2 text-green-600">✔</span>
                                 </div>
                             </div>
+                            <button type="button" class="bg-yellow-500 text-white flex ml-auto mt-4 px-4 py-2 rounded-lg hover:opacity-90" onclick="window.location.href='/user'">Cancel</button>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>

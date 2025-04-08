@@ -8,7 +8,7 @@ class Database
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $dbname = "coffeeshop"; 
+        $dbname = "coffeeshop";
 
         try {
             $this->pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password, [
@@ -36,9 +36,9 @@ class Database
         $this->pdo = null;
     }
     // Add this method to your Database class if it doesn't already exist
-public function getLastInsertId() {
-    return $this->pdo->lastInsertId();
+    public function getLastInsertId()
+    {
+        return $this->pdo->lastInsertId();
+    }
+    
 }
-
-}
-?>

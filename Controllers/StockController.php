@@ -16,66 +16,33 @@ class StockController extends BaseController
         $stocks = $this->model->getAllStock();
         $products = $this->model->getAllProducts();
         $this->view('pages/stock', ['stocks' => $stocks, 'products' => $products]);
-       
     }
-    public function create()
+
+     function create()
     {
         $stock = $this->model->getAllProducts();
         $this->view('pages/create', ['stock' => $stock]);
-    }
-    function update($id)
+    }  
+    function show($stock_id)
     {
-        $stock = $this->model->getStockById($id);
-        if (!$stock) {
-            $this->view('pages/detail', ['error' => "Stock not found."]);
-            return;
+        $stock = $this->model->getStockById($stock_id);
+        if ($stock) {
+            $this->view('pages/details', ['stock' => $stock]);
+        } else {
+            echo "Stock not found.";
         }
-        $this->view('pages/update', ['stock' => $stock]);
     }
-    function store()
+//                 header('Location: ' . $_SERVER['HTTP_REFERER']);
+    function store($data)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = [
-                'product_id' => $_POST['product_id'],
+                'name' => $_POST['name'],
                 'quantity' => $_POST['quantity'],
-                'category_id' => $_POST['category_id'], 
                 'last_updated' => date('Y-m-d H:i:s')
             ];
-    
-            if ($this->model->createStock($data)) {
-                header("Location: /pages/stock");
-                exit;
-            } else {
-                echo "Error: Failed to create stock.";
-            }
+            $this->model->createStock($data);
+            $this->redirect('/pages/stock');
         }
-    }
-    
-    public function show($id)
-    {
-        $stock = $this->model->getStockById($id);
-        if (!$stock) {
-            $this->view('pages/detail', ['error' => "Stock not found."]);
-            return;
-        }
-        $this->view('pages/detail', ['stock' => $stock]);
-    }
-    function detailsProduct($id)
-    {
-        $product = $this->model->detailsProduct($id);
-        if (!$product) {
-            $this->view('pages/detail', ['error' => "Product not found."]);
-            return;
-        }
-        $this->view('pages/detail', ['stock' => $product]); // Use 'stock' key
-    }
-    function getProductStock($id)
-    {
-        $product = $this->model->getProductStock($id);
-        if (!$product) {
-            $this->view('pages/detail', ['error' => "Product not found."]);
-            return;
-        }
-        $this->view('pages/detail', ['stock' => $product]); // Use 'stock' key
     }
 }

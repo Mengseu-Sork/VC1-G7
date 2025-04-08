@@ -19,8 +19,8 @@
 
             <div>
                 <a
-                  href="/"
-                  class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                  href="/Dashboard"
+                  class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
                     <i class="fas fa-home icon text-blue-500 dark:text-light"></i>
@@ -153,7 +153,7 @@
               </div>
               <div>
                 <a
-                  href="/auth/logout"
+                  href="/Views/auth/login.php"
                   class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
@@ -258,7 +258,7 @@
                           </div>
                           </button>
 
-                          <!-- Add this where you want the notification bell to appear -->
+                         
                           <button
                               class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker"
                               >
@@ -280,7 +280,6 @@
                             </svg>
                           </button>
 
-
                           <!-- Color button -->
                           <button
                           @click="openSettingsPanel"
@@ -289,6 +288,7 @@
                           <span class="sr-only">Open settings panel</span>
                             <i class="fas fa-palette" style="font-size: 1.75rem;"></i>
                           </button>
+                          <?php require_once './Views/profile/profile.php'?>
                       </nav>
                   </div>
           </header>           

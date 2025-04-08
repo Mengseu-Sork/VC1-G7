@@ -1,19 +1,28 @@
 <?php
-require 'Router.php';
+require_once 'Router.php';
 require_once 'controllers/UserController.php';
 require_once 'Controllers/DashboardController.php';
 require_once 'Controllers/CategoryController.php';
-require 'Controllers/ProductController.php';
-require 'Controllers/ShowproductController.php';
+require_once 'Controllers/ProductController.php';
+require_once 'Controllers/ShowproductController.php';
 require_once 'Controllers/OrderController.php';
 require_once 'Controllers/AuthController.php';
-require_once 'controllers/StockController.php';
+require_once 'Controllers/StockController.php';
+
 
 
 $routes = new Router();
 
 // dashboard
-$routes->get('/', [DashboardController::class, 'index']);
+$routes->get('/Dashboard', [DashboardController::class, 'index']);
+
+
+// Authentication routes
+$routes->get('/', [AuthController::class, 'login']);
+$routes->post('/auth/login', [AuthController::class, 'login']);
+$routes->get('/auth/register', [AuthController::class, 'register']);
+$routes->post('/auth/register', [AuthController::class, 'register']);
+$routes->get('/auth/logout', [AuthController::class, 'logout']);
 
 // Homepage
 $routes->get('/pages', [ShowproductController::class, 'index']);
@@ -24,10 +33,10 @@ $routes->get('/pages/prosuct_ratings', [ShowproductController::class, 'ratings']
 //stock
 $routes->get('/pages', [ShowproductController::class, 'show']);
 $routes->get('/pages/stock', [StockController::class, 'index']);
-$routes->get('/pages/detail', [StockController::class, 'getProductStock']);
+$routes->get('/pages/stock_list', [StockController::class, 'show']);
 $routes->get('/pages/create', [StockController::class, 'create']);
-$routes->post('/pages/store', [StockController::class, 'store']);
-$routes->get('/pages/update', [StockController::class, 'update']);
+$routes->post('/pages/store', [StockController::class, 'detail']);
+
 
 
 
