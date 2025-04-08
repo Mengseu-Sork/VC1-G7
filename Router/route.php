@@ -8,6 +8,7 @@ require_once 'Controllers/ShowproductController.php';
 require_once 'Controllers/OrderController.php';
 require_once 'Controllers/AuthController.php';
 require_once 'Controllers/StockController.php';
+require_once 'Controllers/ReportController.php';
 
 
 
@@ -37,6 +38,9 @@ $routes->get('/pages/stock_list', [StockController::class, 'show']);
 $routes->get('/pages/create', [StockController::class, 'create']);
 $routes->post('/pages/store', [StockController::class, 'detail']);
 
+
+//report
+$routes->get('/reports/report', [ReportController::class, 'index']);
 
 
 

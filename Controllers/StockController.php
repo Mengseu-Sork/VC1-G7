@@ -18,11 +18,11 @@ class StockController extends BaseController
         $this->view('pages/stock', ['stocks' => $stocks, 'products' => $products]);
     }
 
-     function create()
+    function create()
     {
         $stock = $this->model->getAllProducts();
         $this->view('pages/create', ['stock' => $stock]);
-    }  
+    }
     function show($stock_id)
     {
         $stock = $this->model->getStockById($stock_id);
@@ -32,7 +32,6 @@ class StockController extends BaseController
             echo "Stock not found.";
         }
     }
-//                 header('Location: ' . $_SERVER['HTTP_REFERER']);
     function store($data)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
