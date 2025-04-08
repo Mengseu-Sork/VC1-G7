@@ -8,9 +8,9 @@ class User {
         $this->pdo = new Database();
     }
 
-    public function register($firstName, $lastName, $email, $phone, $password, $role = 'user') {
+    public function register($firstName, $lastName, $email, $phone, $password, $role = 'employee') {
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-        $sql = "INSERT INTO users (FirstName, LastName, email, phone, password, role) 
+        $sql = "INSERT INTO admins (FirstName, LastName, email, phone, password, role) 
                 VALUES (:firstName, :lastName, :email, :phone, :password, :role)";
         $params = [
             ':firstName' => $firstName,
@@ -24,7 +24,7 @@ class User {
     }
 
     public function getUserByEmail($email) {
-        $sql = "SELECT * FROM users WHERE email = :email";
+        $sql = "SELECT * FROM admins WHERE email = :email";
         $params = [':email' => $email];
         $stmt = $this->pdo->query($sql, $params);
         $user = $stmt->fetch();

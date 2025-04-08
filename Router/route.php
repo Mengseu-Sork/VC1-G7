@@ -8,6 +8,7 @@ require_once 'Controllers/ShowproductController.php';
 require_once 'Controllers/OrderController.php';
 require_once 'Controllers/AuthController.php';
 require_once 'Controllers/StockController.php';
+require_once 'Controllers/TransactionController.php';
 
 
 
