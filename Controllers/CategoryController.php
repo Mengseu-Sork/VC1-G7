@@ -11,6 +11,14 @@ class CategoryController extends BaseController {
 
     // Display the categories
     public function index(){
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        if (!isset($_SESSION['user'])) {
+            header("Location: views/auth/login");
+            exit();
+        }
         $categories = $this->model->getAllCategories();
         $this->view('categories/category_list',['categories' => $categories]); 
 
@@ -18,6 +26,9 @@ class CategoryController extends BaseController {
     
     function create()
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         $this->view('categories/create');
     }
 
@@ -35,6 +46,9 @@ class CategoryController extends BaseController {
 
     function edit($id)
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         $category = $this->model->getCategories($id); 
         $this->view('categories/edit', ['category' => $category]); 
     }

@@ -40,7 +40,11 @@
     </div>
 </div>
 <script>
+<<<<<<< HEAD
 function searchProducts() {
+=======
+    function searchProducts() {
+>>>>>>> 068f8b9933bfbeab3757b532d9c562b2372720af
     const input = document.getElementById("searchInput");
     const filter = input.value.toLowerCase();
     const productItems = document.querySelectorAll(".product-item");

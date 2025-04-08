@@ -1,3 +1,4 @@
+
 <div x-data="setup()" x-init="$refs.loading.classList.add('hidden'); setColors(color);" :class="{ 'dark': isDark}">
       <div class="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
         <!-- Loading screen -->
@@ -12,10 +13,10 @@
         <aside class="flex-shrink-0 hidden w-64 bg-white border-r dark:border-primary-darker dark:bg-darker md:block">
           <div class="flex flex-col h-full">
             <nav aria-label="Main" class="flex-1 px-2 py-4 space-y-2 overflow-y-hidden hover:overflow-y-auto">
-            <a href="/" class="inline-flex items-center text-2xl font-bold tracking-wider uppercase text-primary-dark dark:text-light">
-              <img src="../../../Assets/images/FX12 LOGO.png" alt="San Cafe Logo" class="w-12 mr-4">
-              <span class="font-bold text-3xl">SAN CAFE</span>
-            </a>
+              <a href="#" class="inline-flex items-center text-2xl font-bold tracking-wider uppercase text-primary-dark dark:text-light">
+                <img src="../../../Assets/images/FX12 LOGO.png" alt="San Cafe Logo" class="w-12 mr-4">
+                <span class="font-bold text-3xl">SAN CAFE</span>
+              </a>
 
             <div>
                 <a
@@ -281,14 +282,10 @@
                           </button>
 
                           <!-- Color button -->
-                          <button
-                          @click="openSettingsPanel"
-                          class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker"
-                          >
-                          <span class="sr-only">Open settings panel</span>
-                            <i class="fas fa-palette" style="font-size: 1.75rem;"></i>
-                          </button>
-                          <?php require_once './Views/profile/profile.php'?>
+                          <?php require_once './Views/layout/colorNavbar.php'?>
+                          <?php require_once './Views/user/buttonUser.php'?>
                       </nav>
                   </div>
           </header>           
+
+       

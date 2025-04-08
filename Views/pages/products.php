@@ -55,8 +55,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit;
 }
 ?>
-</head>
-<body>
     <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
         <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
             
@@ -107,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <div class="view-more-overlay">View More</div>
                                     </a>
                                 </div>
-                                <h4 class="text-lg font-bold mt-2 text-black"><?= htmlspecialchars($product['name'] ?? 'Unnamed Product') ?></h4>
+                                <h4 class="text-lg font-bold mt-2 font-semibold"><?= htmlspecialchars($product['name'] ?? 'Unnamed Product') ?></h4>
                                 <p class="text-gl font-semibold mt-2 mb-2">
                                     <?= htmlspecialchars($product['stock'] ?? 'In stock') ?>
                                 </p>
@@ -184,9 +182,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button id="closeSuccess" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-300">OK</button>
         </div>
     </div>
-
-</body>
-</html>
 <script>
     let productsPerRow = <?= $productsPerRow ?>; 
     let rowsPerClick = <?= $rowsPerClick ?>;
