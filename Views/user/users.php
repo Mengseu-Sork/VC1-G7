@@ -18,7 +18,6 @@
                                     <th class="py-3 px-6 text-left">Email</th>
                                     <th class="py-3 px-6 text-left">Phone</th>
                                     <th class="py-3 px-6 text-left">Role</th>
-                                    <th class="py-3 px-6 text-left">Active</th>
                                     <th class="py-3 px-2 text-center">Action</th>
                                 </tr>
                             </thead>
@@ -33,13 +32,6 @@
                                         <td class="py-3 px-4 font-semibold"><?= $user['email'] ?></td>
                                         <td class="py-3 px-6 font-semibold"><?= $user['phone'] ?></td>
                                         <td class="py-3 px-6 font-semibold "><?= $user['role'] ?></td>
-                                        <td class="py-3 px-6 font-semibold">
-                                            <?php if ($user['active'] == 1): ?>
-                                                <span class="text-green-500 font-semibold">Active</span>
-                                            <?php else:?>
-                                                <span class="text-red-500 font-semibold">Inactive</span>
-                                            <?php endif; ?>
-                                        </td>
                                         <td class="flex py-3 px-2 font-semibold justify-center relative">
 
                                                 <!-- Edit Option -->
@@ -55,24 +47,30 @@
                                                 </button>
 
 
-                                                <!-- Detail Option -->
-                                                <button onclick="openModal('detailUserModal<?= $user['id'] ?>')" 
-                                                        class="block text-left px-2 py-2 text-gray-700 flex items-center">
-                                                            <i class="far fa-eye mr-1" style="color: blue;"></i>
-                                                </button>
+                                                <a href="/user/show?id=<?= $user['id'] ?>" 
+                                                    class="block px-2 py-2 text-gray-700 flex items-center">
+                                                    <i class="far fa-eye mr-1" style="color: blue;"></i>
+                                                </a>
                                             </div>
                                         </td>
-                                        <!-- Delete Confirmation Modal -->
-                                        <div id="deleteUserModal<?= $user['id'] ?>" 
-                                            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
-                                            <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-                                                <h2 class="text-lg font-semibold flex justify-center">Delete User</h2>
-                                                <p class="mt-4">Are you sure you want to delete this user?</p>
+                                    <!-- Delete Confirmation Modal -->
+                                    <div id="deleteUserModal<?= $user['id'] ?>" 
+                                        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+                                        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+                                            <h2 class="text-lg font-semibold flex justify-center">Delete User</h2>
+                                            <p class="mt-4">Are you sure you want to delete this user?</p>
 
-                                                <div class="mt-6 flex justify-end space-x-2">
-                                                    <button onclick="closeModal('deleteUserModal<?= $user['id'] ?>')"
-                                                        class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:opacity-90">
-                                                        Cancel
+                                            <div class="mt-6 flex justify-end space-x-2">
+                                                <button onclick="closeModal('deleteUserModal<?= $user['id'] ?>')"
+                                                    class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:opacity-90">
+                                                    Cancel
+                                                </button>
+
+                                                <form action="/user/delete?id=<?= $user['id'] ?>" method="POST">
+                                                    <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                                                    <button type="submit"
+                                                        class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
+                                                        Delete
                                                     </button>
 
                                                     <form action="/user/delete?id=<?= $user['id'] ?>" method="POST">
