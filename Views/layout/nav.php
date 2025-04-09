@@ -20,7 +20,7 @@
 
             <div>
                 <a
-                  href="/Dashboard"
+                  href="/Dashboard/list"
                   class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
@@ -35,7 +35,7 @@
               </div>
               <div>
                 <a
-                  href="/pages"
+                  href="/pages/products"
                   class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                 >
                   <span aria-hidden="true">
@@ -52,7 +52,7 @@
 
                 <!-- active classes 'bg-primary-100 dark:bg-primary' -->
                 <a
-                  href="/products"
+                  href="/products/Products_list"
                   class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
 
                 >
@@ -77,7 +77,7 @@
               <div>
                 <!-- active classes 'bg-primary-100 dark:bg-primary' -->
                 <a
-                  href="/categories"
+                  href="/categories/category_list"
                   class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
 
                 >

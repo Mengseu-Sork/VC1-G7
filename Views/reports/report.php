@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-200 p-6">
+<body class="bg-gray-200 p-0">
 
     <div class="container mx-auto">
         <h1 class="text-2xl font-bold mb-6">List of Products</h1>
