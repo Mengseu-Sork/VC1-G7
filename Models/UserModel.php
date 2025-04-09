@@ -16,7 +16,7 @@ class UserModel
     }
 
     public function getUserByEmail($email)
-{
+    {
     $stmt = $this->pdo->query("SELECT * FROM admins WHERE email = ?", [$email]);
     return $stmt->fetch();
     }
@@ -24,17 +24,17 @@ class UserModel
 
     function createUser($data)
     {
-        return $this->pdo->query("INSERT INTO admins (image, FirstName, LastName, email, password) 
-                                  VALUES (:image, :FirstName, :LastName, :email, :password)", [
-            'image' => $data['image'],
-            'FirstName' => $data['FirstName'],
-            'LastName' => $data['LastName'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'password' => password_hash($data['password'], PASSWORD_DEFAULT),
-        ]);
+        $passwordHash = password_hash($data['password'], PASSWORD_DEFAULT);
+        $role = isset($data['role']) ? $data['role'] : 'employee';
+    
+        $sql = "INSERT INTO admins (image, FirstName, LastName, email, phone, password, role) 
+                VALUES ('{$data['image']}', '{$data['FirstName']}', '{$data['LastName']}', '{$data['email']}', 
+                        '{$data['phone']}', '$passwordHash', '$role')";
+    
+        return $this->pdo->query($sql);
     }
 
+    
     function getUser($id)
     {
         return $this->pdo->query("SELECT * FROM admins WHERE id = :id", ['id' => $id])->fetch();
@@ -43,12 +43,13 @@ class UserModel
     function updateUser($id, $data)
     {
         return $this->pdo->query("UPDATE admins SET image = :image, FirstName = :FirstName, LastName = :LastName, 
-                                  email = :email, password = :password WHERE id = :id", [
+                                  email = :email, phone = :phone, role = :role, password = :password WHERE id = :id", [
             'image' => $data['image'],
             'FirstName' => $data['FirstName'],
             'LastName' => $data['LastName'],
             'email' => $data['email'],
             'phone' => $data['phone'],
+            'role' => $data['role'],
             'password' => password_hash($data['password'], PASSWORD_DEFAULT),
             'id' => $id
         ]);
@@ -62,8 +63,15 @@ class UserModel
 
     public function show($id)
     {
-        $sql = "SELECT admins.id,admins.image, admins.FirstName, admins.LastName, admins.email, admins.password FROM admins WHERE admins.id = :id";
+        $sql = "SELECT admins.id,admins.image, admins.FirstName, admins.LastName, admins.email, admins.phone, admins.role, admins.password FROM admins WHERE admins.id = :id";
         $stmt = $this->pdo->query($sql, [':id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }   
+    
+    public function getUserProfile($id) {
+        $sql = "SELECT id, image, FirstName, LastName, email, phone, role 
+                FROM admins 
+                WHERE id = :id";
+        return $this->pdo->query($sql, [':id' => $id])->fetch(PDO::FETCH_ASSOC);
+    }
 }

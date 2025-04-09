@@ -1,4 +1,5 @@
 <?php
+
 require_once 'Router.php';
 require_once 'controllers/UserController.php';
 require_once 'Controllers/DashboardController.php';
@@ -40,6 +41,8 @@ $routes->get('/user/edit', [UserController::class, 'edit']);
 $routes->put('/user/update', [UserController::class, 'update']);
 $routes->delete('/user/delete', [UserController::class, 'destroy']);
 $routes->get('/user/show', [UserController::class, 'show']);
+$routes->get('/user/show', [UserController::class, 'show']);
+$routes->get('/user/profile', [UserController::class, 'profile']);
 
 // products
 $routes->get('/products', [ProductController::class, 'index']);
@@ -53,6 +56,11 @@ $routes->get('/products/details', [ProductController::class, 'show']);
 $routes->get('/products/prosuct_ratings', [ProductController::class, 'ratings']);
 
 $routes->get('/categories', [CategoryController::class, 'index']);
+$routes->get('/categories/create', [CategoryController::class, 'create']);
+$routes->post('/categories/store', [CategoryController::class, 'store']);
+$routes->get('/categories/edit', [CategoryController::class, 'edit']);
+$routes->put('/categories/update', [CategoryController::class, 'update']);
+$routes->get('/categories/delete', [CategoryController::class, 'destroy']);
 
 $routes->post('/order/process', [OrderController::class, 'process']);
 $routes->get('/pages/order', [OrderController::class, 'index']);
@@ -69,7 +77,7 @@ $routes->get('/pages/viewOrder', [OrderController::class, 'viewOrder']);
 // $routes->delete('/orders/delete', [OrderController::class, 'delete']);
 // $routes->get('/orders/show', [OrderController::class, 'show']);
 
-$routes->post('/order/process', [OrderController::class, 'process']);
-$routes->get('/pages/order', [OrderController::class, 'index']);
+$routes->post('/orderHistory/process', [OrderController::class, 'process']);
+$routes->get('/orders/orderHistory', [OrderController::class, 'index']);
 
 $routes->dispatch();

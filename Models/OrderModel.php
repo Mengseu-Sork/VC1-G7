@@ -8,17 +8,17 @@ class OrderModel {
         $this->db = new Database();
     }
 
-    public function beginTransaction() {
-        $this->db->query("START TRANSACTION");
-    }
+    // public function beginTransaction() {
+    //     $this->db->query("START TRANSACTION");
+    // }
 
-    public function commit() {
-        $this->db->query("COMMIT");
-    }
+    // public function commit() {
+    //     $this->db->query("COMMIT");
+    // }
 
-    public function rollBack() {
-        $this->db->query("ROLLBACK");
-    }
+    // public function rollBack() {
+    //     $this->db->query("ROLLBACK");
+    // }
 
     public function insertOrder($orderData) {
         $sql = "INSERT INTO orders (user_id, order_date, total_amount) 

@@ -14,6 +14,14 @@ class StockController extends BaseController
 
     public function index()
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        if (!isset($_SESSION['user'])) {
+            header("Location: views/auth/login");
+            exit();
+        }
         $stocks = $this->model->getAllStock();
         $products = $this->model->getAllProducts();
         $this->view('pages/stock', ['stocks' => $stocks, 'products' => $products]); 

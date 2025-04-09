@@ -10,8 +10,16 @@ class OrderController extends BaseController {
     }
 
     public function index() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        if (!isset($_SESSION['user'])) {
+            header("Location: views/auth/login");
+            exit();
+        }
         $orders = $this->orderModel->getAllOrders();
-        $this->view('pages/orderHistory', ['orders' => $orders]);
+        $this->view('/orders/orderHistory', ['orders' => $orders]);
     }
 
     public function process() {
@@ -47,7 +55,7 @@ class OrderController extends BaseController {
         }
 
         try {
-            $this->orderModel->beginTransaction();
+            // $this->orderModel->beginTransaction();
 
             $orderData = [
                 'user_id' => (int)$data['user_id'],
@@ -109,11 +117,11 @@ class OrderController extends BaseController {
                 }
             }
 
-            $this->orderModel->commit();
-            $this->sendJsonResponse(true, 'Order placed successfully', 200, ['order_id' => $orderID]);
+            // $this->orderModel->commit();
+            // $this->sendJsonResponse(true, 'Order placed successfully', 200, ['order_id' => $orderID]);
 
         } catch (Exception $e) {
-            $this->orderModel->rollBack();
+            // $this->orderModel->rollBack();
             error_log("Order processing error: " . $e->getMessage());
             $this->sendJsonResponse(false, 'Order processing failed: ' . $e->getMessage(), 500);
         }

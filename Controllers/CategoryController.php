@@ -11,6 +11,14 @@ class CategoryController extends BaseController {
 
     // Display the categories
     public function index(){
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        if (!isset($_SESSION['user'])) {
+            header("Location: views/auth/login");
+            exit();
+        }
         $categories = $this->model->getAllCategories();
         $this->view('categories/category_list',['categories' => $categories]); 
 

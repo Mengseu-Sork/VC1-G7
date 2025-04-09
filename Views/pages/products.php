@@ -56,14 +56,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
-
 <body>
     <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
         <div class="grid grid-cols-1 md:grid-cols-1 gap-2">
@@ -75,8 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                         <div class="flex w-full md:w-auto gap-2 relative">
                             <input type="text" id="searchInput" placeholder="Search products..."
                                 class="w-full md:w-64 px-4 py-2 pl-10 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 outline-none bg-white dark:bg-darker border-b dark:border-primary-darker">
-                            <i
-                                class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                             <button type="button" onclick="searchProducts()"
                                 class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300">
                                 Search
@@ -119,11 +116,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                                         <div class="view-more-overlay">View More</div>
                                     </a>
                                 </div>
-                                <h4 class="text-lg font-bold mt-2 text-black text-center">
-                                    <?= htmlspecialchars($product['name'] ?? 'Unnamed Product') ?>
-                                </h4>
-                                <p
-                                    class="text-sm font-semibold mt-2 mb-2 text-center <?= $isInStock ? 'text-green-600' : 'text-red-600' ?>">
+                                <h4 class="text-lg font-bold mt-2 font-semibold"><?= htmlspecialchars($product['name'] ?? 'Unnamed Product') ?></h4>
+                                <p class="text-gl font-semibold mt-2 mb-2">
                                     <?= htmlspecialchars($product['stock'] ?? 'In stock') ?>
                                 </p>
                                 <p class="text-sm font-semibold text-yellow-600 text-center">
@@ -186,7 +180,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                                     <span id="decreaseQty"
                                         class="text-2xl font-bold text-gray-600 cursor-pointer select-none">−</span>
                                     <input type="text" id="quantity" name="quantity" value="1" readonly
-                                        class="rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 w-5 text-center">
+                                        class="rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 w-16 text-center">
                                     <span id="increaseQty"
                                         class="text-2xl font-bold text-gray-600 cursor-pointer select-none">+</span>
                                 </div>
@@ -204,15 +198,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                     </div>
                 </div>
 
+                <!-- Simplified Success Message Popup -->
                 <div id="successMessage"
                     class="fixed inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50 hidden z-50">
-                    <div class="bg-white w-96 p-8 rounded-lg shadow-lg text-center">
-                        <h2 class="text-2xl font-bold text-green-600 mb-4">Order Successful!</h2>
-                        <div class="flex justify-center mb-6">
-                            <i class="fas fa-check-circle text-green-600 text-6xl"></i>
-                        </div>
+                    <div class="bg-white w-80 p-6 rounded-lg shadow-lg text-center">
+                        <h2 id="successMessageTitle" class="text-xl font-bold text-green-600 mb-4">Order Placed Successfully!</h2>
                         <button id="closeSuccess"
-                            class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-300">OK</button>
+                            class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">OK</button>
                     </div>
                 </div>
             </div>
@@ -227,7 +219,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
         const totalProducts = <?= $totalProducts ?>;
         let pendingOrder = null;
 
-        // Cart Management Functions
         function getCart() {
             const cart = localStorage.getItem('cart');
             return cart ? JSON.parse(cart) : [];
@@ -244,28 +235,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
             document.getElementById('cartCount').textContent = totalItems;
         }
 
-        function addToCart(product) {
-            let cart = getCart();
-            const existingItem = cart.find(item => item.id === product.id);
+        function getOrderHistory() {
+            const history = localStorage.getItem('orderHistory');
+            return history ? JSON.parse(history) : [];
+        }
 
-            if (existingItem) {
-                if (existingItem.quantity < product.stock_quantity) {
-                    existingItem.quantity += 1;
-                } else {
-                    alert(`Cannot add more: Only ${product.stock_quantity} items left in stock.`);
-                    return;
-                }
-            } else {
-                if (product.stock_quantity > 0) {
-                    cart.push({ ...product, quantity: 1 });
-                } else {
-                    alert('Cannot add: Product is out of stock.');
-                    return;
-                }
-            }
+        function saveOrderHistory(order) {
+            let history = getOrderHistory();
+            history.push(order);
+            localStorage.setItem('orderHistory', JSON.stringify(history));
+        }
 
-            saveCart(cart);
-            alert(`${product.name} has been added to your cart!`);
+        function showSuccessMessage(message) {
+            const successMessageTitle = document.getElementById('successMessageTitle');
+            const successMessage = document.getElementById('successMessage');
+            successMessageTitle.textContent = message;
+            successMessage.classList.remove('hidden');
         }
 
         function filterByCategory(category) {
@@ -392,10 +377,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
             let currentStockQuantity = 0;
             let currentProductId = 0;
 
-            // Initialize cart count on page load
             updateCartCount();
 
-            // Add to Cart Event Listener
+            // ADD button logic (still adds to cart)
             document.querySelectorAll('.add-to-cart').forEach(button => {
                 button.addEventListener('click', function () {
                     const product = {
@@ -406,7 +390,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                         stock: this.getAttribute('data-stock'),
                         stock_quantity: parseInt(this.getAttribute('data-stock-quantity'))
                     };
-                    addToCart(product);
+
+                    let cart = getCart();
+                    const existingItem = cart.find(item => item.id === product.id);
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                        if (existingItem.quantity > existingItem.stock_quantity) {
+                            existingItem.quantity = existingItem.stock_quantity;
+                            alert('Maximum stock quantity reached!');
+                            return;
+                        }
+                    } else {
+                        product.quantity = 1;
+                        cart.push(product);
+                    }
+                    saveCart(cart);
+                    showSuccessMessage('Product Added to Cart!');
                 });
             });
 
@@ -489,6 +488,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                 const price = parseFloat(elements.modalPriceInput.value);
                 const totalAmount = price * quantity;
 
+                // Validation
                 if (currentStock !== 'In stock') {
                     alert('Cannot order: Product is out of stock.');
                     return;
@@ -502,7 +502,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                     return;
                 }
 
-                // Add the ordered item to the cart
                 const product = {
                     id: productId,
                     name: productName,
@@ -512,56 +511,35 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                     stock_quantity: currentStockQuantity,
                     quantity: quantity
                 };
-                let cart = getCart();
-                const existingItem = cart.find(item => item.id === product.id);
-                if (existingItem) {
-                    existingItem.quantity += quantity;
-                    if (existingItem.quantity > existingItem.stock_quantity) {
-                        existingItem.quantity = existingItem.stock_quantity;
-                        alert(`Adjusted quantity: Only ${existingItem.stock_quantity} items left in stock.`);
-                    }
-                } else {
-                    cart.push(product);
-                }
-                saveCart(cart);
 
+                // Save to order history (without adding to cart)
+                const order = {
+                    user_name: 'Guest', // Replace with actual user_name if available
+                    order_id: Date.now().toString(),
+                    order_date: new Date().toISOString().split('T')[0] + " " + new Date().toLocaleTimeString(),
+                    total_amount: totalAmount,
+                    items: [product]
+                };
+                saveOrderHistory(order);
+
+                // Hide modal and show simple success message
                 elements.modal.classList.add('hidden');
-                elements.successMessage.classList.remove('hidden');
+                elements.modalImage.classList.add('hidden');
+                showSuccessMessage('Order Placed Successfully!');
             });
 
             elements.closeSuccess.addEventListener('click', function () {
                 elements.successMessage.classList.add('hidden');
-                window.location.href = '../../Views/orders/order.php';
             });
 
             resetProducts();
         });
     </script>
     <style>
-        @media (max-width: 1280px) {
-            #productContainer {
-                grid-template-columns: repeat(4, minmax(0, 1fr));
-            }
-        }
-
-        @media (max-width: 1024px) {
-            #productContainer {
-                grid-template-columns: repeat(3, minmax(0, 1fr));
-            }
-        }
-
-        @media (max-width: 768px) {
-            #productContainer {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-        }
-
-        @media (max-width: 480px) {
-            #productContainer {
-                grid-template-columns: repeat(1, minmax(0, 1fr));
-            }
-        }
+        @media (max-width: 1280px) { #productContainer { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+        @media (max-width: 1024px) { #productContainer { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+        @media (max-width: 768px) { #productContainer { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        @media (max-width: 480px) { #productContainer { grid-template-columns: repeat(1, minmax(0, 1fr)); } }
     </style>
 </body>
-
 </html>
