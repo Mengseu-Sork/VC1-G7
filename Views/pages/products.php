@@ -7,9 +7,9 @@ $categories_name = [
     'Drinks' => 'Drinks Products'
 ];
 
-$productsPerRow = 5; // Number of products per row
-$rowsPerClick = 2; // Show 2 more rows per click
-$initialRows = 2; // Initially displayed rows
+$productsPerRow = 5;
+$rowsPerClick = 2;
+$initialRows = 2;
 $initialProductsToShow = $productsPerRow * $initialRows;
 $totalProducts = count($products);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -55,8 +55,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit;
 }
 ?>
-</head>
-<body>
     <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
         <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
             
@@ -86,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php endforeach; ?>
                         </select>                      
                     </div>                
-                <div class="container flex flex-wrap gap-8 p-4 justify-center" id="productContainer">
+                <div class="container flex flex-wrap gap-8 p-4 " id="productContainer">
                     <?php 
                     $index = 0;
                     foreach ($products as $product): 
@@ -94,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $stockStatus = isset($product["stock_status"]) ? $product["stock_status"] : 1;
                     ?>
                     <?php $isInStock = ($product['stock'] ?? 'In stock') === 'In stock'; ?>
-                        <div class="w-48 h-72 bg-white border border-gray-300 p-4 rounded-lg shadow-md transition duration-300 flex flex-col items-center bg-white dark:bg-darker border-b dark:border-primary-darker <?= $hiddenClass ?>" data-category="<?= $product['category_name'] ?>"
+                        <div class="w-48 h-76 bg-white border border-gray-300 p-4 rounded-lg shadow-md transition duration-300 flex flex-col items-center bg-white dark:bg-darker border-b dark:border-primary-darker <?= $hiddenClass ?>" data-category="<?= $product['category_name'] ?>"
                         data-category="<?= htmlspecialchars($product['category_name'] ?? 'Uncategorized') ?>"
                                 data-name="<?= htmlspecialchars($product['name'] ?? '') ?>"
                                 data-price="<?= htmlspecialchars($product['price'] ?? 0.00) ?>"
@@ -107,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <div class="view-more-overlay">View More</div>
                                     </a>
                                 </div>
-                                <h4 class="text-lg font-bold mt-2 text-black"><?= htmlspecialchars($product['name'] ?? 'Unnamed Product') ?></h4>
+                                <h4 class="text-lg font-bold mt-2 font-semibold"><?= htmlspecialchars($product['name'] ?? 'Unnamed Product') ?></h4>
                                 <p class="text-gl font-semibold mt-2 mb-2">
                                     <?= htmlspecialchars($product['stock'] ?? 'In stock') ?>
                                 </p>
@@ -184,9 +182,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button id="closeSuccess" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-300">OK</button>
         </div>
     </div>
-
-</body>
-</html>
 <script>
     let productsPerRow = <?= $productsPerRow ?>; 
     let rowsPerClick = <?= $rowsPerClick ?>;
