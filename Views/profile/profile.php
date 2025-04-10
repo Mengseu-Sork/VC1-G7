@@ -1,3 +1,54 @@
+<?php
+// Handle form submissions for file uploads
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    header("Content-Type: application/json"); // Set response type to JSON
+
+    if (isset($_FILES["image"]) && $_FILES["image"]["error"] == UPLOAD_ERR_OK) {
+        $targetDir = "Assets/images/uploads/";
+        $fileName = basename($_FILES["image"]["name"]);
+        $targetFilePath = $targetDir . $fileName;
+        $fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
+
+        // Allowed file types
+        $allowedTypes = ["jpg", "jpeg", "png", "gif"];
+        if (!in_array($fileType, $allowedTypes)) {
+            echo json_encode(["success" => false, "message" => "Invalid file format. Only JPG, JPEG, PNG, and GIF files are allowed."]);
+            exit;
+        }
+
+        // Ensure target directory exists
+        if (!is_dir($targetDir) && !mkdir($targetDir, 0777, true)) {
+            echo json_encode(["success" => false, "message" => "Failed to create upload directory."]);
+            exit;
+        }
+
+        // Move the uploaded file
+        if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
+            echo json_encode(["success" => true, "message" => "File uploaded successfully!", "image" => $targetFilePath]);
+        } else {
+            echo json_encode(["success" => false, "message" => "Error moving the uploaded file."]);
+        }
+    } else {
+        // Handle specific upload errors
+        $errorMessages = [
+            UPLOAD_ERR_INI_SIZE   => "The uploaded file exceeds the server limit.",
+            UPLOAD_ERR_FORM_SIZE  => "The uploaded file exceeds the form limit.",
+            UPLOAD_ERR_PARTIAL    => "The file was only partially uploaded.",
+            UPLOAD_ERR_NO_FILE    => "No file was uploaded.",
+            UPLOAD_ERR_NO_TMP_DIR => "Missing a temporary folder.",
+            UPLOAD_ERR_CANT_WRITE => "Failed to write file to disk.",
+            UPLOAD_ERR_EXTENSION  => "File upload stopped by a PHP extension."
+        ];
+        
+        $errorCode = $_FILES["image"]["error"];
+        $errorMessage = $errorMessages[$errorCode] ?? "An unknown error occurred.";
+
+        echo json_encode(["success" => false, "message" => $errorMessage]);
+    }
+    exit;
+}
+?>
+
 <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
         <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
             <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
@@ -51,7 +102,10 @@
                                     <span class="px-2 text-green-600">✔</span>
                                 </div>
                             </div>
-                            <button type="button" class="bg-yellow-500 text-white flex ml-auto mt-4 px-4 py-2 rounded-lg hover:opacity-90" onclick="window.location.href='/Dashboard'"> Cancel</button>
+                            <div class="flex justify-end space-x-4">
+                                <a href="/profile/editProfile?id=<?= $user['id'] ?>" class="btn bg-blue-500 text-white flex ml-auto mt-4 px-4 py-2 rounded-lg hover:opacity-90">Edit</a>
+                                <button type="button" class="bg-yellow-500 text-white flex ml-auto mt-4 px-4 py-2 rounded-lg hover:opacity-90" onclick="window.location.href='/Dashboard'"> Cancel</button>
+                            </div>
                         </div>
                     </div>
                 </div>

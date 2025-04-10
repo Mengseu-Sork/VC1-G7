@@ -9,7 +9,7 @@ class ProfileController extends BaseController
         $this->model =  new ProfileModel();
     }
 
-function profile() {
+    function profile() {
         session_start();
         if (!isset($_SESSION['user'])) {
             
@@ -20,5 +20,53 @@ function profile() {
         $userId = $_SESSION['user']['id'];
         $user = $this->model->getUserProfile($userId);
         $this->view('profile/profile', ['user' => $user]);
+    }
+
+    function editProfile($id)
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $user = $this->model->getUserProfile($id);
+        $this->view('profile/edit',['user'=>$user]);
+    }
+
+
+    
+    function updateProfile($id)
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id = $_POST['id'];
+            
+            // Image Upload Handling
+            $profileImage = null;
+            if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+                $target_dir = "Assets/images/uploads/";
+                if (!is_dir($target_dir)) {
+                    mkdir($target_dir, 0777, true);
+                }
+                $profileImage = basename($_FILES['image']['name']);
+                $targetPath = $target_dir . $profileImage;
+                if (!move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
+                    echo "Error: Failed to upload image.";
+                    return;
+                }
+            } else {
+                // If no new image is uploaded, keep the existing image
+                $user = $this->model->getUserProfile($id);
+                $profileImage = $user['image'];
+            }
+
+            $data = [
+                'image' => $profileImage,
+                'FirstName' => $_POST['FirstName'],
+                'LastName' => $_POST['LastName'],
+                'email' => $_POST['email'],
+                'phone' => $_POST['phone'],
+            ];
+
+            $this->model->updateProfile($id, $data);
+            $this->redirect('profile');
+        }
     }
 }

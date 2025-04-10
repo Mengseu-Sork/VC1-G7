@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 03, 2025 at 05:35 AM
+-- Generation Time: Apr 08, 2025 at 04:58 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -35,15 +35,18 @@ CREATE TABLE `admins` (
   `email` varchar(255) DEFAULT NULL,
   `phone` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` varchar(100) NOT NULL
+  `role` varchar(100) NOT NULL,
+  `last_login` datetime DEFAULT NULL,
+  `active` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admins`
 --
 
-INSERT INTO `admins` (`id`, `FirstName`, `LastName`, `image`, `email`, `phone`, `password`, `role`) VALUES
-(3, 'Admin', 'System', 0x313734333635303730335f313734333530393737392d313734333530393731342d313734333530333438382d706963322e6a7067, 'admin@gmail.com', '086788826', '$2y$10$B5aUD6NolnGZ/lsE5AHoN.OsfjTRYZK04vaOWp490f7u3c85ja5YK', 'admin');
+INSERT INTO `admins` (`id`, `FirstName`, `LastName`, `image`, `email`, `phone`, `password`, `role`, `last_login`, `active`) VALUES
+(3, 'Admin', 'System', 0x313734333939363032395f706963332e6a7067, 'admin@gmail.com', '086788826', '$2y$10$PO6tWFVvSvdV9QjNuZGlveLeRpblR.fZqKYRvCsdvP6YrUaLC5rGm', 'admin', '2025-04-07 20:28:43', 1),
+(6, 'Sokleap', 'Seng', 0x313734343030373236345f313734333530333539352d706963362e6a7067, 'sokleap@gmail.com', '01234535', '$2y$10$pe5lsgSLGTJWF3dZVMUWc.FrUgYzCgAD7Q7z9oBCGU7uqZdtH9gZa', 'employee', '2025-04-07 15:49:05', 0);
 
 -- --------------------------------------------------------
 
@@ -244,6 +247,15 @@ CREATE TABLE `stock` (
   `last_updated` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `stock`
+--
+
+INSERT INTO `stock` (`stock_id`, `name`, `product_id`, `quantity`, `last_updated`) VALUES
+(1, 'A', 50, 334, '2025-04-07 04:33:32'),
+(2, 'B', 51, 321, '2025-04-07 04:33:39'),
+(3, 'C', 52, 129, '2025-04-07 04:34:05');
+
 -- --------------------------------------------------------
 
 --
@@ -414,13 +426,13 @@ ALTER TABLE `waste_management`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `discounts_promotions`
@@ -462,7 +474,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `product_discounts`
@@ -492,7 +504,7 @@ ALTER TABLE `shift_scheduling`
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `stock_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `stock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `suppliers`

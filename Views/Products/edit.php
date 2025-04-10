@@ -38,20 +38,15 @@
                             </select>
                         </div>
                         
-                        <div class="flex flex-col">
-                            <label for="product_content" class="font-semibold mb-1">Product Content</label>
-                            <textarea name="product_content" id="product_content" rows="8" class="border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300 bg-white dark:text-light dark:bg-darker border-b dark:border-primary-darker"><?php echo isset($product['description']) ? htmlspecialchars($product['description'], ENT_QUOTES, 'UTF-8') : ''; ?></textarea>
-                        </div>
-                        
-                        <div class="flex flex-col">
-                            <label class="font-semibold mb-1">Product Image</label>
-                            <div class="border border-gray-300 rounded-lg p-4 flex flex-col items-center justify-centerbg-white dark:text-light dark:bg-darker border-b dark:border-primary-darker">
-                                <input type="file" name="image" id="image" accept="image/*" onchange="previewImage(this)" class="mb-2 w-full border border-gray-300  dark:text-light dark:border-primary-darker">
-                                <div class="w-24 h-24 flex items-center justify-center border border-gray-200 rounded-lg overflow-hidden mt-3">
-                                    <img id="image-preview" src="<?php echo !empty($product['image']) ? '/Assets/images/uploads/' . $product['image'] : '#'; ?>" alt="Product Image Preview" class="object-cover w-full h-full <?php echo !empty($product['image']) ? '' : 'hidden'; ?>">
-                                </div>
-                                <p class="text-gray-500 text-sm mt-2">Drag and drop a file to upload</p>
+                    </div>
+                    <div class="flex flex-col mt-6">
+                        <label class="font-semibold mb-1">Product Image</label>
+                        <div class="border border-gray-300 rounded-lg p-4 flex flex-col items-center justify-centerbg-white dark:text-light dark:bg-darker border-b dark:border-primary-darker">
+                            <input type="file" name="image" id="image" accept="image/*" onchange="previewImage(this)" class="mb-2 w-full border border-gray-300  dark:text-light dark:border-primary-darker">
+                            <div class="w-24 h-24 flex items-center justify-center border border-gray-200 rounded-lg overflow-hidden mt-3">
+                                <img id="image-preview" src="<?php echo !empty($product['image']) ? '/Assets/images/uploads/' . $product['image'] : '#'; ?>" alt="Product Image Preview" class="object-cover w-full h-full <?php echo !empty($product['image']) ? '' : 'hidden'; ?>">
                             </div>
+                            <p class="text-gray-500 text-sm mt-2">Drag and drop a file to upload</p>
                         </div>
                     </div>
                     
