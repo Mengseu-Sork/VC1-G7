@@ -13,7 +13,7 @@
         <aside class="flex-shrink-0 hidden w-64 bg-white border-r dark:border-primary-darker dark:bg-darker md:block">
           <div class="flex flex-col h-full">
             <nav aria-label="Main" class="flex-1 px-2 py-4 space-y-2">
-              <a href="#" class="flex flex-col items-center items-start mb-4 mt-2 text-primary-dark dark:text-light">
+              <a href="/Dashboard" class="flex flex-col items-center items-start mb-4 mt-2 text-primary-dark dark:text-light">
                 <img src="../../../Assets/images/FX12 LOGO.png" alt="San Cafe Logo" class="w-16 mb-2">
                 <span class="font-bold text-3xl tracking-wider uppercase">SAN CAFE</span>
               </a>
