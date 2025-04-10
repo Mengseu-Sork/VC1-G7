@@ -21,8 +21,7 @@ class ProductModel {
                 products.price, 
                 products.date, 
                 products.image,
-                products.category_id,
-                products.stock_status,   
+                products.category_id, 
                 categories.name AS category_name
                 FROM products 
                 LEFT JOIN categories ON products.category_id = categories.category_id");
@@ -45,15 +44,15 @@ class ProductModel {
 
     function createProduct($data) {
         try {
-            $stmt = "INSERT INTO products (name, price, category_id, date, image, stock_status) 
-                     VALUES (:name, :price, :category_id, :date, :image, :stock_status)";
+            $stmt = "INSERT INTO products (name, price, category_id, date, image) 
+                     VALUES (:name, :price, :category_id, :date, :image)";
             $this->db->query($stmt, [
                 'name' => $data['name'],
                 'price' => $data['price'],
                 'category_id' => $data['category_id'],
                 'date' => $data['date'],
-                'image' => $data['image'],
-                'stock_status' => isset($data['stock_status']) ? $data['stock_status'] : 1, // Default to in stock
+                'image' => $data['image']
+                // 'stock_status' => isset($data['stock_status']) ? $data['stock_status'] : 1, // Default to in stock
             ]);
             return true;
         } catch (Exception $e) {
@@ -95,11 +94,6 @@ class ProductModel {
                 $params['image'] = $data['image'];
             }
             
-            // Include stock status in the update
-            if (isset($data['stock_status'])) {
-                $stmt .= ", stock_status = :stock_status";
-                $params['stock_status'] = $data['stock_status'];
-            }
             
             $stmt .= " WHERE id = :id";
             
@@ -129,69 +123,6 @@ class ProductModel {
             return true;
         } catch (Exception $e) {
             error_log("Error deleting product: " . $e->getMessage());
-            return false;
-        }
-    }
-
-    function updateStockStatus($id, $status) {
-        try {
-            error_log("Model: Updating product ID: $id to stock status: $status");
-            
-            // Make sure the parameters are of the correct type
-            $id = (int)$id;
-            $status = (int)$status;
-            
-            $stmt = "UPDATE products SET stock_status = :stock_status WHERE id = :id";
-            $result = $this->db->query($stmt, [
-                'id' => $id,
-                'stock_status' => $status
-            ]);
-            
-            // Check if any rows were affected
-            $success = ($result !== false);
-            error_log("Update result: " . ($success ? "success" : "failure"));
-            
-            return $success;
-        } catch (Exception $e) {
-            error_log("Error updating stock status: " . $e->getMessage());
-            return false;
-        }
-    }
-
-    function updateBulkStockStatus($ids, $status) {
-        try {
-            error_log("Model: Updating bulk stock status. IDs: " . (is_string($ids) ? $ids : json_encode($ids)) . ", Status: $status");
-            
-            // Check if ids is a JSON string and decode it
-            if (is_string($ids) && json_decode($ids) !== null) {
-                $ids = json_decode($ids);
-            }
-            
-            // Ensure $ids is an array
-            if (!is_array($ids)) {
-                $ids = [$ids];
-            }
-            
-            // Make sure status is an integer
-            $status = (int)$status;
-            
-            // Create placeholders for the query
-            $placeholders = implode(',', array_fill(0, count($ids), '?'));
-            $stmt = "UPDATE products SET stock_status = ? WHERE id IN ($placeholders)";
-            $params = array_merge([$status], $ids);
-            
-            error_log("SQL Query: $stmt");
-            error_log("Parameters: " . json_encode($params));
-            
-            $result = $this->db->query($stmt, $params);
-            
-            // Check if any rows were affected
-            $success = ($result !== false);
-            error_log("Bulk update result: " . ($success ? "success" : "failure"));
-            
-            return $success;
-        } catch (Exception $e) {
-            error_log("Error updating bulk stock status: " . $e->getMessage());
             return false;
         }
     }
