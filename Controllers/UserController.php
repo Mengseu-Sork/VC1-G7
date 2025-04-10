@@ -19,6 +19,9 @@ class UserController extends BaseController
 
     function create()
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         $this->view('user/create');
     }
 
@@ -46,6 +49,9 @@ class UserController extends BaseController
 
     function edit($id)
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         $user = $this->model->getUser($id);
         $this->view('user/edit',['user'=>$user]);
     }
@@ -55,18 +61,25 @@ class UserController extends BaseController
     function update($id)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if (!empty($_FILES['image']['name'])) {
-                $targetDir = "Assets/images/uploads/";
-                $newFileName = time() . "_" .basename($_FILES["image"]["name"]);
-                $targetFile = $targetDir . $newFileName;
-
-                if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
-                    $profileImage = $newFileName;
-                } else {
-                    $profileImage = $_POST['old_image'];
+            $id = $_POST['id'];
+            
+            // Image Upload Handling
+            $profileImage = null;
+            if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+                $target_dir = "Assets/images/uploads/";
+                if (!is_dir($target_dir)) {
+                    mkdir($target_dir, 0777, true);
+                }
+                $profileImage = basename($_FILES['image']['name']);
+                $targetPath = $target_dir . $profileImage;
+                if (!move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
+                    echo "Error: Failed to upload image.";
+                    return;
                 }
             } else {
-                $profileImage = $_POST['old_image'];
+                // If no new image is uploaded, keep the existing image
+                $user = $this->model->getUsers($id);
+                $profileImage = $user['image'];
             }
 
             $data = [

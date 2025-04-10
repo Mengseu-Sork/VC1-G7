@@ -241,19 +241,16 @@
                 <div class="flex items-center justify-between p-4 bg-white rounded-md dark:bg-darker">
                   <div>
                     <h6
-                      class="text-xs font-medium leading-none tracking-wider text-gray-500 uppercase dark:text-primary-light"
+                      class="text-5xs font-medium leading-none tracking-wider text-gray-500 uppercase dark:text-primary-light"
                     >
                       Value
                     </h6>
-                    <span class="text-xl font-semibold">$30,000</span>
-                    <span class="inline-block px-2 py-px ml-2 text-xs text-green-500 bg-green-100 rounded-md">
-                      +4.4%
-                    </span>
+                    <span class="flex justify-center text-2xl font-semibold mt-2">0</span>
                   </div>
                   <div>
                     <span>
                       <svg
-                        class="w-12 h-12 text-gray-300 dark:text-primary-dark"
+                        class="w-16 h-16 text-gray-300 dark:text-primary-dark"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -274,19 +271,16 @@
                 <div class="flex items-center justify-between p-4 bg-white rounded-md dark:bg-darker">
                   <div>
                     <h6
-                      class="text-xs font-medium leading-none tracking-wider text-gray-500 uppercase dark:text-primary-light"
+                      class="text-5xs font-medium leading-none tracking-wider text-gray-500 uppercase dark:text-primary-light"
                     >
                       Stock
                     </h6>
-                    <span class="text-xl font-semibold">50,021</span>
-                    <span class="inline-block px-2 py-px ml-2 text-xs text-green-500 bg-green-100 rounded-md">
-                      +2.6%
-                    </span>
+                    <span class="flex justify-center text-2xl font-semibold mt-2"><?= htmlspecialchars($data['totalStockQuantity']); ?></span>
                   </div>
                   <div>
                     <span>
                       <svg
-                        class="w-12 h-12 text-gray-300 dark:text-primary-dark"
+                        class="w-16 h-16 text-gray-300 dark:text-primary-dark"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -307,19 +301,16 @@
                 <div class="flex items-center justify-between p-4 bg-white rounded-md dark:bg-darker">
                   <div>
                     <h6
-                      class="text-xs font-medium leading-none tracking-wider text-gray-500 uppercase dark:text-primary-light"
+                      class="text-5xs font-medium leading-none tracking-wider text-gray-500 uppercase dark:text-primary-light"
                     >
                       Orders
                     </h6>
-                    <span class="text-xl font-semibold">45,021</span>
-                    <span class="inline-block px-2 py-px ml-2 text-xs text-green-500 bg-green-100 rounded-md">
-                      +3.1%
-                    </span>
+                    <span class="flex justify-center text-2xl font-semibold mt-2">0</span>
                   </div>
                   <div>
                     <span>
                       <svg
-                        class="w-12 h-12 text-gray-300 dark:text-primary-dark"
+                        class="w-16 h-16 text-gray-300 dark:text-primary-dark"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -340,19 +331,15 @@
                 <div class="flex items-center justify-between p-4 bg-white rounded-md dark:bg-darker">
                   <div>
                     <h6
-                      class="text-xs font-medium leading-none tracking-wider text-gray-500 uppercase dark:text-primary-light"
-                    >
+                      class="text-5xs font-medium leading-none tracking-wider text-gray-500 uppercase dark:text-primary-light">
                       Products
                     </h6>
-                    <span class="text-xl font-semibold">20,516</span>
-                    <span class="inline-block px-2 py-px ml-2 text-xs text-green-500 bg-green-100 rounded-md">
-                      +3.1%
-                    </span>
+                    <span class="flex justify-center text-2xl font-semibold mt-2"><?= $totalProducts ?></span>
                   </div>
                   <div>
                     <span>
                       <svg
-                        class="w-12 h-12 text-gray-300 dark:text-primary-dark"
+                        class="w-16 h-16 text-gray-300 dark:text-primary-dark"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -369,38 +356,85 @@
                   </div>
                 </div>
               </div>
-
               <!-- Charts -->
               <div class="grid grid-cols-2 gap-4 ml-4 mr-4 mb-24">
+
+                <!-- Line Chart -->
+                <div class="bg-white rounded-md dark:bg-darker p-4 rounded-lg shadow">
+                    <h2 class="text-lg font-semibold">REPORT</h2>
+                    <canvas id="lineChart"></canvas>
+                </div>
+
                 <!-- Bar Chart -->
                 <div class="bg-white rounded-md dark:bg-darker p-4 rounded-lg shadow">
-                    <h2 class="text-lg font-semibold">Bar Chart</h2>
+                    <h2 class="text-lg font-semibold">List of Months Sale</h2>
                     <canvas id="barChart"></canvas>
                 </div>
                 
-                <!-- Doughnut Chart -->
-                <div class="bg-white p-4 rounded-lg shadow">
-                    <h2 class="text-lg font-semibold">Doughnut Chart</h2>
-                    <canvas id="doughnutChart"></canvas>
-                </div>
-
+                
                 <!-- Active Users Chart -->
-                <div class="bg-white p-4 rounded-lg shadow">
-                    <h2 class="text-lg font-semibold">Active Users</h2>
-                    <p class="text-2xl font-bold">40 Users</p>
-                    <canvas id="activeUsersChart"></canvas>
+                <div class="bg-white rounded-md dark:bg-darker p-4 rounded-lg shadow">
+                  <h2 class="text-lg font-semibold">Value</h2>
+                  <canvas id="activeUsersChart"></canvas>
                 </div>
 
-                <!-- Line Chart -->
-                <div class="bg-white p-4 rounded-lg shadow">
-                    <h2 class="text-lg font-semibold">Line Chart</h2>
-                    <canvas id="lineChart"></canvas>
+                <!-- Doughnut Chart -->
+                <div class="bg-white rounded-md dark:bg-darker p-4 rounded-lg shadow w-full">
+                    <h2 class="text-lg font-semibold mb-2">List of Day Sale</h2>
+                    <div class="mb-2">
+                        <p class="flex justify-between"><span>Monday</span><span>60.5%</span></p>
+                        <div class="w-full h-2.5 bg-gray-300 rounded-full">
+                            <div class="h-full bg-red-400 rounded-full" style="width: 60.5%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-2">
+                        <p class="flex justify-between"><span>Tuesday</span><span>60.5%</span></p>
+                        <div class="w-full h-2.5 bg-gray-300 rounded-full">
+                            <div class="h-full bg-green-500 rounded-full" style="width: 60.5%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <p class="flex justify-between"><span>Wednesday</span><span>60.5%</span></p>
+                        <div class="w-full h-2.5 bg-gray-300 rounded-full">
+                            <div class="h-full bg-blue-700 rounded-full" style="width: 60.5%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <p class="flex justify-between"><span>Thursday</span><span>60.5%</span></p>
+                        <div class="w-full h-2.5 bg-gray-300 rounded-full">
+                            <div class="h-full bg-red-500 rounded-full" style="width: 60.5%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <p class="flex justify-between"><span>Friday</span><span>60.5%</span></p>
+                        <div class="w-full h-2.5 bg-gray-300 rounded-full">
+                            <div class="h-full bg-green-300 rounded-full" style="width: 60.5%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <p class="flex justify-between"><span>Saturday</span><span>60.5%</span></p>
+                        <div class="w-full h-2.5 bg-gray-300 rounded-full">
+                            <div class="h-full bg-blue-300 rounded-full" style="width: 60.5%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <p class="flex justify-between"><span>Sunday</span><span>60.5%</span></p>
+                        <div class="w-full h-2.5 bg-gray-300 rounded-full">
+                            <div class="h-full bg-yellow-400 rounded-full" style="width: 60.5%;"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-              <!-- Two grid columns -->
-            </div>
-          </main>
+            
+            <!-- Two grid columns -->
+          </div>
+        </main>
         <div
           x-transition:enter="transition duration-300 ease-in-out"
           x-transition:enter-start="opacity-0"
@@ -421,6 +455,20 @@
     
 
     <script>
+        // Line Chart
+        new Chart(document.getElementById('lineChart'), {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Growth',
+                    data: [50, 45, 30, 60, 40, 70, 90, 80, 60, 100, 110, 95],
+                    borderColor: '#C000FF',
+                    fill: false
+                }]
+            }
+        });
+
         // Bar Chart
         new Chart(document.getElementById('barChart'), {
             type: 'bar',
@@ -430,18 +478,6 @@
                     label: 'Sales',
                     data: [80, 30, 20, 90, 40, 50, 100, 60, 30, 90, 60, 50],
                     backgroundColor: 'rgba(192, 0, 255, 0.6)',
-                }]
-            }
-        });
-
-        // Doughnut Chart
-        new Chart(document.getElementById('doughnutChart'), {
-            type: 'doughnut',
-            data: {
-                labels: ['Oct', 'Nov', 'Dec'],
-                datasets: [{
-                    data: [50, 30, 20],
-                    backgroundColor: ['#C000FF', '#E080FF', '#FF40FF']
                 }]
             }
         });
@@ -459,17 +495,4 @@
             }
         });
 
-        // Line Chart
-        new Chart(document.getElementById('lineChart'), {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                datasets: [{
-                    label: 'Growth',
-                    data: [50, 45, 30, 60, 40, 70, 90, 80, 60, 100, 110, 95],
-                    borderColor: '#C000FF',
-                    fill: false
-                }]
-            }
-        });
     </script>

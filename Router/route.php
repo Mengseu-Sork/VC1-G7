@@ -20,6 +20,8 @@ $routes->get('/Dashboard', [DashboardController::class, 'index']);
 
 //profile
 $routes->get('/profile/profile', [ProfileController::class, 'profile']);
+$routes->get('/profile/editProfile', [ProfileController::class, 'editProfile']);
+$routes->put('/profile/updateProfile', [ProfileController::class, 'updateProfile']);
 
 // Authentication routes
 $routes->get('/', [AuthController::class, 'login']);
@@ -68,7 +70,9 @@ $routes->get('/pages/order', [OrderController::class, 'index']);
 $routes->post('/products/order', [OrderController::class, 'process']);
 
 //Stock
-$routes->get('/pages/stock', [StockController::class, 'index']);
+$routes->get('/stock/stock', [StockController::class, 'index']);
+$routes->get('/stock/create', [StockController::class, 'create']);
+$routes->post('/stock/store', [StockController::class, 'store']);
 
 
 $routes->dispatch();
