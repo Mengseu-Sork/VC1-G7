@@ -1,57 +1,61 @@
 <?php
-
 require_once 'Databases/Database.php';
 
-class StockModel
-{
+class StockModel {
     private $db;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->db = new Database();
     }
-    public function getAllStock()
-    {
-        try {
-            $query = "SELECT stock_id, name, product_id, quantity, last_updated FROM stock";
-            $result = $this->db->query($query)->fetchAll(PDO::FETCH_ASSOC);
-            error_log("Fetched stock data: " . print_r($result, true));
-            return $result;
-        } catch (Exception $e) {
-            error_log("Error fetching stock: " . $e->getMessage());
-            return [];
-        }
+
+    public function getAllStock() {
+        $sql = "SELECT s.*, p.name AS product_name, p.image 
+                FROM stock s
+                JOIN products p ON s.product_id = p.id";
+        return $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function getAllProducts()
-    {
-        try {
-            $query = "SELECT 
-                id, 
-                name,
-                price, 
-                stock_status
-                FROM products";
-            $result = $this->db->query($query);
-            return $result->fetchAll(PDO::FETCH_ASSOC);
-        } catch (Exception $e) {
-            error_log("Error fetching products: " . $e->getMessage());
-            return [];
-        }
+
+    public function getAllProducts() {
+        $sql = "SELECT id, name, image FROM products WHERE stock_status = 1";
+        return $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function createStock($data)
-    {
-        try {
-            $query = "INSERT INTO stock (product_id, quantity, last_updated) 
-                      VALUES (:product_id, :quantity, :last_updated)";
-            $this->db->query($query, [
-                'product_id' => $data['product_id'],
-                'quantity' => (int)$data['quantity'],
-                'last_updated' => date('Y-m-d H:i:s')
-            ]);
-            return true;
-        } catch (Exception $e) {
-            error_log("Error creating stock: " . $e->getMessage());
-            return false;
-        }
+
+    public function createStock($data) {
+        $sql = "INSERT INTO stock (product_id, quantity, last_updated) 
+                VALUES (:product_id, :quantity, :last_updated)";
+        return $this->db->query($sql, [
+            'product_id' => $data['product_id'],
+            'quantity' => $data['quantity'],
+            'last_updated' => date('Y-m-d H:i:s')
+        ]);
+    }
+
+    
+    public function getStockById($id) {
+        $sql = "SELECT * FROM stock WHERE stock_id = :id";
+        return $this->db->query($sql, ['id' => $id])->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updateStock($id, $data) {
+        $sql = "UPDATE stock 
+                SET quantity = :quantity, last_updated = :last_updated 
+                WHERE stock_id = :id";
+        return $this->db->query($sql, [
+            'quantity' => $data['quantity'],
+            'last_updated' => date('Y-m-d H:i:s'),
+            'id' => $id
+        ]);
+    }
+
+    public function stockExistsByProductId($productId) {
+        $sql = "SELECT COUNT(*) as count FROM stock WHERE product_id = :product_id";
+        $stmt = $this->db->query($sql, ['product_id' => $productId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['count'] > 0;
+    }
+    
+    public function deleteStock($id) {
+        $sql = "DELETE FROM stock WHERE stock_id = :id";
+        return $this->db->query($sql, ['id' => $id]);
     }
 }

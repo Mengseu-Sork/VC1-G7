@@ -33,30 +33,24 @@
                             </select>
                             <span class="text-red-500 text-sm hidden" id="category_id_error">Please select a category</span>
                         </div>
-                            <!-- Product Content (Full width of the column) -->
-                        <div class="flex flex-col">
-                            <label for="product_content" class="font-semibold mb-2 block">Product Content</label>
-                            <textarea name="product_content" id="product_content" rows="5"
-                                    class="w-full border border-gray-300 rounded-lg font-semibold p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white dark:text-light dark:bg-darker border-b dark:border-primary-darker"></textarea>
-                        </div>
 
-                            <!-- Product Image Upload (Full width of the column) -->
-                        <div class="flex flex-col">
-                            <label class="font-semibold mb-2 block">Product Image</label>
-                            <div class="border border-gray-300 rounded-lg p-4 w-full flex flex-col items-center bg-white dark:text-light dark:bg-darker border-b dark:border-primary-darker">
-                                <input type="file" name="image" id="image" accept="image/*" class="mb-3 cursor-pointer w-full"
-                                        onchange="previewImage(this)">
-                                <div class="border-dashed border-2 border-gray-300 mt-2 rounded-lg p-4 text-center cursor-pointer hover:border-blue-500 transition w-full bg-white dark:text-light dark:bg-darker dark:border-primary-darker"
-                                        id="drop-zone">
-                                    <div class="flex flex-col items-center">
-                                        <img id="image-preview" src="#" alt="Product Image Preview"
-                                                class="w-24 h-24 object-cover rounded hidden">
-                                        <h4 class="font-semibold text-sm mt-2">Drag and drop a file to upload</h4>
-                                    </div>
-                                </div>
+                    </div>
+                    <!-- Product Image Upload (Full width of the column) -->
+                <div class="flex flex-col">
+                    <label class="font-semibold mb-2 block">Product Image</label>
+                    <div class="border border-gray-300 rounded-lg p-4 w-full flex flex-col items-center bg-white dark:text-light dark:bg-darker border-b dark:border-primary-darker">
+                        <input type="file" name="image" id="image" accept="image/*" class="mb-3 cursor-pointer w-full"
+                                onchange="previewImage(this)">
+                        <div class="border-dashed border-2 border-gray-300 mt-2 rounded-lg p-4 text-center cursor-pointer hover:border-blue-500 transition w-full bg-white dark:text-light dark:bg-darker dark:border-primary-darker"
+                                id="drop-zone">
+                            <div class="flex flex-col items-center">
+                                <img id="image-preview" src="#" alt="Product Image Preview"
+                                        class="w-24 h-24 object-cover rounded hidden">
+                                <h4 class="font-semibold text-sm mt-2">Drag and drop a file to upload</h4>
                             </div>
                         </div>
                     </div>
+                </div>
                     <div class="flex justify-end space-x-4">
                         <button type="button" class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg" onclick="window.location.href='/products'">Cancel</button>
                         <button type="submit" class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg">Submit</button>

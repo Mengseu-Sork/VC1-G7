@@ -4,7 +4,6 @@ $categories_name = [
     'Powder' => 'Powder Products',
     'Drinks' => 'Drinks Products'
 ];
-
 // Handle form submissions for file uploads
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Content-Type: application/json"); // Set response type to JSON

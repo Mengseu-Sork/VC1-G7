@@ -1,4 +1,53 @@
-  
+<?php
+// Handle form submissions for file uploads
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    header("Content-Type: application/json"); // Set response type to JSON
+
+    if (isset($_FILES["image"]) && $_FILES["image"]["error"] == UPLOAD_ERR_OK) {
+        $targetDir = "Assets/images/uploads/";
+        $fileName = basename($_FILES["image"]["name"]);
+        $targetFilePath = $targetDir . $fileName;
+        $fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
+
+        // Allowed file types
+        $allowedTypes = ["jpg", "jpeg", "png", "gif"];
+        if (!in_array($fileType, $allowedTypes)) {
+            echo json_encode(["success" => false, "message" => "Invalid file format. Only JPG, JPEG, PNG, and GIF files are allowed."]);
+            exit;
+        }
+
+        // Ensure target directory exists
+        if (!is_dir($targetDir) && !mkdir($targetDir, 0777, true)) {
+            echo json_encode(["success" => false, "message" => "Failed to create upload directory."]);
+            exit;
+        }
+
+        // Move the uploaded file
+        if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
+            echo json_encode(["success" => true, "message" => "File uploaded successfully!", "image" => $targetFilePath]);
+        } else {
+            echo json_encode(["success" => false, "message" => "Error moving the uploaded file."]);
+        }
+    } else {
+        // Handle specific upload errors
+        $errorMessages = [
+            UPLOAD_ERR_INI_SIZE   => "The uploaded file exceeds the server limit.",
+            UPLOAD_ERR_FORM_SIZE  => "The uploaded file exceeds the form limit.",
+            UPLOAD_ERR_PARTIAL    => "The file was only partially uploaded.",
+            UPLOAD_ERR_NO_FILE    => "No file was uploaded.",
+            UPLOAD_ERR_NO_TMP_DIR => "Missing a temporary folder.",
+            UPLOAD_ERR_CANT_WRITE => "Failed to write file to disk.",
+            UPLOAD_ERR_EXTENSION  => "File upload stopped by a PHP extension."
+        ];
+        
+        $errorCode = $_FILES["image"]["error"];
+        $errorMessage = $errorMessages[$errorCode] ?? "An unknown error occurred.";
+
+        echo json_encode(["success" => false, "message" => $errorMessage]);
+    }
+    exit;
+}
+?>
 <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
     <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
         <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
@@ -88,7 +137,7 @@
                                         
                                         <!-- Edit Confirmation Modal -->
                                         <div id="editUserModal<?= $user['id'] ?>" class="fixed inset-0 flex items-center justify-end hidden z-50 mt-16">
-                                            <div class="max-auto flex-1 h-full ml-64 overflow-x-hidden overflow-y-auto bg-white dark:text-light dark:bg-darker">
+                                                <div class="max-auto flex-1 h-full ml-64 overflow-x-hidden overflow-y-auto bg-white dark:text-light dark:bg-darker">
                                                     <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
                                                         <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
                                                             <div class="shadow-lg rounded-lg p-6 border-2 mb-2 border-gray-200 dark:border-primary-darker transition duration-300"
@@ -136,9 +185,6 @@
                                                                         <div class="relative">
                                                                             <input id="password" type="password" name="password" value="<?= htmlspecialchars($user['password']) ?>"
                                                                                 class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 duration-200 rounded-lg shadow-md transition bg-white dark:text-light dark:bg-darker border-b dark:border-primary-darker">
-                                                                            <button type="button" id="togglePassword" class="absolute right-3 top-1/2 transform -translate-y-1/2">
-                                                                                👁️
-                                                                            </button>
                                                                         </div>
                                                                     </div>
 
@@ -238,12 +284,13 @@
 </div>
 
 <script>
-    function openModal(id) {
+
+function openModal(id) {
     document.getElementById(id).classList.remove("hidden");
     }
 
-function closeModal(id) {
-    document.getElementById(id).classList.add("hidden");
+    function closeModal(id) {
+        document.getElementById(id).classList.add("hidden");
     }
 
     
@@ -276,4 +323,5 @@ function closeModal(id) {
         var currentType = passwordField.type;
         passwordField.type = currentType === 'password' ? 'text' : 'password';
     });
+
 </script>

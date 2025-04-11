@@ -137,16 +137,25 @@ Grouping content
 2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
 */
 
-hr {
-  height: 0; /* 1 */
-  color: inherit; /* 2 */
-}
-
 /*
 Text-level semantics
 ====================
 */
+.scrollbar-3px::-webkit-scrollbar {
+  width: 2px;
+}
 
+.scrollbar-3px::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.5); /* customize color if needed */
+  border-radius: 1px;
+}
+
+.scrollbar-3px::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-3px {
+  scrollbar-width: thin;
+}
 /**
 Add the correct text decoration in Chrome, Edge, and Safari.
 */

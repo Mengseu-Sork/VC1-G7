@@ -57,7 +57,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
     <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
         <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
-            
             <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
                 <div class="shadow-lg rounded-lg p-6 mb-16 border-2 border-gray-200 dark:border-primary-darker transition duration-300"
                     :style="{ backgroundColor: bgColor }">
@@ -106,18 +105,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </a>
                                 </div>
                                 <h4 class="text-lg font-bold mt-2 font-semibold"><?= htmlspecialchars($product['name'] ?? 'Unnamed Product') ?></h4>
-                                <p class="text-gl font-semibold mt-2 mb-2">
-                                    <?= htmlspecialchars($product['stock'] ?? 'In stock') ?>
+                                <?php $isInStock = ($product['stock'] ?? 'In stock') === 'In stock'; ?>
+                                <p class="text-3sm font-semibold mt-2 mb-2 
+                                    <?= ($product['stock'] ?? 0) > 0 ? 'text-green-600' : 'text-red-600' ?>">
+                                    <?= ($product['stock'] ?? 0) < 0 ? 'In stock' : 'Out stock' ?>
                                 </p>
-                                <p class="text-gl font-semibold text-yellow-600">
-                                    $<?= number_format($product['price'] ?? 0.00, 2) ?>
-                                </p>
+                                <?php $isInStock = ($product['stock_quantity'] ?? 0) > 0; ?>
                                 <button class="mt-1 border px-8 py-2 <?= $isInStock ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-400 cursor-not-allowed' ?> text-white font-semibold rounded-md transition show-order-modal"
                                     data-product-image="<?= htmlspecialchars($product['image'] ?? 'default.jpg') ?>"
                                     data-product-id="<?= htmlspecialchars($product['id'] ?? '') ?>"
                                     data-product-name="<?= htmlspecialchars($product['name'] ?? '') ?>"
                                     data-product-price="<?= htmlspecialchars($product['price'] ?? 0.00) ?>"
-                                    data-stock="<?= htmlspecialchars($product['stock'] ?? 'In stock') ?>"
+                                    data-stock="<?= ($product['stock_quantity'] ?? 0) > 0 ? 'In stock' : 'Out of stock' ?>"
                                     data-stock-quantity="<?= htmlspecialchars($product['stock_quantity'] ?? 0) ?>"
                                     <?= $isInStock ? '' : 'disabled' ?>>
                                     <i class="fas fa-shopping-cart mr-1" style="color: orange;"></i> ORDER
