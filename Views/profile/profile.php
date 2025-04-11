@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <label class="block font-semibold mb-1">Email</label>
                                 <div class="flex items-center border border-gray-300 rounded-md dark:border-primary-darker">
                                     <span class="w-full p-2 focus:ring-2 focus:ring-blue-500 "><?= $user['email']?></span>
-                                    <span class="px-2 text-green-600">✔</span>
+                                    <span class="px-2 text-green-600">✔️</span>
                                 </div>
                             </div>
 
@@ -92,7 +92,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <label class="block font-semibold mb-1">Phone</label>
                                 <div class="flex items-center border border-gray-300 rounded-md dark:border-primary-darker">
                                     <span class="w-full p-2 focus:ring-2 focus:ring-blue-500 "><?= $user['phone']?></span>  
-                                    <span class="px-2 text-green-600">✔</span>
+                                    <span class="px-2 text-green-600">✔️</span>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <label class="block font-semibold mb-1">Role</label>
+                                <div class="flex items-center border border-gray-300 rounded-md dark:border-primary-darker">
+                                    <span class="w-full p-2 focus:ring-2 focus:ring-blue-500 "><?= $user['role']?></span>  
+                                    <span class="px-2 text-green-600">✔️</span>
                                 </div>
                             </div>
                             <div class="mt-4">
