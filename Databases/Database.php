@@ -30,11 +30,9 @@ class Database
             die("Query Error: " . $e->getMessage());
         }
     }
-
-
-    public function getLastInsertId()
+    public function getConnection()
     {
-        return $this->pdo->lastInsertId();
+        return $this->pdo;
     }
 
     public function closeConnection()

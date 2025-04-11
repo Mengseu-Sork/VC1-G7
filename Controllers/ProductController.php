@@ -1,12 +1,15 @@
 <?php
 require_once 'Models/ProductModel.php';
+require_once 'Models/OrderModel.php';
 require_once 'BaseController.php';
 
 class ProductController extends BaseController {
     private $model;
+    private $orderModel;
 
     public function __construct() {
         $this->model = new ProductModel();
+        $this->orderModel = new OrderModel();
     }
 
     public function index() {
@@ -17,6 +20,32 @@ class ProductController extends BaseController {
         if (!isset($_SESSION['user'])) {
             header("Location: views/auth/login");
             exit();
+        }
+        if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SERVER['CONTENT_TYPE']) && $_SERVER['CONTENT_TYPE'] === 'application/json') {
+            header("Content-Type: application/json");
+            $input = file_get_contents("php://input");
+            $data = json_decode($input, true);
+
+            if (!$data || !isset($data['user_id']) || !isset($data['total_amount']) || !isset($data['products'])) {
+                echo json_encode(["success" => false, "message" => "Invalid order data"]);
+                exit;
+            }
+
+            $user_id = $data['user_id'];
+            $total_amount = $data['total_amount'];
+            $products = $data['products'];
+
+            try {
+                $orderId = $this->orderModel->createOrder($user_id, $total_amount, $products);
+                if ($orderId) {
+                    echo json_encode(["success" => true, "message" => "Order placed successfully", "redirect" => "/order/index"]);
+                } else {
+                    echo json_encode(["success" => false, "message" => "Failed to create order"]);
+                }
+            } catch (Exception $e) {
+                echo json_encode(["success" => false, "message" => "Order failed: " . $e->getMessage()]);
+            }
+            exit;
         }
         $products = $this->model->getAllProducts();
         $product_types = $this->model->getProductTypes();

@@ -22,9 +22,12 @@ class ProductModel {
                 products.date, 
                 products.image,
                 products.category_id,  
-                categories.name AS category_name
+                categories.name AS category_name,
+                stock.quantity AS stock_quantity,
+                CASE WHEN stock.quantity > 0 THEN 'In stock' ELSE 'Out of stock' END AS stock
                 FROM products 
-                LEFT JOIN categories ON products.category_id = categories.category_id");
+                LEFT JOIN categories ON products.category_id = categories.category_id
+                LEFT JOIN stock ON products.id = stock.product_id");
             return $result->fetchAll();
         } catch (Exception $e) {
             error_log("Error fetching products: " . $e->getMessage());
@@ -101,6 +104,7 @@ class ProductModel {
             return false;
         }
     }
+
     function getCategoryById($category_id) {
         try {
             $query = "SELECT * FROM categories WHERE category_id = :category_id";
@@ -126,6 +130,5 @@ class ProductModel {
             return false;
         }
     }
-    
 }
 ?>

@@ -13,6 +13,7 @@ $initialRows = 2;
 $initialProductsToShow = $productsPerRow * $initialRows;
 $totalProducts = count($products);
 
+// Handle image upload (if applicable)
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
     header("Content-Type: application/json");
     if ($_FILES["image"]["error"] === UPLOAD_ERR_OK) {
@@ -56,12 +57,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
         <div class="grid grid-cols-1 md:grid-cols-1 gap-2">
@@ -82,7 +86,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                         <div class="flex space-x-1 text-xl">
                             <a href="../../Views/orders/order.php" class="relative">
                                 <i class="fas fa-shopping-cart mr-1" style="color: orange;"></i>
-                                <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                                <span id="cartCount"
+                                    class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
                             </a>
                             <select id="category-filter"
                                 class="pr-2 pl-2 border border-gray-200 rounded-md duration-200 bg-white dark:bg-darker border-b dark:border-primary-darker"
@@ -116,8 +121,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                                         <div class="view-more-overlay">View More</div>
                                     </a>
                                 </div>
-                                <h4 class="text-lg font-bold mt-2 font-semibold"><?= htmlspecialchars($product['name'] ?? 'Unnamed Product') ?></h4>
-                                <p class="text-gl font-semibold mt-2 mb-2">
+                                <h4 class="text-lg font-bold mt-2 font-semibold">
+                                    <?= htmlspecialchars($product['name'] ?? 'Unnamed Product') ?>
+                                </h4>
+                                <p class="text-lg font-semibold mt-2 mb-2"
+                                    style="color: <?= $isInStock ? 'green' : 'red' ?>;">
                                     <?= htmlspecialchars($product['stock'] ?? 'In stock') ?>
                                 </p>
                                 <p class="text-sm font-semibold text-yellow-600 text-center">
@@ -198,11 +206,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                     </div>
                 </div>
 
-                <!-- Simplified Success Message Popup -->
                 <div id="successMessage"
                     class="fixed inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50 hidden z-50">
                     <div class="bg-white w-80 p-6 rounded-lg shadow-lg text-center">
-                        <h2 id="successMessageTitle" class="text-xl font-bold text-green-600 mb-4">Order Placed Successfully!</h2>
+                        <h2 id="successMessageTitle" class="text-xl font-bold text-green-600 mb-4">Order Placed
+                            Successfully!</h2>
                         <button id="closeSuccess"
                             class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">OK</button>
                     </div>
@@ -210,14 +218,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
             </div>
         </div>
     </div>
-    
+
     <script>
         let productsPerRow = <?= $productsPerRow ?>;
         let rowsPerClick = <?= $rowsPerClick ?>;
         let initialProductsToShow = <?= $initialProductsToShow ?>;
         let shownProducts = initialProductsToShow;
         const totalProducts = <?= $totalProducts ?>;
-        let pendingOrder = null;
+        // Note: loggedInUserId is not defined since we removed session handling
+        const loggedInUserId = null; // You may need to define this differently
+
+        function updateCartCount() {
+            const cart = getCart();
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = totalItems;
+        }
 
         function getCart() {
             const cart = localStorage.getItem('cart');
@@ -227,23 +242,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
         function saveCart(cart) {
             localStorage.setItem('cart', JSON.stringify(cart));
             updateCartCount();
-        }
-
-        function updateCartCount() {
-            const cart = getCart();
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            document.getElementById('cartCount').textContent = totalItems;
-        }
-
-        function getOrderHistory() {
-            const history = localStorage.getItem('orderHistory');
-            return history ? JSON.parse(history) : [];
-        }
-
-        function saveOrderHistory(order) {
-            let history = getOrderHistory();
-            history.push(order);
-            localStorage.setItem('orderHistory', JSON.stringify(history));
         }
 
         function showSuccessMessage(message) {
@@ -275,9 +273,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
             seeMoreButton.style.display = category ? "none" : (shownProducts < totalProducts ? "" : "none");
             backButton.style.display = category ? "none" : (shownProducts > initialProductsToShow ? "" : "none");
 
-            if (category) {
-                shownProducts = visibleCount;
-            } else {
+            if (!category) {
                 resetProducts();
             }
         }
@@ -375,11 +371,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
             let currentPrice = 0;
             let currentStock = '';
             let currentStockQuantity = 0;
-            let currentProductId = 0;
 
             updateCartCount();
 
-            // ADD button logic (still adds to cart)
             document.querySelectorAll('.add-to-cart').forEach(button => {
                 button.addEventListener('click', function () {
                     const product = {
@@ -405,7 +399,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                         cart.push(product);
                     }
                     saveCart(cart);
-                    showSuccessMessage('Product Added to Cart!');
+                    showSuccessMessage('Product Added to Order!');
                 });
             });
 
@@ -420,7 +414,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                 button.addEventListener('click', function () {
                     const productName = this.getAttribute('data-product-name');
                     const productImage = this.getAttribute('data-product-image');
-                    currentProductId = this.getAttribute('data-product-id');
+                    const productId = this.getAttribute('data-product-id');
                     currentPrice = parseFloat(this.getAttribute('data-product-price')) || 0;
                     currentStock = this.getAttribute('data-stock');
                     currentStockQuantity = parseInt(this.getAttribute('data-stock-quantity')) || 0;
@@ -430,7 +424,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                     productIdInput.type = 'hidden';
                     productIdInput.id = 'modalProductId';
                     productIdInput.name = 'product_id';
-                    productIdInput.value = currentProductId;
+                    productIdInput.value = productId;
                     elements.orderForm.appendChild(productIdInput);
 
                     elements.modalProductName.value = productName;
@@ -477,7 +471,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
             elements.cancelBtn.addEventListener('click', function () {
                 elements.modal.classList.add('hidden');
                 elements.modalImage.classList.add('hidden');
-                pendingOrder = null;
             });
 
             elements.orderBtn.addEventListener('click', function (e) {
@@ -488,44 +481,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                 const price = parseFloat(elements.modalPriceInput.value);
                 const totalAmount = price * quantity;
 
-                // Validation
-                if (currentStock !== 'In stock') {
-                    alert('Cannot order: Product is out of stock.');
-                    return;
-                }
-                if (quantity <= 0) {
-                    alert('Please enter a valid quantity greater than 0.');
-                    return;
-                }
-                if (currentStockQuantity > 0 && quantity > currentStockQuantity) {
-                    alert(`Cannot order: Only ${currentStockQuantity} items left in stock.`);
-                    return;
-                }
-
-                const product = {
-                    id: productId,
-                    name: productName,
-                    price: price,
-                    image: elements.modalImage.src.split('/').pop(),
-                    stock: currentStock,
-                    stock_quantity: currentStockQuantity,
-                    quantity: quantity
-                };
-
-                // Save to order history (without adding to cart)
-                const order = {
-                    user_name: 'Guest', // Replace with actual user_name if available
-                    order_id: Date.now().toString(),
-                    order_date: new Date().toISOString().split('T')[0] + " " + new Date().toLocaleTimeString(),
+                const orderData = {
+                    user_id: loggedInUserId,
                     total_amount: totalAmount,
-                    items: [product]
+                    products: [{
+                        product_id: productId,
+                        quantity: quantity,
+                        subtotal: totalAmount
+                    }]
                 };
-                saveOrderHistory(order);
 
-                // Hide modal and show simple success message
-                elements.modal.classList.add('hidden');
-                elements.modalImage.classList.add('hidden');
-                showSuccessMessage('Order Placed Successfully!');
+                fetch('/order/process', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderData)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.text().then(text => { throw new Error(`Network response was not ok: ${response.status} - ${text}`); });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            elements.modal.classList.add('hidden');
+                            showSuccessMessage('Order Placed Successfully!');
+                            setTimeout(() => { window.location.href = '/orders/orderHistory'; }, 2000);
+                        } else {
+                            alert('Order failed: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        alert('An error occurred while placing the order: ' + error.message);
+                    });
             });
 
             elements.closeSuccess.addEventListener('click', function () {
@@ -536,10 +524,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
         });
     </script>
     <style>
-        @media (max-width: 1280px) { #productContainer { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-        @media (max-width: 1024px) { #productContainer { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-        @media (max-width: 768px) { #productContainer { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-        @media (max-width: 480px) { #productContainer { grid-template-columns: repeat(1, minmax(0, 1fr)); } }
+        @media (max-width: 1280px) {
+            #productContainer {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 1024px) {
+            #productContainer {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            #productContainer {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            #productContainer {
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+            }
+        }
     </style>
 </body>
+
 </html>
