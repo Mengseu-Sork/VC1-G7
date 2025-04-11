@@ -14,6 +14,12 @@ class ShowproductModel {
         return $result->fetchAll();
     }
 
+    public function getAllStock() {
+        $query = "SELECT * FROM stock";
+        $result = $this->db->query($query);
+        return $result->fetchAll();
+    }
+
     function getProductTypes() {
         try {
             $result = $this->db->query("SELECT category_id, name FROM categories");

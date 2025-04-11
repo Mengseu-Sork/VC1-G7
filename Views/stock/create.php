@@ -28,7 +28,7 @@
                             </div>
                         </div>
                         <div class="flex justify-end space-x-4">
-                            <button type="button" class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg" onclick="window.location.href='/products'">Cancel</button>
+                            <button type="button" class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg" onclick="window.location.href='/stock/stock'">Cancel</button>
                             <button type="submit" class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg">Submit</button>
                         </div>
                     </form>

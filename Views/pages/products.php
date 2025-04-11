@@ -85,18 +85,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>                
                 <div class="container flex flex-wrap gap-8 p-4 " id="productContainer">
                     <?php 
-                    $index = 0;
-                    foreach ($products as $product): 
-                        $hiddenClass = ($index >= $initialProductsToShow) ? 'hidden product-hidden' : '';
-                        $stockStatus = isset($product["stock_status"]) ? $product["stock_status"] : 1;
-                    ?>
-                    <?php $isInStock = ($product['stock'] ?? 'In stock') === 'In stock'; ?>
-                        <div class="w-48 h-76 bg-white border border-gray-300 p-4 rounded-lg shadow-md transition duration-300 flex flex-col items-center bg-white dark:bg-darker border-b dark:border-primary-darker <?= $hiddenClass ?>" data-category="<?= $product['category_name'] ?>"
-                        data-category="<?= htmlspecialchars($product['category_name'] ?? 'Uncategorized') ?>"
+                        $index = 0;
+                        foreach ($updatedProducts as $product): 
+                            $hiddenClass = ($index >= $initialProductsToShow) ? 'hidden product-hidden' : '';
+                            $quantity = $product['quantity'] ?? 0;
+                            $isInStock = $quantity > 0;?>
+                            <div class="w-48 h-76 bg-white border border-gray-300 p-4 rounded-lg shadow-md transition duration-300 flex flex-col items-center bg-white dark:bg-darker border-b dark:border-primary-darker <?= $hiddenClass ?>"
+                                data-category="<?= htmlspecialchars($product['category_name'] ?? 'Uncategorized') ?>"
                                 data-name="<?= htmlspecialchars($product['name'] ?? '') ?>"
                                 data-price="<?= htmlspecialchars($product['price'] ?? 0.00) ?>"
-                                data-stock-quantity="<?= htmlspecialchars($product['stock_quantity'] ?? 0) ?>">
-                            <div class="product-image-container flex justify-center">
+                                data-stock-quantity="<?= htmlspecialchars($quantity) ?>">
+                                
+                                <div class="product-image-container flex justify-center">
                                     <a href="/pages/details?id=<?= htmlspecialchars($product['id'] ?? '') ?>">
                                         <img src="../Assets/images/uploads/<?= htmlspecialchars($product['image'] ?? 'default.jpg') ?>"
                                             alt="<?= htmlspecialchars($product['name'] ?? '') ?>"
@@ -104,28 +104,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <div class="view-more-overlay">View More</div>
                                     </a>
                                 </div>
+
                                 <h4 class="text-lg font-bold mt-2 font-semibold"><?= htmlspecialchars($product['name'] ?? 'Unnamed Product') ?></h4>
-                                <?php $isInStock = ($product['stock'] ?? 'In stock') === 'In stock'; ?>
-                                <p class="text-3sm font-semibold mt-2 mb-2 
-                                    <?= ($product['stock'] ?? 0) > 0 ? 'text-green-600' : 'text-red-600' ?>">
-                                    <?= ($product['stock'] ?? 0) < 0 ? 'In stock' : 'Out stock' ?>
+
+                                <p class="text-3sm font-semibold mt-2 mb-2 <?= $isInStock ? 'text-green-600' : 'text-red-600' ?>">
+                                    <?= $isInStock ? 'In stock' : 'Out stock' ?>
                                 </p>
-                                <?php $isInStock = ($product['stock_quantity'] ?? 0) > 0; ?>
+
                                 <button class="mt-1 border px-8 py-2 <?= $isInStock ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-400 cursor-not-allowed' ?> text-white font-semibold rounded-md transition show-order-modal"
                                     data-product-image="<?= htmlspecialchars($product['image'] ?? 'default.jpg') ?>"
                                     data-product-id="<?= htmlspecialchars($product['id'] ?? '') ?>"
                                     data-product-name="<?= htmlspecialchars($product['name'] ?? '') ?>"
                                     data-product-price="<?= htmlspecialchars($product['price'] ?? 0.00) ?>"
-                                    data-stock="<?= ($product['stock_quantity'] ?? 0) > 0 ? 'In stock' : 'Out of stock' ?>"
-                                    data-stock-quantity="<?= htmlspecialchars($product['stock_quantity'] ?? 0) ?>"
+                                    data-stock="<?= $isInStock ? 'In stock' : 'Out stock' ?>"
+                                    data-stock-quantity="<?= htmlspecialchars($quantity) ?>"
                                     <?= $isInStock ? '' : 'disabled' ?>>
                                     <i class="fas fa-shopping-cart mr-1" style="color: orange;"></i> ORDER
                                 </button>
-                        </div>
+                            </div>
                     <?php 
                         $index++;
-                    endforeach; 
-                    ?>
+                        endforeach; ?>
                 </div>
 
                 <!-- Buttons Container -->

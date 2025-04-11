@@ -16,7 +16,7 @@ class StockModel {
     }
 
     public function getAllProducts() {
-        $sql = "SELECT id, name, image FROM products WHERE stock_status = 1";
+        $sql = "SELECT id, name, image FROM products WHERE id";
         return $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 

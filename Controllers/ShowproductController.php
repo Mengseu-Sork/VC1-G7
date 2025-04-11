@@ -13,14 +13,35 @@ class ShowproductController extends BaseController {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        
+    
         if (!isset($_SESSION['user'])) {
             header("Location: views/auth/login");
             exit();
         }
+    
         $products = $this->model->getShowProducts();
-        $this->view('pages/products', ['products' => $products]);
+        $stocks = $this->model->getAllStock();
+    
+        $updatedProducts = [];
+    
+        foreach ($products as $product) {
+            $product['quantity'] = 0;
+    
+            foreach ($stocks as $stock) {
+                if ((int)$stock['product_id'] === (int)$product['id']) {
+                    $product['quantity'] = (int)$stock['quantity'];
+                    break;
+                }
+            }
+    
+            $updatedProducts[] = $product;
+        }
+
+        $this->view('pages/products', ['products' => $updatedProducts, 'updatedProducts' => $updatedProducts]);
+
     }
+    
+    
     function ratings() {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();

@@ -10,7 +10,7 @@
         </div>
 
         <!-- Sidebar -->
-        <aside class="flex-shrink-0 hidden w-64 bg-white border-r dark:border-primary-darker dark:bg-darker md:block">
+        <aside class="flex-shrink-0 hidden w-64 bg-white dark:bg-darker md:block">
           <div class="flex flex-col h-full">
             <nav aria-label="Main" class="flex-1 px-2 py-4 space-y-2">
               <a href="/Dashboard" class="flex flex-col items-center items-start mb-4 mt-2 text-primary-dark dark:text-light">
@@ -169,7 +169,7 @@
         </aside>
         <div class="flex-1 h-full overflow-hidden">
           <header class="flex-1 bg-white dark:bg-darker"> 
-                  <div class="flex items-center justify-between p-2 border-b dark:border-primary-darker">
+                  <div class="flex items-center justify-between p-2">
                       <button
                           @click="isMobileMainMenuOpen = !isMobileMainMenuOpen"
                           class="p-1 transition-colors duration-200 rounded-md text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark md:hidden focus:outline-none focus:ring"
