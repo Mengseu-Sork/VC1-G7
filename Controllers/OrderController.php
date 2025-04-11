@@ -40,6 +40,14 @@ class OrderController extends BaseController
    
     private $orderModel;
     public function index() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        if (!isset($_SESSION['user'])) {
+            header("Location: views/auth/login");
+            exit();
+        }
         $orders = $this->orderModel->getAllOrders();
         $this->view('orders/index', ['orders' => $orders]);
     }

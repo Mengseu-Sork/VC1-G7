@@ -1,3 +1,4 @@
+
 <div x-data="setup()" x-init="$refs.loading.classList.add('hidden'); setColors(color);" :class="{ 'dark': isDark}">
       <div class="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
         <!-- Loading screen -->
@@ -11,156 +12,157 @@
         <!-- Sidebar -->
         <aside class="flex-shrink-0 hidden w-64 bg-white border-r dark:border-primary-darker dark:bg-darker md:block">
           <div class="flex flex-col h-full">
-            <nav aria-label="Main" class="flex-1 px-2 py-4 space-y-2 overflow-y-hidden hover:overflow-y-auto">
-            <a href="/" class="inline-flex items-center text-2xl font-bold tracking-wider uppercase text-primary-dark dark:text-light">
-              <img src="../../../Assets/images/FX12 LOGO.png" alt="San Cafe Logo" class="w-12 mr-4">
-              <span class="font-bold text-3xl">SAN CAFE</span>
-            </a>
+            <nav aria-label="Main" class="flex-1 px-2 py-4 space-y-2">
+              <a href="/Dashboard" class="flex flex-col items-center items-start mb-4 mt-2 text-primary-dark dark:text-light">
+                <img src="../../../Assets/images/FX12 LOGO.png" alt="San Cafe Logo" class="w-16 mb-2">
+                <span class="font-bold text-3xl tracking-wider uppercase">SAN CAFE</span>
+              </a>
+              <div class="max-h-96 space-y-2 overflow-y-auto scrollbar-3px">
+                <div>
+                  <a
+                    href="/Dashboard"
+                    class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                    >
+                    <span aria-hidden="true">
+                      <i class="fas fa-home icon text-blue-500 dark:text-light"></i>
+                    </span>
+                    <span class="ml-2 text-5sm"> Dashboards </span>
+                    <span class="ml-auto" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+                <div>
+                  <a
+                    href="/pages"
+                    class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                  >
+                    <span aria-hidden="true">
+                      <i class="fas fa-cube icon text-blue-500 dark:text-light"></i>
+                    </span>
+                    <span class="ml-3 text-5sm "> Products </span>
+                    <span class="ml-auto" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+                <div>
 
-            <div>
-                <a
-                  href="/Dashboard"
-                  class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                >
-                  <span aria-hidden="true">
-                    <i class="fas fa-home icon text-blue-500 dark:text-light"></i>
-                  </span>
-                  <span class="ml-2 text-5sm"> Dashboards </span>
-                  <span class="ml-auto" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </span>
-                </a>
-              </div>
-              <div>
-                <a
-                  href="/pages"
-                  class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                >
-                  <span aria-hidden="true">
-                    <i class="fas fa-cube icon text-blue-500 dark:text-light"></i>
-                  </span>
-                  <span class="ml-3 text-5sm "> Products </span>
-                  <span class="ml-auto" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </span>
-                </a>
-              </div>
-              <div>
-
-                <!-- active classes 'bg-primary-100 dark:bg-primary' -->
-                <a
-                  href="/products"
-                  class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-
-                >
-                  <span aria-hidden="true">
-                    <i class="fas fa-box icon text-blue-500 dark:text-light"></i> 
-                  <span class="ml-2 text-5sm"> Inventory </span>
-                </a>
-              </div>
-              <div>
-                <!-- active classes 'bg-primary-100 dark:bg-primary' -->
-                <a
-                  href="/pages/stock"
-                  class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-
-                >
-                  <span aria-hidden="true">
-                    <i class="fas fa-warehouse text-blue-500 dark:text-light"></i> 
-                  <span class="ml-4 text-5sm"> Stock </span>
-                </a>
-              </div>
-
-              <div>
-                <!-- active classes 'bg-primary-100 dark:bg-primary' -->
-                <a
-                  href="/categories"
-                  class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-
-                >
-                  <span aria-hidden="true">
-                  <i class="fas fa-list icon text-blue-500 dark:text-light"></i>
-                  <span class="ml-2 text-5sm"> Category </span>
-                </a>
-              </div>
-
-              <!-- Pages links -->
-              <div>
-                <a
-                  href="#"
-                  class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                >
-                  <span aria-hidden="true">
-                    <i class="fas fa-file-alt icon text-blue-500 dark:text-light"></i>
-                  </span>
-                  <span class="ml-4 text-5sm"> Report </span>
-                  <span aria-hidden="true" class="ml-auto">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </span>
-                </a>
-              </div>
-
-              <!-- Authentication links -->
-              <div>
-                <a
-                  href="/Views/pages/order.php"
-                  class=".sidebar-item flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-
-                >
-                  <span aria-hidden="true">
-                    <i class="fas fa-shopping-cart icon text-blue-500 dark:text-light"></i>
-                  </span>
-                  <span class="ml-2 text-5sm"> Order </span>
-                  <span aria-hidden="true" class="ml-auto">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </span>
-                </a>
-              </div>
-
-              <!-- Layouts links -->
-              <div>
-                <a
-                    href="../../Views/Payments/payment.php"
+                  <!-- active classes 'bg-primary-100 dark:bg-primary' -->
+                  <a
+                    href="/products"
                     class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
 
                   >
                     <span aria-hidden="true">
-                      <i class="fas fa-dollar-sign icon1 text-blue-500 dark:text-light"></i>
-                    </span>
-                    <span class="ml-4 text-5sm"> Payments </span>
-                    <span aria-hidden="true" class="ml-auto">
-                    </span>
+                      <i class="fas fa-box icon text-blue-500 dark:text-light"></i> 
+                    <span class="ml-2 text-5sm"> Inventory </span>
                   </a>
-              </div>
-              <div>
-                <a
-                  href="/user"
+                </div>
+                <div>
+                  <!-- active classes 'bg-primary-100 dark:bg-primary' -->
+                  <a
+                    href="/stock/stock"
+                    class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+
+                  >
+                    <span aria-hidden="true">
+                      <i class="fas fa-warehouse text-blue-500 dark:text-light"></i> 
+                    <span class="ml-4 text-5sm"> Stock </span>
+                  </a>
+                </div>
+
+                <div>
+                  <!-- active classes 'bg-primary-100 dark:bg-primary' -->
+                  <a
+                    href="/categories"
+                    class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+
+                  >
+                    <span aria-hidden="true">
+                    <i class="fas fa-list icon text-blue-500 dark:text-light"></i>
+                    <span class="ml-2 text-5sm"> Category </span>
+                  </a>
+                </div>
+
+                <!-- Pages links -->
+                <div>
+                  <a
+                    href="#"
                   class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                   >
-                  <span aria-hidden="true">
-                    <i class="fas fa-users icon text-blue-500 dark:text-light"></i>
-                  </span>
-                  <span class="ml-2 text-sm"> Users </span>
-                  <span aria-hidden="true" class="ml-auto">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </span>
-                </a>
-              </div>
-              <div>
-                <a
-                  href="/Views/auth/login.php"
-                  class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                >
-                  <span aria-hidden="true">
-                    <i class="fas fa-sign-out-alt icon text-blue-500 dark:text-light"></i>
-                  </span>
-                  <span class="ml-3 text-5sm"> Logout </span>
-                </a>
+                    <span aria-hidden="true">
+                      <i class="fas fa-file-alt icon text-blue-500 dark:text-light"></i>
+                    </span>
+                    <span class="ml-4 text-5sm"> Report </span>
+                    <span aria-hidden="true" class="ml-auto">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+
+                <!-- Authentication links -->
+                <div>
+                  <a
+                    href="/Views/pages/order.php"
+                    class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+
+                  >
+                    <span aria-hidden="true">
+                      <i class="fas fa-shopping-cart icon text-blue-500 dark:text-light"></i>
+                    </span>
+                    <span class="ml-2 text-5sm"> Order </span>
+                    <span aria-hidden="true" class="ml-auto">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+
+                <!-- Layouts links -->
+                <div>
+                  <a
+                      href="#"
+                      class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+
+                    >
+                      <span aria-hidden="true">
+                        <i class="fas fa-dollar-sign icon1 text-blue-500 dark:text-light"></i>
+                      </span>
+                      <span class="ml-4 text-5sm"> Payments </span>
+                      <span aria-hidden="true" class="ml-auto">
+                      </span>
+                    </a>
+                </div>
+                <div>
+                  <a
+                    href="/user"
+                    class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                    >
+                    <span aria-hidden="true">
+                      <i class="fas fa-users icon text-blue-500 dark:text-light"></i>
+                    </span>
+                    <span class="ml-2 text-sm"> Users </span>
+                    <span aria-hidden="true" class="ml-auto">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+                <div>
+                  <a
+                    href="/Views/auth/login.php"
+                    class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                  >
+                    <span aria-hidden="true">
+                      <i class="fas fa-sign-out-alt icon text-blue-500 dark:text-light"></i>
+                    </span>
+                    <span class="ml-3 text-5sm"> Logout </span>
+                  </a>
+                </div>
               </div>
             </nav>
           </div>
@@ -281,14 +283,10 @@
                           </button>
 
                           <!-- Color button -->
-                          <button
-                          @click="openSettingsPanel"
-                          class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker"
-                          >
-                          <span class="sr-only">Open settings panel</span>
-                            <i class="fas fa-palette" style="font-size: 1.75rem;"></i>
-                          </button>
-                          <?php require_once './Views/profile/profile.php'?>
+                          <?php require_once './Views/layout/colorNavbar.php'?>
+                          <?php require_once './Views/user/buttonUser.php'?>
                       </nav>
                   </div>
           </header>           
+
+       

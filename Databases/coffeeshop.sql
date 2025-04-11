@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 01, 2025 at 01:43 PM
+-- Generation Time: Apr 08, 2025 at 04:58 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,11 +29,24 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admins` (
   `id` int(11) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `profile` blob DEFAULT NULL,
+  `FirstName` varchar(255) NOT NULL,
+  `LastName` varchar(100) NOT NULL,
+  `image` blob DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `password_hash` varchar(255) NOT NULL
+  `phone` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` varchar(100) NOT NULL,
+  `last_login` datetime DEFAULT NULL,
+  `active` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admins`
+--
+
+INSERT INTO `admins` (`id`, `FirstName`, `LastName`, `image`, `email`, `phone`, `password`, `role`, `last_login`, `active`) VALUES
+(3, 'Admin', 'System', 0x313734333939363032395f706963332e6a7067, 'admin@gmail.com', '086788826', '$2y$10$PO6tWFVvSvdV9QjNuZGlveLeRpblR.fZqKYRvCsdvP6YrUaLC5rGm', 'admin', '2025-04-07 20:28:43', 1),
+(6, 'Sokleap', 'Seng', 0x313734343030373236345f313734333530333539352d706963362e6a7067, 'sokleap@gmail.com', '01234535', '$2y$10$pe5lsgSLGTJWF3dZVMUWc.FrUgYzCgAD7Q7z9oBCGU7uqZdtH9gZa', 'employee', '2025-04-07 15:49:05', 0);
 
 -- --------------------------------------------------------
 
@@ -158,8 +171,15 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `price`, `category_id`, `date`, `image`, `stock_status`) VALUES
-(38, 'Quintessa Serrano', 2.00, 1, '1983-07-06', 'white_boba.jpg', 1),
-(42, 'Fulton Schmidt', 2.00, 1, '1991-11-06', 'Popping_boba_strawberry.jpg', 1);
+(42, 'Fulton Schmidt', 2.00, 1, '1991-11-06', 'Popping_boba_strawberry.jpg', 1),
+(45, 'Kevin Guerra', 9.00, 2, '1976-12-23', 'Coca.jpg', 1),
+(46, 'Cheryl Albert', 434.00, 1, '1995-03-24', 'Arabica Ethiopia.png', 1),
+(50, 'Rhonda Hudson', 241.00, 2, '2001-03-27', 'Fanta.jpg', 1),
+(51, 'Colleen Bean', 496.00, 2, '1981-03-21', 'boba_drink_mix.jpg', 1),
+(52, 'Igor Velasquez', 756.00, 3, '2017-08-17', 'photo_2025-03-24_16-07-10.jpg', 1),
+(53, 'Tatiana Valdez', 84.00, 3, '1981-12-14', 'Coca.jpg', 1),
+(54, 'Philip Chen', 647.00, 2, '1987-12-18', 'Flores_bajawa_arabica.jpg', 1),
+(55, 'Violet Aguirre', 112.00, 3, '2009-05-13', 'chocolate.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -227,6 +247,15 @@ CREATE TABLE `stock` (
   `last_updated` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `stock`
+--
+
+INSERT INTO `stock` (`stock_id`, `name`, `product_id`, `quantity`, `last_updated`) VALUES
+(1, 'A', 50, 334, '2025-04-07 04:33:32'),
+(2, 'B', 51, 321, '2025-04-07 04:33:39'),
+(3, 'C', 52, 129, '2025-04-07 04:34:05');
+
 -- --------------------------------------------------------
 
 --
@@ -250,9 +279,7 @@ CREATE TABLE `users` (
   `FirstName` varchar(255) NOT NULL,
   `LastName` varchar(255) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `phone` varchar(100) NOT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `image` longblob DEFAULT NULL
+  `phone` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -278,7 +305,7 @@ CREATE TABLE `waste_management` (
 --
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `Fisrtname` (`username`);
+  ADD UNIQUE KEY `Fisrtname` (`FirstName`);
 
 --
 -- Indexes for table `categories`
@@ -399,13 +426,13 @@ ALTER TABLE `waste_management`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `discounts_promotions`
@@ -447,7 +474,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `product_discounts`
@@ -477,7 +504,7 @@ ALTER TABLE `shift_scheduling`
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `stock_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `stock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `suppliers`
@@ -489,7 +516,7 @@ ALTER TABLE `suppliers`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `waste_management`

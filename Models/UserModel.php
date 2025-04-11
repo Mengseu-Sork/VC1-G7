@@ -35,10 +35,12 @@ class UserModel
         ]);
     }
 
+    
     function getUser($id)
     {
         return $this->pdo->query("SELECT * FROM admins WHERE id = :id", ['id' => $id])->fetch();
     }
+    
     
     function updateUser($id, $data)
     {
@@ -49,6 +51,7 @@ class UserModel
             'LastName' => $data['LastName'],
             'email' => $data['email'],
             'phone' => $data['phone'],
+            'role' => $data['role'],
             'password' => password_hash($data['password'], PASSWORD_DEFAULT),
             'id' => $id
         ]);
@@ -66,4 +69,5 @@ class UserModel
         $stmt = $this->pdo->query($sql, [':id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }   
+    
 }

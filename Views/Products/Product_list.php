@@ -4,7 +4,6 @@ $categories_name = [
     'Powder' => 'Powder Products',
     'Drinks' => 'Drinks Products'
 ];
-
 // Handle form submissions for file uploads
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Content-Type: application/json"); // Set response type to JSON
@@ -135,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <div id="deleteProductModal<?= $product['id'] ?>"
                                          class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50">
                                         <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-                                            <h2 class="text-lg font-semibold">Delete Product</h2>
+                                            <h2 class="text-lg font-semibold flex justify-center">Delete Product</h2>
                                             <p class="mt-4">Are you sure you want to delete this product?</p>
 
                                             <div class="mt-6 flex justify-end space-x-2">
