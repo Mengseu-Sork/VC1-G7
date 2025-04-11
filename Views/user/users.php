@@ -104,11 +104,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                 </button>
 
 
-                                                <!-- Detail Option -->
-                                                <button onclick="openModal('detailUserModal<?= $user['id'] ?>')" 
-                                                        class="block text-left px-2 py-2 text-gray-700 flex items-center">
-                                                            <i class="far fa-eye mr-1" style="color: blue;"></i>
-                                                </button>
+                                                <a href="/user/show?id=<?= $user['id'] ?>" 
+                                                    class="block px-2 py-2 text-gray-700 flex items-center">
+                                                    <i class="far fa-eye mr-1" style="color: blue;"></i>
+                                                </a>
                                             </div>
                                         </td>
                                         <!-- Delete Confirmation Modal -->
