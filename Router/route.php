@@ -9,6 +9,7 @@ require_once 'Controllers/ShowproductController.php';
 require_once 'Controllers/OrderController.php';
 require_once 'Controllers/AuthController.php';
 require_once 'Controllers/StockController.php';
+require_once 'Controllers/ProfileController.php';
 
 
 
@@ -17,6 +18,10 @@ $routes = new Router();
 // dashboard
 $routes->get('/Dashboard', [DashboardController::class, 'index']);
 
+//profile
+$routes->get('/profile/profile', [ProfileController::class, 'profile']);
+$routes->get('/profile/editProfile', [ProfileController::class, 'editProfile']);
+$routes->put('/profile/updateProfile', [ProfileController::class, 'updateProfile']);
 
 // Authentication routes
 $routes->get('/', [AuthController::class, 'login']);
@@ -41,8 +46,7 @@ $routes->get('/user/edit', [UserController::class, 'edit']);
 $routes->put('/user/update', [UserController::class, 'update']);
 $routes->delete('/user/delete', [UserController::class, 'destroy']);
 $routes->get('/user/show', [UserController::class, 'show']);
-$routes->get('/user/show', [UserController::class, 'show']);
-$routes->get('/user/profile', [UserController::class, 'profile']);
+
 
 // products
 $routes->get('/products', [ProductController::class, 'index']);
@@ -79,5 +83,11 @@ $routes->get('/pages/viewOrder', [OrderController::class, 'viewOrder']);
 
 $routes->post('/orderHistory/process', [OrderController::class, 'process']);
 $routes->get('/orders/orderHistory', [OrderController::class, 'index']);
+
+//Stock
+$routes->get('/stock/stock', [StockController::class, 'index']);
+$routes->get('/stock/create', [StockController::class, 'create']);
+$routes->post('/stock/store', [StockController::class, 'store']);
+
 
 $routes->dispatch();

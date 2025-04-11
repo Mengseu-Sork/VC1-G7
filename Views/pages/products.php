@@ -68,8 +68,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
 
 <body>
     <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
-        <div class="grid grid-cols-1 md:grid-cols-1 gap-2">
-            <div x-data="{ bgColor: 'white' }" class="rounded-lg p-8">
+        <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+            <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
                 <div class="shadow-lg rounded-lg p-6 mb-16 border-2 border-gray-200 dark:border-primary-darker transition duration-300"
                     :style="{ backgroundColor: bgColor }">
                     <h1 class="text-left ml-4 text-3xl font-bold">Products</h1>
@@ -167,7 +167,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                         <button onclick="resetProducts()" id="backButton"
                             class="px-6 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-gray-600 transition hidden">
                             Back
-                        </button>
+                       </button>
+                </div>
+
+                <!-- Buttons Container -->
+                <div class="flex justify-center mt-6 gap-4" id="buttonContainer">
+                    <button onclick="showMoreProducts()" id="seeMoreButton" class="px-6 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition">
+                        See More
+                    </button>
+                    <button onclick="resetProducts()" id="backButton" class="px-6 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-gray-600 transition hidden">
+                        Back
+                    </button>
+                </div>
+            </div>
+    </div>
+
+    <!-- Modal with Form (Added Product Name) -->
+    <div id="orderModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-end pr-10 z-50">
+        <div class="bg-white rounded-lg p-6 w-96 h-[350px] flex flex-col justify-between">
+            <form id="orderForm" action="/order/process" method="POST">
+                <div class="modal-content flex flex-col items-center mt-1">
+                    <!-- Product Name in Modal -->
+                    <img id="modalProductImage" src="" alt="Product Image" class="w-32 h-32 rounded-md mb-4 hidden">
+                    <h3 id="modalProductNameDisplay" class="text-lg font-bold mb-3 text-black"></h3>
+                    <input type="hidden" id="modalProductName" name="product_name">
+                    <input type="hidden" id="modalPrice" name="price">
+                    <p id="modalProductPrice" class="text-yellow-600 font-semibold mb-3"></p>
+                    <p id="modalStockStatus" class="text-lg font-semibold mb-3"></p>
+                    <div class="quantity-container mb-3 w-full flex justify-center items-center space-x-2">
+                        <label for="quantity" class="text-lg font-semibold text-gray-700">Quantity:</label>
+                        <span id="decreaseQty" class="text-2xl font-bold text-gray-600 cursor-pointer select-none">−</span>
+                        <input type="text" id="quantity" name="quantity" value="1" readonly
+                            class="rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 w-5 text-center">
+                        <span id="increaseQty" class="text-2xl font-bold text-gray-600 cursor-pointer select-none">+</span>
                     </div>
                 </div>
 

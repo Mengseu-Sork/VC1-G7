@@ -55,12 +55,28 @@ class ProductController extends BaseController {
 
     
     function ratings() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        if (!isset($_SESSION['user'])) {
+            header("Location: views/auth/login");
+            exit();
+        }
         $products = $this->model->getAllProducts();
         $product_types = $this->model->getProductTypes();
         $categories = $this->model->getAllCategories();
         $this->view('Products/Product_ratings', ['products' => $products, 'product_types' => $product_types, 'categories' => $categories]);
     }
     function create(){
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        if (!isset($_SESSION['user'])) {
+            header("Location: views/auth/login");
+            exit();
+        }
         $categories = $this->model->getAllCategories();
         $this->view('Products/create', ['categories' => $categories]);
     }
@@ -105,6 +121,14 @@ class ProductController extends BaseController {
     }
 
     function edit(){
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        if (!isset($_SESSION['user'])) {
+            header("Location: views/auth/login");
+            exit();
+        }
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
             $product = $this->model->getProductById($id);
@@ -174,6 +198,14 @@ class ProductController extends BaseController {
         }
     }
     function show($id = null) {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        if (!isset($_SESSION['user'])) {
+            header("Location: views/auth/login");
+            exit();
+        }
         if ($id === null && isset($_GET['id'])) {
             $id = $_GET['id'];
         }

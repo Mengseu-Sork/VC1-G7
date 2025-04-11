@@ -21,10 +21,8 @@ class ProductModel {
                 products.price, 
                 products.date, 
                 products.image,
-                products.category_id,  
-                categories.name AS category_name,
-                stock.quantity AS stock_quantity,
-                CASE WHEN stock.quantity > 0 THEN 'In stock' ELSE 'Out of stock' END AS stock
+                products.category_id, 
+                categories.name AS category_name
                 FROM products 
                 LEFT JOIN categories ON products.category_id = categories.category_id
                 LEFT JOIN stock ON products.id = stock.product_id");
@@ -55,6 +53,7 @@ class ProductModel {
                 'category_id' => $data['category_id'],
                 'date' => $data['date'],
                 'image' => $data['image']
+                // 'stock_status' => isset($data['stock_status']) ? $data['stock_status'] : 1, // Default to in stock
             ]);
             return true;
         } catch (Exception $e) {
@@ -94,6 +93,7 @@ class ProductModel {
                 $stmt .= ", image = :image";
                 $params['image'] = $data['image'];
             }
+            
             
             $stmt .= " WHERE id = :id";
             

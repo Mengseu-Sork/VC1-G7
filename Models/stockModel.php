@@ -1,76 +1,61 @@
 <?php
-
 require_once 'Databases/Database.php';
 
-class StockModel
-{
+class StockModel {
     private $db;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->db = new Database();
     }
 
-    function getAllProducts() {
-        try {
-            $result = $this->db->query("SELECT 
-                products.id, 
-                products.name,
-                products.price, 
-                products.date, 
-                products.image,
-                products.category_id,
-                products.stock_status
-                FROM products");
-            return $result->fetchAll();
-        } catch (Exception $e) {
-            error_log("Error fetching products: " . $e->getMessage());
-            return [];
-        }
+    public function getAllStock() {
+        $sql = "SELECT s.*, p.name AS product_name, p.image 
+                FROM stock s
+                JOIN products p ON s.product_id = p.id";
+        return $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getAllProducts() {
+        $sql = "SELECT id, name, image FROM products WHERE stock_status = 1";
+        return $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function createStock($data) {
+        $sql = "INSERT INTO stock (product_id, quantity, last_updated) 
+                VALUES (:product_id, :quantity, :last_updated)";
+        return $this->db->query($sql, [
+            'product_id' => $data['product_id'],
+            'quantity' => $data['quantity'],
+            'last_updated' => date('Y-m-d H:i:s')
+        ]);
+    }
+
+    
+    public function getStockById($id) {
+        $sql = "SELECT * FROM stock WHERE stock_id = :id";
+        return $this->db->query($sql, ['id' => $id])->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updateStock($id, $data) {
+        $sql = "UPDATE stock 
+                SET quantity = :quantity, last_updated = :last_updated 
+                WHERE stock_id = :id";
+        return $this->db->query($sql, [
+            'quantity' => $data['quantity'],
+            'last_updated' => date('Y-m-d H:i:s'),
+            'id' => $id
+        ]);
+    }
+
+    public function stockExistsByProductId($productId) {
+        $sql = "SELECT COUNT(*) as count FROM stock WHERE product_id = :product_id";
+        $stmt = $this->db->query($sql, ['product_id' => $productId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['count'] > 0;
     }
     
-    public function getAllStock()
-    {
-        $query = "SELECT products.id, products.name AS product_name, stock.quantity
-                  FROM stock
-                  JOIN products ON stock.product_id = products.id";
-        return $this->db->query($query)->fetchAll(PDO::FETCH_ASSOC);
-    }
-    function getProductDetail($id) {
-        try {
-            // Prepare the SQL statement to prevent SQL injection
-            $stmt = $this->db->query("SELECT 
-                products.id, 
-                products.name, 
-                products.type, 
-                stock.last_updated,
-                stock.quantity
-                FROM products 
-                LEFT JOIN stock ON products.id = stock.product_id 
-                WHERE products.id = :id");
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
-            return $stmt->fetch();
-        } catch (Exception $e) {
-            error_log("Error fetching product details: " . $e->getMessage());
-            return null;
-        }
-    }
-
-    public function getStockById($id)
-    {
-        // SQL query with a placeholder for the id
-        $query = "SELECT products.name AS product_name, stock.quantity, stock.last_updated
-                  FROM stock 
-                  JOIN products ON stock.product_id = products.id
-                  WHERE stock.product_id = :id"; 
-
-        // Execute the query and pass the parameters correctly
-        return $this->db->query($query, ['id' => $id])->fetch(PDO::FETCH_ASSOC); 
-    }
-    function detailsProduct($id)
-    {
-        $query = "SELECT * FROM products WHERE id = :id";
-        return $this->db->query($query, ['id' => $id])->fetch(PDO::FETCH_ASSOC);
+    public function deleteStock($id) {
+        $sql = "DELETE FROM stock WHERE stock_id = :id";
+        return $this->db->query($sql, ['id' => $id]);
     }
 }

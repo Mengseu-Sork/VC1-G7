@@ -36,6 +36,7 @@ class AuthController {
             if ($user && password_verify($password, $user['password'])) {
                 // Update login time
                 $userModel->updateLoginTime($user['id']);
+                $userModel->setUserActive($user['id'], 1);
                 
                 session_start();
                 session_unset();
@@ -61,9 +62,24 @@ class AuthController {
     // Logout method
     public function logout() {
         session_start();
+        
+        if (isset($_SESSION['user']['id'])) {
+            $userId = $_SESSION['user']['id'];
+            $userModel = new User();
+            $userModel->setUserActive($userId, 0);
+        }
+    
+        session_unset();
         session_destroy();
+        
+        // Prevent the browser from caching the page
+        header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+        header("Pragma: no-cache");
+        header("Expires: 0");
+    
         header("Location: Views/auth/login.php");
         exit();
     }
+    
 }
 ?>

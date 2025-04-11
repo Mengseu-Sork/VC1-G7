@@ -22,6 +22,14 @@ class ShowproductController extends BaseController {
         $this->view('pages/products', ['products' => $products]);
     }
     function ratings() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        if (!isset($_SESSION['user'])) {
+            header("Location: views/auth/login");
+            exit();
+        }
         // Get product ID from URL if available
         $id = null;
         if (isset($_GET['id'])) {
@@ -39,6 +47,14 @@ class ShowproductController extends BaseController {
         }
     }
     function show($id = null) {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        if (!isset($_SESSION['user'])) {
+            header("Location: views/auth/login");
+            exit();
+        }
         // If no ID is provided in the URL, try to get it from GET parameters
         if ($id === null && isset($_GET['id'])) {
             $id = $_GET['id'];
