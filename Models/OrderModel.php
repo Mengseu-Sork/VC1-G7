@@ -11,64 +11,71 @@ class OrderModel
         $this->db = new Database();
     }
 
-    public function createOrder($userId, $totalAmount, $products, $pickupDate = null, $pickupTime = null)
+    public function userExists($userId)
     {
+        $pdo = $this->db->getConnection();
+        $stmt = $pdo->prepare("SELECT id FROM users WHERE id = ?");
+        $stmt->execute([$userId]);
+        return $stmt->fetch() !== false;
+    }
+
+    public function createOrder($userId, $totalAmount, $products)
+    {
+        $pdo = $this->db->getConnection();
+
         try {
             if (empty($products)) {
                 throw new Exception("No products provided for the order.");
             }
-    
-            $pdo = $this->db->getConnection();
+
             $pdo->beginTransaction();
-    
-            $orderStmt = $this->db->query("INSERT INTO orders (user_id, total_amount, pickup_date, pickup_time, order_date) VALUES (?, ?, ?, ?, NOW())");
-            $orderStmt->execute([$userId, $totalAmount, $pickupDate, $pickupTime]);
+
+            $orderStmt = $pdo->prepare("INSERT INTO orders (user_id, total_amount, order_date) VALUES (?, ?, NOW())");
+            $orderStmt->execute([$userId, $totalAmount]);
             $orderId = $pdo->lastInsertId();
-    
-            $itemStmt = $this->db->query("INSERT INTO order_items (order_id, product_id, quantity, subtotal) VALUES (?, ?, ?, ?)");
-    
+
+            $itemStmt = $pdo->prepare("INSERT INTO order_items (order_id, product_id, quantity, subtotal) VALUES (?, ?, ?, ?)");
+
             foreach ($products as $product) {
                 if (!isset($product['product_id'], $product['quantity'], $product['subtotal'])) {
-                    throw new Exception("Product data is incomplete for product ID: " . ($product['product_id'] ?? 'unknown'));
+                    throw new Exception("Incomplete product data.");
                 }
-    
-                $stockStmt = $this->db->query("SELECT quantity FROM stock WHERE product_id = ?");
+
+                $stockStmt = $pdo->prepare("SELECT quantity FROM stock WHERE product_id = ?");
                 $stockStmt->execute([$product['product_id']]);
-                $stockResult = $stockStmt->fetch(PDO::FETCH_ASSOC);
-    
-                if (!$stockResult) {
-                    throw new Exception("Product ID " . $product['product_id'] . " not found in stock.");
+                $stock = $stockStmt->fetch(PDO::FETCH_ASSOC);
+
+                if (!$stock || $stock['quantity'] < $product['quantity']) {
+                    throw new Exception("Insufficient stock for product ID {$product['product_id']}");
                 }
-                if ($stockResult['quantity'] < $product['quantity']) {
-                    throw new Exception("Insufficient stock for product ID: " . $product['product_id'] . ". Available: " . $stockResult['quantity']);
-                }
-    
+
                 $itemStmt->execute([$orderId, $product['product_id'], $product['quantity'], $product['subtotal']]);
-    
-                $updateStockStmt = $this->db->query("UPDATE stock SET quantity = quantity - ? WHERE product_id = ?");
+
+                $updateStockStmt = $pdo->prepare("UPDATE stock SET quantity = quantity - ? WHERE product_id = ?");
                 $updateStockStmt->execute([$product['quantity'], $product['product_id']]);
             }
-    
+
             $pdo->commit();
             return $orderId;
+
         } catch (Exception $e) {
             $pdo->rollBack();
-            error_log('Order creation failed: ' . $e->getMessage());
-            echo json_encode(['success' => false, 'message' => $e->getMessage()]);
-            exit;
+            error_log("Order creation failed: " . $e->getMessage());
+            return false;
         }
     }
 
     public function getOrdersByUser($userId)
     {
         try {
-            $query = "SELECT o.order_id, CONCAT(u.firstName, ' ', u.lastName) AS user_name, o.order_date, o.total_amount
+            $pdo = $this->db->getConnection();
+            $query = "SELECT o.order_id, o.order_date, o.total_amount
                       FROM orders o
-                      JOIN users u ON o.user_id = u.id
                       WHERE o.user_id = :user_id
                       ORDER BY o.order_date DESC";
-            $result = $this->db->query($query, ['user_id' => $userId]);
-            return $result->fetchAll();
+            $stmt = $pdo->prepare($query);
+            $stmt->execute(['user_id' => $userId]);
+            return $stmt->fetchAll();
         } catch (Exception $e) {
             error_log("Error fetching orders: " . $e->getMessage());
             return [];

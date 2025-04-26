@@ -226,7 +226,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
         let shownProducts = initialProductsToShow;
         const totalProducts = <?= $totalProducts ?>;
         // Note: loggedInUserId is not defined since we removed session handling
-        const loggedInUserId = null; // You may need to define this differently
+        const loggedInUserId = null;
 
         function updateCartCount() {
             const cart = getCart();
