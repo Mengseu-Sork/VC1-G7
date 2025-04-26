@@ -30,15 +30,14 @@ class Database
             die("Query Error: " . $e->getMessage());
         }
     }
+    public function getConnection()
+    {
+        return $this->pdo;
+    }
 
     public function closeConnection()
     {
         $this->pdo = null;
     }
-    // Add this method to your Database class if it doesn't already exist
-public function getLastInsertId() {
-    return $this->pdo->lastInsertId();
-}
-
 }
 ?>

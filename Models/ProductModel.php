@@ -24,7 +24,8 @@ class ProductModel {
                 products.category_id, 
                 categories.name AS category_name
                 FROM products 
-                LEFT JOIN categories ON products.category_id = categories.category_id");
+                LEFT JOIN categories ON products.category_id = categories.category_id
+                LEFT JOIN stock ON products.id = stock.product_id");
             return $result->fetchAll();
         } catch (Exception $e) {
             error_log("Error fetching products: " . $e->getMessage());
@@ -88,7 +89,6 @@ class ProductModel {
                 'id' => $data['id']
             ];
             
-            // Only include image in the update if it's provided
             if (!empty($data['image'])) {
                 $stmt .= ", image = :image";
                 $params['image'] = $data['image'];
@@ -118,8 +118,12 @@ class ProductModel {
     
     function deleteProduct($id){
         try {
+            $stmt = "DELETE FROM stock WHERE product_id = :id";
+            $this->db->query($stmt, ['id' => $id]);
+    
             $stmt = "DELETE FROM products WHERE id = :id";
             $this->db->query($stmt, ['id' => $id]);
+    
             return true;
         } catch (Exception $e) {
             error_log("Error deleting product: " . $e->getMessage());
