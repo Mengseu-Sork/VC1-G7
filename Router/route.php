@@ -11,8 +11,6 @@ require_once 'Controllers/AuthController.php';
 require_once 'Controllers/StockController.php';
 require_once 'Controllers/ProfileController.php';
 
-
-
 $routes = new Router();
 
 // dashboard
@@ -36,8 +34,6 @@ $routes->get('/pages/products', [ShowproductController::class, 'index']);
 $routes->get('/pages/details', [ShowproductController::class, 'show']);
 $routes->get('/pages/prosuct_ratings', [ShowproductController::class, 'ratings']);
 
-
-
 // user
 $routes->get('/user', [UserController::class, 'index']);
 $routes->get('/user/create', [UserController::class, 'create']);
@@ -46,7 +42,6 @@ $routes->get('/user/edit', [UserController::class, 'edit']);
 $routes->put('/user/update', [UserController::class, 'update']);
 $routes->delete('/user/delete', [UserController::class, 'destroy']);
 $routes->get('/user/show', [UserController::class, 'show']);
-
 
 // products
 $routes->get('/products', [ProductController::class, 'index']);
@@ -66,21 +61,10 @@ $routes->get('/categories/edit', [CategoryController::class, 'edit']);
 $routes->put('/categories/update', [CategoryController::class, 'update']);
 $routes->get('/categories/delete', [CategoryController::class, 'destroy']);
 
+// Order
 $routes->post('/order/process', [OrderController::class, 'process']);
 $routes->get('/pages/order', [OrderController::class, 'index']);
-// $routes->get('/pages/products', [ShowproductController::class, 'index']);
 $routes->get('/pages/viewOrder', [OrderController::class, 'viewOrder']);
-
-
-// order
-// $routes->get('/orders', [OrderController::class, 'index']);
-// $routes->get('/orders/create', [OrderController::class, 'create']);
-// $routes->post('/orders/store', [OrderController::class, 'store']);
-// $routes->get('/orders/edit/{id}', [OrderController::class, 'edit']);
-// $routes->post('/orders/update/{id}', [OrderController::class, 'update']);
-// $routes->delete('/orders/delete', [OrderController::class, 'delete']);
-// $routes->get('/orders/show', [OrderController::class, 'show']);
-
 $routes->post('/orderHistory/process', [OrderController::class, 'process']);
 $routes->get('/orders/orderHistory', [OrderController::class, 'index']);
 
@@ -88,6 +72,5 @@ $routes->get('/orders/orderHistory', [OrderController::class, 'index']);
 $routes->get('/stock/stock', [StockController::class, 'index']);
 $routes->get('/stock/create', [StockController::class, 'create']);
 $routes->post('/stock/store', [StockController::class, 'store']);
-
 
 $routes->dispatch();

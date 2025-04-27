@@ -1,5 +1,4 @@
 <?php
-// OrderModel.php
 require_once 'Databases/Database.php';
 
 class OrderModel
@@ -11,12 +10,32 @@ class OrderModel
         $this->db = new Database();
     }
 
-    public function userExists($userId)
+    public function getUserByEmail($email)
     {
         $pdo = $this->db->getConnection();
-        $stmt = $pdo->prepare("SELECT id FROM users WHERE id = ?");
-        $stmt->execute([$userId]);
-        return $stmt->fetch() !== false;
+        $stmt = $pdo->prepare("SELECT id, first_name, last_name FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function createUser($firstName, $lastName, $email, $phone)
+    {
+        try {
+            $pdo = $this->db->getConnection();
+            $stmt = $pdo->prepare("
+                INSERT INTO users (first_name, last_name, email, phone) 
+                VALUES (?, ?, ?, ?)
+            ");
+            $stmt->execute([$firstName, $lastName, $email, $phone]);
+            return $pdo->lastInsertId();
+        } catch (PDOException $e) {
+            if ($e->getCode() == 23000) { 
+                error_log("Duplicate email error: " . $e->getMessage());
+                return false;
+            }
+            error_log("Create user error: " . $e->getMessage());
+            return false;
+        }
     }
 
     public function createOrder($userId, $totalAmount, $products)
@@ -30,15 +49,26 @@ class OrderModel
 
             $pdo->beginTransaction();
 
-            $orderStmt = $pdo->prepare("INSERT INTO orders (user_id, total_amount, order_date) VALUES (?, ?, NOW())");
+            $orderStmt = $pdo->prepare("
+                INSERT INTO orders (user_id, total_amount, order_date) 
+                VALUES (?, ?, NOW())
+            ");
             $orderStmt->execute([$userId, $totalAmount]);
-            $orderId = $pdo->lastInsertId();
 
-            $itemStmt = $pdo->prepare("INSERT INTO order_items (order_id, product_id, quantity, subtotal) VALUES (?, ?, ?, ?)");
+            $orderId = $pdo->lastInsertId();
+            if (!$orderId) {
+                throw new Exception("Failed to insert order into orders table.");
+            }
+
+
+            $itemStmt = $pdo->prepare("
+                INSERT INTO order_items (order_id, product_id, quantity, subtotal) 
+                VALUES (?, ?, ?, ?)
+            ");
 
             foreach ($products as $product) {
                 if (!isset($product['product_id'], $product['quantity'], $product['subtotal'])) {
-                    throw new Exception("Incomplete product data.");
+                    throw new Exception("Incomplete product data for product ID {$product['product_id']}.");
                 }
 
                 $stockStmt = $pdo->prepare("SELECT quantity FROM stock WHERE product_id = ?");
@@ -46,12 +76,13 @@ class OrderModel
                 $stock = $stockStmt->fetch(PDO::FETCH_ASSOC);
 
                 if (!$stock || $stock['quantity'] < $product['quantity']) {
-                    throw new Exception("Insufficient stock for product ID {$product['product_id']}");
+                    throw new Exception("Insufficient stock for product ID {$product['product_id']}. Available: " . ($stock['quantity'] ?? 0));
                 }
 
                 $itemStmt->execute([$orderId, $product['product_id'], $product['quantity'], $product['subtotal']]);
-
-                $updateStockStmt = $pdo->prepare("UPDATE stock SET quantity = quantity - ? WHERE product_id = ?");
+                $updateStockStmt = $pdo->prepare("
+                    UPDATE stock SET quantity = quantity - ? WHERE product_id = ?
+                ");
                 $updateStockStmt->execute([$product['quantity'], $product['product_id']]);
             }
 
@@ -69,14 +100,17 @@ class OrderModel
     {
         try {
             $pdo = $this->db->getConnection();
-            $query = "SELECT o.order_id, o.order_date, o.total_amount
-                      FROM orders o
-                      WHERE o.user_id = :user_id
-                      ORDER BY o.order_date DESC";
+            $query = "
+                SELECT o.order_id, o.order_date, o.total_amount, u.first_name, u.last_name
+                FROM orders o
+                JOIN users u ON o.user_id = u.id
+                WHERE o.user_id = :user_id
+                ORDER BY o.order_date DESC
+            ";
             $stmt = $pdo->prepare($query);
             $stmt->execute(['user_id' => $userId]);
-            return $stmt->fetchAll();
-        } catch (Exception $e) {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
             error_log("Error fetching orders: " . $e->getMessage());
             return [];
         }

@@ -1,5 +1,4 @@
 <?php
-// OrderController.php
 require_once 'Models/OrderModel.php';
 require_once 'BaseController.php';
 
@@ -24,31 +23,43 @@ class OrderController extends BaseController
             exit;
         }
 
-        if (!isset($_SESSION['user']) || !isset($_SESSION['user']['id'])) {
-            echo json_encode(['success' => false, 'message' => 'User not authenticated']);
-            exit;
-        }
-
-        $userId = $_SESSION['user']['id'];
-        error_log("SESSION USER ID: $userId");
-
-        // Optional: check user exists in DB (helps prevent foreign key errors)
-        if (!$this->orderModel->userExists($userId)) {
-            echo json_encode(['success' => false, 'message' => 'User not found in database']);
-            exit;
-        }
-
         $input = json_decode(file_get_contents('php://input'), true);
         if (!$input) {
             echo json_encode(['success' => false, 'message' => 'Invalid JSON data']);
             exit;
         }
 
+        $customer = $input['customer'] ?? null;
+        if (!$customer || !isset($customer['first_name'], $customer['last_name'], $customer['email'], $customer['phone'])) {
+            echo json_encode(['success' => false, 'message' => 'Missing customer information']);
+            exit;
+        }
+
+        if (isset($_SESSION['user']) && isset($_SESSION['user']['id'])) {
+            $userId = $_SESSION['user']['id'];
+        } else {
+            $user = $this->orderModel->getUserByEmail($customer['email']);
+            if ($user) {
+                $userId = $user['id'];
+            } else {
+                $userId = $this->orderModel->createUser(
+                    $customer['first_name'],
+                    $customer['last_name'],
+                    $customer['email'],
+                    $customer['phone']
+                );
+                if (!$userId) {
+                    echo json_encode(['success' => false, 'message' => 'Failed to create user']);
+                    exit;
+                }
+            }
+        }
+
         $products = $input['products'] ?? array_map(function ($item) {
             return [
                 'product_id' => $item['id'],
-                'quantity'   => $item['quantity'],
-                'subtotal'   => $item['price'] * $item['quantity']
+                'quantity' => $item['quantity'],
+                'subtotal' => $item['price'] * $item['quantity']
             ];
         }, $input['cart'] ?? []);
 
@@ -58,13 +69,12 @@ class OrderController extends BaseController
             echo json_encode(['success' => false, 'message' => 'Invalid order data: missing products or total']);
             exit;
         }
-
         $orderId = $this->orderModel->createOrder($userId, $totalAmount, $products);
 
         if ($orderId) {
             echo json_encode(['success' => true, 'message' => 'Order placed successfully', 'order_id' => $orderId]);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to place order.']);
+            echo json_encode(['success' => false, 'message' => 'Failed to place order']);
         }
         exit;
     }
