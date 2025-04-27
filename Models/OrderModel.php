@@ -13,7 +13,7 @@ class OrderModel
     public function getUserByEmail($email)
     {
         $pdo = $this->db->getConnection();
-        $stmt = $pdo->prepare("SELECT id, first_name, last_name FROM users WHERE email = ?");
+        $stmt = $pdo->query("SELECT id, first_name, last_name FROM users WHERE email = ?");
         $stmt->execute([$email]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -22,14 +22,14 @@ class OrderModel
     {
         try {
             $pdo = $this->db->getConnection();
-            $stmt = $pdo->prepare("
-                INSERT INTO users (first_name, last_name, email, phone) 
-                VALUES (?, ?, ?, ?)
-            ");
+            $stmt = $pdo->query("
+            INSERT INTO users (first_name, last_name, email, phone) 
+            VALUES (?, ?, ?, ?)
+        ");
             $stmt->execute([$firstName, $lastName, $email, $phone]);
-            return $pdo->lastInsertId();
+            return $pdo->lastInsertId();  
         } catch (PDOException $e) {
-            if ($e->getCode() == 23000) { 
+            if ($e->getCode() == 23000) {  
                 error_log("Duplicate email error: " . $e->getMessage());
                 return false;
             }
@@ -37,6 +37,7 @@ class OrderModel
             return false;
         }
     }
+
 
     public function createOrder($userId, $totalAmount, $products)
     {
@@ -49,7 +50,7 @@ class OrderModel
 
             $pdo->beginTransaction();
 
-            $orderStmt = $pdo->prepare("
+            $orderStmt = $pdo->query("
                 INSERT INTO orders (user_id, total_amount, order_date) 
                 VALUES (?, ?, NOW())
             ");
@@ -61,7 +62,7 @@ class OrderModel
             }
 
 
-            $itemStmt = $pdo->prepare("
+            $itemStmt = $pdo->query("
                 INSERT INTO order_items (order_id, product_id, quantity, subtotal) 
                 VALUES (?, ?, ?, ?)
             ");
@@ -71,7 +72,7 @@ class OrderModel
                     throw new Exception("Incomplete product data for product ID {$product['product_id']}.");
                 }
 
-                $stockStmt = $pdo->prepare("SELECT quantity FROM stock WHERE product_id = ?");
+                $stockStmt = $pdo->query("SELECT quantity FROM stock WHERE product_id = ?");
                 $stockStmt->execute([$product['product_id']]);
                 $stock = $stockStmt->fetch(PDO::FETCH_ASSOC);
 
@@ -80,7 +81,7 @@ class OrderModel
                 }
 
                 $itemStmt->execute([$orderId, $product['product_id'], $product['quantity'], $product['subtotal']]);
-                $updateStockStmt = $pdo->prepare("
+                $updateStockStmt = $pdo->query("
                     UPDATE stock SET quantity = quantity - ? WHERE product_id = ?
                 ");
                 $updateStockStmt->execute([$product['quantity'], $product['product_id']]);
@@ -107,7 +108,7 @@ class OrderModel
                 WHERE o.user_id = :user_id
                 ORDER BY o.order_date DESC
             ";
-            $stmt = $pdo->prepare($query);
+            $stmt = $pdo->query($query);
             $stmt->execute(['user_id' => $userId]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
