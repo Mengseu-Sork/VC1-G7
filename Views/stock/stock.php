@@ -1,3 +1,6 @@
+<?php
+$isAdmin = isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin';
+?>
 <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
         <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
             <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
@@ -44,10 +47,14 @@
                                             <?= htmlspecialchars($stock['last_updated']) ?>
                                         </td>
                                         <td class="py-3 px-6 font-semibold text-center space-x-2">
-                                            <a href="/stock/edit?id=<?= $stock['stock_id'] ?>" class="inline-block text-green-600 hover:text-green-800">
+                                            <a href="<?= $isAdmin ? "/stock/edit?id={$stock['stock_id']}" : 'javascript:void(0);' ?>"
+                                                class="inline-block text-green-600 hover:text-green-800 <?= $isAdmin ? '' : 'pointer-events-none opacity-50' ?>">
                                                 <i class="far fa-edit"></i>
                                             </a>
-                                            <button onclick="openModal('deleteStockModal<?= $stock['stock_id'] ?>')" class="inline-block text-red-600 hover:text-red-800">
+
+                                            <!-- Delete Button -->
+                                            <button onclick="<?= $isAdmin ? "openModal('deleteStockModal{$stock['stock_id']}')" : "return false;" ?>"
+                                                    class="inline-block text-red-600 hover:text-red-800 <?= $isAdmin ? '' : 'pointer-events-none opacity-50' ?>">
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </td>

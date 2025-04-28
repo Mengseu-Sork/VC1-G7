@@ -1,3 +1,6 @@
+<?php
+$isAdmin = isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin';
+?>
 <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
     <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
         <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
@@ -37,12 +40,15 @@
                                     <td class="px-6 py-4"><?php echo htmlspecialchars($category['description']); ?></td>
                                     <td class="flex py-3 px-6 font-semibold justify-center relative">
                                         <a href="/categories/edit?id=<?= htmlspecialchars($category['category_id']) ?>"
-                                        class="block px-2 py-2 text-gray-700 flex items-center">
+                                            class="block px-2 py-2 text-gray-700 flex items-center
+                                                <?= $isAdmin ? '' : 'pointer-events-none opacity-50' ?>">
                                             <i class="far fa-edit mr-1" style="color: green;"></i>
                                         </a>
-                                        <button onclick="openModal('deleteCategoriesModal<?= $category['category_id'] ?>')" 
-                                                class="block text-left px-2 py-2 text-gray-700 flex items-center">
-                                                <i class="fas fa-trash-alt mr-1" style="color: red"></i>
+
+                                        <button onclick="<?= $isAdmin ? "openModal('deleteCategoriesModal{$category['category_id']}')" : "return false;" ?>"
+                                                class="block text-left px-2 py-2 text-gray-700 flex items-center
+                                                    <?= $isAdmin ? '' : 'pointer-events-none opacity-50' ?>">
+                                            <i class="fas fa-trash-alt mr-1" style="color: red;"></i>
                                         </button>
 
                                     </td>

@@ -18,6 +18,7 @@
                 <span class="font-bold text-3xl tracking-wider uppercase">SAN CAFE</span>
               </a>
               <div class="max-h-96 space-y-2 overflow-y-auto scrollbar-3px">
+              <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
                 <div>
                   <a
                     href="/Dashboard"
@@ -33,6 +34,8 @@
                     </span>
                   </a>
                 </div>
+                <?php endif; ?>
+
                 <div>
                   <a
                     href="/pages"
@@ -48,7 +51,9 @@
                     </span>
                   </a>
                 </div>
+
                 <div>
+                <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
 
                   <!-- active classes 'bg-primary-100 dark:bg-primary' -->
                   <a
@@ -60,16 +65,18 @@
                       <i class="fas fa-box icon text-blue-500 dark:text-light"></i> 
                     <span class="ml-2 text-5sm"> Inventory </span>
                   </a>
+                  <?php endif; ?>
                 </div>
+
                 <div>
                   <!-- active classes 'bg-primary-100 dark:bg-primary' -->
                   <a
                     href="/stock"
-                    class="sidebar-link flex items-center p-2 ml-1 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                    class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
 
                   >
                     <span aria-hidden="true">
-                      <i class="fas fa-warehouse text-blue-500 dark:text-light"></i> 
+                      <i class="fas fa-warehouse warehouse-icon text-blue-500 dark:text-light"></i>
                     <span class="ml-4 text-5sm"> Stock </span>
                   </a>
                 </div>
@@ -89,6 +96,7 @@
 
                 <!-- Pages links -->
                 <div>
+                <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
                   <a
                     href="#"
                   class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
@@ -102,6 +110,7 @@
                       </svg>
                     </span>
                   </a>
+                  <?php endif; ?>
                 </div>
 
                 <!-- Authentication links -->
@@ -123,6 +132,7 @@
                 </div>
 
                 <!-- Layouts links -->
+                <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
                 <div>
                   <a
                       href="#"
@@ -152,6 +162,7 @@
                     </span>
                   </a>
                 </div>
+                <?php endif; ?>
                 <div>
                   <a
                     href="/Views/auth/login.php"

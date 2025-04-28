@@ -130,5 +130,6 @@ class ProductModel {
             return false;
         }
     }
+    
 }
 ?>
