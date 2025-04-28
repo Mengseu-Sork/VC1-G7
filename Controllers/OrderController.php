@@ -82,7 +82,6 @@ class OrderController extends BaseController
                 $products = $input['products'];
                 error_log("Using " . count($products) . " products directly from input");
             }
-        }
 
             if (empty($products)) {
                 throw new Exception("No products in order");
