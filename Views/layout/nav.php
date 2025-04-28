@@ -77,7 +77,7 @@
                   >
                     <span aria-hidden="true">
                       <i class="fas fa-warehouse warehouse-icon text-blue-500 dark:text-light"></i>
-                    <span class="ml-4 text-5sm"> Stock </span>
+                    <span class="ml-5 text-5sm"> Stock </span>
                   </a>
                 </div>
 
@@ -94,39 +94,18 @@
                   </a>
                 </div>
 
-                <!-- Pages links -->
-                <div>
-                <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
-                  <a
-                    href="#"
-                  class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                  >
-                    <span aria-hidden="true">
-                      <i class="fas fa-file-alt icon text-blue-500 dark:text-light"></i>
-                    </span>
-                    <span class="ml-4 text-5sm"> Report </span>
-                    <span aria-hidden="true" class="ml-auto">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </span>
-                  </a>
-                  <?php endif; ?>
-                </div>
-
                 <!-- Authentication links -->
                 <div>
                   <a
-                    href="orders/orderHistory"
+                    href="orders"
                     class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
 
                   >
                     <span aria-hidden="true">
                       <i class="fas fa-shopping-cart icon text-blue-500 dark:text-light"></i>
                     </span>
-                    <span class="ml-2 text-5sm"> Order </span>
+                    <span class="ml-2 text-5sm"> History Order </span>
                     <span aria-hidden="true" class="ml-auto">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                      </svg>
                     </span>
                   </a>
                 </div>
@@ -165,7 +144,7 @@
                 <?php endif; ?>
                 <div>
                   <a
-                    href="/Views/auth/login.php"
+                    href="/"
                     class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
                   >
                     <span aria-hidden="true">

@@ -1,5 +1,4 @@
 <?php
-
 require_once 'Router.php';
 require_once 'controllers/UserController.php';
 require_once 'Controllers/DashboardController.php';
@@ -9,8 +8,6 @@ require_once 'Controllers/ShowproductController.php';
 require_once 'Controllers/OrderController.php';
 require_once 'Controllers/AuthController.php';
 require_once 'Controllers/StockController.php';
-require_once 'Controllers/ProfileController.php';
-
 
 
 $routes = new Router();
@@ -70,10 +67,7 @@ $routes->get('/categories/delete', [CategoryController::class, 'destroy']);
 
 //order
 $routes->post('/order/process', [OrderController::class, 'process']);
-$routes->get('/pages/order', [OrderController::class, 'index']);
-$routes->get('/pages/viewOrder', [OrderController::class, 'viewOrder']);
-$routes->post('/orderHistory/process', [OrderController::class, 'process']);
-$routes->get('/orders/orderHistory', [OrderController::class, 'index']);
+$routes->get('/orders', [OrderController::class, 'index']);
 
 //Stock
 $routes->get('/stock', [StockController::class, 'index']);

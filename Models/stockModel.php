@@ -65,4 +65,5 @@ class StockModel {
         $sql = "DELETE FROM stock WHERE stock_id = :id";
         return $this->db->query($sql, ['id' => $id]);
     }
+    
 }
