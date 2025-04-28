@@ -9,7 +9,6 @@ require_once 'Controllers/OrderController.php';
 require_once 'Controllers/AuthController.php';
 require_once 'Controllers/StockController.php';
 
-
 $routes = new Router();
 
 // dashboard
@@ -33,8 +32,6 @@ $routes->get('/pages/products', [ShowproductController::class, 'index']);
 $routes->get('/pages/details', [ShowproductController::class, 'show']);
 $routes->get('/pages/prosuct_ratings', [ShowproductController::class, 'ratings']);
 
-
-
 // user
 $routes->get('/user', [UserController::class, 'index']);
 $routes->get('/user/create', [UserController::class, 'create']);
@@ -43,7 +40,6 @@ $routes->get('/user/edit', [UserController::class, 'edit']);
 $routes->put('/user/update', [UserController::class, 'update']);
 $routes->delete('/user/delete', [UserController::class, 'destroy']);
 $routes->get('/user/show', [UserController::class, 'show']);
-
 
 // products
 $routes->get('/products', [ProductController::class, 'index']);
@@ -76,6 +72,5 @@ $routes->post('/stock/store', [StockController::class, 'store']);
 $routes->get('/stock/edit', [StockController::class, 'edit']);
 $routes->post('/stock/update', [StockController::class, 'update']);
 $routes->post('/stock/delete', [StockController::class, 'delete']);
-
 
 $routes->dispatch();
