@@ -97,13 +97,22 @@
       </div>
     </div>
 
+    <!-- Debug Info -->
+    <div id="debug-info" class="mb-4 p-3 bg-gray-100 text-gray-700 rounded-md hidden">
+      <h3 class="font-bold mb-2">Debug Information</h3>
+      <pre id="debug-content" class="text-xs overflow-auto max-h-40"></pre>
+    </div>
+
+    <!-- Error Message -->
+    <div id="error-message" class="mb-4 p-3 bg-red-100 text-red-700 rounded-md hidden"></div>
+
     <!-- Submit Button -->
     <div class="mt-6 flex justify-end gap-4">
       <button type="button" id="cancelBtn"
         class="w-28 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 rounded shadow">
         Cancel
       </button>
-      <button type="submit"
+      <button type="submit" id="submitBtn"
         class="w-28 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded shadow">
         Submit
       </button>
@@ -114,9 +123,13 @@
   document.addEventListener('DOMContentLoaded', () => {
     const orderForm = document.getElementById('order-form');
     const cancelBtn = document.getElementById('cancelBtn');
+    const submitBtn = document.getElementById('submitBtn');
     const totalPriceElement = document.getElementById('total-price');
     const firstNameInput = document.getElementById('first_name');
     const lastNameInput = document.getElementById('last_name');
+    const errorMessageElement = document.getElementById('error-message');
+    const debugInfoElement = document.getElementById('debug-info');
+    const debugContentElement = document.getElementById('debug-content');
 
     function getCart() {
       return JSON.parse(localStorage.getItem('cart') || '[]');
@@ -130,6 +143,20 @@
       const total = getCart().reduce((sum, item) => sum + item.price * item.quantity, 0);
       totalPriceElement.textContent = '$' + total.toFixed(2);
       return total;
+    }
+
+    function showError(message) {
+      errorMessageElement.textContent = message;
+      errorMessageElement.classList.remove('hidden');
+    }
+
+    function hideError() {
+      errorMessageElement.classList.add('hidden');
+    }
+
+    function showDebugInfo(data) {
+      debugContentElement.textContent = JSON.stringify(data, null, 2);
+      debugInfoElement.classList.remove('hidden');
     }
 
     function renderCart() {
@@ -187,9 +214,11 @@
 
     orderForm.addEventListener('submit', e => {
       e.preventDefault();
+      hideError();
+      
       const cart = getCart();
       if (cart.length === 0) {
-        alert('Your cart is empty.');
+        showError('Your cart is empty.');
         return;
       }
 
@@ -198,19 +227,32 @@
       const lastName = lastNameInput.value.trim();
       const nameRegex = /^[a-zA-Z\s-]+$/;
       if (!firstName || !lastName) {
-        alert('First name and last name are required.');
+        showError('First name and last name are required.');
         return;
       }
       if (!nameRegex.test(firstName) || !nameRegex.test(lastName)) {
-        alert('Names can only contain letters, spaces, or hyphens.');
+        showError('Names can only contain letters, spaces, or hyphens.');
         return;
       }
+
+      // Disable submit button to prevent multiple submissions
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
 
       const formData = new FormData(orderForm);
       const pickupTime = `${formData.get('pickup_hour')}:${formData.get('pickup_minute')} ${formData.get('pickup_ampm')}`;
 
+      // Transform cart items to ensure product_id is properly set
+      const transformedCart = cart.map(item => ({
+        product_id: item.id,
+        quantity: item.quantity,
+        subtotal: item.price * item.quantity,
+        price: item.price,
+        name: item.name
+      }));
+
       const orderDetails = {
-        cart: cart,
+        cart: transformedCart,
         total: calculateTotal(),
         customer: {
           first_name: firstName,
@@ -222,32 +264,60 @@
         pickup_time: pickupTime
       };
 
+      // Show debug info
+      showDebugInfo(orderDetails);
+
       fetch('/order/process', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderDetails)
+        body: JSON.stringify({
+          customer: {
+            first_name: firstName,
+            last_name: lastName,
+            email: formData.get('email'),
+            phone: formData.get('phone')
+          },
+          cart: transformedCart.map(item => ({
+            product_id: item.product_id,
+            quantity: item.quantity,
+            subtotal: item.subtotal,
+            price: item.price
+          })),
+          total: calculateTotal(),
+          pickup_date: formData.get('pickup_date'),
+          pickup_time: pickupTime
+        })
       })
-        .then(response => {
-          if (!response.ok) {
-            return response.text().then(text => {
-              throw new Error(`HTTP error! Status: ${response.status} - ${text}`);
-            });
+      .then(response => {
+        if (!response.ok) {
+          return response.text().then(text => {
+            throw new Error(`HTTP error! Status: ${response.status} - ${text}`);
+          });
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data.success) {
+          alert('Order placed successfully!');
+          localStorage.removeItem('cart');
+          window.location.href = '/pages/products';
+        } else {
+          showError('Error: ' + data.message);
+          // Show more detailed error information if available
+          if (data.debug) {
+            showDebugInfo(data.debug);
           }
-          return response.json();
-        })
-        .then(data => {
-          if (data.success) {
-            alert('Order placed successfully!');
-            localStorage.removeItem('cart');
-            window.location.href = '/pages/products';
-          } else {
-            alert('Error: ' + data.message);
-          }
-        })
-        .catch(error => {
-          console.error('Fetch error:', error);
-          alert('An error occurred while placing the order: ' + error.message);
-        });
+        }
+      })
+      .catch(error => {
+        console.error('Fetch error:', error);
+        showError('An error occurred while placing the order: ' + error.message);
+      })
+      .finally(() => {
+        // Re-enable submit button
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit';
+      });
     });
 
     cancelBtn.addEventListener('click', () => {
