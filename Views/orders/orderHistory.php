@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Order History</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             color: #333;
-            line-height: 1.6;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
+            line-height: 1.6
         }
         table {
             width: 100%;
@@ -41,9 +34,27 @@
         .view-details:before {
             content: '› ';
         }
+        .no-orders {
+            text-align: center;
+            padding: 30px 0;
+            color: #777;
+        }
     </style>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Reviews</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body class="bg-gray-50">
+    <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
+        <div class="container mx-auto px-4 py-8 max-w-6xl">
+    
+    <h1>Your Order History</h1>
+    
     <table>
         <thead>
             <tr>
@@ -51,59 +62,30 @@
                 <th>Order date</th>
                 <th>Bill-to name</th>
                 <th>Total</th>
-                <th>Track & trace number</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>SO-1606070005</td>
-                <td>6/7/2016</td>
-                <td>John Doe</td>
-                <td>$318.24</td>
-                <td><a href="#" class="view-details">View details</a></td>
-            </tr>
-            <tr>
-                <td>SO-1606070004</td>
-                <td>6/7/2016</td>
-                <td>John Doe</td>
-                <td>$122.90</td>
-                <td><a href="#" class="view-details">View details</a></td>
-            </tr>
-            <tr>
-                <td>SO-1606070003</td>
-                <td>6/7/2016</td>
-                <td>John Doe</td>
-                <td>$516.91</td>
-                <td><a href="#" class="view-details">View details</a></td>
-            </tr>
-            <tr>
-                <td>SO-1606070002</td>
-                <td>6/7/2016</td>
-                <td>John Doe</td>
-                <td>$723.55</td>
-                <td><a href="#" class="view-details">View details</a></td>
-            </tr>
-            <tr>
-                <td>SO-1606070001</td>
-                <td>6/7/2016</td>
-                <td>John Doe</td>
-                <td>$137.94</td>
-                <td><a href="#" class="view-details">View details</a></td>
-            </tr>
-            <tr>
-                <td>SO-1606070000</td>
-                <td>6/7/2016</td>
-                <td>John Doe</td>
-                <td>$436.08</td>
-                <td><a href="#" class="view-details">View details</a></td>
-            </tr>
-            <tr>
-                <td>SO-108589</td>
-                <td>3/18/2016</td>
-                <td>John Doe</td>
-                <td>$91.74</td>
-                <td><a href="#" class="view-details">View details</a></td>
-            </tr>
+            <?php if (isset($orders) && !empty($orders)): ?>
+                <?php foreach ($orders as $order): ?>
+                    <tr>
+                        <td>SO-<?= str_pad($order['order_id'], 6, '0', STR_PAD_LEFT) ?></td>
+                        <td>
+                            <?php 
+                                // Format the date from timestamp to a readable format
+                                echo date('m/d/Y', strtotime($order['order_date']));
+                            ?>
+                        </td>
+                        <td><?= $order['FirstName'] . ' ' . $order['LastName'] ?></td>
+                        <td>$<?= number_format($order['total_amount'], 2) ?></td>
+                        <td><a href="/pages/order_summary?id=<?= $order['order_id'] ?>" class="view-details">View details</a></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="5" class="no-orders">You haven't placed any orders yet.</td>
+                </tr>
+            <?php endif; ?>
         </tbody>
     </table>
 </body>

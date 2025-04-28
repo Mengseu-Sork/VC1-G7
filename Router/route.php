@@ -63,10 +63,9 @@ $routes->get('/categories/delete', [CategoryController::class, 'destroy']);
 
 // Order
 $routes->post('/order/process', [OrderController::class, 'process']);
-$routes->get('/pages/order', [OrderController::class, 'index']);
-$routes->get('/pages/viewOrder', [OrderController::class, 'viewOrder']);
 $routes->post('/orderHistory/process', [OrderController::class, 'process']);
 $routes->get('/orders/orderHistory', [OrderController::class, 'index']);
+$routes->get('/pages/order_summary', [OrderController::class, 'viewOrder']);
 
 //Stock
 $routes->get('/stock/stock', [StockController::class, 'index']);

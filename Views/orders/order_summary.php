@@ -1,3 +1,4 @@
+<?php var_dump($orderDetails["order_date"])?>
 <!DOCTYPE html>  
 <html lang="en">  
 <head>  

@@ -309,14 +309,23 @@ class OrderModel
     
     private function getUserById($userId)
     {
-        try {
+        // var_dump($userId); // Debugging line to check the user ID
             $pdo = $this->db->getConnection();
             $stmt = $pdo->prepare("SELECT id, FirstName, LastName, email FROM users WHERE id = ?");
             $stmt->execute([$userId]);
             return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log("Error in getUserById: " . $e->getMessage());
-            return false;
-        }
+       
     }
+    function getorder(){
+        $pdo = $this->db->getConnection();
+        $stmt = $pdo->prepare("SELECT * FROM orders");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    function getOrderDetails($orderId) {
+        $pdo = $this->db->getConnection();
+        $stmt = $pdo->prepare("SELECT * FROM orders WHERE order_id = ?");
+        $stmt->execute([$orderId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+}
 }
