@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 11, 2025 at 04:29 AM
+-- Generation Time: Apr 27, 2025 at 10:12 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -45,8 +45,9 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `FirstName`, `LastName`, `image`, `email`, `phone`, `password`, `role`, `last_login`, `active`) VALUES
-(3, 'Admin', 'System', 0x313734343038343738385f70686f746f5f323032342d31312d30345f31332d30302d30382e6a7067, 'admin@gmail.com', '086788826', '$2y$10$0nhdmXF2CpwsPNYM3hDNgOnziZGozQKT6JAi1rNJ095gZtL3lwIe.', 'admin', '2025-04-11 07:10:24', 1),
-(6, 'Sokleap', 'Seng', 0x313734343038353034355f70686f746f5f323032342d31312d32385f31332d35362d30362e6a7067, 'sokleap@gmail.com', '01234535', '$2y$10$yQ03XWCZu.KmSojgKmjDp.FJWdYbyz.kmYiUpeCsbiFBwR.2o8szG', 'employee', '2025-04-10 13:23:37', 0);
+(6, 'Sokleap', 'Seng', 0x313734343030373236345f313734333530333539352d706963362e6a7067, 'sokleap@gmail.com', '01234535', '$2y$10$pe5lsgSLGTJWF3dZVMUWc.FrUgYzCgAD7Q7z9oBCGU7uqZdtH9gZa', 'employee', '2025-04-07 15:49:05', 0),
+(11, 'Thavry', 'Chanhak', '', 'thavry@gmail.com', '0712535080', '$2y$10$spIse3GjFtK25Z06VgpzRuJueIEHRsUQjwEV.wRiGBHi1ferDEING', '', '2025-04-26 08:19:44', 1),
+(14, 'rita', 'mor', NULL, 'rita@email.com', '0712535080', '$2y$10$ly.g4ACT1N0EAVyNsn6l0OQaeM2M5edbZ0VFMi6sH4WyG82IZFEf2', 'employee', '2025-04-27 14:59:57', 1);
 
 -- --------------------------------------------------------
 
@@ -65,7 +66,7 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`category_id`, `name`, `description`) VALUES
-(1, 'Nut', 'This is a sample product description.'),
+(1, 'Nut', '                                                                This is a sample product description.                                 '),
 (2, 'Powder', 'This is a sample product '),
 (3, 'Drinks', 'This is a sample products');
 
@@ -120,7 +121,11 @@ CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `order_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `total_amount` decimal(10,2) NOT NULL
+  `total_amount` decimal(10,2) NOT NULL,
+  `FirstName` varchar(255) NOT NULL,
+  `LastName` varchar(100) NOT NULL,
+  `phone` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -170,10 +175,23 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `price`, `category_id`, `date`, `image`) VALUES
+(42, 'Fulton Schmidt', 2.00, 1, '1991-11-06', 'Popping_boba_strawberry.jpg'),
+(45, 'Kevin Guerra', 9.00, 2, '1976-12-23', 'Coca.jpg'),
+(46, 'Cheryl Albert', 434.00, 1, '1995-03-24', 'Arabica Ethiopia.png'),
 (50, 'Rhonda Hudson', 241.00, 2, '2001-03-27', 'Fanta.jpg'),
 (51, 'Colleen Bean', 496.00, 2, '1981-03-21', 'boba_drink_mix.jpg'),
 (52, 'Igor Velasquez', 756.00, 3, '2017-08-17', 'photo_2025-03-24_16-07-10.jpg'),
-(59, 'Jaden Townsend', 508.00, 1, '1992-07-22', 'caramel-sauce.png');
+(53, 'Tatiana Valdez', 84.00, 3, '1981-12-14', 'Coca.jpg'),
+(54, 'Philip Chen', 647.00, 2, '1987-12-18', 'Flores_bajawa_arabica.jpg'),
+(55, 'Violet Aguirre', 112.00, 3, '2009-05-13', 'chocolate.jpg'),
+(57, 'Stella Maynard', 215.00, 3, '1971-11-12', 'photo_2025-03-24_15-57-08.jpg'),
+(58, 'Linus Maynard', 345.00, 2, '1983-02-22', 'photo_2025-03-24_16-07-32.jpg'),
+(60, 'Stone Snider', 122.00, 2, '1982-01-28', 'photo_2025-03-24_16-05-57.jpg'),
+(61, 'Mira Horne', 766.00, 2, '1972-11-09', 'Raw_cacao_powder.jpg'),
+(62, 'Paloma Rogers', 572.00, 2, '1995-09-11', 'photo_2025-03-24_16-08-41.jpg'),
+(63, 'Rana Sykes', 586.00, 2, '1974-03-10', 'photo_2025-03-24_16-08-41.jpg'),
+(64, 'Honorato Johnson', 37.00, 1, '2017-11-04', 'photo_2025-03-24_16-16-26.jpg'),
+(65, 'Urielle Kane', 454.00, 3, '2000-03-12', 'photo_2025-03-24_15-58-05.jpg');
 
 -- --------------------------------------------------------
 
@@ -198,6 +216,21 @@ CREATE TABLE `product_variants` (
   `product_id` int(11) DEFAULT NULL,
   `variant_name` varchar(255) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reports`
+--
+
+CREATE TABLE `reports` (
+  `id` int(11) NOT NULL,
+  `product_name` varchar(255) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `date_of_bridth` date DEFAULT NULL,
+  `total_price` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -235,6 +268,7 @@ CREATE TABLE `shift_scheduling` (
 
 CREATE TABLE `stock` (
   `stock_id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
   `product_id` int(11) DEFAULT NULL,
   `quantity` int(11) NOT NULL,
   `last_updated` timestamp NOT NULL DEFAULT current_timestamp()
@@ -244,11 +278,10 @@ CREATE TABLE `stock` (
 -- Dumping data for table `stock`
 --
 
-INSERT INTO `stock` (`stock_id`, `product_id`, `quantity`, `last_updated`) VALUES
-(1, 50, 100, '2025-04-07 04:33:32'),
-(3, 52, 129, '2025-04-07 04:34:05'),
-(5, 51, 123, '2025-04-08 22:01:15'),
-(6, 59, 50, '2025-04-08 22:12:37');
+INSERT INTO `stock` (`stock_id`, `name`, `product_id`, `quantity`, `last_updated`) VALUES
+(1, 'A', 50, 334, '2025-04-07 04:33:32'),
+(2, 'B', 51, 321, '2025-04-07 04:33:39'),
+(3, 'C', 52, 129, '2025-04-07 04:34:05');
 
 -- --------------------------------------------------------
 
@@ -373,6 +406,12 @@ ALTER TABLE `product_variants`
   ADD KEY `product_id` (`product_id`);
 
 --
+-- Indexes for table `reports`
+--
+ALTER TABLE `reports`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `reports_analytics`
 --
 ALTER TABLE `reports_analytics`
@@ -420,13 +459,13 @@ ALTER TABLE `waste_management`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `discounts_promotions`
@@ -450,7 +489,7 @@ ALTER TABLE `inventory_transactions_details`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `order_detail`
@@ -468,7 +507,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `product_discounts`
@@ -481,6 +520,12 @@ ALTER TABLE `product_discounts`
 --
 ALTER TABLE `product_variants`
   MODIFY `variant_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `reports`
+--
+ALTER TABLE `reports`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `reports_analytics`
@@ -498,7 +543,7 @@ ALTER TABLE `shift_scheduling`
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `stock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `stock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `suppliers`

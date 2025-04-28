@@ -52,6 +52,8 @@ class Router
         http_response_code(404);
         require_once "views/errors/404.php";
     }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 7d94f7816bb3165a7e4586a7ac72900bc75bc911
 }
-
-?>
