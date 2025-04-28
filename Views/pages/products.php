@@ -445,7 +445,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                     elements.modal.classList.remove('hidden');
                 });
             });
-
             elements.quantityInput.addEventListener("input", function () {
                 let quantity = parseInt(elements.quantityInput.value) || 1;
                 if (quantity < 1) quantity = 1;
@@ -453,14 +452,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                 elements.quantityInput.value = quantity;
                 updateTotalPrice();
             });
-
             elements.increaseQty.addEventListener("click", function () {
                 let quantity = parseInt(elements.quantityInput.value) || 1;
                 if (currentStockQuantity > 0 && quantity >= currentStockQuantity) return;
                 elements.quantityInput.value = quantity + 1;
                 updateTotalPrice();
             });
-
             elements.decreaseQty.addEventListener("click", function () {
                 let quantity = parseInt(elements.quantityInput.value) || 1;
                 if (quantity > 1) {
@@ -468,25 +465,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                     updateTotalPrice();
                 }
             });
-
             elements.cancelBtn.addEventListener('click', function () {
                 elements.modal.classList.add('hidden');
                 elements.modalImage.classList.add('hidden');
             });
-
             elements.orderBtn.addEventListener('click', function (e) {
                 e.preventDefault();
-
-                // Gather product details from the modal
                 const quantity = parseInt(elements.quantityInput.value) || 1;
                 const productId = document.getElementById('modalProductId')?.value;
                 const productName = elements.modalProductName.value;
                 const price = parseFloat(elements.modalPriceInput.value);
-                const productImage = elements.modalImage.src.split('/').pop(); // Extract the image filename
+                const productImage = elements.modalImage.src.split('/').pop(); 
                 const stock = elements.modalStockStatus.textContent;
-                const stockQuantity = currentStockQuantity; // Already set when modal is opened
-
-                // Create product object
+                const stockQuantity = currentStockQuantity; 
                 const product = {
                     id: productId,
                     name: productName,
@@ -496,8 +487,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                     stock_quantity: stockQuantity,
                     quantity: quantity
                 };
-
-                // Add to cart (same logic as "ADD" button)
                 let cart = getCart();
                 const existingItem = cart.find(item => item.id === product.id);
                 if (existingItem) {
@@ -510,25 +499,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                 } else {
                     cart.push(product);
                 }
-
-                // Save the updated cart and update cart count
                 saveCart(cart);
-
-                // Close the modal
                 elements.modal.classList.add('hidden');
                 elements.modalImage.classList.add('hidden');
-
-                // Redirect to the cart page immediately
                 window.location.href = '/Views/orders/order.php';
             });
 
             elements.closeSuccess.addEventListener('click', function () {
-                // Close the success message
                 elements.successMessage.classList.add('hidden');
-                // Close the order modal
                 elements.modal.classList.add('hidden');
                 elements.modalImage.classList.add('hidden');
-                // Redirect to the products page (reload current page)
                 window.location.href = window.location.pathname;
             });
 
