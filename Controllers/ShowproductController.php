@@ -21,23 +21,29 @@ class ShowproductController extends BaseController {
     
         $products = $this->model->getShowProducts();
         $stocks = $this->model->getAllStock();
+        $categories = $this->model->getAllCategories();
     
         $updatedProducts = [];
     
         foreach ($products as $product) {
             $product['quantity'] = 0;
-    
+        
+            // Find the category for each product
+            $productCategory = $this->model->getCategoryById($product['category_id']);
+            $product['category_name'] = $productCategory['name'] ?? '';  // Set the category name
+        
             foreach ($stocks as $stock) {
                 if ((int)$stock['product_id'] === (int)$product['id']) {
                     $product['quantity'] = (int)$stock['quantity'];
                     break;
                 }
             }
-    
+        
             $updatedProducts[] = $product;
         }
+        
 
-        $this->view('pages/products', ['products' => $updatedProducts, 'updatedProducts' => $updatedProducts]);
+        $this->view('pages/products', ['products' => $updatedProducts, 'updatedProducts' => $updatedProducts, 'categories' => $categories]);
 
     }
     

@@ -78,18 +78,18 @@ class StockController extends BaseController {
             $id = $_POST['stock_id'];
             $data = [
                 'quantity' => $_POST['quantity'],
-                'last_updated' => date('Y-m-d H:i:s')
+                'last_updated' => $_POST['last_updated']
             ];
+    
             $this->model->updateStock($id, $data);
             $this->redirect('/stock/stock');
         }
     }
     
-
     public function delete() {
         if (isset($_GET['id'])) {
             $this->model->deleteStock($_GET['id']);
         }
-        $this->redirect('/stock');
+        $this->redirect('/stock/stock');
     }
 }

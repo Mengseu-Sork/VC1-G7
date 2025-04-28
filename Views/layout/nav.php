@@ -64,8 +64,8 @@
                 <div>
                   <!-- active classes 'bg-primary-100 dark:bg-primary' -->
                   <a
-                    href="/stock/stock"
-                    class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
+                    href="/stock"
+                    class="sidebar-link flex items-center p-2 ml-1 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
 
                   >
                     <span aria-hidden="true">

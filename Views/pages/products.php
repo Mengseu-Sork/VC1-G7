@@ -1,11 +1,9 @@
 <?php
 $productModel = new ProductModel();
 $products = $productModel->getAllProducts();
-$categories_name = [
-    'Nut' => 'Nut Products',
-    'Powder' => 'Powder Products',
-    'Drinks' => 'Drinks Products'
-];
+
+$categoriesModel = new CategoryModel();
+$categories = $categoriesModel->getAllCategories();
 
 $productsPerRow = 5;
 $rowsPerClick = 2;
@@ -61,8 +59,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="shadow-lg rounded-lg p-6 mb-16 border-2 border-gray-200 dark:border-primary-darker transition duration-300"
                     :style="{ backgroundColor: bgColor }">
                     
-                    <h1 class="text-left ml-4 text-3xl font-bold">Products</h1>
-                    <div class="flex flex-wrap gap-8 p-4 justify-between">
+                    <h1 class="text-left ml-8 text-3xl font-bold">Products</h1>
+                    <div class="flex flex-wrap gap-8 p-4 px-8 justify-between">
                         <div class="flex w-full md:w-auto gap-2 relative">
                             <input type="text" id="searchInput" placeholder="Search products..." required
                                 class="w-full md:w-64 px-4 py-2 pl-10 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 outline-none bg-white dark:bg-darker border-b dark:border-primary-darker"
@@ -73,59 +71,80 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 Search
                             </button>
                         </div>
-                        <select id="category-filter"
-                            class="pr-5 pl-2 border border-gray-300 rounded-md transition duration-300 mr-1 bg-white dark:bg-darker border-b dark:border-primary-darker"
-                            onchange="filterByCategory(this.value)">
-                            
-                            <option value="">All Products</option>
-                            <?php foreach ($categories_name as $key => $value): ?>
-                                <option value="<?= $key ?>"><?= $value ?></option>
-                            <?php endforeach; ?>
-                        </select>                      
+                        <div class="flex space-x-4 text-xl">
+                            <a href="../../Views/orders/order.php" class="relative">
+                            <i class="fas fa-shopping-cart mr-1" style="color: orange; width: 24px; height: 32px"></i>
+                                <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                            </a>
+
+                            <select id="category-filter"
+                                class="pr-5 pl-2 border border-gray-300 rounded-md transition duration-300 mr-1 bg-white dark:bg-darker border-b dark:border-primary-darker"
+                                onchange="filterByCategory(this.value)">
+                                <option value="">All Products</option>
+                                <?php foreach ($categories as $category): ?>
+                                    <option value="<?= $category['name'] ?>"><?= $category['name'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>                     
                     </div>                
-                <div class="container flex flex-wrap gap-8 p-4 " id="productContainer">
-                    <?php 
+                    <div class="container flex flex-wrap gap-9 p-8" id="productContainer">
+                        <?php
                         $index = 0;
-                        foreach ($updatedProducts as $product): 
+                        foreach ($updatedProducts as $product):
                             $hiddenClass = ($index >= $initialProductsToShow) ? 'hidden product-hidden' : '';
                             $quantity = $product['quantity'] ?? 0;
                             $isInStock = $quantity > 0;?>
-                            <div class="w-48 h-76 bg-white border border-gray-300 p-4 rounded-lg shadow-md transition duration-300 flex flex-col items-center bg-white dark:bg-darker border-b dark:border-primary-darker <?= $hiddenClass ?>"
-                                data-category="<?= htmlspecialchars($product['category_name'] ?? 'Uncategorized') ?>"
+                            <div class="w-64 h-88 bg-white border border-gray-300 p-4 rounded-lg shadow-md transition duration-300 flex flex-col items-center bg-white dark:bg-darker border-b dark:border-primary-darker <?= $hiddenClass ?>"
+                                data-category="<?= htmlspecialchars($product['category_name']) ?>"
                                 data-name="<?= htmlspecialchars($product['name'] ?? '') ?>"
                                 data-price="<?= htmlspecialchars($product['price'] ?? 0.00) ?>"
-                                data-stock-quantity="<?= htmlspecialchars($quantity) ?>">
-                                
+                                data-stock-quantity="<?= htmlspecialchars($product['stock_quantity'] ?? 0) ?>">
                                 <div class="product-image-container flex justify-center">
                                     <a href="/pages/details?id=<?= htmlspecialchars($product['id'] ?? '') ?>">
                                         <img src="../Assets/images/uploads/<?= htmlspecialchars($product['image'] ?? 'default.jpg') ?>"
                                             alt="<?= htmlspecialchars($product['name'] ?? '') ?>"
-                                            class="w-28 h-28 rounded-md mb-1 mt-1">
+                                            class="w-32 h-32 rounded-md mb-1 mt-1">
                                         <div class="view-more-overlay">View More</div>
                                     </a>
                                 </div>
-
-                                <h4 class="text-lg font-bold mt-2 font-semibold"><?= htmlspecialchars($product['name'] ?? 'Unnamed Product') ?></h4>
-
-                                <p class="text-3sm font-semibold mt-2 mb-2 <?= $isInStock ? 'text-green-600' : 'text-red-600' ?>">
-                                    <?= $isInStock ? 'In stock' : 'Out stock' ?>
+                                <h4 class="text-lg font-bold mt-2 font-semibold">
+                                    <?= htmlspecialchars($product['name'] ?? 'Unnamed Product') ?>
+                                </h4>
+                                <p class="text-lg font-semibold mt-2 mb-2"
+                                    style="color: <?= $isInStock ? 'green' : 'red' ?>;">
+                                    <?= htmlspecialchars($product['stock'] ?? 'In stock') ?>
                                 </p>
+                                <p class="text-sm font-semibold text-yellow-600 text-center">
+                                    $<?= number_format($product['price'] ?? 0.00, 2) ?>
+                                </p>
+                                <div class="flex gap-3 mt-2">
+                                    <button
+                                        class="border px-4 py-2 <?= $isInStock ? 'bg-green-500 hover:bg-green-600' : 'bg-gray-400 cursor-not-allowed' ?> text-white font-semibold rounded-md transition add-to-cart flex items-center"
+                                        data-product-id="<?= htmlspecialchars($product['id'] ?? '') ?>"
+                                        data-product-name="<?= htmlspecialchars($product['name'] ?? '') ?>"
+                                        data-product-price="<?= htmlspecialchars($product['price'] ?? 0.00) ?>"
+                                        data-product-image="<?= htmlspecialchars($product['image'] ?? 'default.jpg') ?>"
+                                        data-stock="<?= htmlspecialchars($product['stock'] ?? 'In stock') ?>"
+                                        data-stock-quantity="<?= htmlspecialchars($product['stock_quantity'] ?? 0) ?>"
+                                        <?= $isInStock ? '' : 'disabled' ?>>
+                                        <i class="fas fa-cart-plus mr-2" style="color: white;"></i> ADD
+                                    </button>
+                                    <button
 
-                                <button class="mt-1 border px-8 py-2 <?= $isInStock ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-400 cursor-not-allowed' ?> text-white font-semibold rounded-md transition show-order-modal"
-                                    data-product-image="<?= htmlspecialchars($product['image'] ?? 'default.jpg') ?>"
-                                    data-product-id="<?= htmlspecialchars($product['id'] ?? '') ?>"
-                                    data-product-name="<?= htmlspecialchars($product['name'] ?? '') ?>"
-                                    data-product-price="<?= htmlspecialchars($product['price'] ?? 0.00) ?>"
-                                    data-stock="<?= $isInStock ? 'In stock' : 'Out stock' ?>"
-                                    data-stock-quantity="<?= htmlspecialchars($quantity) ?>"
-                                    <?= $isInStock ? '' : 'disabled' ?>>
-                                    <i class="fas fa-shopping-cart mr-1" style="color: orange;"></i> ORDER
-                                </button>
+                                    class="border px-4 py-2 <?= $isInStock ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-400 cursor-not-allowed' ?> text-white font-semibold rounded-md transition show-order-modal flex items-center"
+                                        data-product-image="<?= htmlspecialchars($product['image'] ?? 'default.jpg') ?>"
+                                        data-product-id="<?= htmlspecialchars($product['id'] ?? '') ?>"
+                                        data-product-name="<?= htmlspecialchars($product['name'] ?? '') ?>"
+                                        data-product-price="<?= htmlspecialchars($product['price'] ?? 0.00) ?>"
+                                        data-stock="<?= htmlspecialchars($product['stock'] ?? 'In stock') ?>"
+                                        data-stock-quantity="<?= htmlspecialchars($product['stock_quantity'] ?? 0) ?>"
+                                        <?= $isInStock ? '' : 'disabled' ?>>
+                                        <i class="fas fa-shopping-cart mr-1" style="color: white;"></i> ORDER
+                                    </button>
+                                </div>
                             </div>
-                    <?php 
-                        $index++;
-                        endforeach; ?>
-                </div>
+                            <?php $index++; endforeach; ?>
+                    </div>
 
                 <!-- Buttons Container -->
                 <div class="flex justify-center mt-6 gap-4" id="buttonContainer">
@@ -170,21 +189,335 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 
-    <!-- Success Message -->
-    <div id="successMessage" class="fixed inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50 hidden z-50">
-        <div class="bg-white w-96 p-8 rounded-lg shadow-lg text-center">
-            <h2 class="text-2xl font-bold text-green-600 mb-4">Order Successful!</h2>
-            <div class="flex justify-center mb-6">
-                <i class="fas fa-check-circle text-green-600 text-6xl"></i>
-            </div>
-            <button id="closeSuccess" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-300">OK</button>
-        </div>
-    </div>
-<script>
-    let productsPerRow = <?= $productsPerRow ?>; 
-    let rowsPerClick = <?= $rowsPerClick ?>;
-    let initialProductsToShow = <?= $initialProductsToShow ?>;
-    let shownProducts = initialProductsToShow;
-    const totalProducts = <?= $totalProducts ?>;
-</script>
-<script src="/Assets/js/product-pagination.js"></script>
+    <script>
+        let productsPerRow = <?= $productsPerRow ?>;
+        let rowsPerClick = <?= $rowsPerClick ?>;
+        let initialProductsToShow = <?= $initialProductsToShow ?>;
+        let shownProducts = initialProductsToShow;
+        const totalProducts = <?= $totalProducts ?>;
+        // Note: loggedInUserId is not defined since we removed session handling
+        const loggedInUserId = null;
+
+        function updateCartCount() {
+            const cart = getCart();
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = totalItems;
+        }
+
+        function getCart() {
+            const cart = localStorage.getItem('cart');
+            return cart ? JSON.parse(cart) : [];
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+
+        function showSuccessMessage(message) {
+            const successMessageTitle = document.getElementById('successMessageTitle');
+            const successMessage = document.getElementById('successMessage');
+            successMessageTitle.textContent = message;
+            successMessage.classList.remove('hidden');
+        }
+
+        function filterByCategory(category) {
+            const productCards = document.querySelectorAll("#productContainer .w-64");
+            let visibleCount = 0;
+
+            productCards.forEach(card => {
+                const productCategory = card.getAttribute("data-category")?.toLowerCase() || "";
+                const shouldShow = !category || productCategory === category.toLowerCase();
+
+                if (shouldShow) {
+                    card.classList.remove("hidden", "product-hidden");
+                    card.style.display = "";
+                    visibleCount++;
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            const seeMoreButton = document.getElementById("seeMoreButton");
+            const backButton = document.getElementById("backButton");
+            seeMoreButton.style.display = category ? "none" : (shownProducts < totalProducts ? "" : "none");
+            backButton.style.display = category ? "none" : (shownProducts > initialProductsToShow ? "" : "none");
+
+            if (!category) {
+                resetProducts();
+            }
+        }
+
+        function searchProducts() {
+            const input = document.getElementById("searchInput").value.toLowerCase().trim();
+            const products = document.querySelectorAll("#productContainer .w-64");
+            const seeMoreButton = document.getElementById("seeMoreButton");
+            const backButton = document.getElementById("backButton");
+
+            let visibleCount = 0;
+
+            products.forEach(product => {
+                const name = product.getAttribute("data-name")?.toLowerCase() || "";
+                const price = product.getAttribute("data-price")?.toLowerCase() || "";
+                const category = product.getAttribute("data-category")?.toLowerCase() || "";
+
+                const isMatch = name.includes(input) || price.includes(input) || category.includes(input);
+
+                if (isMatch) {
+                    product.classList.remove("hidden", "product-hidden");
+                    product.style.display = "";
+                    visibleCount++;
+                } else {
+                    product.style.display = "none";
+                }
+            });
+
+            seeMoreButton.style.display = input ? "none" : (shownProducts < totalProducts ? "" : "none");
+            backButton.style.display = input ? "none" : (shownProducts > initialProductsToShow ? "" : "none");
+
+            if (!input) {
+                resetProducts();
+            }
+        }
+
+        function showMoreProducts() {
+            const products = document.querySelectorAll("#productContainer .w-64");
+            const seeMoreButton = document.getElementById("seeMoreButton");
+            const backButton = document.getElementById("backButton");
+
+            shownProducts += productsPerRow * rowsPerClick;
+            products.forEach((product, index) => {
+                if (index < shownProducts) {
+                    product.classList.remove("hidden", "product-hidden");
+                    product.style.display = "";
+                }
+            });
+
+            seeMoreButton.style.display = shownProducts >= totalProducts ? "none" : "";
+            backButton.style.display = "";
+        }
+
+        function resetProducts() {
+            const products = document.querySelectorAll("#productContainer .w-64");
+            const seeMoreButton = document.getElementById("seeMoreButton");
+            const backButton = document.getElementById("backButton");
+
+            shownProducts = initialProductsToShow;
+            products.forEach((product, index) => {
+                if (index < initialProductsToShow) {
+                    product.classList.remove("hidden", "product-hidden");
+                    product.style.display = "";
+                } else {
+                    product.classList.add("hidden", "product-hidden");
+                    product.style.display = "none";
+                }
+            });
+
+            seeMoreButton.style.display = totalProducts > initialProductsToShow ? "" : "none";
+            backButton.style.display = "none";
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const elements = {
+                modal: document.getElementById('orderModal'),
+                modalImage: document.getElementById('modalProductImage'),
+                modalPrice: document.getElementById('modalProductPrice'),
+                modalStockStatus: document.getElementById('modalStockStatus'),
+                modalProductNameDisplay: document.getElementById('modalProductNameDisplay'),
+                quantityInput: document.getElementById('quantity'),
+                totalPriceSpan: document.getElementById('totalPrice'),
+                cancelBtn: document.getElementById('cancelBtn'),
+                orderBtn: document.getElementById('orderBtn'),
+                modalProductName: document.getElementById('modalProductName'),
+                modalPriceInput: document.getElementById('modalPrice'),
+                orderForm: document.getElementById('orderForm'),
+                successMessage: document.getElementById('successMessage'),
+                closeSuccess: document.getElementById('closeSuccess'),
+                increaseQty: document.getElementById("increaseQty"),
+                decreaseQty: document.getElementById("decreaseQty"),
+                searchInput: document.getElementById("searchInput")
+            };
+
+            let currentPrice = 0;
+            let currentStock = '';
+            let currentStockQuantity = 0;
+
+            updateCartCount();
+
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function () {
+                    const product = {
+                        id: this.getAttribute('data-product-id'),
+                        name: this.getAttribute('data-product-name'),
+                        price: parseFloat(this.getAttribute('data-product-price')),
+                        image: this.getAttribute('data-product-image'),
+                        stock: this.getAttribute('data-stock'),
+                        stock_quantity: parseInt(this.getAttribute('data-stock-quantity'))
+                    };
+
+                    let cart = getCart();
+                    const existingItem = cart.find(item => item.id === product.id);
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                        if (existingItem.quantity > existingItem.stock_quantity) {
+                            existingItem.quantity = existingItem.stock_quantity;
+                            alert('Maximum stock quantity reached!');
+                            return;
+                        }
+                    } else {
+                        product.quantity = 1;
+                        cart.push(product);
+                    }
+                    saveCart(cart);
+                    showSuccessMessage('Product Added to Order!');
+                });
+            });
+
+            function updateTotalPrice() {
+                const quantity = parseInt(elements.quantityInput.value) || 1;
+                elements.totalPriceSpan.textContent = (currentPrice * quantity).toFixed(2);
+            }
+
+            elements.searchInput.addEventListener('input', searchProducts);
+
+            document.querySelectorAll('.show-order-modal').forEach(button => {
+                button.addEventListener('click', function () {
+                    const productName = this.getAttribute('data-product-name');
+                    const productImage = this.getAttribute('data-product-image');
+                    const productId = this.getAttribute('data-product-id');
+                    currentPrice = parseFloat(this.getAttribute('data-product-price')) || 0;
+                    currentStock = this.getAttribute('data-stock');
+                    currentStockQuantity = parseInt(this.getAttribute('data-stock-quantity')) || 0;
+
+                    document.getElementById('modalProductId')?.remove();
+                    const productIdInput = document.createElement('input');
+                    productIdInput.type = 'hidden';
+                    productIdInput.id = 'modalProductId';
+                    productIdInput.name = 'product_id';
+                    productIdInput.value = productId;
+                    elements.orderForm.appendChild(productIdInput);
+
+                    elements.modalProductName.value = productName;
+                    elements.modalPriceInput.value = currentPrice;
+                    elements.modalImage.src = `../Assets/images/uploads/${productImage}`;
+                    elements.modalImage.classList.remove('hidden');
+                    elements.modalPrice.textContent = `$${currentPrice.toFixed(2)}`;
+                    elements.modalStockStatus.textContent = currentStock;
+                    elements.modalStockStatus.className = `text-lg font-semibold mb-2 ${currentStock === 'In stock' ? 'text-green-600' : 'text-red-600'}`;
+                    elements.modalProductNameDisplay.textContent = productName;
+                    elements.quantityInput.value = 1;
+                    updateTotalPrice();
+
+                    elements.orderBtn.disabled = currentStock !== 'In stock';
+                    elements.orderBtn.classList.toggle('bg-gray-400', currentStock !== 'In stock');
+                    elements.orderBtn.classList.toggle('bg-blue-500', currentStock === 'In stock');
+                    elements.modal.classList.remove('hidden');
+                });
+            });
+
+            elements.quantityInput.addEventListener("input", function () {
+                let quantity = parseInt(elements.quantityInput.value) || 1;
+                if (quantity < 1) quantity = 1;
+                if (currentStockQuantity > 0 && quantity > currentStockQuantity) quantity = currentStockQuantity;
+                elements.quantityInput.value = quantity;
+                updateTotalPrice();
+            });
+
+            elements.increaseQty.addEventListener("click", function () {
+                let quantity = parseInt(elements.quantityInput.value) || 1;
+                if (currentStockQuantity > 0 && quantity >= currentStockQuantity) return;
+                elements.quantityInput.value = quantity + 1;
+                updateTotalPrice();
+            });
+
+            elements.decreaseQty.addEventListener("click", function () {
+                let quantity = parseInt(elements.quantityInput.value) || 1;
+                if (quantity > 1) {
+                    elements.quantityInput.value = quantity - 1;
+                    updateTotalPrice();
+                }
+            });
+
+            elements.cancelBtn.addEventListener('click', function () {
+                elements.modal.classList.add('hidden');
+                elements.modalImage.classList.add('hidden');
+            });
+
+            elements.orderBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                const quantity = parseInt(elements.quantityInput.value) || 1;
+                const productId = document.getElementById('modalProductId')?.value;
+                const productName = elements.modalProductName.value;
+                const price = parseFloat(elements.modalPriceInput.value);
+                const totalAmount = price * quantity;
+
+                const orderData = {
+                    user_id: loggedInUserId,
+                    total_amount: totalAmount,
+                    products: [{
+                        product_id: productId,
+                        quantity: quantity,
+                        subtotal: totalAmount
+                    }]
+                };
+
+                fetch('/order/process', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderData)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.text().then(text => { throw new Error(`Network response was not ok: ${response.status} - ${text}`); });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            elements.modal.classList.add('hidden');
+                            showSuccessMessage('Order Placed Successfully!');
+                            setTimeout(() => { window.location.href = '/orders/orderHistory'; }, 2000);
+                        } else {
+                            alert('Order failed: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        alert('An error occurred while placing the order: ' + error.message);
+                    });
+            });
+
+            elements.closeSuccess.addEventListener('click', function () {
+                elements.successMessage.classList.add('hidden');
+            });
+
+            resetProducts();
+        });
+    </script>
+    <style>
+        @media (max-width: 1280px) {
+            #productContainer {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 1024px) {
+            #productContainer {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            #productContainer {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            #productContainer {
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+            }
+        }
+    </style>
+</body>
+
+</html>

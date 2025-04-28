@@ -1,9 +1,5 @@
 <?php
-$categories_name = [
-    'Nut' => 'Nut Products',
-    'Powder' => 'Powder Products',
-    'Drinks' => 'Drinks Products'
-];
+
 // Handle form submissions for file uploads
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Content-Type: application/json"); // Set response type to JSON
@@ -79,18 +75,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <table id="productsTable" class="w-full table-auto border-collapse">
                         <thead>
                             <tr class="bg-blue-500 text-white uppercase text-xs sm:text-sm leading-normal">
-                                <th class="py-1 px-4 text-center"><input type="checkbox" id="selectAll"></th>
                                 <th class="py-3 px-6 text-left">Image</th>
                                 <th class="py-3 px-6 text-left">Product Name</th>
                                 <th class="py-3 px-6 text-left">Price</th>
                                 <th class="py-3 px-6 text-left">Date</th>
                                 <th class="py-3 px-6 text-left">
                                     <select name="category-filter" id="category-filter"
-                                            class="pr-5 pl-2 border border-blue-300 rounded-md transition duration-300 mr-1 bg-blue-600 border-b dark:border-primary-darker"
-                                            onchange="filterByCategory(this.value)">
+                                        class="pr-5 pl-2 border border-blue-300 rounded-md transition duration-300 mr-1 bg-blue-600 border-b dark:border-primary-darker"
+                                        onchange="filterByCategory(this.value)">
                                         <option value="">All Categories</option>
-                                        <?php foreach ($categories_name as $key => $value): ?>
-                                            <option value="<?= $key ?>" <?= (isset($_GET['category']) && $_GET['category'] == $key) ? 'selected' : '' ?>><?= $value ?></option>
+                                        <?php foreach ($categories as $key => $value): ?>
+                                            <option value="<?= htmlspecialchars($value) ?>" <?= (isset($_GET['category']) && $_GET['category'] == $key) ? 'selected' : '' ?>>
+                                                <?= htmlspecialchars($value) ?>
+                                            </option>
                                         <?php endforeach; ?>
                                     </select>
                                 </th>
@@ -99,15 +96,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </thead>
                         <tbody id="product-table-body">
                             <?php foreach ($products as $product): ?>
-                                <tr data-category="<?= $product['category_name']; ?>"
+                                <tr data-category-name="<?= htmlspecialchars($product['category_name']); ?>"
                                     class="duration-200 rounded-lg shadow-md transition bg-white dark:text-light dark:bg-darker border-b dark:border-primary-darker">
-                                    <td class="py-1 px-4 font-semibold">
-                                        <input type="checkbox" class="productCheckbox">
-                                    </td>
                                     <td>
                                         <img src="../Assets/images/uploads/<?php echo $product["image"]?>" class="ml-4" alt="" width="40" height="40" style="border-radius: 5px">
                                     </td>
-                                    <td class="py-3 px-3 font-semibold"><?php echo $product['name']; ?></td>
+                                    <td class="py-3 px-6 font-semibold"><?php echo $product['name']; ?></td>
                                     <td class="py-3 px-6 font-semibold"><?php echo $product['price']; ?>$</td>
                                     <td class="py-3 px-6 font-semibold"><?php echo $product['date']; ?></td>
                                     <td class="py-3 px-6 font-semibold"><?php echo $product['category_name']; ?></td>
@@ -122,10 +116,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <i class="fas fa-trash-alt mr-1" style="color: red"></i>
                                         </a>
 
-                                        <!-- Replace this line: -->
-                                        <!-- <a href="../Views/Products/show.php" -->
-
-                                        <!-- With this: -->
                                         <a href="/pages/details?id=<?php echo htmlspecialchars($product['id']); ?>"
                                         class="block px-2 py-2 text-gray-700 flex items-center">
                                             <i class="far fa-eye mr-1" style="color: blue;"></i>
@@ -194,12 +184,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // Filter products by category
-    function filterByCategory(category) {
+    function filterByCategory(categoryId) {
         const rows = document.querySelectorAll("#product-table-body tr");
         rows.forEach(row => {
-            const productCategory = row.getAttribute("data-category").toLowerCase();
-            if (category === "" || productCategory === category.toLowerCase()) {
-                row.style.display = ""; 
+            const rowCategoryId = row.getAttribute("data-category-name");
+            if (categoryId === "" || rowCategoryId === categoryId) {
+                row.style.display = "";
             } else {
                 row.style.display = "none";
             }
@@ -215,105 +205,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     function closeModal(modalId) {
         document.getElementById(modalId).classList.add('hidden');
     }
-
-    //Add Stock
-    document.addEventListener("DOMContentLoaded", function () {
-        const selectAllCheckbox = document.getElementById("selectAll");
-        const productCheckboxes = document.querySelectorAll(".productCheckbox");
-
-        // Create "Add Stock" button dynamically
-        const addStockButton = document.createElement("button");
-        addStockButton.id = "addStockSelectedButton";
-        addStockButton.textContent = "Add Stock";
-        addStockButton.classList.add(
-            "bg-blue-500", "hover:bg-blue-600", "text-white",
-            "font-semibold", "py-2", "px-4", "rounded-lg",
-            "shadow-md", "transition", "duration-300", "hidden", "mt-4", "mb-4", "ml-4"
-        );
-        addStockButton.addEventListener("click", showStockModal);
-
-        // Create "Clear All" button dynamically
-        const clearAllButton = document.createElement("button");
-        clearAllButton.id = "clearAllButton";
-        clearAllButton.textContent = "Clear All";
-        clearAllButton.classList.add(
-            "bg-red-500", "hover:bg-red-600", "text-white",
-            "font-semibold", "py-2", "px-4", "rounded-lg",
-            "shadow-md", "transition", "duration-300", "hidden", "mt-4", "mb-4", "ml-4"
-        );
-        clearAllButton.addEventListener("click", clearAllSelections);
-
-        // Find the table's parent container and append buttons after it
-        const tableContainer = document.getElementById("productsTable").parentElement;
-        tableContainer.appendChild(addStockButton);
-        tableContainer.appendChild(clearAllButton);
-
-        // Function to toggle button visibility
-        function toggleButtons() {
-            const anyChecked = Array.from(productCheckboxes).some(checkbox => checkbox.checked);
-            addStockButton.classList.toggle("hidden", !anyChecked);
-            clearAllButton.classList.toggle("hidden", !anyChecked);
-        }
-
-        // Listen for changes on individual checkboxes
-        productCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener("change", toggleButtons);
-        });
-
-        // Handle "Select All" checkbox
-        selectAllCheckbox.addEventListener("change", function () {
-            productCheckboxes.forEach(checkbox => {
-                checkbox.checked = selectAllCheckbox.checked;
-            });
-            toggleButtons();
-        });
-
-        // Function to clear all selected checkboxes
-        function clearAllSelections() {
-            selectAllCheckbox.checked = false; // Uncheck "Select All"
-            productCheckboxes.forEach(checkbox => {
-                checkbox.checked = false; // Uncheck all checkboxes
-            });
-            toggleButtons();
-        }
-
-        // Function to show stock input modal
-        function showStockModal() {
-            const selectedIds = Array.from(productCheckboxes)
-                .filter(checkbox => checkbox.checked)
-                .map(checkbox => checkbox.closest("tr").dataset.productId);
-
-            if (selectedIds.length === 0) return;
-
-            const stockQuantity = prompt("Enter stock quantity to add:");
-            if (stockQuantity === null || stockQuantity.trim() === "" || isNaN(stockQuantity) || stockQuantity <= 0) {
-                alert("Please enter a valid stock quantity.");
-                return;
-            }
-
-            addStockToSelectedProducts(selectedIds, stockQuantity);
-        }
-
-        // Function to send stock update request
-        function addStockToSelectedProducts(selectedIds, stockQuantity) {
-            fetch('/products/add-stock', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ids: selectedIds, stock: stockQuantity })
-            }).then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert("Stock added successfully!");
-                    clearAllSelections(); // Clear selection after adding stock
-                } else {
-                    alert("Failed to add stock.");
-                }
-            }).catch(error => console.error("Error:", error));
-        }
-
-        // Toggle buttons based on initial state of checkboxes
-        toggleButtons();
-    });
-
 
 </script>

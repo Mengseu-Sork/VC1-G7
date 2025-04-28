@@ -44,13 +44,36 @@
                                             <?= htmlspecialchars($stock['last_updated']) ?>
                                         </td>
                                         <td class="py-3 px-6 font-semibold text-center space-x-2">
-                                            <a href="/products/edit?id=<?= $stock['stock_id'] ?>" class="inline-block text-green-600 hover:text-green-800">
+                                            <a href="/stock/edit?id=<?= $stock['stock_id'] ?>" class="inline-block text-green-600 hover:text-green-800">
                                                 <i class="far fa-edit"></i>
                                             </a>
                                             <button onclick="openModal('deleteStockModal<?= $stock['stock_id'] ?>')" class="inline-block text-red-600 hover:text-red-800">
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </td>
+                                        <!-- Delete Confirmation Modal -->
+                                        <div id="deleteStockModal<?= $stock['stock_id'] ?>" 
+                                            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+                                            <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+                                                <h2 class="text-lg font-semibold flex justify-center">Delete Stock</h2>
+                                                <p class="mt-4">Are you sure you want to delete this stock?</p>
+
+                                                <div class="mt-6 flex justify-end space-x-2">
+                                                    <button onclick="closeModal('deleteStockModal<?= $stock['stock_id'] ?>')"
+                                                        class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:opacity-90">
+                                                        Cancel
+                                                    </button>
+
+                                                    <form action="/stock/delete?id=<?= $stock['stock_id'] ?>" method="POST">
+                                                        <input type="hidden" name="id" value="<?= $stock['stock_id'] ?>">
+                                                        <button type="submit"
+                                                            class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200">
+                                                            Delete
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>

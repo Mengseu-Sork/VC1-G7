@@ -59,6 +59,7 @@ $routes->get('/products/delete', [ProductController::class, 'delete']);
 $routes->get('/products/details', [ProductController::class, 'show']);
 $routes->get('/products/prosuct_ratings', [ProductController::class, 'ratings']);
 
+//category
 $routes->get('/categories', [CategoryController::class, 'index']);
 $routes->get('/categories/create', [CategoryController::class, 'create']);
 $routes->post('/categories/store', [CategoryController::class, 'store']);
@@ -66,28 +67,21 @@ $routes->get('/categories/edit', [CategoryController::class, 'edit']);
 $routes->put('/categories/update', [CategoryController::class, 'update']);
 $routes->get('/categories/delete', [CategoryController::class, 'destroy']);
 
+
+//order
 $routes->post('/order/process', [OrderController::class, 'process']);
 $routes->get('/pages/order', [OrderController::class, 'index']);
-// $routes->get('/pages/products', [ShowproductController::class, 'index']);
 $routes->get('/pages/viewOrder', [OrderController::class, 'viewOrder']);
-
-
-// order
-// $routes->get('/orders', [OrderController::class, 'index']);
-// $routes->get('/orders/create', [OrderController::class, 'create']);
-// $routes->post('/orders/store', [OrderController::class, 'store']);
-// $routes->get('/orders/edit/{id}', [OrderController::class, 'edit']);
-// $routes->post('/orders/update/{id}', [OrderController::class, 'update']);
-// $routes->delete('/orders/delete', [OrderController::class, 'delete']);
-// $routes->get('/orders/show', [OrderController::class, 'show']);
-
 $routes->post('/orderHistory/process', [OrderController::class, 'process']);
 $routes->get('/orders/orderHistory', [OrderController::class, 'index']);
 
 //Stock
-$routes->get('/stock/stock', [StockController::class, 'index']);
+$routes->get('/stock', [StockController::class, 'index']);
 $routes->get('/stock/create', [StockController::class, 'create']);
 $routes->post('/stock/store', [StockController::class, 'store']);
+$routes->get('/stock/edit', [StockController::class, 'edit']);
+$routes->post('/stock/update', [StockController::class, 'update']);
+$routes->post('/stock/delete', [StockController::class, 'delete']);
 
 
 $routes->dispatch();

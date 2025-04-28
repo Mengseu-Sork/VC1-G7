@@ -8,10 +8,10 @@ class ProductModel {
     }
     
     public function getAllCategories() {
-        $query = "SELECT * FROM categories";
-        $result = $this->db->query($query);
-        return $result->fetchAll();
-    }
+        $result = $this->db->query("SELECT name FROM categories");
+        return $result->fetchAll(PDO::FETCH_COLUMN);
+    }    
+    
 
     function getAllProducts() {
         try {
