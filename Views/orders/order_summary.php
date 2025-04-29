@@ -3,74 +3,67 @@
 <head>  
     <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>Review Order Summary</title>  
-    <link rel="stylesheet" href="styles.css"> 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Order Details</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            margin: 20px;  
+            background-color: #f8f9fa;  
+        }  
+        .order-container {  
+            border: 1px solid #ccc;  
+            border-radius: 5px;  
+            padding: 20px;  
+            background-color: #fff;  
+        }  
+        h2 {  
+            color: #333;  
+        }  
+        .order-summary {  
+            margin-bottom: 20px;  
+        }  
+        .order-item {  
+            margin: 10px 0;  
+        }  
+        .payment-info, .customer-info {  
+            margin-top: 20px;  
+        }  
+        .timeline {  
+            margin-top: 20px;  
+        }  
+    </style>  
 </head>  
 <body>  
 
-</head>
-<body class="bg-gray-100 flex justify-center items-center min-h-screen">
-    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl">
-        <h1 class="text-2xl font-bold mb-4 text-gray-700">Review Order Summary</h1>
-        <p class="text-gray-600 mb-4">Please review your order and if all is correct, click "Place order".</p>
 
-        <h2 class="text-xl font-semibold text-gray-600 mb-2">Order Details</h2>
-        <table class="sm:w-auto border-collapse border border-gray-300">
-            <thead>
-                <tr class="bg-gray-100">
-                    <th class="border border-gray-300 p-1 text-left">Item</th>
-                    <th class="border border-gray-300 p-1 text-center">Quantity</th>
-                    <th class="border border-gray-300 p-1 text-right">Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="border border-gray-200">
-                    <td class="p-1">Product Name 1</td>
-                    <td class="p-1 text-center">2</td>
-                    <td class="p-1 text-right">$20.00</td>
-                </tr>
-                <tr class="border border-gray-300">
-                    <td class="p-1">Product Name 2</td>
-                    <td class="p-1 text-center">1</td>
-                    <td class="p-1 text-right">$15.00</td>
-                </tr>
-                <tr class="border border-gray-300">
-                    <td class="p-1">Product Name 3</td>
-                    <td class="p-1 text-center">1</td>
-                    <td class="p-1 text-right">$30.00</td>
-                </tr>
-            </tbody>
-        </table>
+<div class="order-container">  
+    <h2>Order Details</h2>  
+    
+    <div class="order-summary">  
+        <div class="order-item"><strong>Item:</strong> <?php echo($orderDetails["product_name"])?> </div>  
+        <div class="order-item"><strong>Price:</strong> $ <?php echo($orderDetails["total_amount"])?></div>  
+    </div>  
 
-        <h3 class="text-lg font-semibold mt-4 text-gray-700">Shipping Information</h3>
-        <p class="text-gray-600">Shipping Address: 123 Example St, City, State, ZIP</p>
-        <p class="text-gray-600">Shipping Method: Standard Shipping</p>
+    <div class="customer-info">  
+        <strong>Customer Name:</strong> <?php echo($orderDetails["FirstName"])?> <?php echo($orderDetails["LastName"])?><br>  
+        <strong>Email:</strong><?php echo($orderDetails["email"])?><br>  
+        <strong>Phone:</strong> <?php echo($orderDetails["phone"])?><br>  
+    </div>  
 
-        <h3 class="text-lg font-semibold mt-4 text-gray-700">Order Totals</h3>
-        <p class="text-gray-600">Subtotal: $65.00</p>
-        <p class="text-gray-600">Shipping Cost: $5.00</p>
-        <p class="text-lg font-bold text-gray-700">Total: $70.00</p>
+    <div class="timeline">  
+        <strong>Timeline:</strong><br>  
+        <ul>  
+            <li>Order Processed: The order is being prepared (products are being packed)</li>  
+            <li>Payment Confirmed: Payment has been successfully processed and verified.</li>  
+            <li>Order Placed: Order has been successfully placed by the customer.</li>  
+        </ul>  
+    </div>  
 
-        <div class="mt-6 flex space-x-3">
-            <button class="bg-gray-400 text-white px-3 py-1  hover:bg-gray-600" onclick="editCart()">Edit Cart</button>
-            <button class="bg-blue-400 text-white px-3 py-1  hover:bg-blue-600" onclick="editShipping()">Edit Shipping</button>
-            <button class="bg-green-400 text-white px-3 py-1 hover:bg-green-600" onclick="finalizePayment()">Proceed to Payment</button>
-        </div>
-    </div>
+    <div class="payment-info">  
+        <strong>Payment:</strong><br>  
+        <div class="order-item"><strong>Total:</strong> $<?php echo($orderDetails["total_amount"])?></div>  
+    </div>  
+</div>  
 
-    <script>
-        function editCart() {
-            alert('Redirecting to edit cart...');
-        }
-
-        function editShipping() {
-            alert('Redirecting to edit shipping details...');
-        }
-
-        function finalizePayment() {
-            alert('Proceeding to payment...');
-        }
-    </script>
-</body>
-</html>
+</body>  
+</html>  

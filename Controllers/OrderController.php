@@ -135,7 +135,19 @@ class OrderController extends BaseController
         }
 
         $userId = $_SESSION['user']['id'];
-        $orders = $this->orderModel->getOrdersByUser($userId);
+        $orders = $this->orderModel->getorder();
         $this->view('orders/orderHistory', ['orders' => $orders]);
+        // var_dump($orders); // Debugging line to check the orders data   
+    }
+    function viewOrder($id)
+    {
+        var_dump($id); // Debugging line to check the order ID
+
+        $orderDetails = $this->orderModel->getOrderDetails($id);
+        var_dump($orderDetails); // Debugging line to check the order details
+    
+            $this->view('orders/order_summary',['orderDetails' => $orderDetails]);
+            
+        
     }
 }

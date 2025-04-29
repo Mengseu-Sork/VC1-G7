@@ -146,14 +146,60 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <?php $index++; endforeach; ?>
                     </div>
 
-                <!-- Buttons Container -->
-                <div class="flex justify-center mt-6 gap-4" id="buttonContainer">
-                    <button onclick="showMoreProducts()" id="seeMoreButton" class="px-6 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition">
-                        See More
-                    </button>
-                    <button onclick="resetProducts()" id="backButton" class="px-6 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-gray-600 transition hidden">
-                        Back
-                    </button>
+                    <div class="flex justify-center mt-6 gap-4" id="buttonContainer">
+                        <button onclick="showMoreProducts()" id="seeMoreButton"
+                            class="px-6 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition">
+                            See More
+                        </button>
+                        <button onclick="resetProducts()" id="backButton"
+                            class="px-6 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-gray-600 transition hidden">
+                            Back
+                        </button>
+                    </div>
+                </div>
+
+                <div id="orderModal"
+                    class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-end pr-10 z-50">
+                    <div class="bg-white rounded-lg p-6 w-96 h-[350px] flex flex-col justify-between">
+                        <form id="orderForm">
+                            <div class="modal-content flex flex-col items-center mt-1">
+                                <img id="modalProductImage" src="" alt="Product Image"
+                                    class="w-32 h-32 rounded-md mb-4 hidden">
+                                <h3 id="modalProductNameDisplay" class="text-lg font-bold mb-3 text-black"></h3>
+                                <input type="hidden" id="modalProductName" name="product_name">
+                                <input type="hidden" id="modalPrice" name="price">
+                                <p id="modalProductPrice" class="text-yellow-600 font-semibold mb-3"></p>
+                                <p id="modalStockStatus" class="text-lg font-semibold mb-3"></p>
+                                <div class="quantity-container mb-3 w-full flex justify-center items-center space-x-2">
+                                    <label for="quantity" class="text-lg font-semibold text-gray-700">Quantity:</label>
+                                    <span id="decreaseQty"
+                                        class="text-2xl font-bold text-gray-600 cursor-pointer select-none">−</span>
+                                    <input type="text" id="quantity" name="quantity" value="1" readonly
+                                        class="rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 w-16 text-center">
+                                    <span id="increaseQty"
+                                        class="text-2xl font-bold text-gray-600 cursor-pointer select-none">+</span>
+                                </div>
+                                <p class="text-lg font-semibold mb-3">Total: <span style="color: #D68C1E;">$</span>
+                                    <span id="totalPrice" style="color: #D68C1E;">0.00</span>
+                                </p>
+                            </div>
+                            <div class="button-container flex justify-center gap-4 mb-4">
+                                <button type="button" id="cancelBtn"
+                                    class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">CANCEL</button>
+                                <button type="button" id="orderBtn"
+                                    class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">ORDER</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="successMessage"
+                    class="fixed inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50 hidden z-50">
+                    <div class="bg-white w-80 p-6 rounded-lg shadow-lg text-center">
+                        <h2 id="successMessageTitle" class="text-xl font-bold mb-4"></h2>
+                        <button id="closeSuccess"
+                            class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">OK</button>
+                    </div>
                 </div>
             </div>
     </div>
@@ -196,7 +242,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         let shownProducts = initialProductsToShow;
         const totalProducts = <?= $totalProducts ?>;
         // Note: loggedInUserId is not defined since we removed session handling
-        const loggedInUserId = null;
+        const loggedInUserId = null; // You may need to define this differently
 
         function updateCartCount() {
             const cart = getCart();
@@ -214,10 +260,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             updateCartCount();
         }
 
-        function showSuccessMessage(message) {
+        function showSuccessMessage(message, isError = false) {
             const successMessageTitle = document.getElementById('successMessageTitle');
             const successMessage = document.getElementById('successMessage');
             successMessageTitle.textContent = message;
+            // Apply different styling based on whether it's an error or success message
+            successMessageTitle.className = `text-xl font-bold mb-4 ${isError ? 'text-red-600' : 'text-green-600'}`;
             successMessage.classList.remove('hidden');
         }
 
@@ -361,7 +409,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         existingItem.quantity += 1;
                         if (existingItem.quantity > existingItem.stock_quantity) {
                             existingItem.quantity = existingItem.stock_quantity;
-                            alert('Maximum stock quantity reached!');
+                            showSuccessMessage('Maximum stock quantity reached!', true);
                             return;
                         }
                     } else {
@@ -414,7 +462,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     elements.modal.classList.remove('hidden');
                 });
             });
-
             elements.quantityInput.addEventListener("input", function () {
                 let quantity = parseInt(elements.quantityInput.value) || 1;
                 if (quantity < 1) quantity = 1;
@@ -422,14 +469,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 elements.quantityInput.value = quantity;
                 updateTotalPrice();
             });
-
             elements.increaseQty.addEventListener("click", function () {
                 let quantity = parseInt(elements.quantityInput.value) || 1;
                 if (currentStockQuantity > 0 && quantity >= currentStockQuantity) return;
                 elements.quantityInput.value = quantity + 1;
                 updateTotalPrice();
             });
-
             elements.decreaseQty.addEventListener("click", function () {
                 let quantity = parseInt(elements.quantityInput.value) || 1;
                 if (quantity > 1) {
@@ -437,57 +482,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     updateTotalPrice();
                 }
             });
-
             elements.cancelBtn.addEventListener('click', function () {
                 elements.modal.classList.add('hidden');
                 elements.modalImage.classList.add('hidden');
             });
-
             elements.orderBtn.addEventListener('click', function (e) {
                 e.preventDefault();
                 const quantity = parseInt(elements.quantityInput.value) || 1;
                 const productId = document.getElementById('modalProductId')?.value;
                 const productName = elements.modalProductName.value;
                 const price = parseFloat(elements.modalPriceInput.value);
-                const totalAmount = price * quantity;
-
-                const orderData = {
-                    user_id: loggedInUserId,
-                    total_amount: totalAmount,
-                    products: [{
-                        product_id: productId,
-                        quantity: quantity,
-                        subtotal: totalAmount
-                    }]
+                const productImage = elements.modalImage.src.split('/').pop(); 
+                const stock = elements.modalStockStatus.textContent;
+                const stockQuantity = currentStockQuantity; 
+                const product = {
+                    id: productId,
+                    name: productName,
+                    price: price,
+                    image: productImage,
+                    stock: stock,
+                    stock_quantity: stockQuantity,
+                    quantity: quantity
                 };
-
-                fetch('/order/process', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(orderData)
-                })
-                    .then(response => {
-                        if (!response.ok) {
-                            return response.text().then(text => { throw new Error(`Network response was not ok: ${response.status} - ${text}`); });
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data.success) {
-                            elements.modal.classList.add('hidden');
-                            showSuccessMessage('Order Placed Successfully!');
-                            setTimeout(() => { window.location.href = '/orders/orderHistory'; }, 2000);
-                        } else {
-                            alert('Order failed: ' + data.message);
-                        }
-                    })
-                    .catch(error => {
-                        alert('An error occurred while placing the order: ' + error.message);
-                    });
+                let cart = getCart();
+                const existingItem = cart.find(item => item.id === product.id);
+                if (existingItem) {
+                    existingItem.quantity += quantity;
+                    if (existingItem.quantity > existingItem.stock_quantity) {
+                        existingItem.quantity = existingItem.stock_quantity;
+                        showSuccessMessage('Maximum stock quantity reached!', true);
+                        return;
+                    }
+                } else {
+                    cart.push(product);
+                }
+                saveCart(cart);
+                elements.modal.classList.add('hidden');
+                elements.modalImage.classList.add('hidden');
+                window.location.href = '/Views/orders/order.php';
             });
 
             elements.closeSuccess.addEventListener('click', function () {
                 elements.successMessage.classList.add('hidden');
+                elements.modal.classList.add('hidden');
+                elements.modalImage.classList.add('hidden');
+                window.location.href = window.location.pathname;
             });
 
             resetProducts();
