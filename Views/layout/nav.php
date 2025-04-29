@@ -114,7 +114,7 @@
                 <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
                 <div>
                   <a
-                      href="#"
+                      href="/payments/payment"
                       class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
 
                     >

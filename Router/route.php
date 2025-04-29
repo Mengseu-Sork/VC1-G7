@@ -8,6 +8,8 @@ require_once 'Controllers/ShowproductController.php';
 require_once 'Controllers/OrderController.php';
 require_once 'Controllers/AuthController.php';
 require_once 'Controllers/StockController.php';
+require_once 'Controllers/ProfileController.php';
+require_once 'Controllers/PaymentController.php';
 
 
 
@@ -45,7 +47,7 @@ $routes->post('/user/update', [UserController::class, 'update']);
 $routes->post('/user/delete', [UserController::class, 'destroy']);
 $routes->get('/user/show', [UserController::class, 'show']);
 
-
+$routes->get('/payments/payment', [PaymentController::class, 'payment']);
 // products
 $routes->get('/products', [ProductController::class, 'index']);
 $routes->get('/products/product_list', [ProductController::class, 'index']);
@@ -65,10 +67,13 @@ $routes->get('/categories/edit', [CategoryController::class, 'edit']);
 $routes->put('/categories/update', [CategoryController::class, 'update']);
 $routes->get('/categories/delete', [CategoryController::class, 'destroy']);
 
+//order
 $routes->post('/order/process', [OrderController::class, 'process']);
 $routes->post('/orderHistory/process', [OrderController::class, 'process']);
 $routes->get('/orders/orderHistory', [OrderController::class, 'index']);
 $routes->get('/pages/order_summary', [OrderController::class, 'viewOrder']);
+
+// payment
 
 //Stock
 $routes->get('/stock', [StockController::class, 'index']);
