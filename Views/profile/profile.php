@@ -102,13 +102,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <span class="px-2 text-green-600">✔️</span>
                                 </div>
                             </div>
-                            <div class="mt-4">
-                                <label class="block font-semibold mb-1">Role</label>
-                                <div class="flex items-center border border-gray-300 rounded-md dark:border-primary-darker">
-                                    <span class="w-full p-2 focus:ring-2 focus:ring-blue-500 "><?= $user['role']?></span>  
-                                    <span class="px-2 text-green-600">✔</span>
-                                </div>
-                            </div>
                             <div class="flex justify-end space-x-4">
                                 <a href="/profile/editProfile?id=<?= $user['id'] ?>" class="btn bg-blue-500 text-white flex ml-auto mt-4 px-4 py-2 rounded-lg hover:opacity-90">Edit</a>
                                 <button type="button" class="bg-yellow-500 text-white flex ml-auto mt-4 px-4 py-2 rounded-lg hover:opacity-90" onclick="window.location.href='/Dashboard'"> Cancel</button>

@@ -17,9 +17,9 @@ $routes = new Router();
 $routes->get('/Dashboard', [DashboardController::class, 'index']);
 
 //profile
-$routes->get('/profile/profile', [ProfileController::class, 'profile']);
+$routes->get('/profile', [ProfileController::class, 'profile']);
 $routes->get('/profile/editProfile', [ProfileController::class, 'editProfile']);
-$routes->put('/profile/updateProfile', [ProfileController::class, 'updateProfile']);
+$routes->post('/profile/updateProfile', [ProfileController::class, 'updateProfile']);
 
 // Authentication routes
 $routes->get('/', [AuthController::class, 'login']);
@@ -41,8 +41,8 @@ $routes->get('/user', [UserController::class, 'index']);
 $routes->get('/user/create', [UserController::class, 'create']);
 $routes->post('/user/store', [UserController::class, 'store']);
 $routes->get('/user/edit', [UserController::class, 'edit']);
-$routes->put('/user/update', [UserController::class, 'update']);
-$routes->delete('/user/delete', [UserController::class, 'destroy']);
+$routes->post('/user/update', [UserController::class, 'update']);
+$routes->post('/user/delete', [UserController::class, 'destroy']);
 $routes->get('/user/show', [UserController::class, 'show']);
 
 

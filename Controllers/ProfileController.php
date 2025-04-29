@@ -62,11 +62,12 @@ class ProfileController extends BaseController
                 'FirstName' => $_POST['FirstName'],
                 'LastName' => $_POST['LastName'],
                 'email' => $_POST['email'],
+                'role' => $_POST['role'],
                 'phone' => $_POST['phone'],
             ];
 
-            $this->model->updateProfile($id, $data);
-            $this->redirect('profile');
+            $this->model->updateUser($id, $data);
+            $this->redirect('/profile');
         }
     }
 }

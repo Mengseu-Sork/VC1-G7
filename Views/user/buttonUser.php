@@ -8,7 +8,7 @@ $user = $_SESSION['user'] ?? null;
     onclick="toggleProfile()"
     class="block transition-opacity duration-200 rounded-full dark:opacity-75 dark:hover:opacity-100 focus:outline-none focus:ring dark:focus:opacity-100">
     <span class="sr-only">User menu</span>
-    <a href="/profile/profile">
+    <a href="/profile">
         <div class="relative inline-block">
             <!-- Profile Image -->
             <img class="w-10 h-10 rounded-full object-cover"

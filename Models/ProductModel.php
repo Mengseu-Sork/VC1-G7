@@ -8,10 +8,9 @@ class ProductModel {
     }
     
     public function getAllCategories() {
-        $result = $this->db->query("SELECT name FROM categories");
-        return $result->fetchAll(PDO::FETCH_COLUMN);
-    }    
-    
+        $result = $this->db->query("SELECT * FROM categories");
+        return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     function getAllProducts() {
         try {
@@ -104,7 +103,6 @@ class ProductModel {
             return false;
         }
     }
-
 
     function getCategoryById($category_id) {
         try {

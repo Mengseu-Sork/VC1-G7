@@ -357,78 +357,13 @@
                 </div>
               </div>
               <!-- Charts -->
-              <div class="grid grid-cols-2 gap-4 ml-4 mr-4 mb-24">
-
-                <!-- Line Chart -->
-                <div class="bg-white rounded-md dark:bg-darker p-4 rounded-lg shadow">
-                    <h2 class="text-lg font-semibold">REPORT</h2>
-                    <canvas id="lineChart"></canvas>
-                </div>
-
-                <!-- Bar Chart -->
-                <div class="bg-white rounded-md dark:bg-darker p-4 rounded-lg shadow">
-                    <h2 class="text-lg font-semibold">List of Months Sale</h2>
-                    <canvas id="barChart"></canvas>
-                </div>
-                
-                
+              <div class="grid gap-4 ml-4 mr-4 mb-24">
+ 
                 <!-- Active Users Chart -->
-                <div class="bg-white rounded-md dark:bg-darker p-4 rounded-lg shadow">
-                  <h2 class="text-lg font-semibold">Value</h2>
+                <div class="bg-white rounded-md dark:bg-darker p-4 mr-4 rounded-lg shadow">
+                  <h2 class="text-lg font-semibold">List Order of Day</h2>
                   <canvas id="activeUsersChart"></canvas>
                 </div>
-
-                <!-- Doughnut Chart -->
-                <div class="bg-white rounded-md dark:bg-darker p-4 rounded-lg shadow w-full">
-                    <h2 class="text-lg font-semibold mb-2">List of Day Sale</h2>
-                    <div class="mb-2">
-                        <p class="flex justify-between"><span>Monday</span><span>60.5%</span></p>
-                        <div class="w-full h-2.5 bg-gray-300 rounded-full">
-                            <div class="h-full bg-red-400 rounded-full" style="width: 60.5%;"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="mb-2">
-                        <p class="flex justify-between"><span>Tuesday</span><span>60.5%</span></p>
-                        <div class="w-full h-2.5 bg-gray-300 rounded-full">
-                            <div class="h-full bg-green-500 rounded-full" style="width: 60.5%;"></div>
-                        </div>
-                    </div>
-
-                    <div class="mb-2">
-                        <p class="flex justify-between"><span>Wednesday</span><span>60.5%</span></p>
-                        <div class="w-full h-2.5 bg-gray-300 rounded-full">
-                            <div class="h-full bg-blue-700 rounded-full" style="width: 60.5%;"></div>
-                        </div>
-                    </div>
-
-                    <div class="mb-2">
-                        <p class="flex justify-between"><span>Thursday</span><span>60.5%</span></p>
-                        <div class="w-full h-2.5 bg-gray-300 rounded-full">
-                            <div class="h-full bg-red-500 rounded-full" style="width: 60.5%;"></div>
-                        </div>
-                    </div>
-
-                    <div class="mb-2">
-                        <p class="flex justify-between"><span>Friday</span><span>60.5%</span></p>
-                        <div class="w-full h-2.5 bg-gray-300 rounded-full">
-                            <div class="h-full bg-green-300 rounded-full" style="width: 60.5%;"></div>
-                        </div>
-                    </div>
-
-                    <div class="mb-2">
-                        <p class="flex justify-between"><span>Saturday</span><span>60.5%</span></p>
-                        <div class="w-full h-2.5 bg-gray-300 rounded-full">
-                            <div class="h-full bg-blue-300 rounded-full" style="width: 60.5%;"></div>
-                        </div>
-                    </div>
-
-                    <div class="mb-2">
-                        <p class="flex justify-between"><span>Sunday</span><span>60.5%</span></p>
-                        <div class="w-full h-2.5 bg-gray-300 rounded-full">
-                            <div class="h-full bg-yellow-400 rounded-full" style="width: 60.5%;"></div>
-                        </div>
-                    </div>
                 </div>
             </div>
             
@@ -454,42 +389,15 @@
     </div>
     
 
-    <script>
-        // Line Chart
-        new Chart(document.getElementById('lineChart'), {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                datasets: [{
-                    label: 'Growth',
-                    data: [50, 45, 30, 60, 40, 70, 90, 80, 60, 100, 110, 95],
-                    borderColor: '#C000FF',
-                    fill: false
-                }]
-            }
-        });
-
-        // Bar Chart
-        new Chart(document.getElementById('barChart'), {
-            type: 'bar',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                datasets: [{
-                    label: 'Sales',
-                    data: [80, 30, 20, 90, 40, 50, 100, 60, 30, 90, 60, 50],
-                    backgroundColor: 'rgba(192, 0, 255, 0.6)',
-                }]
-            }
-        });
-
+    <script>  
         // Active Users Chart
         new Chart(document.getElementById('activeUsersChart'), {
             type: 'bar',
             data: {
                 labels: Array.from({length: 30}, (_, i) => i + 1),
                 datasets: [{
-                    label: 'Active Users',
-                    data: Array.from({length: 30}, () => Math.floor(Math.random() * 50)),
+                    label: 'List Order of day',
+                    data: Array.from({length: 30}, () => Math.floor(Math.random() * 100)),
                     backgroundColor: 'rgba(192, 0, 255, 0.6)'
                 }]
             }

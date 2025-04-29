@@ -143,8 +143,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                             <div class="shadow-lg rounded-lg p-6 border-2 mb-2 border-gray-200 dark:border-primary-darker transition duration-300"
                                                                 :style="{ backgroundColor: bgColor }">
                                                                 <h2 class="text-left text-2xl font-bold mb-4">Edit User</h2>
-                                                                <form action="/user/update?id=<?= $user['id'] ?>" method="POST" enctype="multipart/form-data">              
-                                                                <div class="flex flex-col">
+                                                                <form action="/user/update" method="POST" enctype="multipart/form-data" enctype="multipart/form-data">        
+                                                                <input type="hidden" name="id" value="<?= $user['id'] ?>">      
+                                                                    <div class="flex flex-col">
                                                                             <label class="font-semibold mb-1">User Image</label>
                                                                             <div class="border border-gray-300 rounded-lg p-4 flex flex-col items-center justify-centerbg-white dark:text-light dark:bg-darker border-b dark:border-primary-darker">
                                                                             <input type="file" name="image" id="imageInput" accept="image/*" onchange="previewImage(this)" class="mb-2 w-full border border-gray-300  dark:text-light dark:border-primary-darker">
@@ -191,9 +192,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                                     
                                                                     <div class="mt-4">
                                                                         <label class="block font-semibold mb-2">Role:</label>
-                                                                        <input type="role" name="role" value="<?= $user['role'] ?>"
-                                                                            class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 duration-200 rounded-lg shadow-md transition bg-white dark:text-light dark:bg-darker border-b dark:border-primary-darker">
+                                                                        <select 
+                                                                            name="role" 
+                                                                            class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 duration-200 rounded-lg shadow-md transition bg-white dark:text-light dark:bg-darker border-b dark:border-primary-darker"
+                                                                        >
+                                                                            <option value="admin" <?= $user['role'] == 'admin' ? 'selected' : '' ?>>admin</option>
+                                                                            <option value="employee" <?= $user['role'] == 'employee' ? 'selected' : '' ?>>employee</option>
+                                                                        </select>
                                                                     </div>
+
 
                                                                     <!-- Submit Button -->
                                                                     <div class="mt-6">
@@ -203,6 +210,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                                         </button>
                                                                         <button type="button" class="bg-yellow-500 text-white ml-2 px-4 py-2 rounded-lg hover:opacity-90" onclick="window.location.href='/user'">Cancel</button>
                                                                     </div>
+                                                    
                                                                 </form>
                                                             </div>
                                                         </div>

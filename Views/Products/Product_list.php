@@ -84,10 +84,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         class="pr-5 pl-2 border border-blue-300 rounded-md transition duration-300 mr-1 bg-blue-600 border-b dark:border-primary-darker"
                                         onchange="filterByCategory(this.value)">
                                         <option value="">All Categories</option>
-                                        <?php foreach ($categories as $key => $value): ?>
-                                            <option value="<?= htmlspecialchars($value) ?>" <?= (isset($_GET['category']) && $_GET['category'] == $key) ? 'selected' : '' ?>>
-                                                <?= htmlspecialchars($value) ?>
-                                            </option>
+                                        <?php foreach ($categories as $category): ?>
+                                            <option value="<?= $category['name'] ?>"><?= $category['name'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </th>
@@ -96,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </thead>
                         <tbody id="product-table-body">
                             <?php foreach ($products as $product): ?>
-                                <tr data-category-name="<?= htmlspecialchars($product['category_name']); ?>"
+                                <tr data-category="<?= $product['category_name']; ?>"
                                     class="duration-200 rounded-lg shadow-md transition bg-white dark:text-light dark:bg-darker border-b dark:border-primary-darker">
                                     <td>
                                         <img src="../Assets/images/uploads/<?php echo $product["image"]?>" class="ml-4" alt="" width="40" height="40" style="border-radius: 5px">
@@ -116,6 +114,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <i class="fas fa-trash-alt mr-1" style="color: red"></i>
                                         </a>
 
+                                        <!-- Replace this line: -->
+                                        <!-- <a href="../Views/Products/show.php" -->
+
+                                        <!-- With this: -->
                                         <a href="/pages/details?id=<?php echo htmlspecialchars($product['id']); ?>"
                                         class="block px-2 py-2 text-gray-700 flex items-center">
                                             <i class="far fa-eye mr-1" style="color: blue;"></i>
@@ -184,12 +186,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // Filter products by category
-    function filterByCategory(categoryId) {
+    function filterByCategory(category) {
         const rows = document.querySelectorAll("#product-table-body tr");
         rows.forEach(row => {
-            const rowCategoryId = row.getAttribute("data-category-name");
-            if (categoryId === "" || rowCategoryId === categoryId) {
-                row.style.display = "";
+            const productCategory = row.getAttribute("data-category").toLowerCase();
+            if (category === "" || productCategory === category.toLowerCase()) {
+                row.style.display = ""; 
             } else {
                 row.style.display = "none";
             }
@@ -205,5 +207,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     function closeModal(modalId) {
         document.getElementById(modalId).classList.add('hidden');
     }
-
 </script>

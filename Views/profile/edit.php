@@ -5,7 +5,8 @@
             <div class="shadow-lg rounded-lg p-6 border-2 mb-16 border-gray-200 dark:border-primary-darker transition duration-300"
                 :style="{ backgroundColor: bgColor }">
                 <h2 class="text-left text-2xl font-bold mb-4">Edit Profile</h2>
-                <form action="/profile/updateProfile?id=<?= $user['id'] ?>" method="POST" enctype="multipart/form-data">              
+                <form action="/user/update" method="POST" enctype="multipart/form-data" enctype="multipart/form-data">        
+                    <input type="hidden" name="id" value="<?= $user['id'] ?>">              
                     <div class="flex flex-col">
                         <label class="font-semibold mb-1">User Image</label>
                         <div class="border border-gray-300 rounded-lg p-4 flex flex-col items-center justify-centerbg-white dark:text-light dark:bg-darker border-b dark:border-primary-darker">
@@ -49,7 +50,7 @@
                             <button type="submit" class="w-30 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md">
                                 Update
                             </button>
-                            <button type="button" class="bg-yellow-500 text-white ml-2 px-4 py-2 rounded-lg hover:opacity-90" onclick="window.location.href='/profile/profile'">Cancel</button>
+                            <button type="button" class="bg-yellow-500 text-white ml-2 px-4 py-2 rounded-lg hover:opacity-90" onclick="window.location.href='/profile'">Cancel</button>
                         </div>
                     </div>
                 </form>

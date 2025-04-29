@@ -77,7 +77,7 @@ class AuthController {
         header("Pragma: no-cache");
         header("Expires: 0");
     
-        header("Location: Views/auth/login.php");
+        header("Location: /");
         exit();
     }
     

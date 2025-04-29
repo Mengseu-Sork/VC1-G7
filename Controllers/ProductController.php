@@ -197,8 +197,6 @@ class ProductController extends BaseController {
             $this->redirect('/products');
         }
     }
-
-    
     function show($id = null) {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();

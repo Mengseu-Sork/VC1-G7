@@ -48,7 +48,7 @@ class StockController extends BaseController {
             ];
     
             $this->model->createStock($data);
-            $this->redirect('/stock/stock');
+            $this->redirect('/stock');
         }
     }
     
@@ -82,7 +82,7 @@ class StockController extends BaseController {
             ];
     
             $this->model->updateStock($id, $data);
-            $this->redirect('/stock/stock');
+            $this->redirect('/stock');
         }
     }
     
@@ -90,6 +90,6 @@ class StockController extends BaseController {
         if (isset($_GET['id'])) {
             $this->model->deleteStock($_GET['id']);
         }
-        $this->redirect('/stock/stock');
+        $this->redirect('/stock');
     }
 }
