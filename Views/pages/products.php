@@ -209,8 +209,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                 <div id="successMessage"
                     class="fixed inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50 hidden z-50">
                     <div class="bg-white w-80 p-6 rounded-lg shadow-lg text-center">
-                        <h2 id="successMessageTitle" class="text-xl font-bold text-green-600 mb-4">Order Placed
-                            Successfully!</h2>
+                        <h2 id="successMessageTitle" class="text-xl font-bold mb-4"></h2>
                         <button id="closeSuccess"
                             class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">OK</button>
                     </div>
@@ -226,7 +225,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
         let shownProducts = initialProductsToShow;
         const totalProducts = <?= $totalProducts ?>;
         // Note: loggedInUserId is not defined since we removed session handling
-        const loggedInUserId = null;
+        const loggedInUserId = null; // You may need to define this differently
 
         function updateCartCount() {
             const cart = getCart();
@@ -244,10 +243,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
             updateCartCount();
         }
 
-        function showSuccessMessage(message) {
+        function showSuccessMessage(message, isError = false) {
             const successMessageTitle = document.getElementById('successMessageTitle');
             const successMessage = document.getElementById('successMessage');
             successMessageTitle.textContent = message;
+            // Apply different styling based on whether it's an error or success message
+            successMessageTitle.className = `text-xl font-bold mb-4 ${isError ? 'text-red-600' : 'text-green-600'}`;
             successMessage.classList.remove('hidden');
         }
 
@@ -391,7 +392,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                         existingItem.quantity += 1;
                         if (existingItem.quantity > existingItem.stock_quantity) {
                             existingItem.quantity = existingItem.stock_quantity;
-                            alert('Maximum stock quantity reached!');
+                            showSuccessMessage('Maximum stock quantity reached!', true);
                             return;
                         }
                     } else {
@@ -444,7 +445,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                     elements.modal.classList.remove('hidden');
                 });
             });
-
             elements.quantityInput.addEventListener("input", function () {
                 let quantity = parseInt(elements.quantityInput.value) || 1;
                 if (quantity < 1) quantity = 1;
@@ -452,14 +452,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                 elements.quantityInput.value = quantity;
                 updateTotalPrice();
             });
-
             elements.increaseQty.addEventListener("click", function () {
                 let quantity = parseInt(elements.quantityInput.value) || 1;
                 if (currentStockQuantity > 0 && quantity >= currentStockQuantity) return;
                 elements.quantityInput.value = quantity + 1;
                 updateTotalPrice();
             });
-
             elements.decreaseQty.addEventListener("click", function () {
                 let quantity = parseInt(elements.quantityInput.value) || 1;
                 if (quantity > 1) {
@@ -467,57 +465,51 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_FILES["image"])) {
                     updateTotalPrice();
                 }
             });
-
             elements.cancelBtn.addEventListener('click', function () {
                 elements.modal.classList.add('hidden');
                 elements.modalImage.classList.add('hidden');
             });
-
             elements.orderBtn.addEventListener('click', function (e) {
                 e.preventDefault();
                 const quantity = parseInt(elements.quantityInput.value) || 1;
                 const productId = document.getElementById('modalProductId')?.value;
                 const productName = elements.modalProductName.value;
                 const price = parseFloat(elements.modalPriceInput.value);
-                const totalAmount = price * quantity;
-
-                const orderData = {
-                    user_id: loggedInUserId,
-                    total_amount: totalAmount,
-                    products: [{
-                        product_id: productId,
-                        quantity: quantity,
-                        subtotal: totalAmount
-                    }]
+                const productImage = elements.modalImage.src.split('/').pop(); 
+                const stock = elements.modalStockStatus.textContent;
+                const stockQuantity = currentStockQuantity; 
+                const product = {
+                    id: productId,
+                    name: productName,
+                    price: price,
+                    image: productImage,
+                    stock: stock,
+                    stock_quantity: stockQuantity,
+                    quantity: quantity
                 };
-
-                fetch('/order/process', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(orderData)
-                })
-                    .then(response => {
-                        if (!response.ok) {
-                            return response.text().then(text => { throw new Error(`Network response was not ok: ${response.status} - ${text}`); });
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data.success) {
-                            elements.modal.classList.add('hidden');
-                            showSuccessMessage('Order Placed Successfully!');
-                            setTimeout(() => { window.location.href = '/orders/orderHistory'; }, 2000);
-                        } else {
-                            alert('Order failed: ' + data.message);
-                        }
-                    })
-                    .catch(error => {
-                        alert('An error occurred while placing the order: ' + error.message);
-                    });
+                let cart = getCart();
+                const existingItem = cart.find(item => item.id === product.id);
+                if (existingItem) {
+                    existingItem.quantity += quantity;
+                    if (existingItem.quantity > existingItem.stock_quantity) {
+                        existingItem.quantity = existingItem.stock_quantity;
+                        showSuccessMessage('Maximum stock quantity reached!', true);
+                        return;
+                    }
+                } else {
+                    cart.push(product);
+                }
+                saveCart(cart);
+                elements.modal.classList.add('hidden');
+                elements.modalImage.classList.add('hidden');
+                window.location.href = '/Views/orders/order.php';
             });
 
             elements.closeSuccess.addEventListener('click', function () {
                 elements.successMessage.classList.add('hidden');
+                elements.modal.classList.add('hidden');
+                elements.modalImage.classList.add('hidden');
+                window.location.href = window.location.pathname;
             });
 
             resetProducts();
