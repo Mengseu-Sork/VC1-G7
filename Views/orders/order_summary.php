@@ -34,6 +34,7 @@
                   <h3 class="text-lg font-medium font-semibold mb-2">Payment Info</h3>
                   <div><span class="font-semibold">Total:</span> $<?= number_format($orderDetails["total_amount"], 2) ?></div>
                 </div>
+                <button type="button" class="bg-yellow-500 hover:bg-yellow-600 text-white mt-4 py-2 px-4 rounded-lg" onclick="window.location.href='/orders/orderHistory'">Cancel</button>
               </div>
         </div>
     </div>
