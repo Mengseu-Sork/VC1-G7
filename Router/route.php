@@ -48,7 +48,7 @@ $routes->put('/user/update', [UserController::class, 'update']);
 $routes->delete('/user/delete', [UserController::class, 'destroy']);
 $routes->get('/user/show', [UserController::class, 'show']);
 
-
+$routes->get('/payments/payment', [PaymentController::class, 'payment']);
 // products
 $routes->get('/products', [ProductController::class, 'index']);
 $routes->get('/products/product_list', [ProductController::class, 'index']);

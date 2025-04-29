@@ -33,12 +33,12 @@
             padding: 20px;
         }
         
-        .container {
+        .inv-container {
             max-width: 1200px;
             margin: 0 auto;
         }
         
-        .dashboard-card {
+        .inv-dashboard-card {
             background-color: white;
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
@@ -47,7 +47,7 @@
         }
         
         /* Balance Section */
-        .balance-section {
+        .inv-balance-section {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
@@ -55,30 +55,30 @@
             gap: 20px;
         }
         
-        .balance-info {
+        .inv-balance-info {
             flex: 1;
             min-width: 300px;
         }
         
-        .balance-label {
+        .inv-balance-label {
             font-size: 14px;
             color: #4A5568;
             margin-bottom: 8px;
         }
         
-        .balance-amount {
+        .inv-balance-amount {
             font-size: 32px;
             font-weight: 700;
             margin-bottom: 16px;
         }
         
-        .balance-details {
+        .inv-balance-details {
             display: flex;
             gap: 16px;
             margin-bottom: 16px;
         }
         
-        .balance-detail {
+        .inv-balance-detail {
             display: flex;
             align-items: center;
             padding: 8px 12px;
@@ -87,15 +87,15 @@
             gap: 8px;
         }
         
-        .balance-detail.paid {
+        .inv-balance-detail.inv-paid {
             background-color: #E6F7F1;
         }
         
-        .balance-detail.reserved {
+        .inv-balance-detail.inv-reserved {
             background-color: #EBF0FF;
         }
         
-        .icon {
+        .inv-icon {
             width: 20px;
             height: 20px;
             border-radius: 50%;
@@ -106,30 +106,30 @@
             color: white;
         }
         
-        .icon.paid {
+        .inv-icon.inv-paid {
             background-color: var(--primary-green);
         }
         
-        .icon.reserved {
+        .inv-icon.inv-reserved {
             background-color: var(--primary-blue);
         }
         
-        .detail-amount {
+        .inv-detail-amount {
             font-weight: 600;
             font-size: 14px;
         }
         
-        .detail-label {
+        .inv-detail-label {
             font-size: 12px;
             color: #4A5568;
         }
         
-        .balance-actions {
+        .inv-balance-actions {
             display: flex;
             gap: 12px;
         }
         
-        .btn {
+        .inv-btn {
             padding: 10px 16px;
             border-radius: 6px;
             font-weight: 500;
@@ -139,23 +139,23 @@
             transition: all 0.2s;
         }
         
-        .btn-primary {
+        .inv-btn-primary {
             background-color: var(--primary-blue);
             color: white;
         }
         
-        .btn-outline {
+        .inv-btn-outline {
             background-color: white;
             color: var(--primary-green);
             border: 1px solid var(--primary-green);
         }
         
-        .btn:hover {
+        .inv-btn:hover {
             opacity: 0.9;
         }
         
         /* Status Cards */
-        .status-cards {
+        .inv-status-cards {
             display: flex;
             gap: 16px;
             flex: 2;
@@ -163,7 +163,7 @@
             overflow-x: auto;
         }
         
-        .status-card {
+        .inv-status-card {
             flex: 1;
             min-width: 150px;
             padding: 20px;
@@ -174,19 +174,19 @@
             position: relative;
         }
         
-        .status-card.drafts {
+        .inv-status-card.inv-drafts {
             background-color: var(--primary-blue);
         }
         
-        .status-card.pending {
+        .inv-status-card.inv-pending {
             background-color: var(--dark-gray);
         }
         
-        .status-card.paid {
+        .inv-status-card.inv-paid {
             background-color: var(--primary-green);
         }
         
-        .status-title {
+        .inv-status-title {
             font-size: 14px;
             margin-bottom: 24px;
             display: flex;
@@ -194,18 +194,18 @@
             gap: 8px;
         }
         
-        .status-count {
+        .inv-status-count {
             font-size: 36px;
             font-weight: 700;
             margin-bottom: 4px;
         }
         
-        .status-creators {
+        .inv-status-creators {
             font-size: 12px;
             opacity: 0.8;
         }
         
-        .arrow {
+        .inv-arrow {
             position: absolute;
             right: -8px;
             top: 50%;
@@ -223,13 +223,13 @@
         }
         
         /* Tabs Section */
-        .tabs {
+        .inv-tabs {
             display: flex;
             border-bottom: 1px solid var(--medium-gray);
             margin-bottom: 16px;
         }
         
-        .tab {
+        .inv-tab {
             padding: 12px 16px;
             font-size: 14px;
             cursor: pointer;
@@ -237,12 +237,12 @@
             position: relative;
         }
         
-        .tab.active {
+        .inv-tab.inv-active {
             color: var(--primary-blue);
             font-weight: 500;
         }
         
-        .tab.active::after {
+        .inv-tab.inv-active::after {
             content: '';
             position: absolute;
             bottom: -1px;
@@ -253,7 +253,7 @@
         }
         
         /* Search Section */
-        .search-section {
+        .inv-search-section {
             display: flex;
             justify-content: space-between;
             margin-bottom: 16px;
@@ -261,13 +261,13 @@
             flex-wrap: wrap;
         }
         
-        .search-bar {
+        .inv-search-bar {
             flex: 1;
             min-width: 300px;
             position: relative;
         }
         
-        .search-bar input {
+        .inv-search-bar input {
             width: 100%;
             padding: 10px 10px 10px 36px;
             border: 1px solid var(--medium-gray);
@@ -275,7 +275,7 @@
             font-size: 14px;
         }
         
-        .search-icon {
+        .inv-search-icon {
             position: absolute;
             left: 12px;
             top: 50%;
@@ -283,12 +283,12 @@
             color: #4A5568;
         }
         
-        .filter-buttons {
+        .inv-filter-buttons {
             display: flex;
             gap: 8px;
         }
         
-        .filter-btn {
+        .inv-filter-btn {
             padding: 10px 16px;
             border: 1px solid var(--medium-gray);
             border-radius: 6px;
@@ -301,13 +301,17 @@
         }
         
         /* Table Section */
-        .table-container {
+        .inv-table-container {
             overflow-x: auto;
+            overflow-y: auto;
+            max-height: 500px;
+            position: relative;
         }
         
         table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 800px;
         }
         
         th {
@@ -317,6 +321,11 @@
             font-weight: 500;
             color: #4A5568;
             text-transform: uppercase;
+            background-color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom: 1px solid var(--medium-gray);
         }
         
         td {
@@ -325,7 +334,7 @@
             font-size: 14px;
         }
         
-        .checkbox {
+        .inv-checkbox {
             width: 18px;
             height: 18px;
             border-radius: 4px;
@@ -333,25 +342,25 @@
             cursor: pointer;
         }
         
-        .invoice-id {
+        .inv-invoice-id {
             color: var(--primary-blue);
             font-weight: 500;
         }
         
-        .creator-cell {
+        .inv-creator-cell {
             display: flex;
             align-items: center;
             gap: 8px;
         }
         
-        .creator-avatar {
+        .inv-creator-avatar {
             width: 32px;
             height: 32px;
             border-radius: 50%;
             object-fit: cover;
         }
         
-        .status-badge {
+        .inv-status-badge {
             display: inline-block;
             padding: 6px 12px;
             border-radius: 4px;
@@ -359,119 +368,150 @@
             font-weight: 500;
         }
         
-        .status-badge.draft {
+        .inv-status-badge.inv-draft {
             background-color: var(--draft-bg);
             color: var(--draft-color);
         }
         
-        .status-badge.pending {
+        .inv-status-badge.inv-pending {
             background-color: var(--pending-bg);
             color: var(--pending-color);
         }
         
-        .status-badge.paid {
+        .inv-status-badge.inv-paid {
             background-color: var(--paid-bg);
             color: var(--paid-color);
         }
         
-        .actions {
+        .inv-actions {
             color: #4A5568;
             cursor: pointer;
             font-weight: bold;
         }
         
+        /* Scrollbar Styling */
+        .inv-table-container::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        .inv-table-container::-webkit-scrollbar-track {
+            background: var(--light-gray);
+            border-radius: 4px;
+        }
+        
+        .inv-table-container::-webkit-scrollbar-thumb {
+            background: var(--medium-gray);
+            border-radius: 4px;
+        }
+        
+        .inv-table-container::-webkit-scrollbar-thumb:hover {
+            background: var(--dark-gray);
+        }
+        
         @media (max-width: 768px) {
-            .balance-section {
+            .inv-balance-section {
                 flex-direction: column;
             }
             
-            .status-cards {
+            .inv-status-cards {
                 width: 100%;
             }
             
-            .search-section {
+            .inv-search-section {
                 flex-direction: column;
+            }
+            
+            .inv-table-container {
+                max-height: 400px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="inv-container">
         <!-- Balance and Status Cards -->
-        <div class="dashboard-card">
-            <div class="balance-section">
-                <div class="balance-info">
-                    <div class="balance-label">Available Balance</div>
-                    <div class="balance-amount">$252,345.00</div>
-                    <div class="balance-details">
-                        <div class="balance-detail paid">
-                            <div class="icon paid">✓</div>
+        <div class="inv-dashboard-card">
+            <div class="inv-balance-section">
+                <div class="inv-balance-info">
+                    <div class="inv-balance-label">Available Balance</div>
+                    <div class="inv-balance-amount">
+                    <?php $totalPrice = 0; ?>    
+                    <?php foreach ($orders as $key => $order) :?>
+                        <?php 
+                        $totalPrice += $order['total_amount'];
+                        ?>
+                    <?php endforeach ?>
+                    $ <?php echo $totalPrice; ?>
+                    </div>
+                    <div class="inv-balance-details">
+                        <div class="inv-balance-detail inv-paid">
+                            <div class="inv-icon inv-paid">✓</div>
                             <div>
-                                <div class="detail-amount">$120,680.00</div>
-                                <div class="detail-label">Paid</div>
+                                <div class="inv-detail-amount">$120,680.00</div>
+                                <div class="inv-detail-label">Paid</div>
                             </div>
                         </div>
-                        <div class="balance-detail reserved">
-                            <div class="icon reserved">R</div>
+                        <div class="inv-balance-detail inv-reserved">
+                            <div class="inv-icon inv-reserved">R</div>
                             <div>
-                                <div class="detail-amount">$47,320.00</div>
-                                <div class="detail-label">Reserved</div>
+                                <div class="inv-detail-label">Reserved</div>
                             </div>
                         </div>
                     </div>
-                    <div class="balance-actions">
-                        <button class="btn btn-outline">Fillout Balance</button>
-                        <button class="btn btn-primary">Approve All</button>
+                    <div class="inv-balance-actions">
+                        <button class="inv-btn inv-btn-outline">Fill Out Balance</button>
+                        <button class="inv-btn inv-btn-primary">Approve All</button>
                     </div>
                 </div>
                 
-                <div class="status-cards">
-                    <div class="status-card drafts">
-                        <div class="status-title">
+                <div class="inv-status-cards">
+                    <div class="inv-status-card inv-drafts">
+                        <div class="inv-status-title">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                             </svg>
                             Drafts
                         </div>
-                        <div class="status-count">72</div>
-                        <div class="status-creators">32 Creators</div>
-                        <div class="arrow">›</div>
+                        <div class="inv-status-count">72</div>
+                        <div class="inv-status-creators">32 Creators</div>
+                        <div class="inv-arrow">›</div>
                     </div>
                     
-                    <div class="status-card pending">
-                        <div class="status-title">
+                    <div class="inv-status-card inv-pending">
+                        <div class="inv-status-title">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="12" cy="12" r="10"></circle>
                                 <polyline points="12 6 12 12 16 14"></polyline>
                             </svg>
                             Pending
                         </div>
-                        <div class="status-count">122</div>
-                        <div class="status-creators">60 Creators</div>
-                        <div class="arrow">›</div>
+                        <div class="inv-status-count">122</div>
+                        <div class="inv-status-creators">60 Creators</div>
+                        <div class="inv-arrow">›</div>
                     </div>
                     
-                    <div class="status-card paid">
-                        <div class="status-title">
+                    <div class="inv-status-card inv-paid">
+                        <div class="inv-status-title">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                 <circle cx="12" cy="7" r="4"></circle>
                             </svg>
                             Paid
                         </div>
-                        <div class="status-count">96</div>
-                        <div class="status-creators">57 Creators</div>
+                        <div class="inv-status-count">96</div>
+                        <div class="inv-status-creators">57 Creators</div>
                     </div>
                 </div>
             </div>
         </div>
         
         <!-- Invoices Section -->
-        <div class="dashboard-card">
-                       <div class="search-section">
-                <div class="search-bar">
-                    <div class="search-icon">
+        <div class="inv-dashboard-card">
+            <div class="inv-search-section">
+                <div class="inv-search-bar">
+                    <div class="inv-search-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="11" cy="11" r="8"></circle>
                             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -480,15 +520,15 @@
                     <input type="text" placeholder="Search invoice">
                 </div>
                 
-                <div class="filter-buttons">
-                    <button class="filter-btn">
+                <div class="inv-filter-buttons">
+                    <button class="inv-filter-btn">
                         Creator
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     </button>
                     
-                    <button class="filter-btn">
+                    <button class="inv-filter-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="4" y1="21" x2="4" y2="14"></line>
                             <line x1="4" y1="10" x2="4" y2="3"></line>
@@ -505,11 +545,11 @@
                 </div>
             </div>
             
-            <div class="table-container">
+            <div class="inv-table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th><div class="checkbox"></div></th>
+                            <th><div class="inv-checkbox"></div></th>
                             <th>INVOICE ID</th>
                             <th>AMOUNT</th>
                             <th>DATE</th>
@@ -518,105 +558,25 @@
                             <th></th>
                         </tr>
                     </thead>
+                    
                     <tbody>
+                        <?php foreach ($orders as $index => $order) : ?>
                         <tr>
-                            <td><div class="checkbox"></div></td>
-                            <td class="invoice-id">#00181-5404</td>
-                            <td>$25,000.00</td>
-                            <td>Jul 16, 2020</td>
+                            <td><div class="inv-checkbox"></div></td>
+                            <td class="inv-invoice-id">#00181-5404</td>
+                            <td><?php echo($order['total_amount']) ?></td>
+                            <td><?php echo($order['order_date']) ?></td>
                             <td>
-                                <div class="creator-cell">
-                                    <img src="/placeholder.svg?height=32&width=32" alt="Mattie Stone" class="creator-avatar">
-                                    Mattie Stone
+                                <div class="inv-creator-cell">
+                                    <img src="/placeholder.svg?height=32&width=32" alt="Mattie Stone" class="inv-creator-avatar">
+                                    <?php echo($order['FirstName']) ?> 
+                                    <?php echo($order['LastName']) ?> 
                                 </div>
                             </td>
-                            <td><span class="status-badge draft">Draft</span></td>
-                            <td class="actions">⋯</td>
+                            <td><span class="inv-status-badge inv-draft">Draft</span></td>
+                            <td class="inv-actions">⋯</td>
                         </tr>
-                        <tr>
-                            <td><div class="checkbox"></div></td>
-                            <td class="invoice-id">#73597-9803</td>
-                            <td>$14,000.00</td>
-                            <td>Jul 12, 2020</td>
-                            <td>
-                                <div class="creator-cell">
-                                    <img src="/placeholder.svg?height=32&width=32" alt="Alexander Richards" class="creator-avatar">
-                                    Alexander Richards
-                                </div>
-                            </td>
-                            <td><span class="status-badge pending">Pending</span></td>
-                            <td class="actions">⋯</td>
-                        </tr>
-                        <tr>
-                            <td><div class="checkbox"></div></td>
-                            <td class="invoice-id">#99576-8765</td>
-                            <td>$18,000.00</td>
-                            <td>Jul 10, 2020</td>
-                            <td>
-                                <div class="creator-cell">
-                                    <img src="/placeholder.svg?height=32&width=32" alt="Matthew Mitchell" class="creator-avatar">
-                                    Matthew Mitchell
-                                </div>
-                            </td>
-                            <td><span class="status-badge paid">Paid</span></td>
-                            <td class="actions">⋯</td>
-                        </tr>
-                        <tr>
-                            <td><div class="checkbox"></div></td>
-                            <td class="invoice-id">#10338-2087</td>
-                            <td>$16,000.00</td>
-                            <td>Jul 10, 2020</td>
-                            <td>
-                                <div class="creator-cell">
-                                    <img src="/placeholder.svg?height=32&width=32" alt="Lillian McGee" class="creator-avatar">
-                                    Lillian McGee
-                                </div>
-                            </td>
-                            <td><span class="status-badge draft">Draft</span></td>
-                            <td class="actions">⋯</td>
-                        </tr>
-                        <tr>
-                            <td><div class="checkbox"></div></td>
-                            <td class="invoice-id">#28701-5681</td>
-                            <td>$5,000.00</td>
-                            <td>Jun 24, 2020</td>
-                            <td>
-                                <div class="creator-cell">
-                                    <img src="/placeholder.svg?height=32&width=32" alt="Blake Griffith" class="creator-avatar">
-                                    Blake Griffith
-                                </div>
-                            </td>
-                            <td><span class="status-badge draft">Draft</span></td>
-                            <td class="actions">⋯</td>
-                        </tr>
-                        <tr>
-                            <td><div class="checkbox"></div></td>
-                            <td class="invoice-id">#11471-1285</td>
-                            <td>$120,000.00</td>
-                            <td>Jun 22, 2020</td>
-                            <td>
-                                <div class="creator-cell">
-                                    <img src="/placeholder.svg?height=32&width=32" alt="Bettie Stanley" class="creator-avatar">
-                                    Bettie Stanley
-                                </div>
-                            </td>
-                            <td><span class="status-badge paid">Paid</span></td>
-                            <td class="actions">⋯</td>
-                        </tr>
-                        <tr>
-                            <td><div class="checkbox"></div></td>
-                            <td class="invoice-id">#81843-1056</td>
-                            <td>$55,000.00</td>
-                            <td>Jun 18, 2020</td>
-                            <td>
-                                <div class="creator-cell">
-                                    <img src="/placeholder.svg?height=32&width=32" alt="Addie Marshall" class="creator-avatar">
-                                    Addie Marshall
-                                </div>
-                            </td>
-                            <td><span class="status-badge pending">Pending</span></td>
-                            <td class="actions">⋯</td>
-                        </tr>
+                        <?php endforeach ?>
                     </tbody>
                 </table>
             </div>
