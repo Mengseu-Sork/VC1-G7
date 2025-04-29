@@ -107,7 +107,7 @@
                 <!-- Authentication links -->
                 <div>
                   <a
-                    href="/Views/pages/order.php"
+                    href="/orders/orderHistory"
                     class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
 
                   >

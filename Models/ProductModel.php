@@ -24,7 +24,8 @@ class ProductModel {
                 products.category_id, 
                 categories.name AS category_name
                 FROM products 
-                LEFT JOIN categories ON products.category_id = categories.category_id");
+                LEFT JOIN categories ON products.category_id = categories.category_id
+                LEFT JOIN stock ON products.id = stock.product_id");
             return $result->fetchAll();
         } catch (Exception $e) {
             error_log("Error fetching products: " . $e->getMessage());
@@ -103,6 +104,7 @@ class ProductModel {
             return false;
         }
     }
+
     function getCategoryById($category_id) {
         try {
             $query = "SELECT * FROM categories WHERE category_id = :category_id";

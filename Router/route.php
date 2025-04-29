@@ -66,8 +66,10 @@ $routes->get('/categories/edit', [CategoryController::class, 'edit']);
 $routes->put('/categories/update', [CategoryController::class, 'update']);
 $routes->get('/categories/delete', [CategoryController::class, 'destroy']);
 
-$routes->get('/pages/order', [OrderController::class, 'index']); 
-$routes->post('/products/order', [OrderController::class, 'process']);
+$routes->post('/order/process', [OrderController::class, 'process']);
+$routes->post('/orderHistory/process', [OrderController::class, 'process']);
+$routes->get('/orders/orderHistory', [OrderController::class, 'index']);
+$routes->get('/pages/order_summary', [OrderController::class, 'viewOrder']);
 
 //Stock
 $routes->get('/stock/stock', [StockController::class, 'index']);
