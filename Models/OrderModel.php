@@ -324,7 +324,26 @@ class OrderModel
     }
     function getOrderDetails($orderId) {
         $pdo = $this->db->getConnection();
-        $stmt = $pdo->prepare("SELECT * FROM orders WHERE order_id = ?");
+        $stmt = $pdo->prepare("SELECT 
+        orders.order_id,
+        orders.order_date,
+        orders.total_amount,
+        orders.FirstName,
+        orders.LastName,
+        orders.phone,
+        orders.email,
+        order_detail.quantity,
+        order_detail.subtotal,
+        order_detail.product_id,
+        products.name AS product_name,
+        users.id AS user_id,
+        users.FirstName AS user_first_name,
+        users.LastName AS user_last_name
+    FROM orders
+    INNER JOIN order_detail ON orders.order_id = order_detail.order_id
+    INNER JOIN products ON order_detail.product_id = products.id
+    INNER JOIN users ON orders.user_id = users.id
+    WHERE orders.order_id = ?");
         $stmt->execute([$orderId]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
 }
