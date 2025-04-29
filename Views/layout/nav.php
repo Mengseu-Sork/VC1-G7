@@ -125,7 +125,7 @@
                 <!-- Layouts links -->
                 <div>
                   <a
-                      href="#"
+                      href="../Views/payments/payment.php"
                       class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
 
                     >
