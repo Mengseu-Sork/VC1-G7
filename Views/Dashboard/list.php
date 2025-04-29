@@ -245,7 +245,7 @@
                     >
                       Value
                     </h6>
-                    <span class="flex justify-center text-2xl font-semibold mt-2">0</span>
+                    <span class="flex justify-center text-2xl font-semibold mt-2"><?= htmlspecialchars($data['totalRevenue']); ?></span>
                   </div>
                   <div>
                     <span>
@@ -305,7 +305,7 @@
                     >
                       Orders
                     </h6>
-                    <span class="flex justify-center text-2xl font-semibold mt-2">0</span>
+                    <span class="flex justify-center text-2xl font-semibold mt-2"><?= htmlspecialchars($data['totalOrders']); ?></span>
                   </div>
                   <div>
                     <span>
