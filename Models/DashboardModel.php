@@ -22,4 +22,25 @@ class DashboardModel {
         $result = $stmt->fetch();
         return $result['total_quantity'];
     }
+
+    public function getTotalOrder() {
+        $sql = "SELECT COUNT(order_id) AS total_orders FROM orders";
+        $stmt = $this->db->query($sql);
+        $result = $stmt->fetch();
+        return $result['total_orders'];
+    }
+
+    public function getTotalOrderPrice() {
+        $sql = "SELECT SUM(total_amount) AS total_price FROM orders";
+        $stmt = $this->db->query($sql);
+        
+        if ($stmt) {
+            $result = $stmt->fetch();
+            return $result['total_price'] ?? 0;
+        }
+    
+        return 0;
+    }    
+
+    
 }

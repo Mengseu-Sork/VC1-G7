@@ -1,50 +1,71 @@
-<div class="relative">  
-  <div class="dropdown-menu" role="menu" aria-expanded="false">  
-    <button class="btn btn-ghost size-icon relative" aria-haspopup="true" aria-controls="dropdown-menu">  
-      <svg class="h-5 w-5"><!-- Bell SVG here --></svg>  
-      <span class="badge absolute -top-1 -right-1 px-1.5 py-0.5 min-w-[18px] h-[18px] flex items-center justify-center">2</span>  
-    </button>  
-    
-    <div class="dropdown-menu-content w-80" id="dropdown-menu" role="menu" tabindex="-1">  
-      <div class="flex items-center justify-between p-2 border-b">  
-        <h3 class="font-medium">Notifications</h3>  
-        <button class="btn btn-ghost size-sm text-xs text-blue-500 hover:text-blue-700">Mark all as read</button>  
-      </div>  
-      <div class="max-h-[300px] overflow-y-auto">  
-        <div class="dropdown-menu-item p-3 cursor-pointer bg-blue-50 dark:bg-blue-900/20">  
-          <div class="flex flex-col gap-1">  
-            <div class="flex items-start gap-2">  
-              <div class="w-2 h-2 mt-1.5 rounded-full bg-blue-500"></div>  
-              <div>  
-                <p class="text-sm">New product 'Arabica Ethiopia' has been added</p>  
-                <p class="text-xs text-gray-500 dark:text-gray-400">2 minutes ago</p>  
-              </div>  
-            </div>  
-          </div>  
-        </div>  
-        <div class="dropdown-menu-item p-3 cursor-pointer">  
-          <div class="flex flex-col gap-1">  
-            <div class="flex items-start gap-2">  
-              <div class="w-2 h-2 mt-1.5 rounded-full bg-gray-300"></div>  
-              <div>  
-                <p class="text-sm">New product 'Flores Bajawa' has been added</p>  
-                <p class="text-xs text-gray-500 dark:text-gray-400">1 hour ago</p>  
-              </div>  
-            </div>  
-          </div>  
-        </div>  
-        <div class="dropdown-menu-item p-3 cursor-pointer">  
-          <div class="flex flex-col gap-1">  
-            <div class="flex items-start gap-2">  
-              <div class="w-2 h-2 mt-1.5 rounded-full bg-gray-300"></div>  
-              <div>  
-                <p class="text-sm">Product 'Raw Cacao Powder' has been updated</p>  
-                <p class="text-xs text-gray-500 dark:text-gray-400">Yesterday</p>  
-              </div>  
-            </div>  
-          </div>  
-        </div>  
-      </div>  
-    </div>  
-  </div>  
-</div>  
+
+<div class="relative">
+  <button id="bellIcon" class="relative focus:outline-none ">
+    🔔
+    <span id="notifCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-1 rounded-full">0</span>
+  </button>
+
+  <!-- Dropdown -->
+  <div id="notificationDropdown" class="absolute right-0 mt-2 w-80 bg-white border rounded shadow-lg hidden z-50">
+    <div class="p-2 font-bold text-gray-700 border-b">Notifications</div>
+    <div id="notificationList" class="max-h-60 overflow-y-auto"></div>
+    <button onclick="clearNotifications()" class="w-full bg-blue-500 hover:bg-blue-600 text-white text-sm py-2">Clear All</button>
+  </div>
+</div>
+<script>
+// Store notifications
+function storeOutOfStockNotifications(products) {
+    if (!Array.isArray(products) || products.length === 0) return;
+
+    let notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+
+    products.forEach(product => {
+    const message = `Product "${product}" is out of stock.`;
+    const exists = notifications.some(n => n.message === message);
+    if (!exists) {
+        alert(message); // ✅ This will show a popup
+        notifications.push({
+            message,
+            timestamp: new Date().toISOString(),
+            status: 'unread'
+        });
+    }
+});
+
+    localStorage.setItem('notifications', JSON.stringify(notifications));
+    updateNotificationUI();
+}
+
+// Update bell count and list
+function updateNotificationUI() {
+    const notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+    const unread = notifications.filter(n => n.status === 'unread');
+
+    document.getElementById('notifCount').textContent = unread.length;
+
+    const list = document.getElementById('notificationList');
+    list.innerHTML = unread.length === 0
+        ? '<div class="p-2 text-sm text-gray-500">No new notifications.</div>'
+        : unread.map(n => `<div class="p-2 text-sm text-gray-700 border-b">${n.message}</div>`).join('');
+}
+
+// Clear all notifications
+function clearNotifications() {
+    localStorage.removeItem('notifications');
+    updateNotificationUI();
+}
+
+// Toggle dropdown
+document.getElementById('bellIcon').addEventListener('click', () => {
+    document.getElementById('notificationDropdown').classList.toggle('hidden');
+    updateNotificationUI();
+});
+
+// On page load
+updateNotificationUI();
+
+// Auto-store from PHP if available
+if (typeof outOfStockItems !== 'undefined') {
+    storeOutOfStockNotifications(outOfStockItems);
+}
+</script>

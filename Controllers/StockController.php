@@ -92,4 +92,5 @@ class StockController extends BaseController {
         }
         $this->redirect('/stock');
     }
+    
 }

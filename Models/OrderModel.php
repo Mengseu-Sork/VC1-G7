@@ -4,36 +4,13 @@ require_once 'Databases/Database.php';
 class OrderModel
 {
     private $db;
-    //private $hasUserIdColumn = true; // We'll check this dynamically - REMOVED
     private $hasUserIdColumn = true; // We'll check this dynamically
 
     public function __construct()
     {
         $this->db = new Database();
-        // Check if the orders table has a user_id column
-        //$this->checkTableStructure(); - REMOVED
     }
 
-    /*private function checkTableStructure() - REMOVED
-    {
-        try {
-            $pdo = $this->db->getConnection();
-            
-            // Get the table structure
-            $stmt = $pdo->prepare("DESCRIBE orders");
-            $stmt->execute();
-            $columns = $stmt->fetchAll(PDO::FETCH_COLUMN);
-            
-            // Check if user_id exists in the columns
-            $this->hasUserIdColumn = in_array('user_id', $columns);
-            
-            error_log("Orders table " . ($this->hasUserIdColumn ? "has" : "does not have") . " user_id column");
-        } catch (PDOException $e) {
-            error_log("Error checking table structure: " . $e->getMessage());
-            // Default to assuming the column exists to maintain backward compatibility
-            $this->hasUserIdColumn = true;
-        }
-    }*/
 
     public function getUserByEmail($email)
     {

@@ -17,7 +17,7 @@
                 <img src="../../../Assets/images/FX12 LOGO.png" alt="San Cafe Logo" class="w-16 mb-2">
                 <span class="font-bold text-3xl tracking-wider uppercase">SAN CAFE</span>
               </a>
-              <div class="max-h-96 space-y-2 overflow-y-auto scrollbar-3px">
+              <div class="space-y-3 overflow-y-auto">
               <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
                 <div>
                   <a
@@ -114,7 +114,7 @@
                 <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
                 <div>
                   <a
-                      href="#"
+                      href="/payments/payment"
                       class="sidebar-link flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
 
                     >
@@ -207,7 +207,7 @@
                       </button>
 
                       <!-- Desktop Right buttons -->
-                      <nav aria-label="Secondary" class="hidden space-x-2 md:flex md:items-center">
+                      <nav aria-label="Secondary" class="hidden space-x-4 md:flex md:items-center">
                           <!-- Toggle dark theme button -->
                           <button aria-hidden="true" class="relative focus:outline-none" x-cloak @click="toggleTheme">
                           <div
@@ -251,26 +251,7 @@
                           </button>
 
                          
-                          <button
-                              class="p-2 transition-colors duration-200 rounded-full text-primary-lighter bg-primary-50 hover:text-primary hover:bg-primary-100 dark:hover:text-light dark:hover:bg-primary-dark dark:bg-dark focus:outline-none focus:bg-primary-100 dark:focus:bg-primary-dark focus:ring-primary-darker"
-                              >
-                              <span class="sr-only">Open Notification panel</span>
-                              <svg
-                                class="w-7 h-7"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                aria-hidden="true"
-                              >
-                                <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                                />
-                            </svg>
-                          </button>
+                          <?php require_once "./Views/Components/notification-system.php"?>
 
                           <!-- Color button -->
                           <?php require_once './Views/layout/colorNavbar.php'?>

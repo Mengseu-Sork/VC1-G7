@@ -25,9 +25,17 @@ class DashboardController extends BaseController
         // Load products and count
         $totalProducts = $this->model->getProductCount();
         $totalStockQuantity = $this->model->getTotalStockQuantity();
+        $totalOrders = $this->model->getTotalOrder();
+        $totalRevenue = $this->model->getTotalOrderPrice();
+
+        // Pass data to view
         $this->view('Dashboard/list', [
+            "totalProducts" => $totalProducts,
             "totalStockQuantity" => $totalStockQuantity,
-            "totalProducts" => $totalProducts
+            "totalOrders" => $totalOrders,
+            "totalRevenue" => $totalRevenue
         ]);
-    }   
+    }  
+
+
 }

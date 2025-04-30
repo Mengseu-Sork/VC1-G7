@@ -5,7 +5,7 @@ $products = $productModel->getAllProducts();
 $categoriesModel = new CategoryModel();
 $categories = $categoriesModel->getAllCategories();
 
-$productsPerRow = 5;
+$productsPerRow = 4;
 $rowsPerClick = 2;
 $initialRows = 2;
 $initialProductsToShow = $productsPerRow * $initialRows;
@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
         <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
             <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
-                <div class="shadow-lg rounded-lg p-6 mb-16 border-2 border-gray-200 dark:border-primary-darker transition duration-300"
+                <div class="shadow-lg rounded-lg p-4 mb-16 border-2 border-gray-200 dark:border-primary-darker transition duration-300"
                     :style="{ backgroundColor: bgColor }">
                     
                     <h1 class="text-left ml-8 text-3xl font-bold">Products</h1>
@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </select>
                         </div>                     
                     </div>                
-                    <div class="container flex flex-wrap gap-9 p-8" id="productContainer">
+                    <div class="container flex flex-wrap gap-7 p-8" id="productContainer">
                         <?php
                         $index = 0;
                         foreach ($updatedProducts as $product):

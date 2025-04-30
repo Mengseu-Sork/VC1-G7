@@ -300,7 +300,7 @@
         if (data.success) {
           alert('Order placed successfully!');
           localStorage.removeItem('cart');
-          window.location.href = '/pages/products';
+          window.location.href = '/pages';
         } else {
           showError('Error: ' + data.message);
           // Show more detailed error information if available
@@ -322,7 +322,7 @@
 
     cancelBtn.addEventListener('click', () => {
       localStorage.removeItem('cart');
-      window.location.href = '/pages/products';
+      window.location.href = '/pages';
     });
 
     renderCart();

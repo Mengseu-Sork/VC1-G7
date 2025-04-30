@@ -1,69 +1,41 @@
-<!DOCTYPE html>  
-<html lang="en">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>Order Details</title>  
-    <style>  
-        body {  
-            font-family: Arial, sans-serif;  
-            margin: 20px;  
-            background-color: #f8f9fa;  
-        }  
-        .order-container {  
-            border: 1px solid #ccc;  
-            border-radius: 5px;  
-            padding: 20px;  
-            background-color: #fff;  
-        }  
-        h2 {  
-            color: #333;  
-        }  
-        .order-summary {  
-            margin-bottom: 20px;  
-        }  
-        .order-item {  
-            margin: 10px 0;  
-        }  
-        .payment-info, .customer-info {  
-            margin-top: 20px;  
-        }  
-        .timeline {  
-            margin-top: 20px;  
-        }  
-    </style>  
-</head>  
-<body>  
+<div class="mx-auto flex-1 h-full overflow-x-hidden overflow-y-auto">
+    <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+        <div x-data="{ bgColor: 'white' }" class="rounded-lg p-6">
+            <div class="shadow-lg rounded-lg mb-16 p-6 border-2 border-gray-200 dark:border-primary-darker transition duration-300"
+                 :style="{ backgroundColor: bgColor }">
+                <h2 class="text-2xl font-semibold  mb-6">Order Details</h2>
 
+                <!-- Order Summary -->
+                <div class="mb-6">
+                  <div class="mb-2"><span class="font-semibold">Item:</span> <?= htmlspecialchars($orderDetails["product_name"]) ?></div>
+                  <div class="mb-2"><span class="font-semibold">Price:</span> $<?= number_format($orderDetails["total_amount"], 2) ?></div>
+                </div>
 
-<div class="order-container">  
-    <h2>Order Details</h2>  
-    
-    <div class="order-summary">  
-        <div class="order-item"><strong>Item:</strong> <?php echo($orderDetails["product_name"])?> </div>  
-        <div class="order-item"><strong>Price:</strong> $ <?php echo($orderDetails["total_amount"])?></div>  
-    </div>  
+                <!-- Customer Info -->
+                <div class="mb-6">
+                  <h3 class="text-lg font-medium mb-2">Customer Info</h3>
+                  <div><span class="font-semibold">Name:</span> <?= htmlspecialchars($orderDetails["FirstName"] . " " . $orderDetails["LastName"]) ?></div>
+                  <div><span class="font-semibold">Email:</span> <?= htmlspecialchars($orderDetails["email"]) ?></div>
+                  <div><span class="font-semibold">Phone:</span> <?= htmlspecialchars($orderDetails["phone"]) ?></div>
+                </div>
 
-    <div class="customer-info">  
-        <strong>Customer Name:</strong> <?php echo($orderDetails["FirstName"])?> <?php echo($orderDetails["LastName"])?><br>  
-        <strong>Email:</strong><?php echo($orderDetails["email"])?><br>  
-        <strong>Phone:</strong> <?php echo($orderDetails["phone"])?><br>  
-    </div>  
+                <!-- Timeline -->
+                <div class="mb-6">
+                  <h3 class="text-lg font-medium mb-2">Timeline</h3>
+                  <ul class="list-disc list-inside space-y-1 text-sm font-semibold">
+                    <li>Order Processed: The order is being prepared (products are being packed)</li>
+                    <li>Payment Confirmed: Payment has been successfully processed and verified.</li>
+                    <li>Order Placed: Order has been successfully placed by the customer.</li>
+                  </ul>
+                </div>
 
-    <div class="timeline">  
-        <strong>Timeline:</strong><br>  
-        <ul>  
-            <li>Order Processed: The order is being prepared (products are being packed)</li>  
-            <li>Payment Confirmed: Payment has been successfully processed and verified.</li>  
-            <li>Order Placed: Order has been successfully placed by the customer.</li>  
-        </ul>  
-    </div>  
-
-    <div class="payment-info">  
-        <strong>Payment:</strong><br>  
-        <div class="order-item"><strong>Total:</strong> $<?php echo($orderDetails["total_amount"])?></div>  
-    </div>  
-</div>  
-
-</body>  
-</html>  
+                <!-- Payment Info -->
+                <div>
+                  <h3 class="text-lg font-medium font-semibold mb-2">Payment Info</h3>
+                  <div><span class="font-semibold">Total:</span> $<?= number_format($orderDetails["total_amount"], 2) ?></div>
+                </div>
+                <button type="button" class="bg-yellow-500 hover:bg-yellow-600 text-white mt-4 py-2 px-4 rounded-lg" onclick="window.location.href='/orders/orderHistory'">Cancel</button>
+              </div>
+        </div>
+    </div>
+</div>
