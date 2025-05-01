@@ -20,7 +20,7 @@ class DashboardModel {
         $sql = "SELECT SUM(quantity) AS total_quantity FROM stock";
         $stmt = $this->db->query($sql);
         $result = $stmt->fetch();
-        return $result['total_quantity'];
+        return $result['total_quantity']?? 0;
     }
 
     public function getTotalOrder() {
