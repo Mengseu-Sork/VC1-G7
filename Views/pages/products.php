@@ -112,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </h4>
                                 <p class="text-lg font-semibold mt-2 mb-2"
                                     style="color: <?= $isInStock ? 'green' : 'red' ?>;">
-                                    <?= htmlspecialchars($product['stock'] ?? 'In stock') ?>
+                                    <?= $isInStock ? 'In stock' : 'Out stock' ?>
                                 </p>
                                 <p class="text-sm font-semibold text-yellow-600 text-center">
                                     $<?= number_format($product['price'] ?? 0.00, 2) ?>
